@@ -6,11 +6,15 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ## [1.8.1] — 2026-11-14
 
-### Tinh chỉnh Giao diện (UI Refinement - Header & Logo Slot)
+### Tinh chỉnh Giao diện (UI Refinement - Vertical Sidebar & Logo Slot)
+- **Chuyển đổi Header Quản trị sang dạng Sidebar Dọc (Vertical Admin Sidebar):**
+  - Chuyển toàn bộ thanh điều hướng ngang trên cùng của Cổng quản trị (`src/app/(admin)/layout.tsx`) thành thanh Sidebar dọc cố định bên trái (`w-64 xl:w-72`), tối ưu hóa không gian làm việc cho các bảng dữ liệu và biểu đồ phân tích.
+  - Tích hợp Logo Kiểm toán nhà nước, danh mục 5 chức năng dạng danh sách dọc kèm icon và mô tả phụ, đường dẫn nhanh mở form khảo sát, thẻ thông tin cán bộ đăng nhập và nút đăng xuất.
+  - Hỗ trợ giao diện Responsive trên thiết bị di động thông qua thanh Topbar nhỏ gọn và Menu ngăn kéo (Drawer) trượt ngang.
 - **Chuẩn hóa Header & Tạo vị trí chèn Logo:**
   - Bỏ hiển thị số hiệu phiên bản trên Header bài khảo sát di động (`/khao-sat/[token]`) và Header Quản trị (`/admin`).
   - Xây dựng component dùng chung `AppLogo` (`src/components/common/AppLogo.tsx`) tạo khung chứa logo chuẩn mực, tự động nạp file `public/logo.png` hoặc `public/logo.svg` kèm cơ chế fallback biểu trưng vector Kiểm toán nhà nước.
-  - Bố trí vị trí đặt Logo tại: Header Cổng khảo sát, Header thanh điều hướng Admin Layout, Trang chủ và Trang Đăng nhập.
+  - Bổ sung trang gốc chuyển hướng `/admin` tự động redirect sang `/admin/dashboard`.
 
 ---
 
