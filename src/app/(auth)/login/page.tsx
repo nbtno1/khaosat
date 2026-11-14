@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ShieldCheck, Lock, User, AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { Lock, User, AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { AppLogo } from "@/components/common/AppLogo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -54,10 +55,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-sky-950 flex flex-col justify-center items-center px-4 py-12">
       {/* Decorative Brand Header */}
-      <div className="text-center mb-8 max-w-lg">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-sky-600/20 border border-sky-400/30 text-sky-400 mb-4 shadow-xl shadow-sky-950/50">
-          <ShieldCheck className="w-9 h-9" />
-        </div>
+      <div className="text-center mb-8 max-w-lg flex flex-col items-center">
+        {/* VỊ TRÍ ĐẶT LOGO (LOGO SLOT) - Thay logo tại public/logo.png hoặc public/logo.svg */}
+        <AppLogo size="xl" className="mb-4" />
         <div className="text-xs uppercase tracking-widest text-sky-400 font-extrabold mb-1">
           TRƯỜNG ĐÀO TẠO VÀ BỒI DƯỠNG NGHIỆP VỤ KIỂM TOÁN
         </div>

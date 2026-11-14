@@ -17,6 +17,7 @@ import {
   ExternalLink,
   BookOpen,
 } from "lucide-react";
+import { AppLogo } from "@/components/common/AppLogo";
 
 interface CurrentUser {
   id: string;
@@ -128,18 +129,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </button>
 
               <Link href="/admin/dashboard" className="flex items-center gap-3 group">
-                <div className="w-10 h-10 rounded-xl bg-sky-700 flex items-center justify-center text-white shadow-md shadow-sky-700/20 group-hover:bg-sky-800 transition-colors">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
+                {/* VỊ TRÍ ĐẶT LOGO (LOGO SLOT) - Thay logo tại public/logo.png hoặc public/logo.svg */}
+                <AppLogo size="md" />
                 <div>
                   <div className="text-[10px] uppercase font-extrabold text-sky-700 tracking-wider">
                     KIỂM TOÁN NHÀ NƯỚC
                   </div>
                   <div className="text-sm font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
                     <span>Hệ thống Quản lý Khảo sát</span>
-                    <span className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-bold bg-amber-100 text-amber-800 rounded">
-                      v3.3
-                    </span>
                   </div>
                 </div>
               </Link>

@@ -1,11 +1,15 @@
 import Link from "next/link";
+import { AppLogo } from "@/components/common/AppLogo";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-b from-slate-900 to-slate-950 text-white">
-      <div className="max-w-2xl text-center space-y-6">
-        <div className="inline-block px-3 py-1 bg-blue-600/20 border border-blue-500/30 rounded-full text-blue-400 text-xs font-semibold uppercase tracking-wider">
-          Kiểm toán nhà nước · Phiên bản 3.3
+    <div className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white">
+      <div className="max-w-2xl text-center flex flex-col items-center space-y-6">
+        {/* VỊ TRÍ ĐẶT LOGO (LOGO SLOT) - Thay logo tại public/logo.png hoặc public/logo.svg */}
+        <AppLogo size="xl" />
+
+        <div className="inline-block px-3.5 py-1 bg-sky-500/20 border border-sky-400/30 rounded-full text-sky-300 text-xs font-bold uppercase tracking-wider">
+          Kiểm toán nhà nước Việt Nam
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
           Hệ thống Quản lý Khảo sát Năng lực Quản lý Tài chính, Tài sản công

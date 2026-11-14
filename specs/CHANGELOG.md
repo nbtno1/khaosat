@@ -4,6 +4,16 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.8.1] — 2026-11-14
+
+### Tinh chỉnh Giao diện (UI Refinement - Header & Logo Slot)
+- **Chuẩn hóa Header & Tạo vị trí chèn Logo:**
+  - Bỏ hiển thị số hiệu phiên bản trên Header bài khảo sát di động (`/khao-sat/[token]`) và Header Quản trị (`/admin`).
+  - Xây dựng component dùng chung `AppLogo` (`src/components/common/AppLogo.tsx`) tạo khung chứa logo chuẩn mực, tự động nạp file `public/logo.png` hoặc `public/logo.svg` kèm cơ chế fallback biểu trưng vector Kiểm toán nhà nước.
+  - Bố trí vị trí đặt Logo tại: Header Cổng khảo sát, Header thanh điều hướng Admin Layout, Trang chủ và Trang Đăng nhập.
+
+---
+
 ## [1.8.0-milestone-8] — 2026-11-14
 
 ### Đã hoàn thành (Phân hệ Hướng dẫn Sử dụng Cập nhật Động - Dynamic User Guide Module & ADR-010)

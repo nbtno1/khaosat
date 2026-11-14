@@ -8,6 +8,7 @@ import { StepDynamicEvaluation } from "./StepDynamicEvaluation";
 import { StepLearningPreferences } from "./StepLearningPreferences";
 import { SurveySuccessModal } from "./SurveySuccessModal";
 import { SurveyGuideModal } from "./SurveyGuideModal";
+import { AppLogo } from "@/components/common/AppLogo";
 import { Clock, Shield, CheckCircle2, HelpCircle } from "lucide-react";
 
 interface SurveyContainerProps {
@@ -64,18 +65,23 @@ export const SurveyContainer: React.FC<SurveyContainerProps> = ({
     <div className="max-w-3xl mx-auto py-6 px-4 sm:px-6 space-y-6">
       {/* Header thương hiệu Kiểm toán nhà nước */}
       <header className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
-              <Shield className="w-3.5 h-3.5" />
-              <span>KIỂM TOÁN NHÀ NƯỚC VIỆT NAM</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            {/* VỊ TRÍ ĐẶT LOGO (LOGO SLOT) - Thay logo tại public/logo.png hoặc public/logo.svg */}
+            <AppLogo size="lg" />
+
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
+                <Shield className="w-3.5 h-3.5" />
+                <span>KIỂM TOÁN NHÀ NƯỚC VIỆT NAM</span>
+              </div>
+              <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
+                Khảo sát Nhu cầu Đào tạo Cấp Xã
+              </h1>
+              <p className="text-xs text-slate-500">
+                Địa bàn: <strong className="text-slate-800">{linkMeta.provinceName}</strong> | Đợt: {linkMeta.campaignCode}
+              </p>
             </div>
-            <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
-              Khảo sát Nhu cầu Đào tạo Cấp Xã (Phiên bản 3.3)
-            </h1>
-            <p className="text-xs text-slate-500">
-              Địa bàn: <strong className="text-slate-800">{linkMeta.provinceName}</strong> | Đợt: {linkMeta.campaignCode}
-            </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
