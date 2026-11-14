@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Microsoft Office temporary files
+~$*
+.~lock.*
+*.tmp
+
+# IDE & editors
+.vscode/
+.idea/
