@@ -148,30 +148,31 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 - **Spec liên quan:** `specs/02-BUSINESS-REQUIREMENTS.md`, `specs/12-VALIDATION-AND-BUSINESS-RULES.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** TASK-005, TASK-008
-- **File dự kiến tạo:** `src/services/analytics-aggregation.service.ts`, `src/services/capacity-gap.service.ts`
+- **File đã tạo:** `src/services/analytics-aggregation.service.ts`, `src/services/capacity-gap.service.ts`, `src/app/api/admin/analytics/tables/route.ts`, `tests/services/analytics-tables.test.ts`
 - **Các bước thực hiện:**
-  1. Viết pipeline tính toán Bảng B1 (Người trả lời, phân loại tư cách, số xã, số phiếu loại).
-  2. Viết pipeline tính toán Bảng B2 (16 nhóm × 4 cột trạng thái).
-  3. Viết pipeline tính toán Bảng B3 (Nhóm × Vai trò, tính tỷ lệ dưới chuẩn, phân bố thiếu 1, 2, 3 mức so với Benchmark Matrix).
-  4. Viết pipeline tính toán Bảng B4 (Nội dung cần học × Mức độ cấp thiết).
+  1. Viết pipeline tính toán Bảng B1 (Người trả lời, phân loại tư cách, số xã, số phiếu loại & lý do loại).
+  2. Viết pipeline tính toán Bảng B2 (16 nhóm × 4 cột trạng thái, tổng 4 cột = 100%).
+  3. Viết pipeline tính toán Bảng B3 (Nhóm × 4 Vai trò, tính tỷ lệ dưới chuẩn, phân bố thiếu 1, 2, 3 mức so với Benchmark Matrix, dòng người chưa có dịp tính riêng kèm câu chú thích bắt buộc).
+  4. Viết pipeline tính toán Bảng B4 (Nội dung cần học × 3 Mức độ cấp thiết).
   5. Viết pipeline tính toán Bảng B5 (Khó khăn, tách nhãn ngoài đào tạo).
-  6. Viết pipeline tính toán Bảng B6 (5 hình thức học & giới hạn dữ liệu).
-- **Acceptance Criteria:** Kết quả tính toán khớp 100% với các ví dụ chuẩn trong Tài liệu số 2.
-- **Test Cases:** TC-17, TC-18.
-- **Trạng thái:** `PLANNED`
+  6. Viết pipeline tính toán Bảng B6 (5 hình thức học & 2 giới hạn dữ liệu cố định).
+- **Acceptance Criteria:** Kết quả tính toán khớp 100% với các công thức và ví dụ chuẩn trong Tài liệu số 2 và Spec 12; 26/26 tests đạt.
+- **Test Cases:** TC-17, TC-18 (26/26 PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ### TASK-010: Xây dựng Giao diện Analytics Explorer (6 Tabs B1 - B6)
 - **Module:** Admin UI
 - **Spec liên quan:** `specs/10-UI-UX-SPECIFICATION.md`
 - **Mức độ ưu tiên:** P1
 - **Phụ thuộc:** TASK-009
-- **File dự kiến tạo:** `src/app/api/admin/analytics/tables/route.ts`, `src/app/(admin)/admin/analytics/page.tsx`, `src/components/admin/analytics/TableB1View.tsx`, `src/components/admin/analytics/TableB2View.tsx`, `src/components/admin/analytics/TableB3View.tsx`, `src/components/admin/analytics/TableB4View.tsx`, `src/components/admin/analytics/TableB5View.tsx`, `src/components/admin/analytics/TableB6View.tsx`
+- **File đã tạo:** `src/components/admin/AnalyticsTablesViewer.tsx`, `src/app/(admin)/admin/analytics/page.tsx`
 - **Các bước thực hiện:**
-  1. Viết Route Handler trả về dữ liệu 6 bảng có hỗ trợ bộ lọc Campaign, Tỉnh, Cơ quan.
-  2. Dựng giao diện 6 Tabs bảng biểu trực quan, tích hợp biểu đồ Recharts thể hiện khoảng thiếu hụt năng lực.
-- **Acceptance Criteria:** Hiển thị số liệu rõ ràng, chuyển tab mượt mà, hỗ trợ lọc đa chiều.
-- **Test Cases:** TC-17.
-- **Trạng thái:** `PLANNED`
+  1. Viết Route Handler `GET /api/admin/analytics/tables` trả về dữ liệu 6 bảng có hỗ trợ bộ lọc Campaign, Tỉnh, Cơ quan.
+  2. Dựng giao diện 6 Tabs bảng biểu trực quan, hỗ trợ chuyển đổi giữa chế độ số liệu thực và chế độ ẩn danh bảo vệ dữ liệu nhỏ (&lt;5 người).
+  3. Hiển thị chuẩn xác câu ghi chú bắt buộc dưới tiêu đề Bảng B3 và các nhãn phân loại khó khăn.
+- **Acceptance Criteria:** Hiển thị số liệu rõ ràng, chuyển tab mượt mà, hỗ trợ lọc đa chiều, đáp ứng chuẩn UX công vụ.
+- **Test Cases:** TC-17, TC-18.
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ---
 

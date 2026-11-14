@@ -11,6 +11,7 @@
     "test:validations": "tsx tests/validations/survey.schema.test.ts",
     "test:api": "tsx tests/api/public-survey.test.ts",
     "test:duplicates": "tsx tests/services/duplicate-detection.test.ts",
+    "test:analytics": "tsx tests/services/analytics-tables.test.ts",
     "db:seed": "tsx scripts/seed.ts",
     "db:import-communes": "tsx scripts/import-communes.ts"
   },

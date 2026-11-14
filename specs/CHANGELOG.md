@@ -4,6 +4,20 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.4.0-milestone-4] — 2026-11-14
+
+### Đã hoàn thành (Milestone 4 — Analytics Aggregation Engine & 6 Bảng Tổng hợp)
+- **TASK-009 (Analytics Aggregation Service & Pipelines):**
+  - Xây dựng `AnalyticsAggregationService` (`src/services/analytics-aggregation.service.ts`) tính toán trọn bộ 6 bảng B1 đến B6 theo đúng mẫu số và quy cách Phần IV Tài liệu số 2 và Spec 02/Spec 12.
+  - Xây dựng `CapacityGapService` (`src/services/capacity-gap.service.ts`) nạp 64 mức chuẩn Benchmark Matrix, tính toán khoảng cách chênh lệch ($\Delta = \text{Req} - \text{Self}$) và phân bổ chi tiết mức thiếu hụt (thiếu 1 mức, 2 mức, 3 mức).
+  - Viết 26/26 unit tests PASS (`tests/services/analytics-tables.test.ts`).
+- **TASK-010 (Giao diện Analytics Tables Explorer):**
+  - Xây dựng API Route Handler `GET /api/admin/analytics/tables` hỗ trợ lọc theo đợt, tỉnh, cơ quan.
+  - Xây dựng giao diện `AnalyticsTablesViewer` tại `/admin/analytics` với 6 tab bảng biểu, hỗ trợ xem số liệu thực hoặc bật chế độ ẩn danh bảo vệ dữ liệu nhỏ (&lt;5 người).
+  - Đảm bảo in đúng câu ghi chú bắt buộc dưới tiêu đề Bảng B3: *"khoảng thiếu hụt theo tự đánh giá - không đồng nhất với năng lực thực tế đã được kiểm chứng"*.
+
+---
+
 ## [1.3.0-milestone-3] — 2026-11-14
 
 ### Đã hoàn thành (Milestone 3 — Kiểm soát Gửi đúp & Trung tâm Rà soát Nghi trùng)
