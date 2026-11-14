@@ -1,13 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useSurveyFormState, SurveyLinkMeta, SchemaConfigData } from "@/hooks/useSurveyFormState";
 import { StepGeneralInfo } from "./StepGeneralInfo";
 import { StepWorkgroups } from "./StepWorkgroups";
 import { StepDynamicEvaluation } from "./StepDynamicEvaluation";
 import { StepLearningPreferences } from "./StepLearningPreferences";
 import { SurveySuccessModal } from "./SurveySuccessModal";
-import { Clock, Shield, CheckCircle2 } from "lucide-react";
+import { SurveyGuideModal } from "./SurveyGuideModal";
+import { Clock, Shield, CheckCircle2, HelpCircle } from "lucide-react";
 
 interface SurveyContainerProps {
   linkMeta: SurveyLinkMeta;
@@ -45,6 +46,8 @@ export const SurveyContainer: React.FC<SurveyContainerProps> = ({
     submitSurvey,
   } = useSurveyFormState(linkMeta, schemaData);
 
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
+
   if (submitSuccess) {
     return (
       <SurveySuccessModal
@@ -75,9 +78,21 @@ export const SurveyContainer: React.FC<SurveyContainerProps> = ({
             </p>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold self-start sm:self-center border border-slate-200 shadow-sm">
-            <Clock className="w-4 h-4 text-sky-700" />
-            <span>Thời gian ước tính: ~{estimatedMinutes} phút</span>
+          <div className="flex flex-wrap items-center gap-2 self-start sm:self-center">
+            <button
+              type="button"
+              onClick={() => setIsGuideOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sky-50 text-sky-800 hover:bg-sky-100 text-xs font-bold border border-sky-200 transition-colors shadow-sm"
+              title="Xem hướng dẫn làm bài và các lưu ý"
+            >
+              <HelpCircle className="w-4 h-4 text-sky-700" />
+              <span>Hướng dẫn làm bài</span>
+            </button>
+
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200 shadow-sm">
+              <Clock className="w-4 h-4 text-sky-700" />
+              <span>~{estimatedMinutes} phút</span>
+            </div>
           </div>
         </div>
 
@@ -177,6 +192,12 @@ export const SurveyContainer: React.FC<SurveyContainerProps> = ({
           />
         )}
       </main>
+
+      {/* Modal Hướng dẫn Làm bài Khảo sát */}
+      <SurveyGuideModal
+        isOpen={isGuideOpen}
+        onClose={() => setIsGuideOpen(false)}
+      />
     </div>
   );
 };

@@ -6,8 +6,8 @@ Báo cáo trạng thái dự án thời gian thực theo phương pháp Spec-Dri
 
 ## 1. TỔNG QUAN TIẾN ĐỘ THEO YÊU CẦU
 
-- **Giai đoạn hiện tại:** Giai đoạn 3 — Triển khai Mã nguồn Ứng dụng theo Đặc tả Kỹ thuật (Đã hoàn thành 100% Roadmap phát triển, nghiệm thu toàn bộ 23 test cases).
-- **Milestone hiện tại:** TOÀN BỘ 7 MILESTONES ĐÃ HOÀN THÀNH 100% (READY FOR PRODUCTION GO-LIVE).
+- **Giai đoạn hiện tại:** Giai đoạn 3 — Triển khai Mã nguồn Ứng dụng theo Đặc tả Kỹ thuật (Đã hoàn thành 100% Roadmap phát triển, nghiệm thu toàn bộ 23 test cases và bổ sung Phân hệ Hướng dẫn sử dụng).
+- **Milestone hiện tại:** TOÀN BỘ CÁC HẠNG MỤC ĐÃ HOÀN THÀNH 100% (READY FOR PRODUCTION GO-LIVE).
 - **Task đang thực hiện:** Bàn giao sản phẩm & báo cáo tổng kết.
 - **Công việc đã hoàn thành và được xác minh:**
   - **Milestone 1 HOÀN THÀNH 100% (3/3 tasks):** Khởi tạo Next.js 15, React 19, TypeScript strict mode, Tailwind CSS; 8 Mongoose models; Bộ seed data v3.3 chuẩn (16 nhóm việc, 87 chuyên đề, 64 benchmark, 40 vị trí, 34 tỉnh, pilot communes).
@@ -16,9 +16,8 @@ Báo cáo trạng thái dự án thời gian thực theo phương pháp Spec-Dri
   - **Milestone 4 HOÀN THÀNH 100% (2/2 tasks - Analytics & 6 Bảng Tổng hợp):** `AnalyticsAggregationService` tính toán chuẩn xác 100% cho 6 bảng B1 đến B6; `CapacityGapService` tính toán khoảng thiếu hụt năng lực; Giao diện `AnalyticsTablesViewer` tại `/admin/analytics`. 26/26 tests PASS.
   - **Milestone 5 HOÀN THÀNH 100% (2/2 tasks - Suppression & Xuất ExcelJS):** `StatisticalDisclosureService` (Primary, Row, Secondary suppression ngưỡng < 5); `ExcelExportService` sinh file Excel 6 sheet định dạng kiểm toán; API `/api/admin/export/excel`. 5/5 test groups PASS.
   - **Milestone 6 HOÀN THÀNH 100% (2/2 tasks - Dashboard Quản trị, RBAC & Theo dõi Tiến độ):** Xác thực an toàn JWT HMAC SHA-256 trong HTTP-Only cookie, phân quyền RBAC 5 nhóm tài khoản, các API auth, trang Đăng nhập `/login`, Layout Quản trị, `ProgressMonitoringService`, các biểu đồ Recharts, Dashboard `/admin/dashboard`, trang Quản lý 34 Mã QR `/admin/campaigns` và API `/api/admin/campaigns/qr-zip` (ADR-008). 5/5 test groups PASS.
-  - **Milestone 7 HOÀN THÀNH 100% (2/2 tasks - 23 E2E Test Cases & Production Go-Live):**
-    - `TASK-015 (COMPLETED)`: Xây dựng bộ test tự động kiểm thử toàn diện toàn bộ 23 ca kiểm thử nghiệp vụ chính thức (`TC-01` đến `TC-23`), nghiệm thu đạt 23/23 tests PASS (100%).
-    - `TASK-016 (COMPLETED)`: Đóng gói Multi-stage `Dockerfile`, `docker-compose.yml`, `.dockerignore`, `scripts/backup.sh`, API `GET /api/health`, biên dịch tối ưu hóa thành công 100% (21/21 static & dynamic routes).
+  - **Milestone 7 HOÀN THÀNH 100% (2/2 tasks - 23 E2E Test Cases & Production Go-Live):** Bộ test tự động 23 ca kiểm thử nghiệp vụ (`TC-01` đến `TC-23`) PASS 100%; Multi-stage `Dockerfile`, `docker-compose.yml`, `scripts/backup.sh`, API `GET /api/health`, biên dịch tối ưu hóa thành công 100%.
+  - **Phân hệ Hướng dẫn Sử dụng (TASK-017 HOÀN THÀNH 100%):** Cẩm nang Vận hành Hệ thống tại `/admin/guide` (2 phân hệ đối tượng, 5 chuyên đề quản trị, in ấn/PDF, tìm kiếm); Modal Hướng dẫn Làm bài `SurveyGuideModal` tại Cổng khảo sát di động. 3/3 tests PASS.
 - **Công việc chưa hoàn thành:** Không còn task tồn đọng. 100% Backlog đã hoàn thành.
 - **Vướng mắc / Điểm chặn (Blockers):** Không có blocker nào.
 - **Kết quả kiểm thử toàn diện:**
@@ -29,8 +28,9 @@ Báo cáo trạng thái dự án thời gian thực theo phương pháp Spec-Dri
   - `npm run test:excel`: 5/5 GROUPS PASS (100%).
   - `npm run test:auth`: 5/5 GROUPS PASS (100%).
   - `npm run test:e2e`: 23/23 OFFICIAL BUSINESS TESTS PASS (100%).
+  - `npm run test:guide`: 3/3 GROUPS PASS (100%).
   - `npm run typecheck`: PASS (0 errors).
-  - `npm run build`: PASS (21/21 routes compiled & optimized).
+  - `npm run build`: PASS (22/22 routes compiled & optimized).
 
 ---
 
@@ -45,4 +45,5 @@ Báo cáo trạng thái dự án thời gian thực theo phương pháp Spec-Dri
 | **M5** | Thuật toán Suppression & Xuất ExcelJS | 2 | 2/2 | **100%** | **HOÀN THÀNH** |
 | **M6** | Admin Dashboard, RBAC & Theo dõi tiến độ | 2 | 2/2 | **100%** | **HOÀN THÀNH** |
 | **M7** | 23 Ca kiểm thử E2E & Triển khai Production | 2 | 2/2 | **100%** | **HOÀN THÀNH** |
-| **TỔNG CỘNG** | **Toàn bộ Dự án** | **16** | **16/16 Code (100% Spec)** | **100% HOÀN THÀNH** | **SẴN SÀNG VẬN HÀNH** |
+| **M8** | Phân hệ Hướng dẫn Sử dụng Phần mềm | 1 | 1/1 | **100%** | **HOÀN THÀNH** |
+| **TỔNG CỘNG** | **Toàn bộ Dự án** | **17** | **17/17 Code (100% Spec)** | **100% HOÀN THÀNH** | **SẴN SÀNG VẬN HÀNH** |

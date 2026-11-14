@@ -284,3 +284,23 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 - **Acceptance Criteria:** Khởi chạy container thành công, endpoint healthcheck trả về UP/HEALTHY, production build 100% passed.
 - **Test Cases:** Healthcheck API & Next.js Production Build (PASS).
 - **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
+
+---
+
+## MILESTONE 8 / MỞ RỘNG: PHÂN HỆ HƯỚNG DẪN SỬ DỤNG PHẦN MỀM (USER GUIDE MODULE)
+
+### TASK-017: Xây dựng Phân hệ Hướng dẫn Sử dụng Phần mềm Toàn diện
+- **Module:** Documentation / UI / User Experience
+- **Spec liên quan:** `specs/10-UI-UX-SPECIFICATION.md`, `specs/05-USER-ROLES-AND-USE-CASES.md`, `specs/06-BUSINESS-WORKFLOWS.md`
+- **Mức độ ưu tiên:** P1
+- **Phụ thuộc:** TASK-014, TASK-016
+- **File đã tạo:** `src/app/(admin)/admin/guide/page.tsx`, `src/components/survey/SurveyGuideModal.tsx`, `src/components/survey/SurveyContainer.tsx`, `src/app/(admin)/layout.tsx`, `tests/e2e/guide-module.test.ts`
+- **Các bước thực hiện:**
+  1. Xây dựng trang Cẩm nang Vận hành Hệ thống tại `/admin/guide` hỗ trợ chuyển đổi giữa 2 phân hệ đối tượng: Cán bộ Quản trị & Thẩm tra viên vs. Cán bộ Khảo sát Cấp xã.
+  2. Tích hợp đầy đủ 5 chuyên đề nghiệp vụ quản trị: (1) Phân quyền 5 nhóm tài khoản; (2) Điều phối đợt & Tải 34 mã QR ZIP; (3) Thẩm tra phiếu nghi trùng trên workbench; (4) Khai thác 6 bảng tổng hợp & tính khoảng thiếu hụt Gap; (5) Thuật toán ẩn danh số liệu nhỏ <5 người & xuất file Excel 6 sheet.
+  3. Xây dựng component `SurveyGuideModal` và nút "Hướng dẫn làm bài" trực tiếp trên Header bài khảo sát công khai `/khao-sat/[token]` giúp cán bộ cấp xã tra cứu tức thì 4 bước làm bài, các quy tắc nghiệp vụ quan trọng và câu hỏi thường gặp (FAQ) mà không mất dữ liệu form đang điền.
+  4. Tích hợp chức năng in ấn / xuất PDF (`window.print()`) và tìm kiếm nhanh nội dung trong tài liệu hướng dẫn.
+  5. Bổ sung mục "Hướng dẫn sử dụng" vào thanh điều hướng Admin Layout.
+- **Acceptance Criteria:** Giao diện hướng dẫn trực quan, rõ ràng, phân loại đối tượng chính xác, hỗ trợ cán bộ cấp xã thao tác nhanh trên di động; 100% test cases đạt.
+- **Test Cases:** Task 17 Guide Module Tests (PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)

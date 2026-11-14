@@ -15,6 +15,7 @@
     "test:excel": "tsx tests/services/suppression-and-excel.test.ts",
     "test:auth": "tsx tests/services/auth-and-dashboard.test.ts",
     "test:e2e": "tsx tests/e2e/23-official-test-cases.test.ts",
+    "test:guide": "tsx tests/e2e/guide-module.test.ts",
     "db:seed": "tsx scripts/seed.ts",
     "db:import-communes": "tsx scripts/import-communes.ts"
   },

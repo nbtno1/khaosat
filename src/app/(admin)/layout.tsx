@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   ExternalLink,
+  BookOpen,
 } from "lucide-react";
 
 interface CurrentUser {
@@ -97,6 +98,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       label: "Phân tích 6 Bảng & Xuất Excel",
       href: "/admin/analytics",
       icon: Layers,
+      roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
+    },
+    {
+      label: "Hướng dẫn sử dụng",
+      href: "/admin/guide",
+      icon: BookOpen,
       roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
     },
   ];

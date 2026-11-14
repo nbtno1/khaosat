@@ -4,6 +4,19 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.8.0-milestone-8] — 2026-11-14
+
+### Đã hoàn thành (Phân hệ Hướng dẫn Sử dụng Phần mềm - User Guide Module)
+- **TASK-017 (Xây dựng Cẩm nang Vận hành & Hướng dẫn Sử dụng Phần mềm):**
+  - Xây dựng trang Cẩm nang Vận hành Hệ thống tại `/admin/guide` với thiết kế trực quan, chuyển đổi linh hoạt giữa 2 phân hệ đối tượng: Cán bộ Quản trị & Thẩm tra viên vs. Cán bộ Khảo sát Cấp xã.
+  - Tích hợp 5 chuyên đề nghiệp vụ quản trị chi tiết: (1) Ma trận phân quyền 5 nhóm tài khoản; (2) Quản lý đợt khảo sát & Tải ZIP 34 mã QR cấp tỉnh (ADR-008); (3) Thẩm tra phiếu nghi trùng trên Diff View workbench; (4) Khai thác 6 bảng tổng hợp & công thức tính khoảng thiếu hụt Gap; (5) Thuật toán ẩn danh số liệu nhỏ <5 người & xuất báo cáo Excel 6 sheet.
+  - Xây dựng component `SurveyGuideModal` và nút "Hướng dẫn làm bài" trực tiếp trên Header bài khảo sát công khai `/khao-sat/[token]` giúp cán bộ cấp xã xem nhanh 4 bước thực hiện, các lưu ý nghiệp vụ cốt lõi (luồng kết thúc sớm, khó khăn max 2, quy tắc độc quyền) và câu hỏi thường gặp (FAQ).
+  - Tích hợp tính năng In / Xuất PDF (`window.print()`) và tìm kiếm nhanh từ khóa trong tài liệu.
+  - Bổ sung mục "Hướng dẫn sử dụng" vào thanh điều hướng Admin Layout cho toàn bộ các vai trò người dùng.
+  - Viết bộ kiểm thử tự động `tests/e2e/guide-module.test.ts` đạt 3/3 groups PASS (100%).
+
+---
+
 ## [1.7.0-milestone-7] — 2026-11-14
 
 ### Đã hoàn thành (Milestone 7 — 23 Ca kiểm thử E2E & Triển khai Production Go-Live)
