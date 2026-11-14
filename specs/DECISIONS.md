@@ -63,3 +63,24 @@
   - Hỗ trợ cơ chế Streaming giúp tiết kiệm bộ nhớ khi xuất số lượng bản ghi lớn.
   - File tạo ra tương thích 100% với Microsoft Excel, Google Sheets và LibreOffice.
 - **Trạng thái:** ĐÃ DUYỆT (APPROVED).
+
+---
+
+## ADR-007: BỔ SUNG CẤU TRÚC JSON IMPORT CHO 3.321 XÃ/PHƯỜNG
+- **Bối cảnh:** Cần nạp toàn bộ danh mục 34 tỉnh và 3.321 đơn vị hành chính cấp xã sau sắp xếp 2025 vào MongoDB mà không phụ thuộc vào việc phải có sẵn file Excel ngay tại thời điểm khởi tạo dự án.
+- **Quyết định:** Định nghĩa cấu trúc template JSON chuẩn hóa và xây dựng script import tự động `scripts/import-communes.ts`. Trong thời gian chuẩn bị dữ liệu, seed sẵn 34 tỉnh và các xã điểm phục vụ đợt trả lời thử (Pilot).
+- **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
+
+---
+
+## ADR-008: XUẤT HÀNG LOẠT MÃ QR DẠNG GÓI NÉN (.ZIP)
+- **Bối cảnh:** Mỗi tỉnh có một URL và mã QR riêng. Chuyên viên cần tải toàn bộ ảnh mã QR độ phân giải cao để đính kèm vào công văn gửi từng địa phương.
+- **Quyết định:** Cung cấp endpoint API xuất file ZIP nén chứa 34 file ảnh PNG được đặt tên theo định dạng `QR_[MaTinh]_[TenTinh].png`.
+- **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
+
+---
+
+## ADR-009: PHẠM VI ƯU TIÊN HOÀN THIỆN MVP (MILESTONES 1 ĐẾN 5)
+- **Bối cảnh:** Cần bàn giao sớm hệ thống có khả năng vận hành thực tế đợt khảo sát và phân tích báo cáo cốt lõi.
+- **Quyết định:** Ưu tiên dồn nguồn lực hoàn thành trọn vẹn Milestone 1 đến Milestone 5 (Cổng khảo sát di động, 16 nhóm việc, rà soát trùng, 6 bảng B1–B6, thuật toán ẩn danh dưới 5 người, xuất báo cáo Excel và 23 ca kiểm thử).
+- **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).

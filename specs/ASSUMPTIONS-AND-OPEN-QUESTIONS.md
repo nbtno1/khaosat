@@ -24,16 +24,16 @@
 
 ---
 
-## 2. CÁC VẤN ĐỀ MỞ CẦN PHÊ DUYỆT (OPEN QUESTIONS FOR DECISION)
+## 2. CÁC VẤN ĐỀ ĐÃ ĐƯỢC PHÊ DUYỆT (RESOLVED DECISIONS)
 
 ### Vấn đề 1: Danh mục đơn vị hành chính 3.321 Xã/Phường
-- **Câu hỏi:** Bạn đã có sẵn file danh mục Excel chuẩn của 34 tỉnh và 3.321 xã/phường sau sắp xếp hành chính năm 2025 chưa, hay chúng tôi sẽ tạo danh mục hạt giống (seed data) mẫu gồm các tỉnh đại diện và cấu trúc chuẩn để nạp bổ sung sau?
-- **Đề xuất của AI:** Trong giai đoạn khởi tạo, nạp đầy đủ danh mục các tỉnh/thành phố và các xã điểm phục vụ đợt trả lời thử (Pilot) gồm 3-4 xã, đồng thời cung cấp công cụ nạp tự động (import script) từ file Excel khi có danh mục chính thức.
+- **Quyết định:** Người dùng sẽ bổ sung danh mục dưới dạng file JSON chuẩn hóa; hệ thống xây dựng sẵn cấu trúc schema và script import tự động vào MongoDB. Giai đoạn khởi tạo sẽ seed sẵn cấu trúc mẫu và các địa bàn thử nghiệm (Pilot).
+- **Trạng thái:** ĐÃ THỐNG NHẤT (RESOLVED ngày 14/11/2026).
 
-### Vấn đề 2: Xuất hàng loạt Mã QR cho 34 Tỉnh
-- **Câu hỏi:** Phía Trường Đào tạo có nhu cầu xuất gói nén `.zip` chứa toàn bộ ảnh mã QR (dạng `.png` độ phân giải cao kèm tên tỉnh) để tiện chèn vào văn bản gửi địa phương không?
-- **Đề xuất của AI:** Bổ sung tính năng "Tải trọn bộ Mã QR (.zip)" trên màn hình quản lý đợt khảo sát để tiết kiệm thời gian cho chuyên viên Văn phòng Trường.
+### Vấn đề 2: Xuất hàng loạt Mã QR cho 34 Tỉnh (.zip)
+- **Quyết định:** Bổ sung tính năng "Tải trọn bộ Mã QR 34 tỉnh (.zip)" trên màn hình quản lý đợt khảo sát để chuyên viên Văn phòng Trường tiện chèn vào văn bản gửi địa phương.
+- **Trạng thái:** ĐÃ THỐNG NHẤT (RESOLVED ngày 14/11/2026).
 
-### Vấn đề 3: Thời hạn lưu trữ dữ liệu khảo sát
-- **Câu hỏi:** Dữ liệu phản hồi gốc và các bản sao lưu có quy định cụ thể về thời gian lưu trữ tối thiểu (ví dụ: 1 năm hay 5 năm) trước khi chuyển vào kho lưu trữ số (Archived) không?
-- **Đề xuất của AI:** Mặc định lưu trữ dữ liệu trực tuyến trong suốt thời gian mở đợt và 6 tháng sau khi kết thúc báo cáo, sau đó chuyển sang trạng thái nén lưu trữ (Archived) lâu dài mà không xóa bỏ.
+### Vấn đề 3: Phạm vi triển khai ưu tiên
+- **Quyết định:** Tập trung hoàn thiện trọn vẹn phạm vi MVP (từ Milestone 1 đến Milestone 5): Cổng khảo sát di động, 16 nhóm việc động, chống gửi đúp và rà soát trùng, 6 bảng tổng hợp B1–B6, thuật toán ẩn danh dưới 5 người, xuất báo cáo Excel và đáp ứng 23 ca kiểm thử chuẩn.
+- **Trạng thái:** ĐÃ THỐNG NHẤT (RESOLVED ngày 14/11/2026).
