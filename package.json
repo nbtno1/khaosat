@@ -13,6 +13,7 @@
     "test:duplicates": "tsx tests/services/duplicate-detection.test.ts",
     "test:analytics": "tsx tests/services/analytics-tables.test.ts",
     "test:excel": "tsx tests/services/suppression-and-excel.test.ts",
+    "test:auth": "tsx tests/services/auth-and-dashboard.test.ts",
     "db:seed": "tsx scripts/seed.ts",
     "db:import-communes": "tsx scripts/import-communes.ts"
   },

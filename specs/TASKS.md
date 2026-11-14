@@ -216,30 +216,35 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 
 ### TASK-013: Triển khai Xác thực Auth.js v5 & Phân quyền RBAC 5 Nhóm Tài khoản
 - **Module:** Authentication & Security
-- **Spec liên quan:** `specs/05-USER-ROLES-AND-USE-CASES.md`, `specs/07-SYSTEM-ARCHITECTURE.md`
+- **Spec liên quan:** `specs/05-USER-ROLES-AND-USE-CASES.md`, `specs/07-SYSTEM-ARCHITECTURE.md`, `specs/11-SECURITY-SPECIFICATION.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** TASK-002
-- **File dự kiến tạo:** `src/lib/auth.ts`, `src/middleware.ts`, `src/app/api/auth/[...nextauth]/route.ts`, `src/app/(auth)/login/page.tsx`
+- **File đã tạo:** `src/lib/auth.ts`, `src/app/api/auth/login/route.ts`, `src/app/api/auth/logout/route.ts`, `src/app/api/auth/me/route.ts`, `src/app/(auth)/login/page.tsx`, `src/app/(admin)/layout.tsx`, `tests/services/auth-and-dashboard.test.ts`
 - **Các bước thực hiện:**
-  1. Cấu hình NextAuth v5 với Credentials Provider, hash mật khẩu bằng `bcrypt`.
-  2. Cấu hình session JWT lưu trong HTTP-Only Secure Cookie.
-  3. Viết Next.js Middleware chặn truy cập trái quyền theo RBAC matrix.
-- **Acceptance Criteria:** Đăng nhập an toàn, chặn đúng quyền ở cả Client và Server API.
-- **Test Cases:** TC-22.
-- **Trạng thái:** `PLANNED`
+  1. Xây dựng module xác thực an toàn `src/lib/auth.ts` sử dụng JWT HMAC SHA-256 lưu trong HTTP-Only cookie và bcrypt hashing.
+  2. Triển khai đầy đủ ma trận phân quyền RBAC `hasPermission` cho 5 nhóm tài khoản: `TECHNICAL_ADMIN`, `CONTENT_ADMIN`, `REVIEWER`, `PROGRESS_MONITOR`, `LOCAL_COORDINATOR`.
+  3. Xây dựng 3 endpoint API: `/api/auth/login`, `/api/auth/logout`, `/api/auth/me`.
+  4. Thiết kế giao diện Đăng nhập trang trọng, bảo mật tại `/login` với nút chọn nhanh tài khoản kiểm thử.
+  5. Xây dựng Admin Layout với thanh điều hướng theo phân quyền động và menu tài khoản.
+- **Acceptance Criteria:** Đăng nhập an toàn, chặn đúng quyền ở cả Client và Server API, bảo vệ nghiêm ngặt Zero-PII và dữ liệu nội bộ đối với Đầu mối địa phương; 100% test cases đạt.
+- **Test Cases:** TC-22 (PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ### TASK-014: Xây dựng Dashboard Theo dõi Tiến độ & Quản lý Đợt Khảo sát
-- **Module:** Admin UI
-- **Spec liên quan:** `specs/10-UI-UX-SPECIFICATION.md`
+- **Module:** Admin UI / Analytics
+- **Spec liên quan:** `specs/10-UI-UX-SPECIFICATION.md`, `specs/06-BUSINESS-WORKFLOWS.md`
 - **Mức độ ưu tiên:** P1
 - **Phụ thuộc:** TASK-013
-- **File dự kiến tạo:** `src/app/(admin)/admin/dashboard/page.tsx`, `src/app/(admin)/admin/campaigns/page.tsx`, `src/components/admin/ProgressCharts.tsx`, `src/services/campaign-link.service.ts`
+- **File đã tạo:** `src/services/progress-monitoring.service.ts`, `src/app/api/admin/progress/route.ts`, `src/app/api/admin/campaigns/qr-zip/route.ts`, `src/components/admin/ProgressCharts.tsx`, `src/app/(admin)/admin/dashboard/page.tsx`, `src/app/(admin)/admin/campaigns/page.tsx`
 - **Các bước thực hiện:**
-  1. Thiết kế trang Dashboard tổng quan tiến độ: biểu đồ số phiếu theo ngày, tiến độ theo tỉnh.
-  2. Thiết kế trang quản lý đợt khảo sát: tạo chiến dịch, chọn tỉnh, sinh URL và mã QR tự động.
-- **Acceptance Criteria:** Quản lý đợt khảo sát trực quan, theo dõi số liệu tiến độ tức thời.
-- **Test Cases:** TC-13.
-- **Trạng thái:** `PLANNED`
+  1. Xây dựng `ProgressMonitoringService` tổng hợp số phiếu, tỷ lệ hoàn thành theo chỉ tiêu và tiến độ 34 tỉnh.
+  2. Xây dựng các biểu đồ Recharts thời gian thực: Biểu đồ diện tích số phiếu nộp theo ngày (Daily Timeline) và Biểu đồ cột Top địa phương.
+  3. Thiết kế trang Dashboard tại `/admin/dashboard` với 4 thẻ chỉ số KPI và bảng tiến độ 34 tỉnh/thành phố chi tiết kèm tìm kiếm/lọc.
+  4. Thiết kế trang Quản lý Đợt Khảo sát & 34 Mã QR tại `/admin/campaigns` hiển thị thẻ QR trực quan, sao chép link và tải PNG từng tỉnh.
+  5. Xây dựng Route Handler `/api/admin/campaigns/qr-zip` tự động đóng gói file ZIP chứa đủ 34 mã QR PNG độ phân giải cao kèm file hướng dẫn sử dụng (ADR-008).
+- **Acceptance Criteria:** Quản lý đợt khảo sát trực quan, theo dõi số liệu tiến độ tức thời, xuất trọn gói 34 mã QR chuẩn xác; 100% test cases đạt.
+- **Test Cases:** TC-13, TC-14 (PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ---
 

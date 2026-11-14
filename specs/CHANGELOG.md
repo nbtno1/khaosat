@@ -4,6 +4,24 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.6.0-milestone-6] — 2026-11-14
+
+### Đã hoàn thành (Milestone 6 — Dashboard Quản trị, RBAC & Theo dõi Tiến độ)
+- **TASK-013 (Xác thực An toàn & Phân quyền RBAC 5 Nhóm Tài khoản):**
+  - Xây dựng module xác thực an toàn `src/lib/auth.ts` sử dụng JWT HMAC SHA-256 lưu trong HTTP-Only Secure cookie kết hợp bcrypt password hashing.
+  - Triển khai ma trận phân quyền `hasPermission` theo Spec 05, kiểm soát truy cập nghiêm ngặt đối với 5 vai trò: `TECHNICAL_ADMIN`, `CONTENT_ADMIN`, `REVIEWER`, `PROGRESS_MONITOR`, `LOCAL_COORDINATOR` (bảo vệ tuyệt đối Zero-PII, cấm địa phương xem dữ liệu thô và bảng nội bộ).
+  - Xây dựng 3 endpoint API xác thực: `/api/auth/login`, `/api/auth/logout`, `/api/auth/me`.
+  - Thiết kế trang Đăng nhập `/login` chuẩn thương hiệu Kiểm toán nhà nước và Admin Layout `/admin` với thanh điều hướng động.
+- **TASK-014 (Dashboard Tiến độ & Quản lý Đợt Khảo sát / 34 Mã QR):**
+  - Xây dựng `ProgressMonitoringService` (`src/services/progress-monitoring.service.ts`) theo dõi chỉ số toàn quốc và 34 tỉnh.
+  - Tích hợp biểu đồ Recharts diện tích tiến độ theo ngày (Daily Timeline AreaChart) và biểu đồ cột Top địa phương.
+  - Xây dựng Dashboard Quản trị tại `/admin/dashboard` với 4 thẻ KPI và bảng 34 tỉnh chi tiết kèm tìm kiếm/lọc.
+  - Xây dựng trang Quản lý Đợt Khảo sát & 34 Mã QR tại `/admin/campaigns` hiển thị thẻ QR trực quan cho từng tỉnh.
+  - Xây dựng Route Handler `/api/admin/campaigns/qr-zip` tự động đóng gói file ZIP chứa đủ 34 mã QR PNG độ phân giải cao kèm file hướng dẫn sử dụng (ADR-008).
+  - Viết 5/5 test groups PASS (`tests/services/auth-and-dashboard.test.ts`), bao phủ TC-13, TC-14, TC-22.
+
+---
+
 ## [1.5.0-milestone-5] — 2026-11-14
 
 ### Đã hoàn thành (Milestone 5 — Thuật toán Ẩn danh Số liệu & Xuất Báo cáo ExcelJS)
