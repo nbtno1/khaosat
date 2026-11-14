@@ -89,15 +89,39 @@ export const AnalyticsTablesViewer: React.FC = () => {
             {isSuppressed ? (
               <>
                 <EyeOff className="w-4 h-4 text-amber-600" />
-                <span>Quy tắc ẩn (&lt;5 người): BẬT</span>
+                <span>Quy tắc ẩn (&lt;5): BẬT</span>
               </>
             ) : (
               <>
                 <Eye className="w-4 h-4 text-slate-500" />
-                <span>Quy tắc ẩn (&lt;5 người): TẮT</span>
+                <span>Quy tắc ẩn (&lt;5): TẮT</span>
               </>
             )}
           </button>
+
+          {/* Export Excel Buttons */}
+          <div className="relative inline-flex items-center gap-1.5">
+            <a
+              href={`/api/admin/export/excel?mode=INTERNAL${selectedProvince ? `&provinceCode=${selectedProvince}` : ""}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-sm transition-all"
+              title="Xuất trọn bộ 6 Sheet Excel bản số liệu đầy đủ cho Kiểm toán nhà nước"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Xuất Excel (Nội bộ)</span>
+            </a>
+            <a
+              href={`/api/admin/export/excel?mode=LOCAL_CONFIDENTIAL${selectedProvince ? `&provinceCode=${selectedProvince}` : ""}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-emerald-600 text-emerald-800 hover:bg-emerald-50 text-xs font-bold shadow-sm transition-all"
+              title="Xuất trọn bộ 6 Sheet Excel đã áp dụng quy tắc ẩn danh số liệu nhỏ <5 người cho địa phương"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Xuất Excel (Địa phương)</span>
+            </a>
+          </div>
 
           <button
             type="button"

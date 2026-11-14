@@ -4,6 +4,25 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.5.0-milestone-5] — 2026-11-14
+
+### Đã hoàn thành (Milestone 5 — Thuật toán Ẩn danh Số liệu & Xuất Báo cáo ExcelJS)
+- **TASK-011 (Statistical Disclosure Limitation Engine):**
+  - Xây dựng `StatisticalDisclosureService` (`src/services/statistical-disclosure.service.ts`) theo đúng chuẩn Phần IV Tài liệu số 2 và Spec 11/Spec 12.
+  - Triển khai Primary Suppression: chuyển đổi các ô có giá trị đếm $1 \le n < 5$ thành `"dưới 5 - không công bố"`, giữ nguyên $0$ và các giá trị $\ge 5$.
+  - Triển khai Row Suppression: làm mờ toàn bộ dòng nếu mẫu số $N < 5$ (được áp dụng triệt để cho Bảng B2 và Bảng B3).
+  - Triển khai Secondary Suppression: tự động tìm và làm mờ ô nhỏ nhất khác 0 kế tiếp khi trong một hàng/cột có Tổng chỉ có duy nhất 1 ô bị làm mờ sơ cấp, triệt tiêu hoàn toàn nguy cơ suy đoán danh tính.
+  - Hỗ trợ phương thức `suppressAll` áp dụng đồng bộ cho cả 6 bảng B1 - B6.
+- **TASK-012 (ExcelJS Multi-Sheet Export Service & API):**
+  - Xây dựng `ExcelExportService` (`src/services/excel-export.service.ts`) tạo workbook 6 worksheet (`B1_NguoiTraLoi`, `B2_NhomCongViec`, `B3_KhoangThieuHut`, `B4_NoiDungCanHoc`, `B5_KhoKho`, `B6_HinhThucHoc`) chuẩn format kiểm toán nhà nước.
+  - Áp dụng banner tiêu đề trang trọng (Navy `#1E3A8A`, chữ in hoa, in đậm, auto-fit cột, border xám, định dạng số nguyên `#,##0` và tỷ lệ `0.0%`).
+  - Hỗ trợ 2 chế độ xuất: `INTERNAL` (số liệu thực tế đầy đủ) và `LOCAL_CONFIDENTIAL` (áp dụng toàn diện bộ quy tắc ẩn danh số liệu nhỏ < 5).
+  - Xây dựng Route Handler `GET /api/admin/export/excel` stream trực tiếp binary file `.xlsx` về trình duyệt.
+  - Tích hợp 2 nút xuất báo cáo 1-click (Bản Nội bộ và Bản Địa phương) trên giao diện Analytics Explorer.
+  - Viết 5/5 test groups PASS (`tests/services/suppression-and-excel.test.ts`), bao phủ TC-19, TC-20, TC-21, TC-23.
+
+---
+
 ## [1.4.0-milestone-4] — 2026-11-14
 
 ### Đã hoàn thành (Milestone 4 — Analytics Aggregation Engine & 6 Bảng Tổng hợp)

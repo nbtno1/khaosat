@@ -183,29 +183,32 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 - **Spec liên quan:** `specs/11-SECURITY-SPECIFICATION.md`, `specs/12-VALIDATION-AND-BUSINESS-RULES.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** TASK-009
-- **File dự kiến tạo:** `src/services/statistical-disclosure.service.ts`, `src/lib/suppression-engine.ts`
+- **File đã tạo:** `src/services/statistical-disclosure.service.ts`, `tests/services/suppression-and-excel.test.ts`
 - **Các bước thực hiện:**
-  1. Viết hàm Primary Suppression: chuyển đổi các ô đếm $1 \le n \le 4$ thành `"dưới 5 - không công bố"`.
-  2. Viết hàm Row Suppression: ẩn cả dòng nếu mẫu số $\in [1, 4]$.
-  3. Viết hàm Secondary Suppression: tự động tìm và ẩn ô nhỏ nhất kế tiếp trong hàng/cột có Tổng.
-- **Acceptance Criteria:** Bảo đảm 100% dữ liệu xuất ra cho địa phương không thể bị suy đoán danh tính.
-- **Test Cases:** TC-19, TC-20, TC-21.
-- **Trạng thái:** `PLANNED`
+  1. Viết hàm Primary Suppression `maskCell`: chuyển đổi các ô đếm $1 \le n < 5$ thành `"dưới 5 - không công bố"`, giữ nguyên $0$ và $\ge 5$.
+  2. Viết hàm Row Suppression: ẩn cả dòng nếu mẫu số $N \in [1, 4]$ (áp dụng cho Bảng B2 và B3).
+  3. Viết hàm Secondary Suppression `applySecondarySuppression`: tự động tìm và ẩn ô nhỏ nhất kế tiếp khác 0 trong hàng/cột có Tổng khi chỉ có 1 ô bị ẩn sơ cấp.
+  4. Viết hàm `suppressAll` áp dụng đồng bộ cho cả 6 bảng B1 - B6.
+- **Acceptance Criteria:** Bảo đảm 100% dữ liệu xuất ra cho địa phương không thể bị suy đoán danh tính; 100% test cases đạt.
+- **Test Cases:** TC-19, TC-20, TC-21 (PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ### TASK-012: Xây dựng Pipeline Xuất Báo cáo Excel Đa sheet (ExcelJS Export)
 - **Module:** Export Pipeline
 - **Spec liên quan:** `specs/09-API-SPECIFICATION.md`, `specs/02-BUSINESS-REQUIREMENTS.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** TASK-009, TASK-011
-- **File dự kiến tạo:** `src/services/excel-export.service.ts`, `src/app/api/admin/export/excel/route.ts`
+- **File đã tạo:** `src/services/excel-export.service.ts`, `src/app/api/admin/export/excel/route.ts`, `src/components/admin/AnalyticsTablesViewer.tsx`
 - **Các bước thực hiện:**
-  1. Cài đặt `exceljs`.
-  2. Xây dựng template generator tạo 6 sheets tương ứng B1 - B6 (+ sheet dữ liệu gốc cho bản nội bộ).
-  3. Định dạng borders, font chữ tiếng Việt, in đậm tiêu đề và số phiên bản 3.3.
-  4. Tạo Route Handler stream tải file Excel về trình duyệt.
-- **Acceptance Criteria:** Tải file Excel chuẩn xác, mở được trên MS Excel và Google Sheets không bị lỗi font.
-- **Test Cases:** TC-23.
-- **Trạng thái:** `PLANNED`
+  1. Sử dụng thư viện `exceljs` xây dựng class `ExcelExportService`.
+  2. Xây dựng generator tạo 6 sheets tương ứng B1 - B6 chuẩn định dạng kiểm toán nhà nước.
+  3. Định dạng banner tiêu đề trang trọng, border, font chữ tiếng Việt, in đậm, auto-fit cột.
+  4. Hỗ trợ 2 chế độ: `INTERNAL` (số liệu thực đầy đủ) và `LOCAL_CONFIDENTIAL` (ẩn số liệu nhỏ < 5).
+  5. Tạo Route Handler `GET /api/admin/export/excel` stream binary file `.xlsx` về trình duyệt.
+  6. Tích hợp nút xuất Excel trực tiếp trên giao diện Analytics Explorer.
+- **Acceptance Criteria:** Tải file Excel chuẩn xác, mở được trên MS Excel và Google Sheets không bị lỗi font; 100% test cases đạt.
+- **Test Cases:** TC-23 (PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ---
 
