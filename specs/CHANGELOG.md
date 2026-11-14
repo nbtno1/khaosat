@@ -4,6 +4,26 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.3.0-milestone-3] — 2026-11-14
+
+### Đã hoàn thành (Milestone 3 — Kiểm soát Gửi đúp & Trung tâm Rà soát Nghi trùng)
+- **TASK-007 (Duplicate Detection Service & APIs):**
+  - Xây dựng `DuplicateDetectionService` (`src/services/duplicate-detection.service.ts`) gom nhóm phiếu nghi trùng theo `businessHash` SHA-256.
+  - Xây dựng 3 endpoint API phục vụ thẩm tra:
+    - `GET /api/admin/reviews/duplicates`: Truy vấn nhóm nghi trùng và chỉ số thống kê tổng quan.
+    - `PATCH /api/admin/reviews/duplicates/[id]/decision`: Cập nhật trạng thái phiếu (`VALID` hoặc `EXCLUDED`) kèm lý do thẩm tra.
+    - `POST /api/admin/reviews/duplicates/resolve-group`: Giải quyết nhanh cả nhóm (giữ phiếu nộp sau, loại các phiếu nộp trước).
+  - Tích hợp ghi nhật ký hệ thống `AuditLog` lưu vết mọi quyết định thẩm tra.
+  - Viết 8/8 unit & integration tests PASS (`tests/services/duplicate-detection.test.ts`), bao phủ AC-06 và AC-07.
+- **TASK-008 (Giao diện Trung tâm Rà soát Nghi trùng - Workbench):**
+  - Xây dựng giao diện `DuplicateReviewWorkbench` tại `/admin/reviews/duplicates`.
+  - Hiển thị 4 thẻ chỉ số thời gian thực: Tổng nghi trùng, Đang chờ duyệt, Đã chấp nhận, Đã loại bỏ.
+  - Cung cấp bộ lọc trạng thái và tìm kiếm nhanh theo địa bàn.
+  - Cung cấp Accordion và Side-by-side Diff View so sánh song song giữa các phiếu trong cùng nhóm trùng (thời điểm nộp, phần III, phần IV).
+  - Tích hợp nút xử lý nhanh 1-click và modal xác nhận loại trừ phiếu kèm nhập lý do.
+
+---
+
 ## [1.2.0-milestone-2] — 2026-11-14
 
 ### Đã hoàn thành (Milestone 2 — Cổng Khảo sát & Dynamic Survey Engine - Cốt lõi MVP)

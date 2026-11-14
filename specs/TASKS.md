@@ -113,27 +113,31 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 - **Spec liên quan:** `specs/06-BUSINESS-WORKFLOWS.md`, `specs/08-DATABASE-DESIGN.md`
 - **Mức độ ưu tiên:** P1
 - **Phụ thuộc:** TASK-005
-- **File dự kiến tạo:** `src/services/duplicate-detection.service.ts`
+- **File đã tạo:** `src/services/duplicate-detection.service.ts`, `src/app/api/admin/reviews/duplicates/route.ts`, `src/app/api/admin/reviews/duplicates/[id]/decision/route.ts`, `src/app/api/admin/reviews/duplicates/resolve-group/route.ts`, `tests/services/duplicate-detection.test.ts`
 - **Các bước thực hiện:**
-  1. Viết hàm tính toán `businessHash` SHA-256 từ `communeCode + agencyCode + positionCode + 16_statuses`.
-  2. Tích hợp kiểm tra tự động khi nhận phản hồi mới: nếu trùng mã băm trong cùng đợt → gắn cờ `isSuspectedDuplicate = true`.
-- **Acceptance Criteria:** Nhận diện chính xác phiếu nghi trùng mà không cần thông tin PII.
-- **Test Cases:** TC-15.
-- **Trạng thái:** `PLANNED`
+  1. Xây dựng class `DuplicateDetectionService` gom nhóm các phản hồi nghi trùng theo `businessHash`.
+  2. Viết phương thức `getDuplicateGroups` hỗ trợ lọc theo đợt khảo sát, tỉnh, và trạng thái thẩm tra.
+  3. Viết phương thức `makeDecision` ra quyết định (`VALID` hoặc `EXCLUDED`) kèm lý do thẩm tra và ghi log vào `AuditLog`.
+  4. Viết phương thức `resolveGroup` xử lý nhanh cả nhóm (giữ 1 phiếu hợp lệ, loại trừ các phiếu trùng còn lại).
+  5. Viết các API Route Handlers: `GET /api/admin/reviews/duplicates`, `PATCH .../[id]/decision`, `POST .../resolve-group`.
+- **Acceptance Criteria:** Phát hiện chuẩn xác 100% các phiếu nghi trùng cùng xã, cơ quan, vị trí và 16 lựa chọn; cho phép thẩm tra viên phê duyệt hoặc loại trừ kèm lý do; 8/8 tests đạt.
+- **Test Cases:** TC-15, TC-16 (AC-06, AC-07 PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ### TASK-008: Xây dựng Giao diện Duplicate Review Workbench
 - **Module:** Admin UI / Backend API
 - **Spec liên quan:** `specs/09-API-SPECIFICATION.md`, `specs/10-UI-UX-SPECIFICATION.md`
 - **Mức độ ưu tiên:** P1
 - **Phụ thuộc:** TASK-007
-- **File dự kiến tạo:** `src/app/api/admin/reviews/duplicates/route.ts`, `src/app/api/admin/reviews/duplicates/[id]/decision/route.ts`, `src/app/(admin)/admin/reviews/page.tsx`, `src/components/admin/reviews/DuplicateDiffView.tsx`
+- **File đã tạo:** `src/components/admin/DuplicateReviewWorkbench.tsx`, `src/app/(admin)/admin/reviews/duplicates/page.tsx`
 - **Các bước thực hiện:**
-  1. Viết APIs lấy danh sách phiếu nghi trùng theo nhóm và cập nhật quyết định thẩm tra.
-  2. Thiết kế giao diện Accordion so sánh song song (Diff View) giữa các phiếu trong nhóm trùng.
-  3. Cung cấp hộp thoại phê duyệt Tính (`VALID`) hoặc Loại trừ (`EXCLUDED`) kèm nhập lý do.
-- **Acceptance Criteria:** Chuyên viên thao tác rà soát thuận tiện; phiếu loại trừ được loại khỏi kết quả tính toán.
-- **Test Cases:** TC-16.
-- **Trạng thái:** `PLANNED`
+  1. Xây dựng 4 thẻ chỉ số thống kê thời gian thực: Tổng nghi trùng, Đang chờ duyệt, Đã chấp nhận (Tính), Đã loại trừ.
+  2. Xây dựng thanh công cụ lọc theo trạng thái thẩm tra (`ALL`, `PENDING_REVIEW`, `VALID`, `EXCLUDED`) và ô tìm kiếm nhanh địa bàn.
+  3. Xây dựng giao diện Accordion danh sách nhóm nghi trùng và Side-by-side Diff View so sánh chi tiết thời điểm nộp, Phần III (mức tự đánh giá, khó khăn, chuyên đề học) và Phần IV (hình thức học, ý kiến).
+  4. Tích hợp nút hành động: "Chấp nhận (Tính)", "Loại trừ phiếu" (kèm Modal nhập lý do thẩm tra), và "Xử lý nhanh" (giữ phiếu nộp sau, loại phiếu nộp trước).
+- **Acceptance Criteria:** Giao diện so sánh trực quan, cập nhật trạng thái ngay lập tức trên UI và cơ sở dữ liệu.
+- **Test Cases:** TC-16, TC-17.
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ---
 
