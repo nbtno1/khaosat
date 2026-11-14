@@ -3,14 +3,16 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface ICommune extends Document {
   communeCode: string; // e.g. "00004", unique
   name: string; // e.g. "Phường Ba Đình"
-  type: string; // "Phường" | "Xã" | "Thị trấn"
+  type: string; // "Phường" | "Xã" | "Thị trấn" | "Đặc khu"
   provinceCode: string; // e.g. "01"
   provinceName: string; // e.g. "Thành phố Hà Nội"
+  districtName?: string;
   postalCode?: string; // e.g. "11120"
   areaKm2?: number; // e.g. 2.97
   population?: number; // e.g. 65023
   resolution?: string; // e.g. "Nghị quyết số 1656/NQ-UBTVQH15"
   url?: string;
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,11 +24,13 @@ const CommuneSchema = new Schema<ICommune>(
     type: { type: String, default: "Xã" },
     provinceCode: { type: String, required: true, trim: true },
     provinceName: { type: String, required: true, trim: true },
+    districtName: { type: String },
     postalCode: { type: String },
     areaKm2: { type: Number },
     population: { type: Number },
     resolution: { type: String },
     url: { type: String },
+    isActive: { type: Boolean, default: true },
   },
   {
     timestamps: true,

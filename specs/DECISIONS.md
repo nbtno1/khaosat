@@ -73,6 +73,18 @@
 
 ---
 
+## ADR-011: QUẢN LÝ VÀ CẤU HÌNH DANH MỤC ĐƠN VỊ HÀNH CHÍNH 2 CẤP (ADMINISTRATIVE UNITS CATALOGUE MANAGEMENT)
+- **Bối cảnh:** Hệ thống cần mở rộng khả năng quản trị, cấu hình, thêm/sửa/xóa và bật/tắt các đơn vị hành chính (34 tỉnh/thành và 3.321 xã/phường/đặc khu) khi có thay đổi địa giới theo Nghị quyết mới của Ủy ban Thường vụ Quốc hội. Cần cơ chế lưu trữ bền vững, đồng bộ 1-click từ dữ liệu gốc chuẩn CC BY 4.0 và xuất báo cáo Excel/JSON.
+- **Quyết định:**
+  1. **Mô hình 2 cấp (Bỏ cấp huyện):** Liên kết trực tiếp giữa `Province` và `Commune` qua `communes.provinceCode = provinces.provinceCode`. Mã tỉnh giữ nguyên dạng chuỗi 2 chữ số (`01`, `19`, `79`), mã xã dạng chuỗi 5 chữ số duy nhất (`00004`, `05977`) nhằm bảo tồn các số `0` ở đầu.
+  2. **Dịch vụ Quản trị Tập trung (`AdministrativeUnitsService`):** Đảm nhiệm toàn bộ logic CRUD, tính toán thời gian thực số lượng xã của tỉnh, phân trang và tìm kiếm.
+  3. **Cơ chế Dual-Mode (Database & Offline Fallback):** Khi MongoDB kết nối, dữ liệu đọc/ghi trực tiếp vào DB collections. Khi chạy offline hoặc demo, dịch vụ tự động đọc từ kho dữ liệu chuẩn `real-provinces.json` và `real-communes.json` kết hợp in-memory delta cache.
+  4. **Bảo mật & Phân quyền RBAC:** Chỉ `TECHNICAL_ADMIN` và `CONTENT_ADMIN` mới có quyền thực hiện các thao tác ghi (thêm, sửa, xóa, đồng bộ).
+  5. **Tích hợp Xuất Excel & Cẩm nang Động:** Hỗ trợ xuất dữ liệu 2 sheet bằng ExcelJS và tự động đăng ký vào `SystemGuideService` như module chức năng thứ 7.
+- **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
+
+---
+
 ## ADR-008: XUẤT HÀNG LOẠT MÃ QR DẠNG GÓI NÉN (.ZIP)
 - **Bối cảnh:** Mỗi tỉnh có một URL và mã QR riêng. Chuyên viên cần tải toàn bộ ảnh mã QR độ phân giải cao để đính kèm vào công văn gửi từng địa phương.
 - **Quyết định:** Cung cấp endpoint API xuất file ZIP nén chứa 34 file ảnh PNG được đặt tên theo định dạng `QR_[MaTinh]_[TenTinh].png`.
@@ -80,9 +92,33 @@
 
 ---
 
+## ADR-011: QUẢN LÝ VÀ CẤU HÌNH DANH MỤC ĐƠN VỊ HÀNH CHÍNH 2 CẤP (ADMINISTRATIVE UNITS CATALOGUE MANAGEMENT)
+- **Bối cảnh:** Hệ thống cần mở rộng khả năng quản trị, cấu hình, thêm/sửa/xóa và bật/tắt các đơn vị hành chính (34 tỉnh/thành và 3.321 xã/phường/đặc khu) khi có thay đổi địa giới theo Nghị quyết mới của Ủy ban Thường vụ Quốc hội. Cần cơ chế lưu trữ bền vững, đồng bộ 1-click từ dữ liệu gốc chuẩn CC BY 4.0 và xuất báo cáo Excel/JSON.
+- **Quyết định:**
+  1. **Mô hình 2 cấp (Bỏ cấp huyện):** Liên kết trực tiếp giữa `Province` và `Commune` qua `communes.provinceCode = provinces.provinceCode`. Mã tỉnh giữ nguyên dạng chuỗi 2 chữ số (`01`, `19`, `79`), mã xã dạng chuỗi 5 chữ số duy nhất (`00004`, `05977`) nhằm bảo tồn các số `0` ở đầu.
+  2. **Dịch vụ Quản trị Tập trung (`AdministrativeUnitsService`):** Đảm nhiệm toàn bộ logic CRUD, tính toán thời gian thực số lượng xã của tỉnh, phân trang và tìm kiếm.
+  3. **Cơ chế Dual-Mode (Database & Offline Fallback):** Khi MongoDB kết nối, dữ liệu đọc/ghi trực tiếp vào DB collections. Khi chạy offline hoặc demo, dịch vụ tự động đọc từ kho dữ liệu chuẩn `real-provinces.json` và `real-communes.json` kết hợp in-memory delta cache.
+  4. **Bảo mật & Phân quyền RBAC:** Chỉ `TECHNICAL_ADMIN` và `CONTENT_ADMIN` mới có quyền thực hiện các thao tác ghi (thêm, sửa, xóa, đồng bộ).
+  5. **Tích hợp Xuất Excel & Cẩm nang Động:** Hỗ trợ xuất dữ liệu 2 sheet bằng ExcelJS và tự động đăng ký vào `SystemGuideService` như module chức năng thứ 7.
+- **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
+
+---
+
 ## ADR-009: PHẠM VI ƯU TIÊN HOÀN THIỆN MVP (MILESTONES 1 ĐẾN 5)
 - **Bối cảnh:** Cần bàn giao sớm hệ thống có khả năng vận hành thực tế đợt khảo sát và phân tích báo cáo cốt lõi.
 - **Quyết định:** Ưu tiên dồn nguồn lực hoàn thành trọn vẹn Milestone 1 đến Milestone 5 (Cổng khảo sát di động, 16 nhóm việc, rà soát trùng, 6 bảng B1–B6, thuật toán ẩn danh dưới 5 người, xuất báo cáo Excel và 23 ca kiểm thử).
+- **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
+
+---
+
+## ADR-011: QUẢN LÝ VÀ CẤU HÌNH DANH MỤC ĐƠN VỊ HÀNH CHÍNH 2 CẤP (ADMINISTRATIVE UNITS CATALOGUE MANAGEMENT)
+- **Bối cảnh:** Hệ thống cần mở rộng khả năng quản trị, cấu hình, thêm/sửa/xóa và bật/tắt các đơn vị hành chính (34 tỉnh/thành và 3.321 xã/phường/đặc khu) khi có thay đổi địa giới theo Nghị quyết mới của Ủy ban Thường vụ Quốc hội. Cần cơ chế lưu trữ bền vững, đồng bộ 1-click từ dữ liệu gốc chuẩn CC BY 4.0 và xuất báo cáo Excel/JSON.
+- **Quyết định:**
+  1. **Mô hình 2 cấp (Bỏ cấp huyện):** Liên kết trực tiếp giữa `Province` và `Commune` qua `communes.provinceCode = provinces.provinceCode`. Mã tỉnh giữ nguyên dạng chuỗi 2 chữ số (`01`, `19`, `79`), mã xã dạng chuỗi 5 chữ số duy nhất (`00004`, `05977`) nhằm bảo tồn các số `0` ở đầu.
+  2. **Dịch vụ Quản trị Tập trung (`AdministrativeUnitsService`):** Đảm nhiệm toàn bộ logic CRUD, tính toán thời gian thực số lượng xã của tỉnh, phân trang và tìm kiếm.
+  3. **Cơ chế Dual-Mode (Database & Offline Fallback):** Khi MongoDB kết nối, dữ liệu đọc/ghi trực tiếp vào DB collections. Khi chạy offline hoặc demo, dịch vụ tự động đọc từ kho dữ liệu chuẩn `real-provinces.json` và `real-communes.json` kết hợp in-memory delta cache.
+  4. **Bảo mật & Phân quyền RBAC:** Chỉ `TECHNICAL_ADMIN` và `CONTENT_ADMIN` mới có quyền thực hiện các thao tác ghi (thêm, sửa, xóa, đồng bộ).
+  5. **Tích hợp Xuất Excel & Cẩm nang Động:** Hỗ trợ xuất dữ liệu 2 sheet bằng ExcelJS và tự động đăng ký vào `SystemGuideService` như module chức năng thứ 7.
 - **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
 
 ---
@@ -98,5 +134,17 @@
   - Cẩm nang luôn phản ánh chính xác 100% hiện trạng phần mềm và dữ liệu khảo sát, tự động cập nhật khi cấu hình thay đổi mà không cần build lại ứng dụng.
   - Ban chỉ đạo có thể bổ sung hướng dẫn tác nghiệp nóng ngay trên giao diện web.
   - Bảo đảm tính đồng bộ cao nhất giữa đặc tả kỹ thuật, mã nguồn và cẩm nang người dùng.
+- **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
+
+---
+
+## ADR-011: QUẢN LÝ VÀ CẤU HÌNH DANH MỤC ĐƠN VỊ HÀNH CHÍNH 2 CẤP (ADMINISTRATIVE UNITS CATALOGUE MANAGEMENT)
+- **Bối cảnh:** Hệ thống cần mở rộng khả năng quản trị, cấu hình, thêm/sửa/xóa và bật/tắt các đơn vị hành chính (34 tỉnh/thành và 3.321 xã/phường/đặc khu) khi có thay đổi địa giới theo Nghị quyết mới của Ủy ban Thường vụ Quốc hội. Cần cơ chế lưu trữ bền vững, đồng bộ 1-click từ dữ liệu gốc chuẩn CC BY 4.0 và xuất báo cáo Excel/JSON.
+- **Quyết định:**
+  1. **Mô hình 2 cấp (Bỏ cấp huyện):** Liên kết trực tiếp giữa `Province` và `Commune` qua `communes.provinceCode = provinces.provinceCode`. Mã tỉnh giữ nguyên dạng chuỗi 2 chữ số (`01`, `19`, `79`), mã xã dạng chuỗi 5 chữ số duy nhất (`00004`, `05977`) nhằm bảo tồn các số `0` ở đầu.
+  2. **Dịch vụ Quản trị Tập trung (`AdministrativeUnitsService`):** Đảm nhiệm toàn bộ logic CRUD, tính toán thời gian thực số lượng xã của tỉnh, phân trang và tìm kiếm.
+  3. **Cơ chế Dual-Mode (Database & Offline Fallback):** Khi MongoDB kết nối, dữ liệu đọc/ghi trực tiếp vào DB collections. Khi chạy offline hoặc demo, dịch vụ tự động đọc từ kho dữ liệu chuẩn `real-provinces.json` và `real-communes.json` kết hợp in-memory delta cache.
+  4. **Bảo mật & Phân quyền RBAC:** Chỉ `TECHNICAL_ADMIN` và `CONTENT_ADMIN` mới có quyền thực hiện các thao tác ghi (thêm, sửa, xóa, đồng bộ).
+  5. **Tích hợp Xuất Excel & Cẩm nang Động:** Hỗ trợ xuất dữ liệu 2 sheet bằng ExcelJS và tự động đăng ký vào `SystemGuideService` như module chức năng thứ 7.
 - **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
 

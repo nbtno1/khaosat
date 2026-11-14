@@ -17,6 +17,7 @@ import {
   ExternalLink,
   BookOpen,
   Sparkles,
+  MapPin,
 } from "lucide-react";
 import { AppLogo } from "@/components/common/AppLogo";
 
@@ -104,6 +105,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       icon: Layers,
       description: "Bảng B1-B6, Khoảng thiếu hụt & Excel",
       roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
+    },
+    {
+      label: "Danh mục Tỉnh, Xã/Phường",
+      href: "/admin/administrative-units",
+      icon: MapPin,
+      description: "Cấu hình 34 tỉnh & 3.321 xã/phường",
+      roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR"],
     },
     {
       label: "Hướng dẫn sử dụng",

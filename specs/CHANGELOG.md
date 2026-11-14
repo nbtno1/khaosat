@@ -4,6 +4,36 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.10.0] — 2026-11-14
+
+### Phân hệ Cấu hình Danh mục Đơn vị Hành chính (Administrative Units Management - 34 Tỉnh & 3.321 Xã/Phường & ADR-011)
+- **TASK-018 (Xây dựng Dịch vụ & Giao diện Cấu hình Danh mục Đơn vị Hành chính 2 cấp):**
+  - Xây dựng dịch vụ `AdministrativeUnitsService` (`src/services/administrative-units.service.ts`) quản trị toàn diện danh mục 34 tỉnh/thành phố và 3.321 xã/phường/đặc khu (709 Phường, 2.599 Xã, 13 Đặc khu) hiệu lực năm 2026.
+  - Cung cấp các thao tác thống kê tổng quan, tìm kiếm, lọc theo loại, lọc theo trạng thái hoạt động; hỗ trợ thêm mới, chỉnh sửa, xóa/tạm dừng tỉnh/xã, tự động tính lại số lượng xã của tỉnh liên quan; cơ chế đồng bộ hóa 1-click từ dữ liệu gốc chuẩn CC BY 4.0 (`real-provinces.json` và `real-communes.json`); tích hợp bộ nhớ đệm offline fallback an toàn khi MongoDB chưa khởi chạy.
+  - Xây dựng bộ Zod Schemas (`src/lib/validations/administrative-units.schema.ts`) chuẩn hóa và kiểm tra nghiêm ngặt: mã tỉnh gồm đúng 2 chữ số (giữ số 0 đầu), mã xã gồm đúng 5 chữ số duy nhất toàn quốc.
+  - Xây dựng 7 Route Handlers API Quản trị:
+    - `GET /api/admin/administrative-units/stats`: Báo cáo thống kê tổng quan 34 tỉnh và 3.321 xã/phường/đặc khu.
+    - `GET /api/admin/administrative-units/provinces`: Tìm kiếm, lọc và phân loại danh sách tỉnh.
+    - `POST /api/admin/administrative-units/provinces`: Thêm mới hoặc hiệu chỉnh tỉnh/thành (kiểm tra phân quyền RBAC `TECHNICAL_ADMIN`, `CONTENT_ADMIN`).
+    - `PATCH /api/admin/administrative-units/provinces/[code]/status`: Bật/tắt trạng thái hoạt động của tỉnh.
+    - `GET /api/admin/administrative-units/communes`: Lọc xã theo tỉnh, tìm kiếm từ khóa, phân loại và phân trang.
+    - `POST /api/admin/administrative-units/communes`: Thêm mới hoặc hiệu chỉnh xã/phường (kiểm tra phân quyền RBAC).
+    - `DELETE /api/admin/administrative-units/communes/[code]`: Xóa xã/phường (kiểm tra phân quyền RBAC).
+    - `PATCH /api/admin/administrative-units/communes/[code]`: Bật/tắt trạng thái hoạt động của xã.
+    - `POST /api/admin/administrative-units/sync`: Kích hoạt đồng bộ hóa danh mục gốc vào MongoDB.
+    - `GET /api/admin/administrative-units/export`: Xuất dữ liệu danh mục ra file Excel `.xlsx` gồm 2 sheet chuyên nghiệp định dạng kiểm toán.
+  - Xây dựng Giao diện Quản trị Cấu hình ĐVHC tại `/admin/administrative-units`:
+    - 4 Thẻ chỉ số tổng quan (34 tỉnh, 3.321 xã, cơ cấu phân loại, căn cứ pháp lý hiệu lực 2026).
+    - Thanh tác vụ: Đồng bộ nguồn, Xuất Excel, Thêm tỉnh, Thêm xã.
+    - Bảng Tab 1: Danh mục 34 Tỉnh / Thành phố kèm nút xem nhanh danh sách xã theo tỉnh.
+    - Bảng Tab 2: Danh mục Xã / Phường / Đặc khu với bộ lọc tỉnh, từ khóa, loại hình và phân trang.
+    - Modals thêm/sửa Tỉnh và Xã/phường với đầy đủ xác thực client & server.
+  - Cập nhật Sidebar Admin Layout bổ sung mục "Danh mục Tỉnh, Xã/Phường" (`/admin/administrative-units`).
+  - Đăng ký tự động vào Phân hệ Hướng dẫn Sử dụng Động `SystemGuideService` như module chức năng thứ 7.
+  - Viết bộ kiểm thử tự động `tests/services/administrative-units.test.ts` đạt **5/5 tests PASS (100%)**.
+
+---
+
 ## [1.9.0] — 2026-11-14
 
 ### Dữ liệu Hành chính Thực tế (Real Administrative Units — 34 Tỉnh & 3.321 Xã/Phường)

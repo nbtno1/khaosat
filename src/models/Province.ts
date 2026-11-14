@@ -8,6 +8,8 @@ export interface IProvince extends Document {
   communeCount: number; // e.g. 126
   url?: string;
   targetRespondents: number;
+  region?: string; // "Miền Bắc" | "Miền Trung" | "Miền Nam"
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,6 +23,8 @@ const ProvinceSchema = new Schema<IProvince>(
     communeCount: { type: Number, default: 0 },
     url: { type: String },
     targetRespondents: { type: Number, default: 100 },
+    region: { type: String },
+    isActive: { type: Boolean, default: true },
   },
   {
     timestamps: true,

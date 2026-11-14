@@ -254,6 +254,45 @@ export class SystemGuideService {
         ],
         apiEndpoints: ["GET /api/admin/export/excel?mode=INTERNAL", "GET /api/admin/export/excel?mode=LOCAL_CONFIDENTIAL"],
       },
+      {
+        id: "administrative_units",
+        name: "Cấu hình Danh mục Đơn vị Hành chính (34 Tỉnh & 3.321 Xã/Phường)",
+        route: "/admin/administrative-units",
+        icon: "MapPin",
+        description:
+          "Quản lý, tìm kiếm, hiệu chỉnh và đồng bộ danh mục 34 tỉnh/thành phố và 3.321 xã/phường/đặc khu trên toàn quốc theo dữ liệu chuẩn hiệu lực 2026.",
+        allowedRoles: [
+          ROLE_LABELS.TECHNICAL_ADMIN,
+          ROLE_LABELS.CONTENT_ADMIN,
+          ROLE_LABELS.REVIEWER,
+          ROLE_LABELS.PROGRESS_MONITOR,
+        ],
+        keyCapabilities: [
+          "Xem và tìm kiếm danh mục 34 Tỉnh / Thành phố với số lượng xã/phường và chỉ tiêu khảo sát thực tế",
+          "Duyệt danh sách 3.321 Xã / Phường / Đặc khu theo từng tỉnh, phân loại Phường (709), Xã (2.599), Đặc khu (13)",
+          "Thêm mới hoặc hiệu chỉnh Tỉnh / Xã khi có sắp xếp địa giới hành chính theo Nghị quyết mới",
+          "Kích hoạt hoặc tạm dừng (bật/tắt) đơn vị hành chính trong chiến dịch khảo sát",
+          "Đồng bộ hóa 1-click từ dữ liệu nguồn chuẩn CC BY 4.0 (diachiviet.com / Cục Thống kê)",
+          "Xuất dữ liệu danh mục ra file Excel (.xlsx) 2 sheet phục vụ kiểm toán và lưu trữ",
+        ],
+        operationalRules: [
+          "Mã tỉnh gồm đúng 2 chữ số (giữ nguyên số 0 đầu, ví dụ '01', '04', '79').",
+          "Mã xã gồm đúng 5 chữ số duy nhất trên toàn quốc (ví dụ '00004', '05977').",
+          "Khi thêm hoặc xóa xã, số lượng xã của tỉnh liên quan sẽ được tự động cập nhật.",
+          "Chỉ Quản trị viên Kỹ thuật và Quản trị Nội dung mới có quyền thêm, sửa, xóa hoặc kích hoạt đồng bộ.",
+        ],
+        apiEndpoints: [
+          "GET /api/admin/administrative-units/stats",
+          "GET /api/admin/administrative-units/provinces",
+          "POST /api/admin/administrative-units/provinces",
+          "PATCH /api/admin/administrative-units/provinces/[code]/status",
+          "GET /api/admin/administrative-units/communes",
+          "POST /api/admin/administrative-units/communes",
+          "DELETE /api/admin/administrative-units/communes/[code]",
+          "POST /api/admin/administrative-units/sync",
+          "GET /api/admin/administrative-units/export",
+        ],
+      },
     ];
 
     return {

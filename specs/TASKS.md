@@ -314,3 +314,38 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 - **Acceptance Criteria:** Hướng dẫn cập nhật động 100% theo các module phần mềm và cấu hình DB, hỗ trợ chỉnh sửa ghi chú, in PDF, 5/5 test cases đạt, 23/23 routes build thành công.
 - **Test Cases:** Task 17 Dynamic Guide Module Tests (5/5 PASS).
 - **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
+
+---
+
+## MILESTONE 9 / MỞ RỘNG: PHÂN HỆ CẤU HÌNH ĐƠN VỊ HÀNH CHÍNH (34 TỈNH & 3.321 XÃ/PHƯỜNG)
+
+### TASK-018: Xây dựng Phân hệ Cấu hình & Quản trị Danh mục Đơn vị Hành chính 2 cấp (ADR-011)
+- **Module:** Administrative Units Management / Backend Service / Admin UI
+- **Spec liên quan:** `specs/08-DATABASE-DESIGN.md`, `specs/05-USER-ROLES-AND-USE-CASES.md`, `specs/10-UI-UX-SPECIFICATION.md`, `specs/DECISIONS.md` (ADR-011)
+- **Mức độ ưu tiên:** P1
+- **Phụ thuộc:** TASK-013, TASK-014, TASK-017
+- **File đã tạo/cập nhật:**
+  - `src/models/Province.ts`, `src/models/Commune.ts`: Bổ sung trường `isActive`, `region`, `districtName`.
+  - `src/lib/validations/administrative-units.schema.ts`: Zod schema xác thực mã tỉnh 2 số, mã xã 5 số duy nhất, phân loại và phân trang.
+  - `src/services/administrative-units.service.ts`: Dịch vụ quản trị 34 tỉnh và 3.321 xã/phường/đặc khu (thống kê tổng quan, tìm kiếm, lọc, thêm, sửa, xóa, đồng bộ 1-click từ nguồn chuẩn CC BY 4.0, offline fallback).
+  - `src/app/api/admin/administrative-units/stats/route.ts`: API thống kê tổng quan.
+  - `src/app/api/admin/administrative-units/provinces/route.ts`: API tìm kiếm, lọc và thêm/sửa tỉnh/thành.
+  - `src/app/api/admin/administrative-units/provinces/[code]/status/route.ts`: API bật/tắt trạng thái tỉnh.
+  - `src/app/api/admin/administrative-units/communes/route.ts`: API lọc xã theo tỉnh, tìm kiếm từ khóa, phân trang và thêm/sửa xã.
+  - `src/app/api/admin/administrative-units/communes/[code]/route.ts`: API xóa và bật/tắt trạng thái xã.
+  - `src/app/api/admin/administrative-units/sync/route.ts`: API kích hoạt đồng bộ hóa từ nguồn chuẩn vào MongoDB.
+  - `src/app/api/admin/administrative-units/export/route.ts`: API xuất file Excel .xlsx 2 sheet chuyên nghiệp.
+  - `src/app/(admin)/admin/administrative-units/page.tsx`: Giao diện Quản trị Cấu hình ĐVHC (4 thẻ KPI, thanh tác vụ, tab 34 tỉnh, tab 3.321 xã/phường, modals thêm/sửa).
+  - `src/app/(admin)/layout.tsx`: Bổ sung menu "Danh mục Tỉnh, Xã/Phường" vào thanh điều hướng Sidebar.
+  - `src/services/system-guide.service.ts`: Đăng ký module chức năng thứ 7 vào Cẩm nang Vận hành Động.
+  - `tests/services/administrative-units.test.ts`: 5 ca kiểm thử tự động đạt PASS 100%.
+- **Các bước thực hiện:**
+  1. Xây dựng Zod validation schemas kiểm tra chặt chẽ định dạng mã hành chính cấp tỉnh (2 số) và cấp xã (5 số).
+  2. Phát triển `AdministrativeUnitsService` hỗ trợ đầy đủ các thao tác CRUD, thống kê, phân trang và cơ chế fallback an toàn.
+  3. Xây dựng 7 Route Handlers API Quản trị có phân quyền RBAC và xử lý lỗi đồng bộ.
+  4. Thiết kế giao diện Quản trị `/admin/administrative-units` với 2 tab Tỉnh và Xã/Phường, bộ lọc theo tỉnh, từ khóa, phân loại và modals tương tác.
+  5. Tích hợp tính năng xuất Excel danh mục đa sheet và đồng bộ 1-click từ tệp chuẩn.
+  6. Viết bộ test tự động và nghiệm thu toàn diện (5/5 tests PASS).
+- **Acceptance Criteria:** Quản lý trọn vẹn 34 tỉnh và 3.321 xã/phường/đặc khu, hỗ trợ thêm/sửa/xóa/bật tắt, xuất Excel, đồng bộ nguồn, 5/5 tests PASS, 30/30 routes build thành công.
+- **Test Cases:** TC-DVHC-01 đến TC-DVHC-05 (5/5 PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
