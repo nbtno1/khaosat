@@ -31,10 +31,22 @@ export interface ProgressSummary {
 
 export class ProgressMonitoringService {
   /**
-   * Lấy danh sách 34 tỉnh từ file seed chuẩn
+   * Lấy danh sách 34 tỉnh từ file thực tế hoặc seed chuẩn
    */
   static getProvincesList(): Array<{ code: string; name: string }> {
     try {
+      const realPath = path.join(process.cwd(), "src/data/real-provinces.json");
+      if (fs.existsSync(realPath)) {
+        const raw = JSON.parse(fs.readFileSync(realPath, "utf-8"));
+        const list = raw.dong || raw;
+        if (Array.isArray(list) && list.length > 0) {
+          return list.map((p: any) => ({
+            code: p.ma_tinh,
+            name: p.ten_day_du || p.ten,
+          }));
+        }
+      }
+
       const filePath = path.join(process.cwd(), "src/data/seed-provinces-pilot.json");
       const raw = fs.readFileSync(filePath, "utf-8");
       return JSON.parse(raw).provinces || [];

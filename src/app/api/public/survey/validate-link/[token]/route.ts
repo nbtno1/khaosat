@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
 import { SurveyLink } from "@/models/SurveyLink";
 import { Campaign } from "@/models/Campaign";
+import { Commune } from "@/models/Commune";
 import fs from "fs";
 import path from "path";
 
@@ -81,20 +82,50 @@ export async function GET(
       );
     }
 
-    // Load communes for this province
-    // Check pilot file fallback
-    const pilotPath = path.join(process.cwd(), "src/data/seed-provinces-pilot.json");
+    // Load communes for this province (Ưu tiên Database -> Fallback real-communes.json -> Fallback pilot)
     let communes: Array<{ code: string; name: string; districtName?: string }> = [];
 
-    if (fs.existsSync(pilotPath)) {
-      const pilotData = JSON.parse(fs.readFileSync(pilotPath, "utf-8"));
-      communes = pilotData.pilotCommunes
-        .filter((c: any) => c.provinceCode === link.provinceCode)
-        .map((c: any) => ({
+    try {
+      const dbCommunes = await Commune.find({ provinceCode: link.provinceCode })
+        .sort({ communeCode: 1 })
+        .lean();
+      if (dbCommunes && dbCommunes.length > 0) {
+        communes = dbCommunes.map((c: any) => ({
           code: c.communeCode,
-          name: c.communeName,
-          districtName: c.districtName,
+          name: c.name,
+          districtName: c.type || undefined,
         }));
+      }
+    } catch {
+      // Offline fallback below
+    }
+
+    if (communes.length === 0) {
+      const realCommunesPath = path.join(process.cwd(), "src/data/real-communes.json");
+      if (fs.existsSync(realCommunesPath)) {
+        const realData = JSON.parse(fs.readFileSync(realCommunesPath, "utf-8"));
+        communes = (realData.dong || [])
+          .filter((c: any) => c.ma_tinh === link.provinceCode)
+          .map((c: any) => ({
+            code: c.ma_xa,
+            name: c.ten,
+            districtName: c.loai || undefined,
+          }));
+      }
+    }
+
+    if (communes.length === 0) {
+      const pilotPath = path.join(process.cwd(), "src/data/seed-provinces-pilot.json");
+      if (fs.existsSync(pilotPath)) {
+        const pilotData = JSON.parse(fs.readFileSync(pilotPath, "utf-8"));
+        communes = (pilotData.pilotCommunes || [])
+          .filter((c: any) => c.provinceCode === link.provinceCode)
+          .map((c: any) => ({
+            code: c.communeCode,
+            name: c.communeName,
+            districtName: c.districtName,
+          }));
+      }
     }
 
     return NextResponse.json({

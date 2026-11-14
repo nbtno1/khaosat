@@ -7,3 +7,5 @@ export * from "./PositionWorkgroupsMapping";
 export * from "./SurveyResponse";
 export * from "./AuditLog";
 export * from "./SystemGuide";
+export * from "./Province";
+export * from "./Commune";

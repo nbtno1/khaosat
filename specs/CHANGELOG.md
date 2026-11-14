@@ -4,6 +4,18 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.9.0] — 2026-11-14
+
+### Dữ liệu Hành chính Thực tế (Real Administrative Units — 34 Tỉnh & 3.321 Xã/Phường)
+- **Tích hợp Bộ dữ liệu Hành chính Thực tế:**
+  - Nạp và xác thực toàn bộ dữ liệu đơn vị hành chính chính thức từ `tinh.json` và `xa.json`: đúng **34 Tỉnh/Thành phố** và đúng **3.321 Xã/Phường/Thị trấn** theo quy định của Kiểm toán nhà nước và Cục Tin học.
+  - Xây dựng 2 Model Mongoose mới: `Province` (`src/models/Province.ts`) và `Commune` (`src/models/Commune.ts`) lưu trữ đầy đủ mã bưu chính, diện tích, quy mô dân số, số hiệu nghị quyết sáp nhập.
+  - Xây dựng công cụ import tự động siêu tốc `scripts/import-dvhc.ts` (`npm run db:import-dvhc`) sử dụng `bulkWrite` và đồng bộ mã QR, liên kết khảo sát cho toàn bộ 34 tỉnh.
+  - Nâng cấp API `GET /api/public/survey/validate-link/[token]` tự động lọc và nạp chính xác danh sách xã/phường thực tế của từng tỉnh (hỗ trợ cả kết nối Database trực tiếp lẫn chế độ Offline fallback).
+  - Đồng bộ dữ liệu gốc vào `src/data/real-provinces.json` và `src/data/real-communes.json`.
+
+---
+
 ## [1.8.1] — 2026-11-14
 
 ### Tinh chỉnh Giao diện (UI Refinement - Vertical Sidebar, Logo Slot & Select Beautification)
