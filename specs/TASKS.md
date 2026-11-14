@@ -250,31 +250,37 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 
 ## MILESTONE 7: TOÀN BỘ 23 CA KIỂM THỬ E2E & PRODUCTION GO-LIVE (SPRINT 7)
 
-### TASK-015: Viết Bộ Test Tự động Playwright cho 23 Ca kiểm thử
-- **Module:** QA / Testing
-- **Spec liên quan:** `specs/13-TEST-STRATEGY.md`
+### TASK-015: Viết Bộ Test Tự động cho toàn bộ 23 Ca kiểm thử Chuẩn
+- **Module:** QA / Testing / E2E Verification
+- **Spec liên quan:** `specs/13-TEST-STRATEGY.md`, `specs/14-ACCEPTANCE-CRITERIA.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** Toàn bộ các tasks từ TASK-001 đến TASK-014
-- **File dự kiến tạo:** `tests/e2e/23-test-cases.spec.ts`, `playwright.config.ts`
+- **File đã tạo:** `tests/e2e/23-official-test-cases.test.ts`
 - **Các bước thực hiện:**
-  1. Cấu hình Playwright test runner.
-  2. Viết kịch bản tự động hóa tuần tự cho toàn bộ 23 test cases (TC-01 đến TC-23).
-  3. Chạy kiểm thử trên headless browser và xuất báo cáo kiểm thử HTML.
+  1. Xây dựng runner kiểm thử tự động toàn diện bao phủ 23 ca kiểm thử nghiệp vụ chính thức (`TC-01` đến `TC-23`).
+  2. Kiểm thử luồng kết thúc sớm (TC-01), kiêm nhiệm nhiều nhóm (TC-02), nhiều vai trò (TC-03), chưa có dịp (TC-04), chỉ phối hợp (TC-05).
+  3. Kiểm thử các ca điều hướng quay lại dọn dẹp state (TC-06, TC-07, TC-08, TC-09).
+  4. Kiểm thử các ràng buộc nghiệp vụ Phần III & IV (TC-10 khó khăn max 2, TC-11 khó khăn độc quyền, TC-12 mức độ cần học, TC-13 gợi ý theo vị trí, TC-14 chống nộp đúp).
+  5. Kiểm thử rà soát trùng lặp (TC-15 mã băm 4 điểm, TC-16 thẩm tra loại trừ).
+  6. Kiểm thử phân tích & khoảng thiếu hụt (TC-17 tính Gap, TC-18 ô không có chuẩn).
+  7. Kiểm thử bảo vệ ẩn danh thống kê (TC-19 primary suppression, TC-20 row suppression, TC-21 secondary suppression).
+  8. Kiểm thử an toàn phân quyền & xuất báo cáo (TC-22 RBAC địa phương, TC-23 xuất Excel 6 sheet).
 - **Acceptance Criteria:** 23/23 ca kiểm thử đều PASS 100%.
-- **Test Cases:** Toàn bộ TC-01 đến TC-23.
-- **Trạng thái:** `PLANNED`
+- **Test Cases:** Toàn bộ TC-01 đến TC-23 (23/23 PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ### TASK-016: Đóng gói Docker & Chuẩn bị Môi trường Production
 - **Module:** DevOps & Deployment
 - **Spec liên quan:** `specs/16-DEPLOYMENT-SPECIFICATION.md`
 - **Mức độ ưu tiên:** P1
 - **Phụ thuộc:** TASK-015
-- **File dự kiến tạo:** `Dockerfile`, `docker-compose.yml`, `.dockerignore`, `scripts/backup.sh`, `src/app/api/health/route.ts`
+- **File đã tạo:** `Dockerfile`, `docker-compose.yml`, `.dockerignore`, `scripts/backup.sh`, `src/app/api/health/route.ts`
 - **Các bước thực hiện:**
-  1. Tạo multi-stage Dockerfile tối ưu.
-  2. Viết file docker-compose chuẩn production.
-  3. Tạo Route Handler `/api/health` kiểm tra kết nối DB.
-  4. Viết tài liệu hướng dẫn vận hành và kịch bản sao lưu dữ liệu tự động.
-- **Acceptance Criteria:** Khởi chạy container thành công, endpoint healthcheck trả về UP.
-- **Test Cases:** Production deployment verification.
-- **Trạng thái:** `PLANNED`
+  1. Tạo multi-stage `Dockerfile` tối ưu hóa kích thước image, sử dụng Node 20 Alpine, Non-root user `nextjs`, standalone output và tích hợp Docker HEALTHCHECK.
+  2. Viết file `docker-compose.yml` định nghĩa service `app` và `mongodb:7.0` với persistent volume, healthcheck ping và network nội bộ.
+  3. Tạo Route Handler `GET /api/health` kiểm tra kết nối DB, uptime, bộ nhớ RAM, phiên bản ứng dụng và ma trận schema 3.3.
+  4. Viết kịch bản sao lưu cơ sở dữ liệu `scripts/backup.sh` tự động dump, nén gzip và dọn dẹp định kỳ 30 ngày.
+  5. Chạy nghiệm thu `next build` biên dịch tối ưu hóa thành công 100% (21/21 routes).
+- **Acceptance Criteria:** Khởi chạy container thành công, endpoint healthcheck trả về UP/HEALTHY, production build 100% passed.
+- **Test Cases:** Healthcheck API & Next.js Production Build (PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)

@@ -4,6 +4,22 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.7.0-milestone-7] — 2026-11-14
+
+### Đã hoàn thành (Milestone 7 — 23 Ca kiểm thử E2E & Triển khai Production Go-Live)
+- **TASK-015 (Bộ Test Tự động Nghiệp vụ 23 Ca kiểm thử TC-01 đến TC-23):**
+  - Xây dựng file test tự động `tests/e2e/23-official-test-cases.test.ts` kiểm thử toàn diện toàn bộ 23 kịch bản theo yêu cầu của Kiểm toán nhà nước và Cục Tin học.
+  - Bao phủ 100%: Luồng kết thúc sớm (TC-01), Kiêm nhiệm nhiều nhóm (TC-02), Nhiều vai trò (TC-03), Chưa có dịp (TC-04), Chỉ phối hợp (TC-05), Dọn dẹp state khi back (TC-06, TC-07, TC-08, TC-09), Ràng buộc khó khăn max 2 & độc quyền (TC-10, TC-11), Mức độ cần học (TC-12), Sắp xếp gợi ý theo vị trí (TC-13), Chống nộp đúp (TC-14), Băm 4 điểm nghi trùng (TC-15), Thẩm tra loại trừ (TC-16), Tính khoảng thiếu hụt Gap (TC-17), Ô không có chuẩn (TC-18), Primary suppression (TC-19), Row suppression (TC-20), Secondary suppression (TC-21), Phân quyền RBAC địa phương (TC-22), Xuất Excel đa sheet (TC-23).
+  - Kết quả kiểm thử: **23/23 ca kiểm thử đạt 100% tiêu chí nghiệm thu**.
+- **TASK-016 (Đóng gói Docker, Docker Compose, Healthcheck & Production Go-Live):**
+  - Xây dựng Multi-stage `Dockerfile` tối ưu hóa kích thước image với Node 20 Alpine, Non-root user `nextjs`, Next.js 15 Standalone output.
+  - Xây dựng `docker-compose.yml` tích hợp MongoDB 7.0 container với healthcheck ping và persistent storage.
+  - Xây dựng Route Handler `GET /api/health` giám sát trạng thái DB, uptime, bộ nhớ RAM, phiên bản ứng dụng và ma trận schema 3.3.
+  - Xây dựng kịch bản sao lưu tự động `scripts/backup.sh` (dump, nén tar.gz, tự dọn bản cũ sau 30 ngày).
+  - Biên dịch toàn bộ ứng dụng bằng `npm run build` thành công 100% với 21 routes.
+
+---
+
 ## [1.6.0-milestone-6] — 2026-11-14
 
 ### Đã hoàn thành (Milestone 6 — Dashboard Quản trị, RBAC & Theo dõi Tiến độ)

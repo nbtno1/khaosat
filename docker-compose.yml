@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: khaosat_web_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/khaosat
+      - AUTH_SECRET=khaosat-kiemtoannn-production-secret-key-2026-very-secure
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - khaosat_network
+
+  mongodb:
+    image: mongo:7.0
+    container_name: khaosat_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./scripts/mongo-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - khaosat_network
+
+volumes:
+  mongo_data:
+    name: khaosat_mongo_data
+
+networks:
+  khaosat_network:
+    name: khaosat_network
+    driver: bridge
