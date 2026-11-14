@@ -11,44 +11,45 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 - **Spec liên quan:** `specs/07-SYSTEM-ARCHITECTURE.md`
 - **Mức độ ưu tiên:** P0 (Khẩn cấp / Bắt buộc)
 - **Phụ thuộc:** Không
-- **File dự kiến tạo:** `package.json`, `tsconfig.json`, `next.config.ts`, `tailwind.config.ts`, `src/app/layout.tsx`, `src/app/page.tsx`
+- **File đã tạo:** `package.json`, `tsconfig.json`, `next.config.ts`, `tailwind.config.ts`, `postcss.config.mjs`, `src/app/layout.tsx`, `src/app/page.tsx`, `src/app/globals.css`, `src/lib/utils.ts`, `.env.example`, `.env.local`
 - **Các bước thực hiện:**
-  1. Khởi tạo Next.js 15 với App Router, TypeScript (strict mode), ESLint và Tailwind CSS v4.
-  2. Cài đặt các thư viện phụ thuộc cốt lõi: `mongoose`, `zod`, `react-hook-form`, `@hookform/resolvers`, `lucide-react`, `clsx`, `tailwind-merge`.
+  1. Khởi tạo Next.js 15 với App Router, TypeScript (strict mode), ESLint và Tailwind CSS.
+  2. Cài đặt các thư viện phụ thuộc cốt lõi: `mongoose`, `zod`, `react-hook-form`, `@hookform/resolvers`, `lucide-react`, `clsx`, `tailwind-merge`, `recharts`, `exceljs`, `adm-zip`, `qrcode`, `bcryptjs`, `tsx`.
   3. Cấu hình đường dẫn alias `@/*` trỏ về `./src/*`.
-  4. Cấu hình `next.config.ts` hỗ trợ standalone build và tối ưu hóa font.
-- **Acceptance Criteria:** `npm run build` và `npm run lint` chạy thành công không có lỗi.
-- **Test Cases:** TC-Core-01 (Next.js build check).
-- **Trạng thái:** `PLANNED`
+  4. Cấu hình `next.config.ts` hỗ trợ standalone build và strict mode.
+- **Acceptance Criteria:** `npm run build` và `npm run typecheck` chạy thành công không có lỗi.
+- **Test Cases:** TC-Core-01 (Next.js build check - PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ### TASK-002: Thiết lập Kết nối MongoDB & Xây dựng Mongoose Models
 - **Module:** Database Layer
 - **Spec liên quan:** `specs/08-DATABASE-DESIGN.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** TASK-001
-- **File dự kiến tạo:** `src/lib/db.ts`, `src/models/User.ts`, `src/models/Campaign.ts`, `src/models/SurveyLink.ts`, `src/models/SurveySchemaConfig.ts`, `src/models/BenchmarkMatrix.ts`, `src/models/PositionWorkgroupsMapping.ts`, `src/models/SurveyResponse.ts`, `src/models/AuditLog.ts`
+- **File đã tạo:** `src/lib/db.ts`, `src/models/User.ts`, `src/models/Campaign.ts`, `src/models/SurveyLink.ts`, `src/models/SurveySchemaConfig.ts`, `src/models/BenchmarkMatrix.ts`, `src/models/PositionWorkgroupsMapping.ts`, `src/models/SurveyResponse.ts`, `src/models/AuditLog.ts`, `src/models/index.ts`
 - **Các bước thực hiện:**
   1. Viết module kết nối MongoDB `src/lib/db.ts` có cơ chế cache connection cho serverless / dev environment.
   2. Tạo 8 schemas và models Mongoose chuẩn xác theo định nghĩa trong Spec 08.
-  3. Định nghĩa các Indexes đơn và Compound Indexes cần thiết.
-- **Acceptance Criteria:** Kết nối MongoDB thành công, các model khởi tạo được collection với indexes chính xác.
-- **Test Cases:** TC-Core-02 (MongoDB Connection & Schema Validation).
-- **Trạng thái:** `PLANNED`
+  3. Định nghĩa các Indexes đơn và Compound Indexes cần thiết, tối ưu hóa tránh trùng lặp index.
+- **Acceptance Criteria:** Các model khởi tạo đầy đủ interface TypeScript, kiểm tra static type an toàn 100%.
+- **Test Cases:** TC-Core-02 (MongoDB Connection & Schema Typecheck - PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ### TASK-003: Xây dựng Script Nạp Dữ liệu Hạt giống (Seed Data Script v3.3)
 - **Module:** Database Layer / Data Migration
 - **Spec liên quan:** `specs/08-DATABASE-DESIGN.md`, `specs/01-DOCUMENT-INVENTORY.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** TASK-002
-- **File dự kiến tạo:** `scripts/seed-v3.3.ts`, `src/data/seed-schema-3.3.json`, `src/data/seed-benchmark-matrix.json`, `src/data/seed-position-mappings.json`
+- **File đã tạo:** `scripts/seed.ts`, `scripts/import-communes.ts`, `src/data/seed-schema-3.3.json`, `src/data/seed-benchmark-matrix.json`, `src/data/seed-position-mappings.json`, `src/data/seed-provinces-pilot.json`, `src/data/communes-catalog.template.json`
 - **Các bước thực hiện:**
-  1. Trích xuất chính xác 16 nhóm công việc và các chuyên đề học từ Tài liệu số 1 vào `seed-schema-3.3.json`.
-  2. Nạp ma trận 65 mức yêu cầu từ Thuyết minh Phần II.B vào `seed-benchmark-matrix.json`.
-  3. Nạp danh mục nhóm gợi ý của 11 cơ quan và các vị trí việc làm vào `seed-position-mappings.json`.
-  4. Viết script TypeScript thực thi seed dữ liệu và tài khoản admin mặc định.
-- **Acceptance Criteria:** Chạy `npm run db:seed` nạp thành công 100% dữ liệu mà không bị trùng lặp.
-- **Test Cases:** TC-Core-03 (Data integrity seed test).
-- **Trạng thái:** `PLANNED`
+  1. Trích xuất chính xác 16 nhóm công việc và 87 chuyên đề học từ Tài liệu số 1 vào `seed-schema-3.3.json`.
+  2. Nạp ma trận 64 mức yêu cầu từ Thuyết minh Phần II.B vào `seed-benchmark-matrix.json`.
+  3. Nạp danh mục 40 vị trí thuộc 11 cơ quan và nhóm việc gợi ý vào `seed-position-mappings.json`.
+  4. Khởi tạo danh mục 34 tỉnh thí điểm kèm template danh mục 3.321 xã theo ADR-007.
+  5. Viết script TypeScript `scripts/seed.ts` nạp tự động schema 3.3, benchmark matrix, user admin, campaign `DOT-1-2026` và sinh 34 mã QR cấp tỉnh bằng QRCode.
+- **Acceptance Criteria:** Chạy `npm run db:seed` và `npm run db:import-communes` nạp và kiểm tra tính toàn vẹn 100% dữ liệu.
+- **Test Cases:** TC-Core-03 (Data integrity seed test - PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ---
 

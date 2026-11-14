@@ -1,0 +1,672 @@
+{
+  "version": "3.3",
+  "title": "Bộ phiếu khảo sát nhu cầu bồi dưỡng năng lực quản lý tài chính, tài sản công cấp xã",
+  "isActive": true,
+  "description": "Bộ đặc tả chuẩn phiên bản 3.3 ban hành kèm theo Quyết định khảo sát của Trường Đào tạo và Bồi dưỡng nghiệp vụ kiểm toán",
+  "workgroups": [
+    {
+      "id": "N01",
+      "order": 1,
+      "title": "Trách nhiệm, kiểm soát nội bộ, công khai, làm việc với thanh tra, kiểm toán",
+      "description": "Bảng phân công, điểm kiểm soát trong phần việc; hồ sơ công khai; báo cáo thực hiện kiến nghị; biện pháp tiết kiệm, phòng chống lãng phí",
+      "learningTopics": [
+        {
+          "topicId": "N01_01",
+          "topicTitle": "Trách nhiệm, thẩm quyền theo vị trí"
+        },
+        {
+          "topicId": "N01_02",
+          "topicTitle": "Kiểm soát nội bộ trong phần việc"
+        },
+        {
+          "topicId": "N01_03",
+          "topicTitle": "Công khai, lưu trữ hồ sơ, dữ liệu"
+        },
+        {
+          "topicId": "N01_04",
+          "topicTitle": "Làm việc với thanh tra, kiểm toán"
+        },
+        {
+          "topicId": "N01_05",
+          "topicTitle": "thực hiện kiến nghị"
+        },
+        {
+          "topicId": "N01_06",
+          "topicTitle": "Tiết kiệm, chống lãng phí, phòng chống tham nhũng trong tài chính, tài sản công"
+        },
+        {
+          "topicId": "N01_07",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N02",
+      "order": 2,
+      "title": "Bàn giao, tiếp nhận khi sắp xếp đơn vị hành chính",
+      "description": "Biên bản, danh mục bàn giao, tiếp nhận ngân sách, tài sản, dự án, công nợ, hồ sơ khi sắp xếp; phương án xử lý tồn tại; phần việc tài chính, tài sản tiếp nhận từ cấp huyện trước đây (tài sản do cấp tỉnh điều chuyển, giao sau đó khai ở nhóm “Quản lý tài sản công tại cơ quan, đơn vị” hoặc “Nhà đất công, đất công ích, tài sản kết cấu hạ tầng”)",
+      "learningTopics": [
+        {
+          "topicId": "N02_01",
+          "topicTitle": "Lập danh mục, biên bản bàn giao"
+        },
+        {
+          "topicId": "N02_02",
+          "topicTitle": "Tiếp nhận, đối chiếu số dư, tài sản, hồ sơ"
+        },
+        {
+          "topicId": "N02_03",
+          "topicTitle": "Xử lý công nợ, nghĩa vụ chuyển tiếp của đơn vị cũ"
+        },
+        {
+          "topicId": "N02_04",
+          "topicTitle": "Dự án liên xã, dự án chuyển tiếp"
+        },
+        {
+          "topicId": "N02_05",
+          "topicTitle": "Nhiệm vụ, hợp đồng, hồ sơ tài chính, tài sản tiếp nhận từ cấp huyện trước đây"
+        },
+        {
+          "topicId": "N02_06",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N03",
+      "order": 3,
+      "title": "Thẩm tra, quyết định, giám sát ngân sách của Hội đồng nhân dân",
+      "description": "Sản phẩm riêng của Hội đồng nhân dân: báo cáo thẩm tra; nghị quyết về dự toán, phân bổ, điều chỉnh, phê chuẩn quyết toán; kết luận giám sát và theo dõi thực hiện. Việc lập, trình dự toán, quyết toán của Ủy ban nhân dân khai ở nhóm “Lập, phân bổ, giao, điều chỉnh dự toán; nguồn đặc thù” và nhóm “Xử lý cuối năm, quyết toán ngân sách, công khai”",
+      "learningTopics": [
+        {
+          "topicId": "N03_01",
+          "topicTitle": "Thẩm tra dự toán, phân bổ, điều chỉnh"
+        },
+        {
+          "topicId": "N03_02",
+          "topicTitle": "Giám sát chấp hành ngân sách, yêu cầu giải trình"
+        },
+        {
+          "topicId": "N03_03",
+          "topicTitle": "Thẩm tra, phê chuẩn quyết toán"
+        },
+        {
+          "topicId": "N03_04",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N04",
+      "order": 4,
+      "title": "Phân cấp, chỉ đạo, kiểm tra chung về tài sản, mua sắm, đầu tư, bồi thường",
+      "description": "Sản phẩm chung của địa phương, không gắn với một hồ sơ cụ thể: quy chế, quyết định phân cấp, phân công thẩm quyền; kế hoạch, kết luận kiểm tra chung và xử lý sau kiểm tra; báo cáo tổng hợp tình hình. Việc phê duyệt, kiểm soát một hồ sơ cụ thể (một tài sản, một gói mua sắm, một dự án, một khoản chi trả bồi thường) khai ở nhóm có hồ sơ đó",
+      "learningTopics": [
+        {
+          "topicId": "N04_01",
+          "topicTitle": "Thẩm quyền, phân cấp quyết định về tài sản, nhà đất"
+        },
+        {
+          "topicId": "N04_02",
+          "topicTitle": "Thẩm quyền, trình tự quyết định mua sắm, lựa chọn nhà thầu"
+        },
+        {
+          "topicId": "N04_03",
+          "topicTitle": "Thẩm quyền quyết định đầu tư, phê duyệt quyết toán dự án"
+        },
+        {
+          "topicId": "N04_04",
+          "topicTitle": "Thẩm quyền, trình tự quyết định bồi thường, hỗ trợ"
+        },
+        {
+          "topicId": "N04_05",
+          "topicTitle": "Tổ chức kiểm tra chung, xử lý sau kiểm tra"
+        },
+        {
+          "topicId": "N04_06",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N05",
+      "order": 5,
+      "title": "Lập, phân bổ, giao, điều chỉnh dự toán; nguồn đặc thù",
+      "description": "Dự toán thu, chi (theo dự toán, chỉ tiêu tỉnh giao); phương án phân bổ; tờ trình điều chỉnh; kế hoạch nguồn bổ sung từ ngân sách tỉnh, cải cách tiền lương",
+      "learningTopics": [
+        {
+          "topicId": "N05_01",
+          "topicTitle": "Phân cấp nguồn thu, nhiệm vụ chi giữa tỉnh và xã"
+        },
+        {
+          "topicId": "N05_02",
+          "topicTitle": "Lập dự toán thu, chi"
+        },
+        {
+          "topicId": "N05_03",
+          "topicTitle": "Phân bổ, điều chỉnh dự toán, dự phòng, công khai"
+        },
+        {
+          "topicId": "N05_04",
+          "topicTitle": "Bổ sung cân đối, bổ sung có mục tiêu từ ngân sách tỉnh"
+        },
+        {
+          "topicId": "N05_05",
+          "topicTitle": "chương trình mục tiêu quốc gia"
+        },
+        {
+          "topicId": "N05_06",
+          "topicTitle": "Nguồn cải cách tiền lương, quỹ lương"
+        },
+        {
+          "topicId": "N05_07",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N06",
+      "order": 6,
+      "title": "Quan hệ ngân sách với đơn vị trực thuộc (phía cấp quản lý)",
+      "description": "Bảng giao dự toán chi tiết cho từng đơn vị trực thuộc; hồ sơ đặt hàng, giao nhiệm vụ; bảng theo dõi thực hiện dự toán, đặt hàng của đơn vị; biên bản, thông báo xét duyệt quyết toán đơn vị (dự toán chung của ngân sách xã khai ở nhóm “Lập, phân bổ, giao, điều chỉnh dự toán; nguồn đặc thù”; kế toán của chính đơn vị mình khai ở nhóm “Kế toán, đối chiếu, báo cáo”)",
+      "learningTopics": [
+        {
+          "topicId": "N06_01",
+          "topicTitle": "Giao dự toán, kiểm tra đơn vị trực thuộc"
+        },
+        {
+          "topicId": "N06_02",
+          "topicTitle": "Đặt hàng, giao nhiệm vụ dịch vụ sự nghiệp công"
+        },
+        {
+          "topicId": "N06_03",
+          "topicTitle": "Xét duyệt quyết toán đơn vị trực thuộc"
+        },
+        {
+          "topicId": "N06_04",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N07",
+      "order": 7,
+      "title": "Chấp hành thu, chi; giao dịch Kho bạc; quỹ và khoản huy động",
+      "description": "Theo dõi thu; hồ sơ chi, thanh toán; hồ sơ giao dịch Kho bạc (rút dự toán, thanh toán, nộp trả) của ngân sách xã và của kế toán từng đơn vị; theo dõi tạm ứng, khoản thu hộ, chi hộ; sổ theo dõi quỹ tài chính ngoài ngân sách giao xã quản lý và các khoản huy động, đóng góp thuộc phạm vi khảo sát",
+      "learningTopics": [
+        {
+          "topicId": "N07_01",
+          "topicTitle": "Quản lý thu: phí, lệ phí, thu từ đất, tài sản"
+        },
+        {
+          "topicId": "N07_02",
+          "topicTitle": "Chi thường xuyên, chế độ chính sách"
+        },
+        {
+          "topicId": "N07_03",
+          "topicTitle": "Hồ sơ rút dự toán, thanh toán qua Kho bạc (ngân sách xã và đơn vị)"
+        },
+        {
+          "topicId": "N07_04",
+          "topicTitle": "Tạm ứng, thu hộ-chi hộ, khoản phải thu hồi"
+        },
+        {
+          "topicId": "N07_05",
+          "topicTitle": "Quản lý quỹ tài chính ngoài ngân sách, khoản huy động, đóng góp"
+        },
+        {
+          "topicId": "N07_06",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N08",
+      "order": 8,
+      "title": "Kế toán, đối chiếu, báo cáo",
+      "description": "Chứng từ, sổ kế toán; bảng đối chiếu với Kho bạc; báo cáo tài chính, báo cáo chấp hành, quyết toán của đơn vị",
+      "learningTopics": [
+        {
+          "topicId": "N08_01",
+          "topicTitle": "Tổ chức công tác kế toán"
+        },
+        {
+          "topicId": "N08_02",
+          "topicTitle": "Chứng từ, hạch toán, mục lục ngân sách"
+        },
+        {
+          "topicId": "N08_03",
+          "topicTitle": "Đối chiếu, khóa sổ, xử lý chênh lệch"
+        },
+        {
+          "topicId": "N08_04",
+          "topicTitle": "Báo cáo tài chính, báo cáo quyết toán"
+        },
+        {
+          "topicId": "N08_05",
+          "topicTitle": "Kế toán tài sản"
+        },
+        {
+          "topicId": "N08_06",
+          "topicTitle": "Báo cáo tình hình chấp hành ngân sách"
+        },
+        {
+          "topicId": "N08_07",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N09",
+      "order": 9,
+      "title": "Xử lý cuối năm, quyết toán ngân sách, công khai",
+      "description": "Bảng xử lý số dư, tạm ứng, chuyển nguồn, nộp trả; báo cáo quyết toán ngân sách; hồ sơ trình phê chuẩn, công khai",
+      "learningTopics": [
+        {
+          "topicId": "N09_01",
+          "topicTitle": "Xử lý số dư, tạm ứng, công nợ cuối năm"
+        },
+        {
+          "topicId": "N09_02",
+          "topicTitle": "Chuyển nguồn, hủy dự toán, nộp trả, kết dư"
+        },
+        {
+          "topicId": "N09_03",
+          "topicTitle": "Tổng hợp quyết toán ngân sách"
+        },
+        {
+          "topicId": "N09_04",
+          "topicTitle": "Trình phê chuẩn, gửi cơ quan tài chính cấp tỉnh, công khai, giải trình quyết toán"
+        },
+        {
+          "topicId": "N09_05",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N10",
+      "order": 10,
+      "title": "Quản lý tài sản công tại cơ quan, đơn vị",
+      "description": "Sổ, cơ sở dữ liệu tài sản; biên bản tiếp nhận tài sản do cấp tỉnh điều chuyển, giao; biên bản kiểm kê và xử lý; hồ sơ khai thác, cho thuê, điều chuyển, thanh lý",
+      "learningTopics": [
+        {
+          "topicId": "N10_01",
+          "topicTitle": "Quy chế, sổ, tiêu chuẩn định mức tài sản"
+        },
+        {
+          "topicId": "N10_02",
+          "topicTitle": "Kiểm kê, đối chiếu tài sản với sổ"
+        },
+        {
+          "topicId": "N10_03",
+          "topicTitle": "Khai thác, cho thuê tài sản"
+        },
+        {
+          "topicId": "N10_04",
+          "topicTitle": "Điều chuyển, thu hồi, thanh lý tài sản"
+        },
+        {
+          "topicId": "N10_05",
+          "topicTitle": "Tài sản được xác lập sở hữu toàn dân"
+        },
+        {
+          "topicId": "N10_06",
+          "topicTitle": "Tiếp nhận tài sản do cấp tỉnh điều chuyển, giao quản lý"
+        },
+        {
+          "topicId": "N10_07",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N11",
+      "order": 11,
+      "title": "Nhà đất công, đất công ích, tài sản kết cấu hạ tầng",
+      "description": "Hồ sơ quản lý trụ sở, nhà đất, đất công ích; phương án sắp xếp, xử lý trụ sở, nhà đất dôi dư; danh mục, hồ sơ tài sản kết cấu hạ tầng giao xã quản lý (kể cả do cấp tỉnh giao)",
+      "learningTopics": [
+        {
+          "topicId": "N11_01",
+          "topicTitle": "Hồ sơ, hiện trạng nhà đất, đất công, đất công ích"
+        },
+        {
+          "topicId": "N11_02",
+          "topicTitle": "Quản lý, khai thác tài sản kết cấu hạ tầng (kể cả do cấp tỉnh giao)"
+        },
+        {
+          "topicId": "N11_03",
+          "topicTitle": "Sắp xếp, xử lý trụ sở, nhà đất dôi dư"
+        },
+        {
+          "topicId": "N11_04",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N12",
+      "order": 12,
+      "title": "Chi trả bồi thường, hỗ trợ, tái định cư (phần tài chính)",
+      "description": "Phần kinh phí của phương án bồi thường, hỗ trợ khi được giao (dự toán, nguồn kinh phí); danh sách chi trả theo phương án được duyệt; chứng từ chi, khấu trừ nghĩa vụ tài chính về đất",
+      "learningTopics": [
+        {
+          "topicId": "N12_01",
+          "topicTitle": "Chi trả theo phương án được duyệt, khấu trừ nghĩa vụ tài chính"
+        },
+        {
+          "topicId": "N12_02",
+          "topicTitle": "Hồ sơ, chứng từ chi trả bồi thường, hỗ trợ"
+        },
+        {
+          "topicId": "N12_03",
+          "topicTitle": "Lập, kiểm tra phần kinh phí và nguồn kinh phí của phương án bồi thường, hỗ trợ theo nhiệm vụ được giao"
+        },
+        {
+          "topicId": "N12_04",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N13",
+      "order": 13,
+      "title": "Mua sắm, sửa chữa, lựa chọn nhà thầu",
+      "description": "Đề xuất nhu cầu, dự toán mua sắm; kế hoạch, hồ sơ lựa chọn nhà thầu; hợp đồng, biên bản nghiệm thu, bàn giao",
+      "learningTopics": [
+        {
+          "topicId": "N13_01",
+          "topicTitle": "Xác định nhu cầu, dự toán mua sắm"
+        },
+        {
+          "topicId": "N13_02",
+          "topicTitle": "Giá gói thầu, kế hoạch, lựa chọn nhà thầu"
+        },
+        {
+          "topicId": "N13_03",
+          "topicTitle": "Hợp đồng, nghiệm thu, thanh toán"
+        },
+        {
+          "topicId": "N13_04",
+          "topicTitle": "Phân biệt sửa chữa thường xuyên với dự án"
+        },
+        {
+          "topicId": "N13_05",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N14",
+      "order": 14,
+      "title": "Đầu tư công, quản lý dự án (từ chủ trương đến thanh toán)",
+      "description": "Hồ sơ đề xuất chủ trương, kế hoạch vốn; hồ sơ chuẩn bị dự án; hợp đồng xây dựng; hồ sơ tạm ứng, thanh toán vốn",
+      "learningTopics": [
+        {
+          "topicId": "N14_01",
+          "topicTitle": "Chủ trương, kế hoạch đầu tư công, nguồn vốn"
+        },
+        {
+          "topicId": "N14_02",
+          "topicTitle": "Chuẩn bị dự án, dự toán (phần quản lý vốn)"
+        },
+        {
+          "topicId": "N14_03",
+          "topicTitle": "Lựa chọn nhà thầu, hợp đồng xây dựng"
+        },
+        {
+          "topicId": "N14_04",
+          "topicTitle": "Nghiệm thu, tạm ứng, thanh toán vốn"
+        },
+        {
+          "topicId": "N14_05",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N15",
+      "order": 15,
+      "title": "Quyết toán dự án, bàn giao tài sản hình thành",
+      "description": "Hồ sơ quyết toán dự án hoàn thành; báo cáo thẩm tra; hồ sơ bàn giao tài sản, số liệu quyết toán vốn theo niên độ",
+      "learningTopics": [
+        {
+          "topicId": "N15_01",
+          "topicTitle": "Lập hồ sơ quyết toán dự án"
+        },
+        {
+          "topicId": "N15_02",
+          "topicTitle": "Thẩm tra, phê duyệt quyết toán dự án"
+        },
+        {
+          "topicId": "N15_03",
+          "topicTitle": "Bàn giao tài sản hình thành, quyết toán vốn theo niên độ"
+        },
+        {
+          "topicId": "N15_04",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    },
+    {
+      "id": "N16",
+      "order": 16,
+      "title": "Tài chính của đơn vị sự nghiệp, đơn vị dự toán",
+      "description": "Phương án tự chủ; dự toán, quỹ lương của đơn vị; quy chế chi tiêu nội bộ; hồ sơ thực hiện đặt hàng; báo cáo quản trị",
+      "learningTopics": [
+        {
+          "topicId": "N16_01",
+          "topicTitle": "Cơ chế tự chủ tài chính"
+        },
+        {
+          "topicId": "N16_02",
+          "topicTitle": "Dự toán, nguồn thu, quỹ lương của đơn vị"
+        },
+        {
+          "topicId": "N16_03",
+          "topicTitle": "Quy chế chi tiêu nội bộ"
+        },
+        {
+          "topicId": "N16_04",
+          "topicTitle": "Thực hiện nhiệm vụ được đặt hàng"
+        },
+        {
+          "topicId": "N16_05",
+          "topicTitle": "Luồng hồ sơ với Kho bạc, kế toán, mua sắm, tài sản"
+        },
+        {
+          "topicId": "N16_06",
+          "topicTitle": "Khác (ghi rõ)"
+        }
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "roleId": "DIRECT",
+      "title": "Trực tiếp thực hiện",
+      "description": "Lập chứng từ, sổ, danh sách, bảng theo dõi, hồ sơ, số liệu của phần việc được giao",
+      "levelDescriptions": {
+        "1": "Chưa tự làm được; cần người khác làm cùng hoặc hướng dẫn từng bước",
+        "2": "Tự làm được phần việc, nhưng còn cần người khác hỗ trợ chuyên môn (chỉ cách làm, sửa sai) để hoàn thành đúng công việc thường gặp",
+        "3": "Tự lập, tự xem lại kết quả và xử lý được các trường hợp thường gặp; chỉ hỏi ý kiến với trường hợp mới, phức tạp; sản phẩm dùng được ngay (dùng biểu mẫu theo quy định là bình thường)",
+        "4": "Xử lý được trường hợp phức tạp, chưa có hướng dẫn cụ thể; hướng dẫn, kiểm tra được người khác"
+      }
+    },
+    {
+      "roleId": "ADVISORY",
+      "title": "Tham mưu",
+      "description": "Lập hồ sơ, tờ trình, phương án, đề xuất để trình",
+      "levelDescriptions": {
+        "1": "Chưa tự lập được hồ sơ, tờ trình, phương án; cần người khác soạn cùng hoặc hướng dẫn từng bước",
+        "2": "Tự lập được hồ sơ, tờ trình, phương án, nhưng còn cần người khác hỗ trợ chuyên môn về căn cứ, số liệu để trình đúng trong trường hợp thường gặp",
+        "3": "Tự lập, tự rà soát căn cứ, số liệu và đề xuất được phương án đúng quy định cho các trường hợp thường gặp; chỉ hỏi ý kiến với trường hợp mới, phức tạp",
+        "4": "Đề xuất được phương án cho trường hợp phức tạp, chưa có tiền lệ; hướng dẫn, kiểm tra được người khác tham mưu"
+      }
+    },
+    {
+      "roleId": "SUPERVISORY",
+      "title": "Kiểm tra, giám sát",
+      "description": "Kiểm soát hồ sơ người khác lập; thẩm tra, giám sát (kể cả Hội đồng nhân dân)",
+      "levelDescriptions": {
+        "1": "Chưa biết cần kiểm tra những điểm gì; cần người khác hướng dẫn từng bước",
+        "2": "Tự kiểm tra được các điểm chính, nhưng còn cần người khác hỗ trợ chuyên môn để kết luận đúng trong trường hợp thường gặp",
+        "3": "Tự kiểm tra, phát hiện sai sót, điểm chưa phù hợp và yêu cầu sửa, giải trình trong các trường hợp thường gặp; chỉ hỏi ý kiến với trường hợp mới, phức tạp (dùng danh mục kiểm tra là bình thường)",
+        "4": "Kiểm tra được trường hợp phức tạp; xây dựng cách kiểm tra, hướng dẫn người khác kiểm tra"
+      }
+    },
+    {
+      "roleId": "APPROVAL",
+      "title": "Quyết định, phê duyệt",
+      "description": "Ký quyết định, phê duyệt hoặc chịu trách nhiệm cuối cùng",
+      "levelDescriptions": {
+        "1": "Chưa nắm thẩm quyền, điều kiện để quyết định việc này; cần người khác hướng dẫn từng bước trước khi quyết định",
+        "2": "Nắm được thẩm quyền, điều kiện, nhưng còn cần người khác giải thích căn cứ, rủi ro của hồ sơ trình mới quyết định được trường hợp thường gặp",
+        "3": "Tự xem xét được hồ sơ trình, nhận ra rủi ro, yêu cầu làm rõ trước khi quyết định trong các trường hợp thường gặp; chỉ cần ý kiến chuyên môn với trường hợp mới, phức tạp",
+        "4": "Quyết định được trường hợp phức tạp, chưa có tiền lệ; chỉ đạo được cách làm, cách kiểm soát cho cấp dưới"
+      }
+    }
+  ],
+  "workgroupStatuses": [
+    {
+      "id": "DANG_THUC_HIEN",
+      "title": "Đang thực hiện"
+    },
+    {
+      "id": "CHUA_CO_DIP",
+      "title": "Được giao nhưng chưa có dịp thực hiện"
+    },
+    {
+      "id": "CHI_PHOI_HOP",
+      "title": "Chỉ phối hợp"
+    },
+    {
+      "id": "KHONG_DUOC_GIAO",
+      "title": "Không được giao"
+    }
+  ],
+  "difficulties": [
+    {
+      "id": "D1",
+      "title": "Kiến thức - Chưa nắm vững quy định, nguyên tắc",
+      "isExclusive": false,
+      "category": "DAO_TAO"
+    },
+    {
+      "id": "D2",
+      "title": "Kỹ năng - Chưa thành thạo cách làm, cách tính, cách lập hồ sơ",
+      "isExclusive": false,
+      "category": "DAO_TAO"
+    },
+    {
+      "id": "D3",
+      "title": "Hướng dẫn - Văn bản hướng dẫn chưa rõ hoặc thay đổi nhiều",
+      "isExclusive": false,
+      "category": "NGOAI_DAO_TAO"
+    },
+    {
+      "id": "D4",
+      "title": "Quy trình - Phân công, phối hợp, trình tự chưa rõ",
+      "isExclusive": false,
+      "category": "NGOAI_DAO_TAO"
+    },
+    {
+      "id": "D5",
+      "title": "Nhân lực - Thiếu người, kiêm nhiệm nhiều việc",
+      "isExclusive": false,
+      "category": "NGOAI_DAO_TAO"
+    },
+    {
+      "id": "D6",
+      "title": "Công cụ - Phần mềm, mẫu biểu, dữ liệu, hồ sơ chưa đáp ứng",
+      "isExclusive": false,
+      "category": "NGOAI_DAO_TAO"
+    },
+    {
+      "id": "KHONG_KHO_KHAN",
+      "title": "Không gặp khó khăn đáng kể (không chọn cùng lựa chọn khác)",
+      "isExclusive": true,
+      "category": "NONE"
+    }
+  ],
+  "urgencyLevels": [
+    {
+      "id": "URGENT_6M",
+      "title": "Cần học ngay (trong 6 tháng tới)"
+    },
+    {
+      "id": "WITHIN_YEAR",
+      "title": "Cần học trong năm"
+    },
+    {
+      "id": "AFTER_YEAR",
+      "title": "Có thể học sau một năm"
+    }
+  ],
+  "learningFormats": [
+    {
+      "id": "F1",
+      "title": "Lớp tập trung ngắn ngày"
+    },
+    {
+      "id": "F2",
+      "title": "Học trực tuyến"
+    },
+    {
+      "id": "F3",
+      "title": "Kết hợp trực tuyến và tập trung"
+    },
+    {
+      "id": "F4",
+      "title": "Hướng dẫn tại chỗ, theo hồ sơ thực tế"
+    },
+    {
+      "id": "F5",
+      "title": "Tài liệu, sổ tay tự học"
+    }
+  ],
+  "capacities": [
+    {
+      "id": "CAN_BO",
+      "title": "Cán bộ"
+    },
+    {
+      "id": "CONG_CHUC",
+      "title": "Công chức"
+    },
+    {
+      "id": "VIEN_CHUC",
+      "title": "Viên chức"
+    },
+    {
+      "id": "DAI_BIEU_HDND",
+      "title": "Đại biểu Hội đồng nhân dân"
+    },
+    {
+      "id": "KHONG_CHUYEN_TRACH",
+      "title": "Người hoạt động không chuyên trách"
+    },
+    {
+      "id": "NGUOI_LAO_DONG",
+      "title": "Người lao động"
+    },
+    {
+      "id": "KHAC",
+      "title": "Khác (ghi rõ)"
+    }
+  ],
+  "experienceYears": [
+    {
+      "id": "UNDER_1",
+      "title": "Dưới 1 năm"
+    },
+    {
+      "id": "FROM_1_TO_3",
+      "title": "Từ 1 đến 3 năm"
+    },
+    {
+      "id": "OVER_3",
+      "title": "Trên 3 năm"
+    }
+  ]
+}

@@ -1,0 +1,450 @@
+[
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N01",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Người lập chứng từ, hồ sơ phải tự áp dụng đúng điểm kiểm soát, công khai, lưu trữ trong phần việc của mình; đây là khâu đầu tiên của kiểm soát nội bộ."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N01",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người tham mưu tự lập được báo cáo thực hiện kiến nghị, hồ sơ công khai, biện pháp tiết kiệm đúng quy định để trình; không thể dựa vào mẫu cho từng trường hợp."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N01",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người kiểm tra phải tự nhận ra hồ sơ thiếu công khai, thiếu kiểm soát, kiến nghị chưa thực hiện; đây là chức năng cốt lõi của vai trò kiểm tra."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N01",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Người đứng đầu chịu trách nhiệm về kiểm soát nội bộ, công khai và thực hiện kiến nghị của cơ quan; cần tự nhận ra rủi ro trong hồ sơ trình, không chỉ dựa vào giải thích của cấp dưới."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N02",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Đối chiếu số dư, tài sản, công nợ khi tiếp nhận phải đúng và dùng được ngay; sai sót khó sửa sau khi đã ký biên bản."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N02",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người tham mưu lập phương án xử lý tồn tại, công nợ, dự án chuyển tiếp; cần tự lập đúng vì không có mẫu chung cho từng trường hợp."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N02",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người kiểm tra phải tự phát hiện chênh lệch giữa biên bản bàn giao với sổ sách, hồ sơ; danh mục kiểm tra chung khó bao quát hết tình huống chuyển tiếp."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N02",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Người ký biên bản, phương án xử lý tồn tại chịu trách nhiệm về số liệu tiếp nhận; cần tự nhận ra khoản chưa rõ nguồn gốc trước khi ký."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N03",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Phần việc: lập bảng tổng hợp, so sánh số liệu dự toán, quyết toán phục vụ thẩm tra; theo dõi thực hiện kết luận giám sát của Hội đồng nhân dân. Người được giao phải tự lập đúng, đủ số liệu để Hội đồng nhân dân sử dụng."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N03",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người giúp việc Ban Kinh tế - Ngân sách lập báo cáo thẩm tra, dự thảo nghị quyết; cần tự lập đúng nội dung, thời hạn theo quy định."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N03",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Thẩm tra, giám sát ngân sách là nhiệm vụ của Hội đồng nhân dân và Ban Kinh tế - Ngân sách; người được giao cần tự phát hiện điểm bất hợp lý trong dự toán, quyết toán và yêu cầu giải trình."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N03",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Thường trực, Chủ tịch Hội đồng nhân dân chủ trì quyết định dự toán, phê chuẩn quyết toán; cần tự xem xét được hồ sơ trình và nhận ra rủi ro."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N04",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Phần việc: lập bảng theo dõi chung về tài sản, mua sắm, dự án, bồi thường của địa phương; tổng hợp số liệu phục vụ kiểm tra chung. Người được giao phải tự lập đúng, đủ để lãnh đạo chỉ đạo, kiểm tra."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N04",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người tham mưu quy chế, phân cấp, kế hoạch và kết luận kiểm tra chung phải tự nêu được căn cứ, thẩm quyền, rủi ro để lãnh đạo quyết định."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N04",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Kiểm tra chung việc chấp hành thẩm quyền, trình tự về tài sản, mua sắm, đầu tư, bồi thường; người kiểm tra phải tự phát hiện sai phạm về thẩm quyền, trình tự."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N04",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Người ban hành quy chế, phân cấp, kết luận kiểm tra chung chịu trách nhiệm về tổ chức kiểm soát của địa phương; cần tự xem xét hồ sơ, nhận ra rủi ro."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N05",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Người tổng hợp số liệu dự toán chi tiết (theo chỉ tiêu tỉnh giao, định mức) phải tự lập đúng, dùng được ngay cho tờ trình."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N05",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu dự toán, phân bổ, điều chỉnh là nhiệm vụ chính của công chức tài chính - ngân sách; phải tự lập đúng quy định, đúng nguồn bổ sung của tỉnh."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N05",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người kiểm soát dự toán của nhóm (lãnh đạo bộ phận tài chính, người được giao kiểm tra trước khi trình) phải tự phát hiện dự toán sai định mức, sai nguồn, thiếu nhiệm vụ chi bắt buộc; thẩm tra của Hội đồng nhân dân khai ở N03."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N05",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Chủ tịch Ủy ban nhân dân quyết định phân bổ, điều chỉnh dự toán và chịu trách nhiệm điều hành ngân sách; cần tự nhận ra rủi ro (hụt thu, chi vượt nguồn) trong hồ sơ trình."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N06",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Phần việc riêng: lập bảng giao dự toán chi tiết cho từng đơn vị trực thuộc, theo dõi thực hiện dự toán, đặt hàng, tổng hợp số liệu quyết toán đơn vị để xét duyệt (khác dự toán chung của ngân sách xã ở N05 và kế toán của đơn vị mình ở N08). Người được giao phải tự lập đúng, đủ."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N06",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu giao dự toán, đặt hàng, xét duyệt quyết toán cho trường học, trạm y tế trực thuộc xã đòi hỏi tự lập đúng biên bản, thông báo theo quy định."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N06",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Kiểm tra, xét duyệt quyết toán đơn vị trực thuộc là kiểm tra hồ sơ người khác lập; cần tự phát hiện chi sai chế độ, sai nguồn."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N06",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Người ký giao dự toán, thông báo xét duyệt quyết toán cho đơn vị cần tự nhận ra rủi ro trước khi ký."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N07",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Kế toán, thủ quỹ, người thu phí lập hồ sơ chi, chứng từ giao dịch Kho bạc hằng ngày; phải đúng ngay để được thanh toán, không thể chờ hướng dẫn từng lần."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N07",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu chi chế độ, chính sách, quản lý thu từ đất, tài sản phải tự lập đúng tờ trình, dự toán chi tiết."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N07",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Kiểm soát chi trước khi chủ tài khoản ký (kế toán trưởng, lãnh đạo phòng) phải tự phát hiện chi sai chế độ, thiếu hồ sơ."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N07",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Chủ tài khoản duyệt chi chịu trách nhiệm trực tiếp về từng khoản chi; cần tự xem xét hồ sơ chi, nhận ra rủi ro."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N08",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Hạch toán, đối chiếu, khóa sổ phải đúng mục lục ngân sách và khớp Kho bạc; sai sót làm sai báo cáo quyết toán."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N08",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người tham mưu báo cáo tài chính, báo cáo chấp hành phải tự lập đúng biểu mẫu, đúng số liệu để trình."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N08",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Kế toán trưởng, người phụ trách kế toán kiểm soát sổ sách, báo cáo; phải tự phát hiện sai hạch toán, chênh lệch đối chiếu."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N08",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Người ký chứng từ, báo cáo kế toán không trực tiếp hạch toán nhưng chịu trách nhiệm về hồ sơ mình ký; cần tự xem xét chứng từ, báo cáo, nhận ra khoản bất thường trước khi ký. Thống nhất mức 3 với vai trò Quyết định ở các nhóm khác."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N09",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Xử lý số dư, tạm ứng, chuyển nguồn cuối năm phải đúng thời hạn, đúng quy định; sai sót ảnh hưởng trực tiếp quyết toán."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N09",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu báo cáo quyết toán trình Hội đồng nhân dân, gửi cơ quan tài chính cấp tỉnh phải tự lập đúng biểu, thuyết minh, giải trình."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N09",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người kiểm soát báo cáo quyết toán của nhóm (lãnh đạo bộ phận tài chính, người được giao kiểm tra trước khi trình) phải tự phát hiện chuyển nguồn sai, số dư chưa xử lý; thẩm tra của Hội đồng nhân dân khai ở N03."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N09",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Chủ tịch Ủy ban nhân dân trình phê chuẩn quyết toán, chịu trách nhiệm số liệu; cần tự nhận ra rủi ro trước khi trình Hội đồng nhân dân."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N10",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Mở sổ, kiểm kê, đối chiếu tài sản là việc định kỳ; phải tự làm đúng để số liệu tài sản khớp sổ kế toán."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N10",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu điều chuyển, thanh lý, khai thác tài sản phải tự lập đúng hồ sơ, đúng thẩm quyền, trình tự."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N10",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Kiểm tra việc sử dụng, xử lý tài sản phải tự phát hiện sử dụng sai mục đích, vượt tiêu chuẩn, thanh lý sai trình tự."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N10",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Người quyết định điều chuyển, thanh lý, cho thuê tài sản chịu trách nhiệm về thẩm quyền và giá trị; cần tự nhận ra rủi ro."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N11",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Lập hồ sơ, theo dõi hiện trạng nhà đất, đất công ích, tài sản kết cấu hạ tầng giao xã quản lý phải đúng, đầy đủ để quản lý, khai thác."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N11",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu phương án quản lý, khai thác, xử lý nhà đất, trụ sở dôi dư phải tự lập đúng quy định."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N11",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Kiểm tra quản lý đất công ích, nhà đất phải tự phát hiện cho thuê, sử dụng sai, thất thu."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N11",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Quyết định về khai thác đất công ích, xử lý nhà đất gắn rủi ro lớn; người quyết định cần tự nhận ra rủi ro."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N12",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Phần việc gồm lập phần kinh phí, nguồn kinh phí của phương án bồi thường, hỗ trợ khi được giao và lập danh sách, chứng từ chi trả, khấu trừ nghĩa vụ tài chính theo phương án được duyệt; tiền chi trực tiếp cho người dân nên phải tự lập đúng."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N12",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu phần kinh phí, nguồn kinh phí của phương án và tờ trình chi trả, khấu trừ nghĩa vụ tài chính; phải tự nêu đúng căn cứ, số liệu, nguồn."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N12",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Kiểm tra phần kinh phí, nguồn kinh phí của phương án và hồ sơ chi trả; phải tự phát hiện sai đối tượng, sai đơn giá, thiếu nguồn so với phương án."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N12",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Duyệt phần kinh phí của phương án theo thẩm quyền được giao và duyệt chi trả; cần tự xem xét hồ sơ, đối chiếu nguồn kinh phí và phương án, nhận ra rủi ro chi sai."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N13",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Lập dự toán mua sắm, hồ sơ lựa chọn nhà thầu, hợp đồng, nghiệm thu phải đúng trình tự; sai sót dẫn tới vi phạm đấu thầu."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N13",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu kế hoạch, giá gói thầu, kết quả lựa chọn nhà thầu phải tự lập đúng quy định để trình phê duyệt."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N13",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Kiểm tra hồ sơ mua sắm, lựa chọn nhà thầu phải tự phát hiện chia nhỏ gói thầu, sai hình thức, giá không hợp lý."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N13",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Người có thẩm quyền phê duyệt kế hoạch, kết quả lựa chọn nhà thầu ra quyết định trực tiếp ở từng bước; quyết định của họ là điểm kiểm soát chính, nên cần tự xem xét hồ sơ."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N14",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Người lập hồ sơ thanh toán, tạm ứng vốn, quản lý hợp đồng phải lập đúng để Kho bạc chấp nhận và tránh thanh toán sai."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N14",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu chủ trương, kế hoạch vốn, chuẩn bị dự án phải tự lập đúng trình tự đầu tư công."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N14",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Kiểm tra hồ sơ dự án, nghiệm thu, thanh toán phải tự phát hiện khối lượng, đơn giá bất hợp lý, sai trình tự."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N14",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Quyết định chủ trương, phê duyệt dự án, kế hoạch vốn gắn trách nhiệm người có thẩm quyền; cần tự nhận ra rủi ro trong hồ sơ."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N15",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Lập hồ sơ quyết toán dự án hoàn thành, bàn giao tài sản hình thành phải đúng biểu mẫu, đúng số liệu vốn."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N15",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu phê duyệt quyết toán dự án phải tự lập tờ trình trên cơ sở báo cáo thẩm tra."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N15",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Thẩm tra quyết toán dự án là kiểm tra chuyên sâu; người được giao thẩm tra phải tự phát hiện chi phí không hợp lệ."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N15",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Người phê duyệt quyết toán dự án chịu trách nhiệm về giá trị quyết toán; cần tự xem xét báo cáo thẩm tra, nhận ra rủi ro."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N16",
+    "roleId": "DIRECT",
+    "requiredLevel": 3,
+    "rationale": "Kế toán đơn vị sự nghiệp, đơn vị dự toán lập dự toán, quỹ lương, chứng từ chi của đơn vị; phải đúng ngay."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N16",
+    "roleId": "ADVISORY",
+    "requiredLevel": 3,
+    "rationale": "Tham mưu phương án tự chủ, quy chế chi tiêu nội bộ phải tự lập đúng quy định để thủ trưởng ban hành."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N16",
+    "roleId": "SUPERVISORY",
+    "requiredLevel": 3,
+    "rationale": "Người kiểm tra trong đơn vị phải tự phát hiện chi sai quy chế, sai nguồn."
+  },
+  {
+    "schemaVersion": "3.3",
+    "workgroupId": "N16",
+    "roleId": "APPROVAL",
+    "requiredLevel": 3,
+    "rationale": "Thủ trưởng đơn vị là chủ tài khoản, ban hành quy chế chi tiêu nội bộ; cần tự xem xét hồ sơ, nhận ra rủi ro."
+  }
+]

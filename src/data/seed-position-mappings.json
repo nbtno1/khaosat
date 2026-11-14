@@ -1,0 +1,632 @@
+[
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "UBND",
+    "agencyName": "Lãnh đạo Ủy ban nhân dân xã/phường",
+    "positionCode": "CHU_TICH_UBND",
+    "positionTitle": "Chủ tịch Ủy ban nhân dân",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N04",
+      "N05",
+      "N07",
+      "N09",
+      "N10",
+      "N13",
+      "N14"
+    ],
+    "commonRoleId": "APPROVAL",
+    "estimatedMinutes": 17
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "UBND",
+    "agencyName": "Lãnh đạo Ủy ban nhân dân xã/phường",
+    "positionCode": "PHO_CHU_TICH_UBND",
+    "positionTitle": "Phó Chủ tịch Ủy ban nhân dân",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N04",
+      "N05",
+      "N07",
+      "N09",
+      "N10",
+      "N13",
+      "N14"
+    ],
+    "commonRoleId": "APPROVAL",
+    "estimatedMinutes": 17
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "UBND",
+    "agencyName": "Lãnh đạo Ủy ban nhân dân xã/phường",
+    "positionCode": "UBND_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "HDND",
+    "agencyName": "Hội đồng nhân dân xã/phường",
+    "positionCode": "LANH_DAO_HDND",
+    "positionTitle": "Chủ tịch, Phó Chủ tịch Hội đồng nhân dân",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N03"
+    ],
+    "commonRoleId": "SUPERVISORY",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "HDND",
+    "agencyName": "Hội đồng nhân dân xã/phường",
+    "positionCode": "BAN_KT_NS_HDND",
+    "positionTitle": "Trưởng, Phó Trưởng Ban Kinh tế-Ngân sách Hội đồng nhân dân",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N03"
+    ],
+    "commonRoleId": "SUPERVISORY",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "HDND",
+    "agencyName": "Hội đồng nhân dân xã/phường",
+    "positionCode": "DAI_BIEU_HDND_KHAC",
+    "positionTitle": "Đại biểu Hội đồng nhân dân khác",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N03"
+    ],
+    "commonRoleId": "SUPERVISORY",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "HDND",
+    "agencyName": "Hội đồng nhân dân xã/phường",
+    "positionCode": "HDND_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "VP_HDND_UBND",
+    "agencyName": "Văn phòng Hội đồng nhân dân và Ủy ban nhân dân",
+    "positionCode": "LANH_DAO_VP",
+    "positionTitle": "Chánh, Phó Chánh Văn phòng",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N10",
+      "N11",
+      "N12",
+      "N13",
+      "N14",
+      "N15"
+    ],
+    "commonRoleId": "SUPERVISORY",
+    "estimatedMinutes": 16
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "VP_HDND_UBND",
+    "agencyName": "Văn phòng Hội đồng nhân dân và Ủy ban nhân dân",
+    "positionCode": "VP_CC_TAI_CHINH_KT",
+    "positionTitle": "Công chức phụ trách tài chính, kế toán của cơ quan",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N07",
+      "N08",
+      "N09"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 12
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "VP_HDND_UBND",
+    "agencyName": "Văn phòng Hội đồng nhân dân và Ủy ban nhân dân",
+    "positionCode": "VP_CC_QUAN_TRI_TAI_SAN",
+    "positionTitle": "Công chức phụ trách quản trị, tài sản, mua sắm của cơ quan",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N10",
+      "N11",
+      "N12",
+      "N13",
+      "N14",
+      "N15"
+    ],
+    "commonRoleId": "ADVISORY",
+    "estimatedMinutes": 16
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "VP_HDND_UBND",
+    "agencyName": "Văn phòng Hội đồng nhân dân và Ủy ban nhân dân",
+    "positionCode": "VP_THU_QUY",
+    "positionTitle": "Thủ quỹ",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N07",
+      "N08",
+      "N09"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 12
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "VP_HDND_UBND",
+    "agencyName": "Văn phòng Hội đồng nhân dân và Ủy ban nhân dân",
+    "positionCode": "VP_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "PHONG_KINH_TE",
+    "agencyName": "Phòng Kinh tế (xã) / Phòng Kinh tế, Hạ tầng và Đô thị (phường)",
+    "positionCode": "LANH_DAO_PHONG_KT",
+    "positionTitle": "Trưởng phòng, Phó Trưởng phòng",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N05",
+      "N06",
+      "N07",
+      "N08",
+      "N09",
+      "N15"
+    ],
+    "commonRoleId": "SUPERVISORY",
+    "estimatedMinutes": 16
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "PHONG_KINH_TE",
+    "agencyName": "Phòng Kinh tế (xã) / Phòng Kinh tế, Hạ tầng và Đô thị (phường)",
+    "positionCode": "KT_CC_TAI_CHINH_NS",
+    "positionTitle": "Công chức tài chính-ngân sách",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N05",
+      "N06",
+      "N07",
+      "N08",
+      "N09",
+      "N15"
+    ],
+    "commonRoleId": "ADVISORY",
+    "estimatedMinutes": 16
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "PHONG_KINH_TE",
+    "agencyName": "Phòng Kinh tế (xã) / Phòng Kinh tế, Hạ tầng và Đô thị (phường)",
+    "positionCode": "KT_CC_KE_TOAN_NS",
+    "positionTitle": "Công chức kế toán ngân sách, kế toán Ủy ban nhân dân",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N07",
+      "N08",
+      "N09"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 12
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "PHONG_KINH_TE",
+    "agencyName": "Phòng Kinh tế (xã) / Phòng Kinh tế, Hạ tầng và Đô thị (phường)",
+    "positionCode": "KT_CC_TAI_SAN_MUA_SAM",
+    "positionTitle": "Công chức phụ trách tài sản công, mua sắm",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N10",
+      "N11",
+      "N12",
+      "N13",
+      "N14",
+      "N15"
+    ],
+    "commonRoleId": "ADVISORY",
+    "estimatedMinutes": 16
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "PHONG_KINH_TE",
+    "agencyName": "Phòng Kinh tế (xã) / Phòng Kinh tế, Hạ tầng và Đô thị (phường)",
+    "positionCode": "KT_CC_DAU_TU_XAY_DUNG",
+    "positionTitle": "Công chức phụ trách đầu tư công, xây dựng, hạ tầng",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N10",
+      "N11",
+      "N12",
+      "N13",
+      "N14",
+      "N15"
+    ],
+    "commonRoleId": "ADVISORY",
+    "estimatedMinutes": 16
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "PHONG_KINH_TE",
+    "agencyName": "Phòng Kinh tế (xã) / Phòng Kinh tế, Hạ tầng và Đô thị (phường)",
+    "positionCode": "KT_CC_DAT_DAI_TAI_NGUYEN",
+    "positionTitle": "Công chức phụ trách đất đai, tài nguyên",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N10",
+      "N11",
+      "N12",
+      "N13",
+      "N14",
+      "N15"
+    ],
+    "commonRoleId": "ADVISORY",
+    "estimatedMinutes": 16
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "PHONG_KINH_TE",
+    "agencyName": "Phòng Kinh tế (xã) / Phòng Kinh tế, Hạ tầng và Đô thị (phường)",
+    "positionCode": "KT_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "PHONG_VAN_HOA_XA_HOI",
+    "agencyName": "Phòng Văn hóa-Xã hội",
+    "positionCode": "VHXH_QL_CHI_TRA_KINH_PHI",
+    "positionTitle": "Vị trí có quản lý, chi trả kinh phí (chính sách xã hội, giáo dục, y tế, văn hóa)",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N05",
+      "N06",
+      "N07",
+      "N08",
+      "N09"
+    ],
+    "commonRoleId": "ADVISORY",
+    "estimatedMinutes": 13
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "PHONG_VAN_HOA_XA_HOI",
+    "agencyName": "Phòng Văn hóa-Xã hội",
+    "positionCode": "VHXH_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "TT_HANH_CHINH_CONG",
+    "agencyName": "Trung tâm phục vụ hành chính công",
+    "positionCode": "LANH_DAO_TTHCC",
+    "positionTitle": "Giám đốc, Phó Giám đốc Trung tâm",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N07",
+      "N08"
+    ],
+    "commonRoleId": "SUPERVISORY",
+    "estimatedMinutes": 10
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "TT_HANH_CHINH_CONG",
+    "agencyName": "Trung tâm phục vụ hành chính công",
+    "positionCode": "TTHCC_THU_PHI_LE_PHI",
+    "positionTitle": "Người thu phí, lệ phí, quản lý tài chính của Trung tâm",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N07",
+      "N08"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 10
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "TT_HANH_CHINH_CONG",
+    "agencyName": "Trung tâm phục vụ hành chính công",
+    "positionCode": "TTHCC_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "DON_VI_SU_NGHIEP",
+    "agencyName": "Đơn vị sự nghiệp công lập trực thuộc (trường học, trạm y tế, trung tâm…)",
+    "positionCode": "DVSN_THU_TRUONG",
+    "positionTitle": "Thủ trưởng, Phó thủ trưởng đơn vị",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N08",
+      "N10",
+      "N13",
+      "N16"
+    ],
+    "commonRoleId": "APPROVAL",
+    "estimatedMinutes": 13
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "DON_VI_SU_NGHIEP",
+    "agencyName": "Đơn vị sự nghiệp công lập trực thuộc (trường học, trạm y tế, trung tâm…)",
+    "positionCode": "DVSN_KE_TOAN",
+    "positionTitle": "Kế toán đơn vị",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N07",
+      "N08",
+      "N10",
+      "N13",
+      "N16"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 14
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "DON_VI_SU_NGHIEP",
+    "agencyName": "Đơn vị sự nghiệp công lập trực thuộc (trường học, trạm y tế, trung tâm…)",
+    "positionCode": "DVSN_QL_TAI_SAN",
+    "positionTitle": "Người quản lý tài sản, thiết bị, mua sắm của đơn vị",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N08",
+      "N10",
+      "N13",
+      "N16"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 13
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "DON_VI_SU_NGHIEP",
+    "agencyName": "Đơn vị sự nghiệp công lập trực thuộc (trường học, trạm y tế, trung tâm…)",
+    "positionCode": "DVSN_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "BAN_QLDA",
+    "agencyName": "Ban quản lý dự án, tổ hoặc người được giao quản lý dự án",
+    "positionCode": "BQLDA_TRUONG_BAN",
+    "positionTitle": "Trưởng ban, Phó Trưởng ban hoặc người được giao quản lý dự án",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N10",
+      "N12",
+      "N13",
+      "N14",
+      "N15"
+    ],
+    "commonRoleId": "SUPERVISORY",
+    "estimatedMinutes": 14
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "BAN_QLDA",
+    "agencyName": "Ban quản lý dự án, tổ hoặc người được giao quản lý dự án",
+    "positionCode": "BQLDA_CAN_BO_KT",
+    "positionTitle": "Cán bộ kỹ thuật, giám sát, kế toán dự án",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N10",
+      "N12",
+      "N13",
+      "N14",
+      "N15"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 14
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "BAN_QLDA",
+    "agencyName": "Ban quản lý dự án, tổ hoặc người được giao quản lý dự án",
+    "positionCode": "BQLDA_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "VP_DANG_UY",
+    "agencyName": "Văn phòng Đảng ủy xã/phường",
+    "positionCode": "VPDU_LANH_DAO",
+    "positionTitle": "Chánh, Phó Chánh Văn phòng phụ trách tài chính",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N08",
+      "N10",
+      "N13",
+      "N16"
+    ],
+    "commonRoleId": "APPROVAL",
+    "estimatedMinutes": 13
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "VP_DANG_UY",
+    "agencyName": "Văn phòng Đảng ủy xã/phường",
+    "positionCode": "VPDU_KE_TOAN",
+    "positionTitle": "Kế toán, người phụ trách tài chính, tài sản",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N07",
+      "N08",
+      "N10",
+      "N13",
+      "N16"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 14
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "VP_DANG_UY",
+    "agencyName": "Văn phòng Đảng ủy xã/phường",
+    "positionCode": "VPDU_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "CO_QUAN_MTTQ_DOAN_THE",
+    "agencyName": "Cơ quan Ủy ban Mặt trận Tổ quốc Việt Nam và các tổ chức chính trị-xã hội cấp xã",
+    "positionCode": "MTTQ_NGUOI_DUNG_DAU",
+    "positionTitle": "Người đứng đầu, cấp phó phụ trách tài chính",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N08",
+      "N10",
+      "N13",
+      "N16"
+    ],
+    "commonRoleId": "APPROVAL",
+    "estimatedMinutes": 13
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "CO_QUAN_MTTQ_DOAN_THE",
+    "agencyName": "Cơ quan Ủy ban Mặt trận Tổ quốc Việt Nam và các tổ chức chính trị-xã hội cấp xã",
+    "positionCode": "MTTQ_KE_TOAN",
+    "positionTitle": "Kế toán, người phụ trách tài chính, tài sản",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N07",
+      "N08",
+      "N10",
+      "N13",
+      "N16"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 14
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "CO_QUAN_MTTQ_DOAN_THE",
+    "agencyName": "Cơ quan Ủy ban Mặt trận Tổ quốc Việt Nam và các tổ chức chính trị-xã hội cấp xã",
+    "positionCode": "MTTQ_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "DON_VI_KHAC",
+    "agencyName": "Đơn vị khác được giao dự toán từ ngân sách cấp xã",
+    "positionCode": "DVKHAC_NGUOI_DUNG_DAU",
+    "positionTitle": "Người đứng đầu, cấp phó phụ trách tài chính",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N08",
+      "N10",
+      "N13",
+      "N16"
+    ],
+    "commonRoleId": "APPROVAL",
+    "estimatedMinutes": 13
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "DON_VI_KHAC",
+    "agencyName": "Đơn vị khác được giao dự toán từ ngân sách cấp xã",
+    "positionCode": "DVKHAC_KE_TOAN",
+    "positionTitle": "Kế toán, người phụ trách tài chính, tài sản",
+    "suggestedWorkgroupIds": [
+      "N01",
+      "N02",
+      "N07",
+      "N08",
+      "N10",
+      "N13",
+      "N16"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 14
+  },
+  {
+    "schemaVersion": "3.3",
+    "agencyCode": "DON_VI_KHAC",
+    "agencyName": "Đơn vị khác được giao dự toán từ ngân sách cấp xã",
+    "positionCode": "DVKHAC_VI_TRI_KHAC",
+    "positionTitle": "Vị trí khác",
+    "suggestedWorkgroupIds": [
+      "N01"
+    ],
+    "commonRoleId": "DIRECT",
+    "estimatedMinutes": 8
+  }
+]

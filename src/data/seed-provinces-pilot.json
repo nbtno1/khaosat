@@ -1,0 +1,628 @@
+{
+  "provinces": [
+    {
+      "code": "01",
+      "name": "Thành phố Hà Nội"
+    },
+    {
+      "code": "02",
+      "name": "Tỉnh Hà Giang"
+    },
+    {
+      "code": "04",
+      "name": "Tỉnh Cao Bằng"
+    },
+    {
+      "code": "06",
+      "name": "Tỉnh Bắc Kạn"
+    },
+    {
+      "code": "08",
+      "name": "Tỉnh Tuyên Quang"
+    },
+    {
+      "code": "10",
+      "name": "Tỉnh Lào Cai"
+    },
+    {
+      "code": "11",
+      "name": "Tỉnh Điện Biên"
+    },
+    {
+      "code": "12",
+      "name": "Tỉnh Lai Châu"
+    },
+    {
+      "code": "14",
+      "name": "Tỉnh Sơn La"
+    },
+    {
+      "code": "15",
+      "name": "Tỉnh Yên Bái"
+    },
+    {
+      "code": "17",
+      "name": "Tỉnh Hoà Bình"
+    },
+    {
+      "code": "19",
+      "name": "Tỉnh Thái Nguyên"
+    },
+    {
+      "code": "20",
+      "name": "Tỉnh Lạng Sơn"
+    },
+    {
+      "code": "22",
+      "name": "Tỉnh Quảng Ninh"
+    },
+    {
+      "code": "24",
+      "name": "Tỉnh Bắc Giang"
+    },
+    {
+      "code": "25",
+      "name": "Tỉnh Phú Thọ"
+    },
+    {
+      "code": "26",
+      "name": "Tỉnh Vĩnh Phúc"
+    },
+    {
+      "code": "27",
+      "name": "Tỉnh Bắc Ninh"
+    },
+    {
+      "code": "30",
+      "name": "Tỉnh Hải Dương"
+    },
+    {
+      "code": "31",
+      "name": "Thành phố Hải Phòng"
+    },
+    {
+      "code": "33",
+      "name": "Tỉnh Hưng Yên"
+    },
+    {
+      "code": "34",
+      "name": "Tỉnh Thái Bình"
+    },
+    {
+      "code": "35",
+      "name": "Tỉnh Hà Nam"
+    },
+    {
+      "code": "36",
+      "name": "Tỉnh Nam Định"
+    },
+    {
+      "code": "37",
+      "name": "Tỉnh Ninh Bình"
+    },
+    {
+      "code": "38",
+      "name": "Tỉnh Thanh Hóa"
+    },
+    {
+      "code": "40",
+      "name": "Tỉnh Nghệ An"
+    },
+    {
+      "code": "42",
+      "name": "Tỉnh Hà Tĩnh"
+    },
+    {
+      "code": "44",
+      "name": "Tỉnh Quảng Bình"
+    },
+    {
+      "code": "45",
+      "name": "Tỉnh Quảng Trị"
+    },
+    {
+      "code": "46",
+      "name": "Tỉnh Thừa Thiên Huế"
+    },
+    {
+      "code": "48",
+      "name": "Thành phố Đà Nẵng"
+    },
+    {
+      "code": "79",
+      "name": "Thành phố Hồ Chí Minh"
+    },
+    {
+      "code": "92",
+      "name": "Thành phố Cần Thơ"
+    }
+  ],
+  "pilotCommunes": [
+    {
+      "provinceCode": "01",
+      "communeCode": "00001",
+      "communeName": "Phường Phúc Xá",
+      "districtName": "Quận Ba Đình"
+    },
+    {
+      "provinceCode": "01",
+      "communeCode": "00004",
+      "communeName": "Phường Trúc Bạch",
+      "districtName": "Quận Ba Đình"
+    },
+    {
+      "provinceCode": "01",
+      "communeCode": "00006",
+      "communeName": "Phường Vĩnh Phúc",
+      "districtName": "Quận Ba Đình"
+    },
+    {
+      "provinceCode": "01",
+      "communeCode": "00007",
+      "communeName": "Phường Cống Vị",
+      "districtName": "Quận Ba Đình"
+    },
+    {
+      "provinceCode": "01",
+      "communeCode": "00008",
+      "communeName": "Phường Liễu Giai",
+      "districtName": "Quận Ba Đình"
+    },
+    {
+      "provinceCode": "01",
+      "communeCode": "00028",
+      "communeName": "Phường Hàng Bạc",
+      "districtName": "Quận Hoàn Kiếm"
+    },
+    {
+      "provinceCode": "01",
+      "communeCode": "00031",
+      "communeName": "Phường Tràng Tiền",
+      "districtName": "Quận Hoàn Kiếm"
+    },
+    {
+      "provinceCode": "40",
+      "communeCode": "15649",
+      "communeName": "Phường Bến Thủy",
+      "districtName": "Thành phố Vinh"
+    },
+    {
+      "provinceCode": "40",
+      "communeCode": "15652",
+      "communeName": "Phường Cửa Nam",
+      "districtName": "Thành phố Vinh"
+    },
+    {
+      "provinceCode": "40",
+      "communeCode": "15655",
+      "communeName": "Phường Đội Cung",
+      "districtName": "Thành phố Vinh"
+    },
+    {
+      "provinceCode": "40",
+      "communeCode": "15658",
+      "communeName": "Phường Đông Vĩnh",
+      "districtName": "Thành phố Vinh"
+    },
+    {
+      "provinceCode": "40",
+      "communeCode": "15700",
+      "communeName": "Xã Nghi Kim",
+      "districtName": "Thành phố Vinh"
+    },
+    {
+      "provinceCode": "46",
+      "communeCode": "19759",
+      "communeName": "Phường Phú Nhuận",
+      "districtName": "Thành phố Huế"
+    },
+    {
+      "provinceCode": "46",
+      "communeCode": "19762",
+      "communeName": "Phường Vĩnh Ninh",
+      "districtName": "Thành phố Huế"
+    },
+    {
+      "provinceCode": "46",
+      "communeCode": "19765",
+      "communeName": "Phường Phước Vĩnh",
+      "districtName": "Thành phố Huế"
+    },
+    {
+      "provinceCode": "48",
+      "communeCode": "20194",
+      "communeName": "Phường Thạch Thang",
+      "districtName": "Quận Hải Châu"
+    },
+    {
+      "provinceCode": "48",
+      "communeCode": "20197",
+      "communeName": "Phường Hải Châu I",
+      "districtName": "Quận Hải Châu"
+    },
+    {
+      "provinceCode": "48",
+      "communeCode": "20200",
+      "communeName": "Phường Hải Châu II",
+      "districtName": "Quận Hải Châu"
+    },
+    {
+      "provinceCode": "79",
+      "communeCode": "26734",
+      "communeName": "Phường Bến Nghé",
+      "districtName": "Quận 1"
+    },
+    {
+      "provinceCode": "79",
+      "communeCode": "26737",
+      "communeName": "Phường Bến Thành",
+      "districtName": "Quận 1"
+    },
+    {
+      "provinceCode": "79",
+      "communeCode": "26740",
+      "communeName": "Phường Cầu Kho",
+      "districtName": "Quận 1"
+    },
+    {
+      "provinceCode": "79",
+      "communeCode": "26743",
+      "communeName": "Phường Cầu Ông Lãnh",
+      "districtName": "Quận 1"
+    },
+    {
+      "provinceCode": "79",
+      "communeCode": "26746",
+      "communeName": "Phường Cô Giang",
+      "districtName": "Quận 1"
+    },
+    {
+      "provinceCode": "02",
+      "communeCode": "02001",
+      "communeName": "Phường 1 (Tỉnh Hà Giang)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "02",
+      "communeCode": "02002",
+      "communeName": "Xã Tân Tiến (Tỉnh Hà Giang)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "04",
+      "communeCode": "04001",
+      "communeName": "Phường 1 (Tỉnh Cao Bằng)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "04",
+      "communeCode": "04002",
+      "communeName": "Xã Tân Tiến (Tỉnh Cao Bằng)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "06",
+      "communeCode": "06001",
+      "communeName": "Phường 1 (Tỉnh Bắc Kạn)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "06",
+      "communeCode": "06002",
+      "communeName": "Xã Tân Tiến (Tỉnh Bắc Kạn)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "08",
+      "communeCode": "08001",
+      "communeName": "Phường 1 (Tỉnh Tuyên Quang)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "08",
+      "communeCode": "08002",
+      "communeName": "Xã Tân Tiến (Tỉnh Tuyên Quang)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "10",
+      "communeCode": "10001",
+      "communeName": "Phường 1 (Tỉnh Lào Cai)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "10",
+      "communeCode": "10002",
+      "communeName": "Xã Tân Tiến (Tỉnh Lào Cai)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "11",
+      "communeCode": "11001",
+      "communeName": "Phường 1 (Tỉnh Điện Biên)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "11",
+      "communeCode": "11002",
+      "communeName": "Xã Tân Tiến (Tỉnh Điện Biên)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "12",
+      "communeCode": "12001",
+      "communeName": "Phường 1 (Tỉnh Lai Châu)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "12",
+      "communeCode": "12002",
+      "communeName": "Xã Tân Tiến (Tỉnh Lai Châu)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "14",
+      "communeCode": "14001",
+      "communeName": "Phường 1 (Tỉnh Sơn La)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "14",
+      "communeCode": "14002",
+      "communeName": "Xã Tân Tiến (Tỉnh Sơn La)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "15",
+      "communeCode": "15001",
+      "communeName": "Phường 1 (Tỉnh Yên Bái)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "15",
+      "communeCode": "15002",
+      "communeName": "Xã Tân Tiến (Tỉnh Yên Bái)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "17",
+      "communeCode": "17001",
+      "communeName": "Phường 1 (Tỉnh Hoà Bình)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "17",
+      "communeCode": "17002",
+      "communeName": "Xã Tân Tiến (Tỉnh Hoà Bình)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "19",
+      "communeCode": "19001",
+      "communeName": "Phường 1 (Tỉnh Thái Nguyên)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "19",
+      "communeCode": "19002",
+      "communeName": "Xã Tân Tiến (Tỉnh Thái Nguyên)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "20",
+      "communeCode": "20001",
+      "communeName": "Phường 1 (Tỉnh Lạng Sơn)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "20",
+      "communeCode": "20002",
+      "communeName": "Xã Tân Tiến (Tỉnh Lạng Sơn)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "22",
+      "communeCode": "22001",
+      "communeName": "Phường 1 (Tỉnh Quảng Ninh)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "22",
+      "communeCode": "22002",
+      "communeName": "Xã Tân Tiến (Tỉnh Quảng Ninh)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "24",
+      "communeCode": "24001",
+      "communeName": "Phường 1 (Tỉnh Bắc Giang)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "24",
+      "communeCode": "24002",
+      "communeName": "Xã Tân Tiến (Tỉnh Bắc Giang)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "25",
+      "communeCode": "25001",
+      "communeName": "Phường 1 (Tỉnh Phú Thọ)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "25",
+      "communeCode": "25002",
+      "communeName": "Xã Tân Tiến (Tỉnh Phú Thọ)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "26",
+      "communeCode": "26001",
+      "communeName": "Phường 1 (Tỉnh Vĩnh Phúc)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "26",
+      "communeCode": "26002",
+      "communeName": "Xã Tân Tiến (Tỉnh Vĩnh Phúc)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "27",
+      "communeCode": "27001",
+      "communeName": "Phường 1 (Tỉnh Bắc Ninh)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "27",
+      "communeCode": "27002",
+      "communeName": "Xã Tân Tiến (Tỉnh Bắc Ninh)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "30",
+      "communeCode": "30001",
+      "communeName": "Phường 1 (Tỉnh Hải Dương)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "30",
+      "communeCode": "30002",
+      "communeName": "Xã Tân Tiến (Tỉnh Hải Dương)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "31",
+      "communeCode": "31001",
+      "communeName": "Phường 1 (Thành phố Hải Phòng)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "31",
+      "communeCode": "31002",
+      "communeName": "Xã Tân Tiến (Thành phố Hải Phòng)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "33",
+      "communeCode": "33001",
+      "communeName": "Phường 1 (Tỉnh Hưng Yên)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "33",
+      "communeCode": "33002",
+      "communeName": "Xã Tân Tiến (Tỉnh Hưng Yên)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "34",
+      "communeCode": "34001",
+      "communeName": "Phường 1 (Tỉnh Thái Bình)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "34",
+      "communeCode": "34002",
+      "communeName": "Xã Tân Tiến (Tỉnh Thái Bình)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "35",
+      "communeCode": "35001",
+      "communeName": "Phường 1 (Tỉnh Hà Nam)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "35",
+      "communeCode": "35002",
+      "communeName": "Xã Tân Tiến (Tỉnh Hà Nam)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "36",
+      "communeCode": "36001",
+      "communeName": "Phường 1 (Tỉnh Nam Định)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "36",
+      "communeCode": "36002",
+      "communeName": "Xã Tân Tiến (Tỉnh Nam Định)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "37",
+      "communeCode": "37001",
+      "communeName": "Phường 1 (Tỉnh Ninh Bình)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "37",
+      "communeCode": "37002",
+      "communeName": "Xã Tân Tiến (Tỉnh Ninh Bình)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "38",
+      "communeCode": "38001",
+      "communeName": "Phường 1 (Tỉnh Thanh Hóa)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "38",
+      "communeCode": "38002",
+      "communeName": "Xã Tân Tiến (Tỉnh Thanh Hóa)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "42",
+      "communeCode": "42001",
+      "communeName": "Phường 1 (Tỉnh Hà Tĩnh)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "42",
+      "communeCode": "42002",
+      "communeName": "Xã Tân Tiến (Tỉnh Hà Tĩnh)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "44",
+      "communeCode": "44001",
+      "communeName": "Phường 1 (Tỉnh Quảng Bình)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "44",
+      "communeCode": "44002",
+      "communeName": "Xã Tân Tiến (Tỉnh Quảng Bình)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "45",
+      "communeCode": "45001",
+      "communeName": "Phường 1 (Tỉnh Quảng Trị)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "45",
+      "communeCode": "45002",
+      "communeName": "Xã Tân Tiến (Tỉnh Quảng Trị)",
+      "districtName": "Huyện ngoại thành"
+    },
+    {
+      "provinceCode": "92",
+      "communeCode": "92001",
+      "communeName": "Phường 1 (Thành phố Cần Thơ)",
+      "districtName": "Thành phố / Thị xã trung tâm"
+    },
+    {
+      "provinceCode": "92",
+      "communeCode": "92002",
+      "communeName": "Xã Tân Tiến (Thành phố Cần Thơ)",
+      "districtName": "Huyện ngoại thành"
+    }
+  ]
+}

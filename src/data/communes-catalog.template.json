@@ -1,0 +1,29 @@
+[
+  {
+    "provinceCode": "01",
+    "provinceName": "Thành phố Hà Nội",
+    "districtCode": "001",
+    "districtName": "Quận Ba Đình",
+    "communeCode": "00001",
+    "communeName": "Phường Phúc Xá",
+    "communeType": "PHUONG"
+  },
+  {
+    "provinceCode": "01",
+    "provinceName": "Thành phố Hà Nội",
+    "districtCode": "001",
+    "districtName": "Quận Ba Đình",
+    "communeCode": "00004",
+    "communeName": "Phường Trúc Bạch",
+    "communeType": "PHUONG"
+  },
+  {
+    "provinceCode": "40",
+    "provinceName": "Tỉnh Nghệ An",
+    "districtCode": "412",
+    "districtName": "Thành phố Vinh",
+    "communeCode": "15649",
+    "communeName": "Phường Bến Thủy",
+    "communeType": "PHUONG"
+  }
+]
