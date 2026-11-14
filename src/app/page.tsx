@@ -19,7 +19,7 @@ export default function Home() {
         </p>
         <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
           <Link
-            href="/admin"
+            href="/admin/dashboard"
             className="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition shadow-md"
           >
             Cổng Quản trị Hệ thống

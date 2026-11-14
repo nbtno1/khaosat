@@ -32,26 +32,34 @@ export const AppLogo: React.FC<AppLogoProps> = ({
   className = "",
   showText = false,
 }) => {
-  const [hasError, setHasError] = useState(false);
+  const [imgSrc, setImgSrc] = useState<string>("/logo.png");
+  const [hasError, setHasError] = useState<boolean>(false);
   const dimensions = SIZE_MAP[size];
+
+  const handleImageError = () => {
+    if (imgSrc === "/logo.png") {
+      // Nếu /logo.png không tồn tại, thử /logo.svg
+      setImgSrc("/logo.svg");
+    } else {
+      // Cả 2 đều không tồn tại -> hiện icon fallback
+      setHasError(true);
+    }
+  };
 
   return (
     <div className={`relative flex items-center gap-3 shrink-0 ${className}`}>
       {/* VÙNG CHỨA LOGO (LOGO SLOT) */}
       <div
-        className={`relative ${dimensions.container} rounded-2xl overflow-hidden flex items-center justify-center bg-gradient-to-br from-sky-700 to-sky-900 text-white shadow-md shadow-sky-900/20 border border-sky-400/30 transition-transform duration-200 hover:scale-105`}
-        title="Logo Kiểm toán nhà nước (Thay thế tại public/logo.png hoặc public/logo.svg)"
+        className={`relative ${dimensions.container} rounded-2xl overflow-hidden flex items-center justify-center bg-white/10 backdrop-blur-xs text-white shadow-md border border-slate-200/40 transition-transform duration-200 hover:scale-105`}
+        title="Logo Kiểm toán nhà nước"
       >
         {!hasError ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
-            src="/logo.svg"
+            src={imgSrc}
             alt="Logo Kiểm toán nhà nước"
             className="w-full h-full object-contain p-0.5"
-            onError={() => {
-              // Thử fallback sang /logo.png nếu /logo.svg lỗi, hoặc hiện fallback icon
-              setHasError(true);
-            }}
+            onError={handleImageError}
           />
         ) : (
           <div className="flex items-center justify-center w-full h-full bg-sky-800 text-amber-300">
