@@ -117,15 +117,123 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const userRole = currentUser?.role || "TECHNICAL_ADMIN";
   const visibleNavItems = navItems.filter((item) => item.roles.includes(userRole));
 
-  // Sidebar content markup reused in both Desktop and Mobile drawer
-  const SidebarContent = () => (
+  return (
+    <div className="min-h-screen bg-slate-50 flex flex-col lg:flex-row">
+      {/* 1. DESKTOP VERTICAL SIDEBAR (CỐ ĐỊNH BÊN TRÁI) */}
+      <aside className="hidden lg:flex w-64 xl:w-72 shrink-0 border-r border-slate-200/80 bg-white h-screen sticky top-0 z-30 shadow-xs">
+        <AdminSidebar
+          pathname={pathname}
+          visibleNavItems={visibleNavItems}
+          currentUser={currentUser}
+          onLogout={handleLogout}
+        />
+      </aside>
+
+      {/* 2. MOBILE TOPBAR & DRAWER (MÀN HÌNH NHỎ) */}
+      <div className="lg:hidden sticky top-0 z-40 bg-white border-b border-slate-200/90 shadow-xs">
+        <div className="px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 border border-slate-200/80"
+              aria-label="Mở menu điều hướng"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+
+            <Link href="/admin/dashboard" className="flex items-center gap-2.5">
+              <AppLogo size="sm" />
+              <div>
+                <div className="text-[9px] uppercase font-black text-sky-700">KIỂM TOÁN NHÀ NƯỚC</div>
+                <div className="text-xs font-extrabold text-slate-900 truncate max-w-[170px]">
+                  Quản lý Khảo sát
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+            title="Đăng xuất"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Mobile Slide-in Drawer */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-50 flex">
+            {/* Backdrop overlay */}
+            <div
+              className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+
+            {/* Drawer Body */}
+            <div className="relative w-72 max-w-[85%] bg-white h-full shadow-2xl z-10 flex flex-col animate-in slide-in-from-left duration-200">
+              <AdminSidebar
+                pathname={pathname}
+                visibleNavItems={visibleNavItems}
+                currentUser={currentUser}
+                onLogout={handleLogout}
+                onCloseMobile={() => setIsMobileMenuOpen(false)}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 3. MAIN CONTENT WORKSPACE (BÊN PHẢI) */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+          {children}
+        </main>
+
+        {/* Global Admin Footer */}
+        <footer className="bg-white border-t border-slate-200/80 py-4 px-6 text-center text-xs text-slate-500">
+          Hệ thống Khảo sát Năng lực Quản lý Tài chính, Tài sản công cấp xã — Trường Đào tạo và Bồi dưỡng nghiệp vụ kiểm toán (Kiểm toán nhà nước)
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+interface AdminSidebarProps {
+  pathname: string;
+  visibleNavItems: Array<{
+    label: string;
+    href: string;
+    icon: React.ComponentType<{ className?: string }>;
+    description: string;
+    roles: string[];
+  }>;
+  currentUser: CurrentUser | null;
+  onLogout: () => void;
+  onCloseMobile?: () => void;
+}
+
+/**
+ * Component Sidebar quản trị tách biệt độc lập ở top-level
+ * Đảm bảo không bị re-mount hoặc gây hydration error khi re-render
+ */
+function AdminSidebar({
+  pathname,
+  visibleNavItems,
+  currentUser,
+  onLogout,
+  onCloseMobile,
+}: AdminSidebarProps) {
+  return (
     <div className="flex flex-col h-full justify-between bg-white">
       {/* Brand & Logo Header */}
       <div>
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
           <Link
             href="/admin/dashboard"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={onCloseMobile}
             className="flex items-center gap-3 group"
           >
             <AppLogo size="md" />
@@ -140,13 +248,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </Link>
 
           {/* Close button on mobile */}
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="lg:hidden p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          {onCloseMobile && (
+            <button
+              type="button"
+              onClick={onCloseMobile}
+              className="lg:hidden p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
         </div>
 
         {/* Navigation Section */}
@@ -163,7 +273,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={onCloseMobile}
                     className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all ${
                       isActive
                         ? "bg-sky-50 text-sky-800 font-extrabold shadow-xs border-l-4 border-sky-700"
@@ -222,84 +332,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         <button
           type="button"
-          onClick={handleLogout}
+          onClick={onLogout}
           className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 border border-rose-200/70 hover:border-rose-300 transition-colors shadow-2xs"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span>Đăng xuất phiên làm việc</span>
         </button>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="min-h-screen bg-slate-50 flex flex-col lg:flex-row">
-      {/* 1. DESKTOP VERTICAL SIDEBAR (CỐ ĐỊNH BÊN TRÁI) */}
-      <aside className="hidden lg:flex w-64 xl:w-72 shrink-0 border-r border-slate-200/80 bg-white h-screen sticky top-0 z-30 shadow-xs">
-        <SidebarContent />
-      </aside>
-
-      {/* 2. MOBILE TOPBAR & DRAWER (MÀN HÌNH NHỎ) */}
-      <div className="lg:hidden sticky top-0 z-40 bg-white border-b border-slate-200/90 shadow-xs">
-        <div className="px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 border border-slate-200/80"
-              aria-label="Mở menu điều hướng"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-
-            <Link href="/admin/dashboard" className="flex items-center gap-2.5">
-              <AppLogo size="sm" />
-              <div>
-                <div className="text-[9px] uppercase font-black text-sky-700">KIỂM TOÁN NHÀ NƯỚC</div>
-                <div className="text-xs font-extrabold text-slate-900 truncate max-w-[170px]">
-                  Quản lý Khảo sát
-                </div>
-              </div>
-            </Link>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-            title="Đăng xuất"
-          >
-            <LogOut className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Mobile Slide-in Drawer */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 flex">
-            {/* Backdrop overlay */}
-            <div
-              className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs transition-opacity"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-
-            {/* Drawer Body */}
-            <div className="relative w-72 max-w-[85%] bg-white h-full shadow-2xl z-10 flex flex-col animate-in slide-in-from-left duration-200">
-              <SidebarContent />
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* 3. MAIN CONTENT WORKSPACE (BÊN PHẢI) */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
-          {children}
-        </main>
-
-        {/* Global Admin Footer */}
-        <footer className="bg-white border-t border-slate-200/80 py-4 px-6 text-center text-xs text-slate-500">
-          Hệ thống Khảo sát Năng lực Quản lý Tài chính, Tài sản công cấp xã — Trường Đào tạo và Bồi dưỡng nghiệp vụ kiểm toán (Kiểm toán nhà nước)
-        </footer>
       </div>
     </div>
   );
