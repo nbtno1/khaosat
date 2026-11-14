@@ -84,3 +84,19 @@
 - **Bối cảnh:** Cần bàn giao sớm hệ thống có khả năng vận hành thực tế đợt khảo sát và phân tích báo cáo cốt lõi.
 - **Quyết định:** Ưu tiên dồn nguồn lực hoàn thành trọn vẹn Milestone 1 đến Milestone 5 (Cổng khảo sát di động, 16 nhóm việc, rà soát trùng, 6 bảng B1–B6, thuật toán ẩn danh dưới 5 người, xuất báo cáo Excel và 23 ca kiểm thử).
 - **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
+
+---
+
+## ADR-010: KIẾN TRÚC CẨM NANG HƯỚNG DẪN SỬ DỤNG CẬP NHẬT ĐỘNG (DYNAMIC INTROSPECTION GUIDE ARCHITECTURE)
+- **Bối cảnh:** Người dùng yêu cầu bổ sung chức năng Hướng dẫn sử dụng phần mềm, và yêu cầu cẩm nang hướng dẫn phải được cập nhật động theo các chức năng thực tế trên phần mềm và cấu hình dữ liệu thay vì văn bản tĩnh cứng.
+- **Quyết định:** Xây dựng `SystemGuideService` kết hợp Dynamic Introspection + Schema Configuration + Admin In-App Notes:
+  1. Tự động đọc dữ liệu cấu hình thời gian thực từ Database Models: `SurveySchemaConfig` (phiên bản, 16 nhóm việc, 4 vai trò, mô tả mức năng lực), `Campaign` (mã đợt, số tỉnh, chỉ tiêu), `PositionWorkgroupsMapping` (gợi ý nhóm việc theo vị trí), với cơ chế fallback local JSON khi khởi động.
+  2. Bóc tách danh mục các phân hệ chức năng (Modules) đang trực tuyến trong phần mềm với phân quyền RBAC (`allowedRoles`), năng lực cốt lõi (`keyCapabilities`), quy tắc nghiệp vụ (`operationalRules`), và danh sách REST API (`apiEndpoints`).
+  3. Cung cấp API `GET /api/public/guide` và model `SystemGuide` trong MongoDB cho phép quản trị viên (`TECHNICAL_ADMIN`, `CONTENT_ADMIN`) cập nhật và lưu trữ trực tiếp các ghi chú vận hành (`PATCH /api/admin/guide/sections/[key]`) mà không cần sửa code.
+  4. Cung cấp giao diện tra cứu trực quan tại `/admin/guide` (hỗ trợ lọc module, tab đối tượng Quản trị / Cán bộ cấp xã, in PDF) và component `SurveyGuideModal` nhúng trực tiếp vào biểu mẫu khảo sát công khai `/khao-sat/[token]`.
+- **Lý do & Lợi ích:**
+  - Cẩm nang luôn phản ánh chính xác 100% hiện trạng phần mềm và dữ liệu khảo sát, tự động cập nhật khi cấu hình thay đổi mà không cần build lại ứng dụng.
+  - Ban chỉ đạo có thể bổ sung hướng dẫn tác nghiệp nóng ngay trên giao diện web.
+  - Bảo đảm tính đồng bộ cao nhất giữa đặc tả kỹ thuật, mã nguồn và cẩm nang người dùng.
+- **Trạng thái:** ĐÃ DUYỆT (APPROVED ngày 14/11/2026).
+

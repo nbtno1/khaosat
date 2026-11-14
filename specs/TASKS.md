@@ -287,20 +287,30 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 
 ---
 
-## MILESTONE 8 / MỞ RỘNG: PHÂN HỆ HƯỚNG DẪN SỬ DỤNG PHẦN MỀM (USER GUIDE MODULE)
+## MILESTONE 8 / MỞ RỘNG: PHÂN HỆ HƯỚNG DẪN SỬ DỤNG PHẦN MỀM ĐỘNG (DYNAMIC USER GUIDE MODULE)
 
-### TASK-017: Xây dựng Phân hệ Hướng dẫn Sử dụng Phần mềm Toàn diện
-- **Module:** Documentation / UI / User Experience
-- **Spec liên quan:** `specs/10-UI-UX-SPECIFICATION.md`, `specs/05-USER-ROLES-AND-USE-CASES.md`, `specs/06-BUSINESS-WORKFLOWS.md`
+### TASK-017: Xây dựng Phân hệ Hướng dẫn Sử dụng Cập nhật Động theo Phần mềm (ADR-010)
+- **Module:** Documentation / Dynamic Introspection / UI / User Experience
+- **Spec liên quan:** `specs/10-UI-UX-SPECIFICATION.md`, `specs/05-USER-ROLES-AND-USE-CASES.md`, `specs/06-BUSINESS-WORKFLOWS.md`, `specs/DECISIONS.md` (ADR-010)
 - **Mức độ ưu tiên:** P1
 - **Phụ thuộc:** TASK-014, TASK-016
-- **File đã tạo:** `src/app/(admin)/admin/guide/page.tsx`, `src/components/survey/SurveyGuideModal.tsx`, `src/components/survey/SurveyContainer.tsx`, `src/app/(admin)/layout.tsx`, `tests/e2e/guide-module.test.ts`
+- **File đã tạo/cập nhật:**
+  - `src/models/SystemGuide.ts`, `src/models/index.ts`: Mongoose schema cho ghi chú hướng dẫn và metadata cẩm nang.
+  - `src/services/system-guide.service.ts`: Dịch vụ Dynamic Introspection đọc thời gian thực từ `SurveySchemaConfig`, `Campaign`, `PositionWorkgroupsMapping`, bóc tách 6 module chức năng online kèm RBAC, năng lực cốt lõi, quy tắc nghiệp vụ và API endpoints.
+  - `src/app/api/public/guide/route.ts`: Public API trả về dữ liệu cẩm nang đồng bộ thời gian thực.
+  - `src/app/api/admin/guide/sections/[key]/route.ts`: Admin API bảo vệ bằng RBAC cho phép `TECHNICAL_ADMIN` và `CONTENT_ADMIN` lưu trữ ghi chú tác nghiệp trực tiếp vào DB.
+  - `src/app/(admin)/admin/guide/page.tsx`: Giao diện Cẩm nang Vận hành Động: banner trạng thái DB, tabs module chức năng, bộ lọc tìm kiếm, dynamic schema explorer (16 nhóm việc, 4 vai trò, mô tả mức độ), editor ghi chú trực tuyến và in PDF.
+  - `src/components/survey/SurveyGuideModal.tsx`: Component modal hướng dẫn làm bài 4 bước, Zero-PII, quy tắc nghiệp vụ và FAQ nhúng trên di động.
+  - `src/components/survey/SurveyContainer.tsx`: Header nút "Hướng dẫn làm bài" kích hoạt modal ngay trong bài khảo sát.
+  - `src/app/(admin)/layout.tsx`: Tích hợp link `/admin/guide` vào thanh điều hướng Sidebar.
+  - `tests/e2e/guide-module.test.ts`: Bộ 5 ca kiểm thử tự động cho toàn bộ phân hệ cẩm nang động.
 - **Các bước thực hiện:**
-  1. Xây dựng trang Cẩm nang Vận hành Hệ thống tại `/admin/guide` hỗ trợ chuyển đổi giữa 2 phân hệ đối tượng: Cán bộ Quản trị & Thẩm tra viên vs. Cán bộ Khảo sát Cấp xã.
-  2. Tích hợp đầy đủ 5 chuyên đề nghiệp vụ quản trị: (1) Phân quyền 5 nhóm tài khoản; (2) Điều phối đợt & Tải 34 mã QR ZIP; (3) Thẩm tra phiếu nghi trùng trên workbench; (4) Khai thác 6 bảng tổng hợp & tính khoảng thiếu hụt Gap; (5) Thuật toán ẩn danh số liệu nhỏ <5 người & xuất file Excel 6 sheet.
-  3. Xây dựng component `SurveyGuideModal` và nút "Hướng dẫn làm bài" trực tiếp trên Header bài khảo sát công khai `/khao-sat/[token]` giúp cán bộ cấp xã tra cứu tức thì 4 bước làm bài, các quy tắc nghiệp vụ quan trọng và câu hỏi thường gặp (FAQ) mà không mất dữ liệu form đang điền.
-  4. Tích hợp chức năng in ấn / xuất PDF (`window.print()`) và tìm kiếm nhanh nội dung trong tài liệu hướng dẫn.
-  5. Bổ sung mục "Hướng dẫn sử dụng" vào thanh điều hướng Admin Layout.
-- **Acceptance Criteria:** Giao diện hướng dẫn trực quan, rõ ràng, phân loại đối tượng chính xác, hỗ trợ cán bộ cấp xã thao tác nhanh trên di động; 100% test cases đạt.
-- **Test Cases:** Task 17 Guide Module Tests (PASS).
+  1. Xây dựng dịch vụ `SystemGuideService` tự động đồng bộ hóa cấu hình hệ thống (Schema 3.3, Đợt khảo sát `DOT-1-2026`, danh mục gợi ý theo vị trí) với cơ chế fallback local JSON.
+  2. Bóc tách và đăng ký đầy đủ các module phần mềm đang trực tuyến (Cổng khảo sát di động, Dashboard tiến độ, Quản lý QR 34 tỉnh, Thẩm tra phiếu trùng, 6 bảng tổng hợp B1-B6, Pipeline xuất Excel).
+  3. Cung cấp API Public và API Admin cho phép quản trị viên chỉnh sửa và lưu ghi chú hướng dẫn trực tiếp trên giao diện web vào MongoDB.
+  4. Nâng cấp giao diện `/admin/guide` thành bảng điều khiển động, phân tách đối tượng Quản trị viên và Cán bộ cấp xã, hỗ trợ in ấn PDF chuyên nghiệp.
+  5. Tích hợp `SurveyGuideModal` vào biểu mẫu khảo sát công khai `/khao-sat/[token]` giúp cán bộ tra cứu không làm gián đoạn bài làm.
+  6. Viết bộ 5 ca kiểm thử tự động kiểm tra tính toàn vẹn của dữ liệu bóc tách, bảo vệ phân quyền RBAC và giao diện người dùng.
+- **Acceptance Criteria:** Hướng dẫn cập nhật động 100% theo các module phần mềm và cấu hình DB, hỗ trợ chỉnh sửa ghi chú, in PDF, 5/5 test cases đạt, 23/23 routes build thành công.
+- **Test Cases:** Task 17 Dynamic Guide Module Tests (5/5 PASS).
 - **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)

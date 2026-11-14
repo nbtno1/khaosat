@@ -6,3 +6,4 @@ export * from "./BenchmarkMatrix";
 export * from "./PositionWorkgroupsMapping";
 export * from "./SurveyResponse";
 export * from "./AuditLog";
+export * from "./SystemGuide";

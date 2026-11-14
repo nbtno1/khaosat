@@ -6,14 +6,17 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ## [1.8.0-milestone-8] — 2026-11-14
 
-### Đã hoàn thành (Phân hệ Hướng dẫn Sử dụng Phần mềm - User Guide Module)
-- **TASK-017 (Xây dựng Cẩm nang Vận hành & Hướng dẫn Sử dụng Phần mềm):**
-  - Xây dựng trang Cẩm nang Vận hành Hệ thống tại `/admin/guide` với thiết kế trực quan, chuyển đổi linh hoạt giữa 2 phân hệ đối tượng: Cán bộ Quản trị & Thẩm tra viên vs. Cán bộ Khảo sát Cấp xã.
-  - Tích hợp 5 chuyên đề nghiệp vụ quản trị chi tiết: (1) Ma trận phân quyền 5 nhóm tài khoản; (2) Quản lý đợt khảo sát & Tải ZIP 34 mã QR cấp tỉnh (ADR-008); (3) Thẩm tra phiếu nghi trùng trên Diff View workbench; (4) Khai thác 6 bảng tổng hợp & công thức tính khoảng thiếu hụt Gap; (5) Thuật toán ẩn danh số liệu nhỏ <5 người & xuất báo cáo Excel 6 sheet.
-  - Xây dựng component `SurveyGuideModal` và nút "Hướng dẫn làm bài" trực tiếp trên Header bài khảo sát công khai `/khao-sat/[token]` giúp cán bộ cấp xã xem nhanh 4 bước thực hiện, các lưu ý nghiệp vụ cốt lõi (luồng kết thúc sớm, khó khăn max 2, quy tắc độc quyền) và câu hỏi thường gặp (FAQ).
-  - Tích hợp tính năng In / Xuất PDF (`window.print()`) và tìm kiếm nhanh từ khóa trong tài liệu.
+### Đã hoàn thành (Phân hệ Hướng dẫn Sử dụng Cập nhật Động - Dynamic User Guide Module & ADR-010)
+- **TASK-017 (Xây dựng Cẩm nang Vận hành Động & Hướng dẫn Sử dụng Tự động Cập nhật theo Phần mềm):**
+  - Xây dựng dịch vụ `SystemGuideService` (`src/services/system-guide.service.ts`) tự động bóc tách cấu hình thời gian thực từ cơ sở dữ liệu (`SurveySchemaConfig`, `Campaign`, `PositionWorkgroupsMapping`) và đăng ký động 6 modules phần mềm trực tuyến (Cổng khảo sát di động, Dashboard tiến độ, Quản lý QR 34 tỉnh, Thẩm tra phiếu trùng, 6 bảng tổng hợp B1-B6, Pipeline xuất Excel) kèm vai trò RBAC, năng lực cốt lõi, quy tắc nghiệp vụ và API endpoints.
+  - Xây dựng model Mongoose `SystemGuide` (`src/models/SystemGuide.ts`) lưu trữ các ghi chú bổ sung của Ban chỉ đạo và trạng thái cẩm nang.
+  - Xây dựng API Public `GET /api/public/guide` phân phối dữ liệu cẩm nang đồng bộ thời gian thực cho cả client và máy trạm.
+  - Xây dựng API Admin `PATCH /api/admin/guide/sections/[key]` có bảo vệ RBAC (`TECHNICAL_ADMIN`, `CONTENT_ADMIN`) cho phép chỉnh sửa và lưu trực tiếp ghi chú tác nghiệp vào MongoDB ngay trên giao diện web.
+  - Thiết kế trang Cẩm nang Vận hành Động tại `/admin/guide`: Banner trạng thái cơ sở dữ liệu thời gian thực (phiên bản schema, số nhóm việc, số vai trò, đợt khảo sát, chỉ tiêu, số modules online), tabs module chức năng động, bộ lọc tìm kiếm, dynamic schema explorer, editor ghi chú trực tuyến và in PDF.
+  - Xây dựng component `SurveyGuideModal` và nút "Hướng dẫn làm bài" trực tiếp trên Header bài khảo sát công khai `/khao-sat/[token]` giúp cán bộ cấp xã xem nhanh 4 bước thực hiện, các lưu ý nghiệp vụ cốt lõi và chính sách Zero-PII.
   - Bổ sung mục "Hướng dẫn sử dụng" vào thanh điều hướng Admin Layout cho toàn bộ các vai trò người dùng.
-  - Viết bộ kiểm thử tự động `tests/e2e/guide-module.test.ts` đạt 3/3 groups PASS (100%).
+  - Viết bộ kiểm thử tự động `tests/e2e/guide-module.test.ts` đạt 5/5 groups PASS (100%).
+  - Biên dịch sản phẩm Next.js 15 đạt 23/23 routes thành công 100%.
 
 ---
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BookOpen,
   Printer,
@@ -22,12 +22,48 @@ import {
   HelpCircle,
   Server,
   Lock,
+  Sparkles,
+  Edit3,
+  Save,
+  RefreshCw,
+  ExternalLink,
+  Code,
+  Check,
 } from "lucide-react";
+import { DynamicGuideData, SoftwareModuleGuide } from "@/services/system-guide.service";
 
 export default function UserGuidePage() {
-  const [activeAudience, setActiveAudience] = useState<"SURVEY_RESPONDENT" | "ADMIN_OPERATOR">("ADMIN_OPERATOR");
+  const [guideData, setGuideData] = useState<DynamicGuideData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeAudience, setActiveAudience] = useState<"ADMIN_OPERATOR" | "SURVEY_RESPONDENT">("ADMIN_OPERATOR");
   const [searchQuery, setSearchQuery] = useState("");
-  const [expandedSection, setExpandedSection] = useState<string | null>("sec_analytics");
+  const [expandedSection, setExpandedSection] = useState<string | null>("sec_modules");
+  const [selectedModuleId, setSelectedModuleId] = useState<string>("public_survey");
+  
+  // Note editing state for admins
+  const [editingSectionKey, setEditingSectionKey] = useState<string | null>(null);
+  const [editNoteText, setEditNoteText] = useState<string>("");
+  const [isSavingNote, setIsSavingNote] = useState(false);
+  const [saveSuccessMsg, setSaveSuccessMsg] = useState<string | null>(null);
+
+  const fetchGuideData = async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/public/guide");
+      const json = await res.json();
+      if (json.success && json.data) {
+        setGuideData(json.data);
+      }
+    } catch (err) {
+      console.error("Lỗi tải hướng dẫn động:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGuideData();
+  }, []);
 
   const toggleSection = (id: string) => {
     setExpandedSection(expandedSection === id ? null : id);
@@ -37,24 +73,71 @@ export default function UserGuidePage() {
     window.print();
   };
 
+  const handleStartEdit = (key: string, currentText: string) => {
+    setEditingSectionKey(key);
+    setEditNoteText(currentText || "");
+    setSaveSuccessMsg(null);
+  };
+
+  const handleSaveNote = async (key: string) => {
+    setIsSavingNote(true);
+    try {
+      const res = await fetch(`/api/admin/guide/sections/${key}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notes: editNoteText }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSaveSuccessMsg("Đã lưu ghi chú thành công!");
+        setEditingSectionKey(null);
+        fetchGuideData();
+        setTimeout(() => setSaveSuccessMsg(null), 3000);
+      } else {
+        alert(data.error || "Không thể lưu ghi chú");
+      }
+    } catch {
+      alert("Lỗi kết nối khi lưu ghi chú");
+    } finally {
+      setIsSavingNote(false);
+    }
+  };
+
+  const filteredModules = (guideData?.modules || []).filter(
+    (m) =>
+      m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      m.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      m.route.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="space-y-8 pb-16">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-100 text-sky-900 mb-1">
-            <BookOpen className="w-3.5 h-3.5 text-sky-700" />
-            <span>TÀI LIỆU VẬN HÀNH & HƯỚNG DẪN SỬ DỤNG PHẦN MỀM</span>
+            <Sparkles className="w-3.5 h-3.5 text-sky-700" />
+            <span>CẨM NANG VẬN HÀNH CẬP NHẬT ĐỘNG THEO PHẦN MỀM (ADR-010)</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-            Cẩm nang Hướng dẫn Vận hành Hệ thống Khảo sát
+            Hướng dẫn Sử dụng & Vận hành Phần mềm
           </h1>
           <p className="text-xs sm:text-sm text-slate-500">
-            Tài liệu hướng dẫn thao tác chuẩn hóa cho Cán bộ khảo sát cấp xã, Đầu mối địa phương và Ban Chỉ đạo Kiểm toán nhà nước.
+            Nội dung được hệ thống tự động đồng bộ hóa thời gian thực theo cấu hình Schema {guideData?.schemaMeta.version || "3.3"} và các chức năng đang kích hoạt.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={fetchGuideData}
+            disabled={isLoading}
+            className="p-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 shadow-sm transition-all"
+            title="Đồng bộ hóa dữ liệu hướng dẫn mới nhất từ hệ thống"
+          >
+            <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin text-sky-600" : ""}`} />
+          </button>
+
           <button
             type="button"
             onClick={handlePrint}
@@ -66,6 +149,54 @@ export default function UserGuidePage() {
           </button>
         </div>
       </div>
+
+      {/* Dynamic Status Meta Banner */}
+      {guideData && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 p-4 rounded-3xl text-white shadow-md">
+          <div className="border-r border-slate-800 pr-3">
+            <div className="text-[10px] uppercase font-bold text-sky-400">Bộ tiêu chuẩn</div>
+            <div className="text-base font-black text-white mt-0.5">
+              Phiên bản {guideData.schemaMeta.version}
+            </div>
+            <div className="text-[10px] text-slate-400 mt-0.5 truncate">
+              {guideData.schemaMeta.totalWorkgroups} nhóm việc · {guideData.schemaMeta.totalRoles} vai trò
+            </div>
+          </div>
+
+          <div className="border-r border-slate-800 pr-3">
+            <div className="text-[10px] uppercase font-bold text-sky-400">Đợt khảo sát</div>
+            <div className="text-base font-black text-white mt-0.5 truncate">
+              {guideData.campaignMeta.code}
+            </div>
+            <div className="text-[10px] text-slate-400 mt-0.5">
+              {guideData.campaignMeta.participatingProvincesCount} tỉnh · Mục tiêu {guideData.campaignMeta.totalNationalTarget.toLocaleString()}
+            </div>
+          </div>
+
+          <div className="border-r border-slate-800 pr-3">
+            <div className="text-[10px] uppercase font-bold text-sky-400">Phân hệ chức năng</div>
+            <div className="text-base font-black text-emerald-400 mt-0.5">
+              {guideData.modules.length} Modules
+            </div>
+            <div className="text-[10px] text-slate-400 mt-0.5">Đang trực tuyến 100%</div>
+          </div>
+
+          <div>
+            <div className="text-[10px] uppercase font-bold text-sky-400">Trạng thái đồng bộ</div>
+            <div className="text-base font-black text-sky-200 mt-0.5">Thời gian thực</div>
+            <div className="text-[10px] text-slate-400 mt-0.5">
+              {new Date(guideData.lastGeneratedAt).toLocaleTimeString("vi-VN")}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {saveSuccessMsg && (
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center gap-2 text-xs font-bold animate-in fade-in">
+          <Check className="w-4 h-4 text-emerald-600" />
+          <span>{saveSuccessMsg}</span>
+        </div>
+      )}
 
       {/* Role / Audience Switcher */}
       <div className="bg-white p-2 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -80,7 +211,7 @@ export default function UserGuidePage() {
             }`}
           >
             <ShieldCheck className="w-4 h-4" />
-            <span>Dành cho Cán bộ Quản trị & Thẩm tra viên</span>
+            <span>Phân hệ Quản trị & Thao tác Chức năng (Admin)</span>
           </button>
 
           <button
@@ -93,7 +224,7 @@ export default function UserGuidePage() {
             }`}
           >
             <Smartphone className="w-4 h-4" />
-            <span>Dành cho Cán bộ Khảo sát Cấp Xã</span>
+            <span>Hướng dẫn Điền Phiếu Khảo sát (Cấp Xã)</span>
           </button>
         </div>
 
@@ -102,7 +233,7 @@ export default function UserGuidePage() {
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Tìm kiếm nội dung hướng dẫn..."
+            placeholder="Tìm kiếm module hoặc chức năng..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
@@ -111,310 +242,278 @@ export default function UserGuidePage() {
       </div>
 
       {/* ========================================================================= */}
-      {/* SECTION 1: DÀNH CHO CÁN BỘ QUẢN TRỊ & THẨM TRA VIÊN (ADMIN PORTAL)         */}
+      {/* SECTION 1: PHÂN HỆ QUẢN TRỊ & THAO TÁC CHỨC NĂNG (ADMIN PORTAL)           */}
       {/* ========================================================================= */}
-      {activeAudience === "ADMIN_OPERATOR" && (
-        <div className="space-y-4">
-          {/* Section: Phân quyền tài khoản */}
+      {activeAudience === "ADMIN_OPERATOR" && guideData && (
+        <div className="space-y-6">
+          {/* 1. Dynamic Modules Explorer (Cập nhật động theo phần mềm) */}
           <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
-            <button
-              type="button"
-              onClick={() => toggleSection("sec_rbac")}
-              className="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50/50 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center font-bold">
-                  <Users className="w-5 h-5" />
-                </div>
-                <div>
-                  <h2 className="text-base font-extrabold text-slate-900">
-                    1. Phân quyền và Trách nhiệm 5 Nhóm Tài khoản (RBAC)
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    Quy định ma trận quyền hạn theo Tài liệu số 1 và Quyết định phê duyệt của Kiểm toán nhà nước
-                  </p>
-                </div>
+            <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
+              <div>
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-100 text-sky-800">
+                  DYNAMIC MODULES DISCOVERY
+                </span>
+                <h2 className="text-base font-extrabold text-slate-900 mt-1">
+                  1. Hướng dẫn Thao tác Từng Chức năng Đang Vận hành ({filteredModules.length} Modules)
+                </h2>
+                <p className="text-xs text-slate-500">
+                  Mỗi chức năng được hệ thống tự động bóc tách phạm vi quyền hạn, đường dẫn và quy tắc vận hành
+                </p>
               </div>
-              {expandedSection === "sec_rbac" ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-            </button>
 
-            {expandedSection === "sec_rbac" && (
-              <div className="p-6 pt-0 border-t border-slate-100 space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800">
-                      TECHNICAL_ADMIN
-                    </span>
-                    <h3 className="font-bold text-slate-900 text-xs sm:text-sm">Quản trị Kỹ thuật</h3>
-                    <p className="text-xs text-slate-600">
-                      Toàn quyền quản lý tài khoản, cấu hình mã nguồn, kiểm tra hệ thống, giám sát tài nguyên và xem Audit Logs.
-                    </p>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800">
-                      CONTENT_ADMIN
-                    </span>
-                    <h3 className="font-bold text-slate-900 text-xs sm:text-sm">Quản trị Nội dung</h3>
-                    <p className="text-xs text-slate-600">
-                      Quản lý cấu hình bộ câu hỏi phiên bản 3.3, phê duyệt danh mục chuyên đề đào tạo và ma trận chuẩn năng lực.
-                    </p>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
-                      REVIEWER
-                    </span>
-                    <h3 className="font-bold text-slate-900 text-xs sm:text-sm">Thẩm tra viên (Khoa Cơ sở)</h3>
-                    <p className="text-xs text-slate-600">
-                      Vận hành Bàn rà soát phiếu nghi trùng, xem dữ liệu chi tiết, duyệt tính hợp lệ hoặc loại trừ phiếu, phân tích 6 bảng số liệu nội bộ.
-                    </p>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-1.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-violet-100 text-violet-800">
-                      PROGRESS_MONITOR
-                    </span>
-                    <h3 className="font-bold text-slate-900 text-xs sm:text-sm">Theo dõi Tiến độ</h3>
-                    <p className="text-xs text-slate-600">
-                      Giám sát số lượng phiếu tiếp nhận theo ngày, tiến độ từng tỉnh/xã trên biểu đồ Dashboard và xem báo cáo tổng hợp.
-                    </p>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 space-y-1.5 col-span-1 md:col-span-2">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-200 text-amber-900">
-                      LOCAL_COORDINATOR (Đầu mối địa phương)
-                    </span>
-                    <h3 className="font-bold text-amber-950 text-xs sm:text-sm">Đầu mối Cấp Tỉnh / Sở Tài chính</h3>
-                    <p className="text-xs text-amber-900/90 leading-relaxed">
-                      <strong>Chính sách Bảo mật Zero-PII:</strong> Đầu mối địa phương chỉ được xem số liệu tiến độ của tỉnh mình và chỉ được xem 6 bảng tổng hợp đã <strong>áp dụng triệt để thuật toán làm mờ số liệu nhỏ &lt;5 người</strong>. Tuyệt đối không được cấp quyền xem dữ liệu thô, không xem bảng nội bộ và không xuất dữ liệu chưa ẩn danh.
-                    </p>
-                  </div>
-                </div>
+              {/* Module Quick Pill Tabs */}
+              <div className="flex items-center gap-1 overflow-x-auto max-w-full pb-1">
+                {guideData.modules.map((m) => (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setSelectedModuleId(m.id)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                      selectedModuleId === m.id
+                        ? "bg-sky-700 text-white shadow-sm"
+                        : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100"
+                    }`}
+                  >
+                    {m.name.split("(")[0].trim()}
+                  </button>
+                ))}
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* Section: Theo dõi tiến độ & Tải 34 Mã QR */}
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
-            <button
-              type="button"
-              onClick={() => toggleSection("sec_progress")}
-              className="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50/50 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center font-bold">
-                  <QrCode className="w-5 h-5" />
-                </div>
-                <div>
-                  <h2 className="text-base font-extrabold text-slate-900">
-                    2. Theo dõi Tiến độ & Phát hành Bộ 34 Mã QR Cấp Tỉnh (ADR-008)
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    Cách thức điều phối đợt khảo sát diện rộng trên 34 tỉnh và 3.321 xã
-                  </p>
-                </div>
-              </div>
-              {expandedSection === "sec_progress" ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-            </button>
+            {/* Selected Module Detail View */}
+            {(() => {
+              const activeMod = guideData.modules.find((m) => m.id === selectedModuleId) || guideData.modules[0];
+              if (!activeMod) return null;
 
-            {expandedSection === "sec_progress" && (
-              <div className="p-6 pt-0 border-t border-slate-100 space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                <div className="space-y-3">
-                  <h3 className="font-bold text-slate-900">Quy trình Điều phối Mã QR:</h3>
-                  <ol className="list-decimal pl-5 space-y-2">
-                    <li>
-                      <strong>Truy cập Trang Quản lý Mã QR:</strong> Vào menu <em>"Đợt khảo sát & Mã QR"</em> tại đường dẫn <code>/admin/campaigns</code>.
-                    </li>
-                    <li>
-                      <strong>Tải Trọn gói 34 Mã QR (ZIP):</strong> Bấm nút <em>"Tải trọn bộ 34 Mã QR (ZIP)"</em>. Hệ thống sẽ lập tức tạo file nén <code>34_Ma_QR_KhaoSat_KiemToan_2026.zip</code> chứa 34 ảnh PNG độ nét cao (512x512) kèm file hướng dẫn sử dụng.
-                    </li>
-                    <li>
-                      <strong>Phát hành về Địa phương:</strong> Chuyên viên đính kèm file ảnh QR của từng tỉnh vào công văn hướng dẫn gửi UBND tỉnh và Sở Tài chính để triển khai đến cấp xã.
-                    </li>
-                    <li>
-                      <strong>Giám sát trên Dashboard:</strong> Truy cập <code>/admin/dashboard</code> để theo dõi số lượng phiếu tăng trưởng theo biểu đồ diện tích thời gian thực và xếp hạng Top tỉnh tích cực.
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Section: Bàn rà soát Phiếu Nghi trùng */}
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
-            <button
-              type="button"
-              onClick={() => toggleSection("sec_duplicates")}
-              className="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50/50 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
-                  <FileCheck2 className="w-5 h-5" />
-                </div>
-                <div>
-                  <h2 className="text-base font-extrabold text-slate-900">
-                    3. Quy trình Thẩm tra & Xử lý Phiếu Nghi trùng (Duplicate Workbench)
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    Thuật toán băm 4 điểm nghiệp vụ SHA-256 và quy trình ra quyết định của Thẩm tra viên
-                  </p>
-                </div>
-              </div>
-              {expandedSection === "sec_duplicates" ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-            </button>
-
-            {expandedSection === "sec_duplicates" && (
-              <div className="p-6 pt-0 border-t border-slate-100 space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                  <div className="font-bold text-slate-900 flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4 text-sky-600" />
-                    <span>Cơ chế Nhận diện Phiếu Nghi trùng (ADR-005):</span>
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    Hệ thống tính toán mã băm nghiệp vụ 4 điểm: <code>SHA-256(Mã xã + Mã cơ quan + Mã vị trí việc làm + 16 lựa chọn nhóm việc)</code>. Khi phát hiện 2 phiếu có mã băm giống hệt nhau trong cùng một địa bàn, hệ thống tự động gắn cờ <code>isSuspectedDuplicate = true</code> và chuyển trạng thái sang <strong>PENDING_REVIEW</strong>. Phiếu không bị xóa để bảo đảm tính toàn vẹn dữ liệu.
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="font-bold text-slate-900">Các Bước Thẩm tra trên Giao diện:</h3>
-                  <ul className="list-disc pl-5 space-y-1.5">
-                    <li>Vào trang <code>/admin/reviews/duplicates</code>, chọn nhóm nghi trùng cần rà soát.</li>
-                    <li>Sử dụng giao diện <strong>Side-by-side Diff View</strong> so sánh thời điểm nộp, các mức tự đánh giá Phần III và ý kiến Phần IV.</li>
-                    <li>
-                      <strong>Nếu xác nhận là gửi đúp (lần nộp sau là bổ sung hoàn thiện):</strong> Bấm <em>"Loại trừ phiếu nộp trước"</em> (hệ thống yêu cầu nhập lý do thẩm tra, ví dụ: "Người trả lời nộp lại phiếu lần 2 có điều chỉnh").
-                    </li>
-                    <li>
-                      <strong>Nếu là 2 người cùng chức danh trong xã (ví dụ: xã có 2 kế toán viên cùng làm):</strong> Thẩm tra viên bấm <em>"Chấp nhận (Tính)"</em> để đưa cả 2 phiếu vào tính toán 6 bảng.
-                    </li>
-                    <li>Mọi thao tác thẩm tra đều được lưu vết thời gian thực vào bảng <code>AuditLog</code>.</li>
-                  </ul>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Section: Phân tích 6 Bảng Tổng hợp & Công thức Khoảng thiếu hụt */}
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
-            <button
-              type="button"
-              onClick={() => toggleSection("sec_analytics")}
-              className="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50/50 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-700 flex items-center justify-center font-bold">
-                  <Layers className="w-5 h-5" />
-                </div>
-                <div>
-                  <h2 className="text-base font-extrabold text-slate-900">
-                    4. Khai thác 6 Bảng Tổng hợp & Phương pháp Tính Khoảng Thiếu hụt
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    Đặc tả chi tiết các bảng B1 đến B6 và công thức Gap theo Phần IV Tài liệu số 2
-                  </p>
-                </div>
-              </div>
-              {expandedSection === "sec_analytics" ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-            </button>
-
-            {expandedSection === "sec_analytics" && (
-              <div className="p-6 pt-0 border-t border-slate-100 space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                <div className="space-y-3">
-                  <div className="p-3.5 rounded-2xl bg-sky-50 border border-sky-100">
-                    <h3 className="font-bold text-sky-950 text-xs sm:text-sm mb-1">
-                      Công thức Tính Khoảng Thiếu hụt Năng lực (Bảng B3):
-                    </h3>
-                    <p className="text-xs text-sky-900 leading-relaxed">
-                      Khoảng thiếu hụt: <code>Δ = Mức chuẩn yêu cầu (Benchmark Matrix 3.3) - Mức tự đánh giá (Câu 9)</code>
-                    </p>
-                    <ul className="list-disc pl-4 text-xs text-sky-900/90 mt-1 space-y-0.5">
-                      <li>Nếu <code>Δ &gt; 0</code>: Cán bộ thuộc diện <strong>Dưới chuẩn</strong> (Thiếu 1 mức, 2 mức hoặc 3 mức).</li>
-                      <li>Nếu <code>Δ &le; 0</code>: Cán bộ <strong>Đạt hoặc Vượt chuẩn</strong> (Gap = 0 hoặc âm).</li>
-                      <li>Người thuộc trạng thái <em>"Chưa có dịp thực hiện"</em> được thống kê ở cột riêng, không tính vào khoảng thiếu hụt.</li>
-                    </ul>
-                  </div>
-
-                  <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs leading-relaxed">
-                    <strong>Ghi chú Bắt buộc Dưới Tiêu đề Bảng B3:</strong><br />
-                    <em>"Việc đánh giá khoảng thiếu hụt năng lực căn cứ theo Ma trận chuẩn năng lực phiên bản 3.3 ban hành kèm theo Quyết định của cấp có thẩm quyền. Tỷ lệ % tính trên tổng số người có thực hiện hoặc được phân công nhóm việc tương ứng."</em>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                    <div className="border border-slate-200 rounded-2xl p-3">
-                      <div className="font-bold text-slate-900 text-xs">Bảng B1: Người trả lời</div>
-                      <p className="text-[11px] text-slate-500 mt-0.5">Phân loại theo cơ quan, vị trí việc làm, tư cách và lý do loại trừ phiếu.</p>
+              return (
+                <div className="p-6 sm:p-8 space-y-6">
+                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                    <div className="space-y-2 max-w-2xl">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-sky-50 text-sky-800 border border-sky-200">
+                          {activeMod.route}
+                        </span>
+                        <a
+                          href={activeMod.route.replace("[token]", "pilot_dot-1-2026_p20")}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-sky-600 hover:text-sky-800 font-semibold"
+                        >
+                          <span>Mở trực tiếp</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                      <h3 className="text-lg font-black text-slate-900">{activeMod.name}</h3>
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        {activeMod.description}
+                      </p>
                     </div>
-                    <div className="border border-slate-200 rounded-2xl p-3">
-                      <div className="font-bold text-slate-900 text-xs">Bảng B2: Nhóm công việc</div>
-                      <p className="text-[11px] text-slate-500 mt-0.5">16 nhóm x 4 cột trạng thái, tổng tỷ lệ 4 cột luôn bằng đúng 100%.</p>
-                    </div>
-                    <div className="border border-slate-200 rounded-2xl p-3">
-                      <div className="font-bold text-slate-900 text-xs">Bảng B4: Nội dung cần học</div>
-                      <p className="text-[11px] text-slate-500 mt-0.5">Xếp hạng nhu cầu đào tạo theo 3 mức độ cấp thiết (6 tháng, 12 tháng, khi có điều kiện).</p>
-                    </div>
-                    <div className="border border-slate-200 rounded-2xl p-3">
-                      <div className="font-bold text-slate-900 text-xs">Bảng B5 & B6: Khó khăn & Hình thức</div>
-                      <p className="text-[11px] text-slate-500 mt-0.5">Tách rõ khó khăn thuộc đào tạo và khó khăn ngoài đào tạo (thể chế); 5 hình thức bồi dưỡng.</p>
+
+                    <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 lg:w-80 shrink-0 space-y-2">
+                      <div className="text-[10px] font-bold uppercase text-slate-400">
+                        Vai trò được phép truy cập
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {activeMod.allowedRoles.map((role, idx) => (
+                          <span
+                            key={idx}
+                            className="px-2 py-1 rounded-lg bg-white border border-slate-200 text-[11px] font-bold text-slate-800 shadow-2xs"
+                          >
+                            {role}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
-          </div>
 
-          {/* Section: Thuật toán Ẩn danh & Xuất Excel */}
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
-            <button
-              type="button"
-              onClick={() => toggleSection("sec_suppression_excel")}
-              className="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50/50 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
-                  <FileSpreadsheet className="w-5 h-5" />
-                </div>
-                <div>
-                  <h2 className="text-base font-extrabold text-slate-900">
-                    5. Thuật toán Ẩn danh Số liệu Nhóm nhỏ & Xuất Báo cáo ExcelJS
-                  </h2>
-                  <p className="text-xs text-slate-500">
-                    Ngưỡng bảo vệ &lt;5 người và quy trình xuất file Excel đa sheet chuẩn kiểm toán
-                  </p>
-                </div>
-              </div>
-              {expandedSection === "sec_suppression_excel" ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-            </button>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    {/* Key capabilities */}
+                    <div className="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-2">
+                      <div className="font-bold text-sky-950 text-xs sm:text-sm flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-sky-700" />
+                        <span>Các Thao tác & Năng lực Cốt lõi</span>
+                      </div>
+                      <ul className="space-y-1.5 text-xs text-slate-700">
+                        {activeMod.keyCapabilities.map((cap, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-sky-600 shrink-0 mt-1.5" />
+                            <span>{cap}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-            {expandedSection === "sec_suppression_excel" && (
-              <div className="p-6 pt-0 border-t border-slate-100 space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                <div className="space-y-3">
+                    {/* Operational rules */}
+                    <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-100 space-y-2">
+                      <div className="font-bold text-amber-950 text-xs sm:text-sm flex items-center gap-2">
+                        <AlertTriangle className="w-4 h-4 text-amber-600" />
+                        <span>Ràng buộc Nghiệp vụ & Cảnh báo</span>
+                      </div>
+                      <ul className="space-y-1.5 text-xs text-slate-700">
+                        {activeMod.operationalRules.map((rule, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0 mt-1.5" />
+                            <span>{rule}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* API Endpoints */}
+                  <div className="p-3.5 rounded-xl bg-slate-900 text-slate-200 font-mono text-xs space-y-1">
+                    <div className="text-[10px] uppercase font-bold text-slate-400">
+                      Giao diện Lập trình (REST API Endpoints):
+                    </div>
+                    {activeMod.apiEndpoints.map((ep, i) => (
+                      <div key={i} className="text-sky-400">{ep}</div>
+                    ))}
+                  </div>
+
+                  {/* In-app Note Editing Section */}
                   <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                    <div className="font-bold text-slate-900 flex items-center gap-2">
-                      <EyeOff className="w-4 h-4 text-amber-600" />
-                      <span>Thuật toán Statistical Disclosure Limitation (Ngưỡng &lt;5):</span>
+                    <div className="flex items-center justify-between">
+                      <div className="font-bold text-slate-800 text-xs flex items-center gap-2">
+                        <Edit3 className="w-4 h-4 text-slate-600" />
+                        <span>Ghi chú Bổ sung của Ban Chỉ đạo cho Chức năng này</span>
+                      </div>
+                      {editingSectionKey !== activeMod.id && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleStartEdit(
+                              activeMod.id,
+                              guideData.adminCustomNotes[activeMod.id] || ""
+                            )
+                          }
+                          className="px-2.5 py-1 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition-colors"
+                        >
+                          Sửa ghi chú
+                        </button>
+                      )}
                     </div>
-                    <ul className="list-disc pl-5 text-xs space-y-1 text-slate-600">
-                      <li><strong>Primary Suppression:</strong> Mọi ô đếm có giá trị từ 1 đến 4 người đều được hiển thị thành <code>"dưới 5 - không công bố"</code>. Ô có giá trị 0 hoặc từ 5 trở lên được hiển thị bình thường.</li>
-                      <li><strong>Row Suppression:</strong> Nếu mẫu số chung của một dòng &lt; 5, làm mờ toàn bộ dòng (kể cả tỷ lệ % và các ô khác).</li>
-                      <li><strong>Secondary Suppression:</strong> Khi trong một hàng có Tổng mà chỉ có đúng 1 ô bị làm mờ sơ cấp, thuật toán tự động làm mờ thêm ô nhỏ nhất khác 0 kế tiếp để triệt tiêu hoàn toàn khả năng lấy Tổng trừ các ô còn lại để suy đoán.</li>
-                    </ul>
-                  </div>
 
-                  <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
-                    <div className="font-bold text-emerald-950 flex items-center gap-2">
-                      <Download className="w-4 h-4 text-emerald-700" />
-                      <span>Hai Chế độ Xuất File Excel Đa Sheet:</span>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                      <div className="bg-white p-3 rounded-xl border border-emerald-100">
-                        <strong className="text-emerald-800">1. Bản Nội bộ (INTERNAL):</strong>
-                        <p className="text-slate-600 mt-1">Xuất toàn bộ số liệu thực tế đầy đủ 100% phục vụ chuyên gia phân tích và lãnh đạo Kiểm toán nhà nước.</p>
+                    {editingSectionKey === activeMod.id ? (
+                      <div className="space-y-2 pt-2">
+                        <textarea
+                          rows={3}
+                          value={editNoteText}
+                          onChange={(e) => setEditNoteText(e.target.value)}
+                          placeholder="Nhập ghi chú hướng dẫn riêng biệt cho cán bộ sử dụng chức năng này..."
+                          className="w-full p-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-600 bg-white"
+                        />
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => handleSaveNote(activeMod.id)}
+                            disabled={isSavingNote}
+                            className="px-3.5 py-1.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs flex items-center gap-1.5 transition-colors disabled:opacity-50"
+                          >
+                            <Save className="w-3.5 h-3.5" />
+                            <span>{isSavingNote ? "Đang lưu..." : "Lưu vào Database"}</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setEditingSectionKey(null)}
+                            className="px-3.5 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-xs transition-colors"
+                          >
+                            Hủy bỏ
+                          </button>
+                        </div>
                       </div>
-                      <div className="bg-white p-3 rounded-xl border border-emerald-100">
-                        <strong className="text-emerald-800">2. Bản Địa phương (LOCAL_CONFIDENTIAL):</strong>
-                        <p className="text-slate-600 mt-1">Tự động áp dụng toàn diện thuật toán bảo vệ ẩn danh số liệu nhỏ &lt;5 người để gửi cho tỉnh hoặc công bố công khai.</p>
+                    ) : (
+                      <div className="text-xs text-slate-600 italic">
+                        {guideData.adminCustomNotes[activeMod.id] ? (
+                          <div className="p-2.5 bg-white rounded-xl border border-slate-200 not-italic text-slate-800 leading-relaxed">
+                            {guideData.adminCustomNotes[activeMod.id]}
+                          </div>
+                        ) : (
+                          "Chưa có ghi chú tùy biến từ quản trị viên. Bấm 'Sửa ghi chú' để nhập hướng dẫn bổ sung."
+                        )}
                       </div>
-                    </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* 2. Dynamic Schema Explorer (Tự động cập nhật theo cấu hình DB) */}
+          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
+            <button
+              type="button"
+              onClick={() => toggleSection("sec_schema")}
+              className="w-full p-6 text-left flex items-center justify-between hover:bg-slate-50/50 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
+                  <Code className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-base font-extrabold text-slate-900">
+                    2. Cấu trúc Nghiệp vụ Động: 16 Nhóm Công việc & 4 Vai trò (Phiên bản {guideData.schemaMeta.version})
+                  </h2>
+                  <p className="text-xs text-slate-500">
+                    Cập nhật thời gian thực từ cơ sở dữ liệu SurveySchemaConfig
+                  </p>
+                </div>
+              </div>
+              {expandedSection === "sec_schema" ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+            </button>
+
+            {expandedSection === "sec_schema" && (
+              <div className="p-6 pt-0 border-t border-slate-100 space-y-6 text-xs sm:text-sm">
+                <div>
+                  <h3 className="font-bold text-slate-900 text-xs sm:text-sm mb-3">
+                    Danh sách 16 Nhóm Công việc Cấp Xã & Số Chuyên đề Đào tạo:
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                    {guideData.schemaMeta.workgroups.map((wg) => (
+                      <div
+                        key={wg.id}
+                        className="p-3 rounded-xl bg-slate-50 border border-slate-200/70 space-y-1"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono font-bold text-sky-800 text-xs bg-sky-50 px-1.5 py-0.5 rounded">
+                            {wg.id}
+                          </span>
+                          <span className="text-[10px] font-bold text-slate-500">
+                            {wg.topicsCount} chuyên đề
+                          </span>
+                        </div>
+                        <div className="font-bold text-slate-900 text-xs line-clamp-1">
+                          {wg.title}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100">
+                  <h3 className="font-bold text-slate-900 text-xs sm:text-sm mb-3">
+                    Mô tả 4 Cấp độ Năng lực theo Ngữ cảnh Từng Vai trò:
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {guideData.schemaMeta.roles.map((role) => (
+                      <div
+                        key={role.id}
+                        className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-2 text-xs"
+                      >
+                        <div className="font-bold text-slate-900 flex items-center justify-between">
+                          <span className="text-sm font-extrabold text-sky-900">{role.title}</span>
+                          <span className="font-mono text-[10px] text-slate-400 font-bold bg-white px-2 py-0.5 rounded border">
+                            {role.id}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500">{role.description}</p>
+                        <div className="space-y-1 pt-1 font-medium">
+                          <div><strong className="text-slate-700">Mức 1:</strong> {role.level1}</div>
+                          <div><strong className="text-slate-700">Mức 2:</strong> {role.level2}</div>
+                          <div><strong className="text-slate-700">Mức 3:</strong> {role.level3}</div>
+                          <div><strong className="text-slate-700">Mức 4:</strong> {role.level4}</div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -426,18 +525,18 @@ export default function UserGuidePage() {
       {/* ========================================================================= */}
       {/* SECTION 2: DÀNH CHO CÁN BỘ KHẢO SÁT CẤP XÃ (PUBLIC SURVEY PORTAL)         */}
       {/* ========================================================================= */}
-      {activeAudience === "SURVEY_RESPONDENT" && (
-        <div className="space-y-4">
+      {activeAudience === "SURVEY_RESPONDENT" && guideData && (
+        <div className="space-y-6">
           <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-8 space-y-6">
             <div>
               <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
-                DÀNH CHO CÁN BỘ CẤP XÃ
+                CẨM NANG NGƯỜI TRẢ LỜI CẤP XÃ
               </span>
               <h2 className="text-lg font-black text-slate-900 mt-2">
                 Quy trình 4 Bước Tham gia Khảo sát Trực tuyến trên Di động
               </h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                Thời gian thực hiện ước tính khoảng 15 đến 20 phút. Hệ thống tự động lưu trữ và bảo vệ danh tính 100%.
+                Bộ phiếu phiên bản {guideData.schemaMeta.version} gồm {guideData.schemaMeta.totalWorkgroups} nhóm công việc chuẩn hóa. Hệ thống tự động lưu trữ và bảo vệ danh tính 100%.
               </p>
             </div>
 
@@ -445,7 +544,7 @@ export default function UserGuidePage() {
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
                   <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-xs">1</span>
-                  <span>Bước 1: Điền Thông tin Hành chính</span>
+                  <span>Bước 1: Điền Thông tin Hành chính (Phần I)</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
                   Quét mã QR của tỉnh bằng điện thoại hoặc nhấp vào đường link trong công văn. Chọn Tỉnh, Xã, Cơ quan (Đảng ủy, HĐND, UBND...) và chức danh thực tế của bạn.
@@ -455,7 +554,7 @@ export default function UserGuidePage() {
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
                   <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-xs">2</span>
-                  <span>Bước 2: Khai báo 16 Nhóm Công việc</span>
+                  <span>Bước 2: Khai báo {guideData.schemaMeta.totalWorkgroups} Nhóm Công việc (Phần II)</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
                   Hệ thống tự động xếp các nhóm công việc thường gặp của chức vụ bạn lên đầu. Chọn 1 trong 4 trạng thái cho từng nhóm việc (Đang làm, Chưa có dịp, Chỉ phối hợp, Không được giao).
@@ -465,7 +564,7 @@ export default function UserGuidePage() {
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
                   <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-xs">3</span>
-                  <span>Bước 3: Tự Đánh giá & Chọn Nhu cầu Học</span>
+                  <span>Bước 3: Tự Đánh giá & Chọn Nhu cầu Học (Phần III)</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
                   Lần lượt trả lời từng nhóm được phân công: chọn vai trò → tự chấm điểm năng lực (Mức 1 đến 4) → chọn tối đa 2 khó khăn → chọn chuyên đề học và mức độ cấp thiết.
@@ -475,10 +574,10 @@ export default function UserGuidePage() {
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
                   <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-xs">4</span>
-                  <span>Bước 4: Chọn Hình thức Học & Gửi Phiếu</span>
+                  <span>Bước 4: Chọn Hình thức Học & Gửi Phiếu (Phần IV)</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Chọn tối đa 2 hình thức học tập phù hợp (lớp tập trung, trực tuyến E-learning, tài liệu tự học...), ghi ý kiến tự do (nếu có) và nhấn nút "Gửi kết quả khảo sát".
+                  Chọn tối đa 2 hình thức học tập phù hợp (trong {guideData.schemaMeta.learningFormats.length} hình thức cho phép), ghi ý kiến tự do (nếu có) và nhấn nút "Gửi kết quả khảo sát".
                 </p>
               </div>
             </div>
