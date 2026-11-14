@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { ProgressCharts } from "@/components/admin/ProgressCharts";
 import { ProgressSummary, ProvinceProgressItem } from "@/services/progress-monitoring.service";
+import { Select } from "@/components/common/Select";
 
 export default function AdminDashboardPage() {
   const [data, setData] = useState<ProgressSummary | null>(null);
@@ -204,16 +205,19 @@ export default function AdminDashboardPage() {
             </div>
 
             {/* Status Filter */}
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-sky-500"
-            >
-              <option value="ALL">Tất cả trạng thái</option>
-              <option value="COMPLETED">Đạt chỉ tiêu (&gt;=100%)</option>
-              <option value="IN_PROGRESS">Đang thu thập</option>
-              <option value="NOT_STARTED">Chưa có phiếu</option>
-            </select>
+            <div className="w-48 sm:w-56">
+              <Select
+                sizeVariant="sm"
+                icon={Filter}
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="ALL">Tất cả trạng thái</option>
+                <option value="COMPLETED">Đạt chỉ tiêu (&gt;=100%)</option>
+                <option value="IN_PROGRESS">Đang thu thập</option>
+                <option value="NOT_STARTED">Chưa có phiếu</option>
+              </Select>
+            </div>
           </div>
         </div>
 

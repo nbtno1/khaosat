@@ -14,7 +14,46 @@ import {
   Eye,
   EyeOff,
   Download,
+  MapPin,
 } from "lucide-react";
+import { Select } from "@/components/common/Select";
+
+const PROVINCES_34 = [
+  { code: "01", name: "TP. Hà Nội" },
+  { code: "02", name: "Hà Giang" },
+  { code: "04", name: "Cao Bằng" },
+  { code: "06", name: "Bắc Kạn" },
+  { code: "08", name: "Tuyên Quang" },
+  { code: "10", name: "Lào Cai" },
+  { code: "11", name: "Điện Biên" },
+  { code: "12", name: "Lai Châu" },
+  { code: "14", name: "Sơn La" },
+  { code: "15", name: "Yên Bái" },
+  { code: "17", name: "Hoà Bình" },
+  { code: "19", name: "Thái Nguyên" },
+  { code: "20", name: "Lạng Sơn" },
+  { code: "22", name: "Quảng Ninh" },
+  { code: "24", name: "Bắc Giang" },
+  { code: "25", name: "Phú Thọ" },
+  { code: "26", name: "Vĩnh Phúc" },
+  { code: "27", name: "Bắc Ninh" },
+  { code: "30", name: "Hải Dương" },
+  { code: "31", name: "TP. Hải Phòng" },
+  { code: "33", name: "Hưng Yên" },
+  { code: "34", name: "Thái Bình" },
+  { code: "35", name: "Hà Nam" },
+  { code: "36", name: "Nam Định" },
+  { code: "37", name: "Ninh Bình" },
+  { code: "38", name: "Thanh Hóa" },
+  { code: "40", name: "Nghệ An" },
+  { code: "42", name: "Hà Tĩnh" },
+  { code: "44", name: "Quảng Bình" },
+  { code: "45", name: "Quảng Trị" },
+  { code: "46", name: "Thừa Thiên Huế" },
+  { code: "48", name: "TP. Đà Nẵng" },
+  { code: "49", name: "Quảng Nam" },
+  { code: "51", name: "Quảng Ngãi" },
+];
 
 export const AnalyticsTablesViewer: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("b3");
@@ -74,7 +113,24 @@ export const AnalyticsTablesViewer: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Lọc theo Tỉnh */}
+          <div className="w-44 sm:w-52">
+            <Select
+              sizeVariant="sm"
+              icon={MapPin}
+              value={selectedProvince}
+              onChange={(e) => setSelectedProvince(e.target.value)}
+            >
+              <option value="">Toàn quốc (34 Tỉnh)</option>
+              {PROVINCES_34.map((p) => (
+                <option key={p.code} value={p.code}>
+                  {p.name}
+                </option>
+              ))}
+            </Select>
+          </div>
+
           {/* Toggle Suppression Mode */}
           <button
             type="button"

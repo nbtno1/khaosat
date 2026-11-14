@@ -6,7 +6,12 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ## [1.8.1] — 2026-11-14
 
-### Tinh chỉnh Giao diện (UI Refinement - Vertical Sidebar & Logo Slot)
+### Tinh chỉnh Giao diện (UI Refinement - Vertical Sidebar, Logo Slot & Select Beautification)
+- **Làm đẹp toàn diện các thẻ Dropdown Select (Select Beautification):**
+  - Xây dựng component chuẩn hóa `Select` (`src/components/common/Select.tsx`) hiện đại hóa toàn bộ dropdowns: loại bỏ mũi tên thô mặc định của hệ điều hành (`appearance-none`), bổ sung `ChevronDown` mượt mà, tích hợp Icon ngữ cảnh bên trái (MapPin, Landmark, Briefcase, Filter), bo góc mềm mại, đổ bóng nhẹ và hiệu ứng focus ring êm ái.
+  - Nâng cấp toàn diện các trường chọn tại Cổng khảo sát cấp xã ([`StepGeneralInfo.tsx`](file:///Users/macbook/Desktop/khaosat/src/components/survey/StepGeneralInfo.tsx)) cho: Xã/Phường, Cơ quan, Vị trí việc làm.
+  - Nâng cấp Dropdown bộ lọc trạng thái tiến độ trên Dashboard Quản trị ([`page.tsx`](file:///Users/macbook/Desktop/khaosat/src/app/(admin)/admin/dashboard/page.tsx)).
+  - Bổ sung Dropdown chọn 34 Tỉnh/Thành phố trên thanh công cụ Phân tích 6 Bảng ([`AnalyticsTablesViewer.tsx`](file:///Users/macbook/Desktop/khaosat/src/components/admin/AnalyticsTablesViewer.tsx)).
 - **Chuyển đổi Header Quản trị sang dạng Sidebar Dọc (Vertical Admin Sidebar):**
   - Chuyển toàn bộ thanh điều hướng ngang trên cùng của Cổng quản trị (`src/app/(admin)/layout.tsx`) thành thanh Sidebar dọc cố định bên trái (`w-64 xl:w-72`), tối ưu hóa không gian làm việc cho các bảng dữ liệu và biểu đồ phân tích.
   - Tích hợp Logo Kiểm toán nhà nước, danh mục 5 chức năng dạng danh sách dọc kèm icon và mô tả phụ, đường dẫn nhanh mở form khảo sát, thẻ thông tin cán bộ đăng nhập và nút đăng xuất.

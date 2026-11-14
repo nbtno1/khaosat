@@ -3,7 +3,18 @@
 import React, { useState } from "react";
 import { Part1Data } from "@/lib/validations/survey.schema";
 import { SurveyLinkMeta } from "@/hooks/useSurveyFormState";
-import { Building2, User, Clock, CheckCircle2, ChevronRight, AlertCircle } from "lucide-react";
+import { Select } from "@/components/common/Select";
+import {
+  Building2,
+  User,
+  Clock,
+  CheckCircle2,
+  ChevronRight,
+  AlertCircle,
+  MapPin,
+  Landmark,
+  Briefcase,
+} from "lucide-react";
 
 interface StepGeneralInfoProps {
   part1: Partial<Part1Data>;
@@ -231,34 +242,37 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">
-              Tỉnh / Thành phố
+            <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+              <span>Tỉnh / Thành phố</span>
             </label>
-            <input
-              type="text"
-              readOnly
-              value={linkMeta.provinceName}
-              className="w-full bg-slate-100 border border-slate-300 text-slate-800 rounded-lg px-3 py-2 text-sm font-medium cursor-not-allowed"
-            />
+            <div className="relative flex items-center">
+              <div className="pointer-events-none absolute left-3.5 w-4 h-4 text-sky-700 z-10">
+                <MapPin className="w-full h-full" />
+              </div>
+              <input
+                type="text"
+                readOnly
+                value={linkMeta.provinceName}
+                className="w-full bg-slate-100 border border-slate-200/90 text-slate-800 rounded-xl sm:rounded-2xl pl-10 pr-4 py-2.5 text-xs sm:text-sm font-bold cursor-not-allowed shadow-2xs"
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">
-              Xã / Phường / Thị trấn <span className="text-red-500">*</span>
-            </label>
-            <select
-              value={part1.communeCode || ""}
-              onChange={handleCommuneChange}
-              className="w-full bg-white border border-slate-300 focus:border-sky-600 focus:ring-1 focus:ring-sky-600 rounded-lg px-3 py-2 text-sm text-slate-800"
-            >
-              <option value="">-- Bấm để chọn Xã/Phường --</option>
-              {filteredCommunes.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.name} {c.districtName ? `(${c.districtName})` : ""}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="Xã / Phường / Thị trấn"
+            required
+            icon={MapPin}
+            sizeVariant="md"
+            value={part1.communeCode || ""}
+            onChange={handleCommuneChange}
+          >
+            <option value="">-- Bấm để chọn Xã/Phường --</option>
+            {filteredCommunes.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.name} {c.districtName ? `(${c.districtName})` : ""}
+              </option>
+            ))}
+          </Select>
         </div>
       </div>
 
@@ -270,48 +284,45 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
         </div>
 
         <div className="space-y-4">
-          <div>
-            <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">
-              Câu 2: Cơ quan, đơn vị công tác <span className="text-red-500">*</span>
-            </label>
-            <select
-              value={part1.agencyCode || ""}
-              onChange={handleAgencyChange}
-              className="w-full bg-white border border-slate-300 focus:border-sky-600 focus:ring-1 focus:ring-sky-600 rounded-lg px-3 py-2.5 text-sm text-slate-800"
-            >
-              <option value="">-- Bấm để chọn Cơ quan, đơn vị --</option>
-              {AGENCIES.map((a) => (
-                <option key={a.code} value={a.code}>
-                  {a.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="Câu 2: Cơ quan, đơn vị công tác"
+            required
+            icon={Landmark}
+            sizeVariant="md"
+            value={part1.agencyCode || ""}
+            onChange={handleAgencyChange}
+          >
+            <option value="">-- Bấm để chọn Cơ quan, đơn vị --</option>
+            {AGENCIES.map((a) => (
+              <option key={a.code} value={a.code}>
+                {a.name}
+              </option>
+            ))}
+          </Select>
 
           {part1.agencyCode && (
-            <div>
-              <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">
-                Câu 3: Vị trí việc làm của đồng chí <span className="text-red-500">*</span>
-              </label>
-              <select
-                value={part1.positionCode || ""}
-                onChange={handlePositionChange}
-                className="w-full bg-white border border-slate-300 focus:border-sky-600 focus:ring-1 focus:ring-sky-600 rounded-lg px-3 py-2.5 text-sm text-slate-800"
-              >
-                <option value="">-- Bấm để chọn Vị trí việc làm --</option>
-                {currentPositions.map((p) => (
-                  <option key={p.code} value={p.code}>
-                    {p.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <Select
+              label="Câu 3: Vị trí việc làm của đồng chí"
+              required
+              icon={Briefcase}
+              sizeVariant="md"
+              value={part1.positionCode || ""}
+              onChange={handlePositionChange}
+            >
+              <option value="">-- Bấm để chọn Vị trí việc làm --</option>
+              {currentPositions.map((p) => (
+                <option key={p.code} value={p.code}>
+                  {p.name}
+                </option>
+              ))}
+            </Select>
           )}
 
           {part1.positionCode?.includes("KHAC") && (
             <div>
-              <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">
-                Ghi rõ chức danh vị trí khác <span className="text-red-500">*</span>
+              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                <span>Ghi rõ chức danh vị trí khác</span>
+                <span className="text-rose-500 font-black">*</span>
               </label>
               <input
                 type="text"
@@ -320,7 +331,7 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
                   setPart1((prev) => ({ ...prev, positionOtherText: e.target.value }))
                 }
                 placeholder="Ví dụ: Cán bộ giao thông - thủy lợi..."
-                className="w-full bg-white border border-slate-300 focus:border-sky-600 focus:ring-1 focus:ring-sky-600 rounded-lg px-3 py-2 text-sm text-slate-800"
+                className="w-full bg-slate-50/60 hover:bg-white focus:bg-white border border-slate-300/80 hover:border-slate-400 text-slate-900 rounded-xl sm:rounded-2xl px-4 py-2.5 text-xs sm:text-sm font-medium shadow-2xs focus:outline-none focus:border-sky-600 focus:ring-4 focus:ring-sky-500/10 transition-all"
               />
             </div>
           )}
