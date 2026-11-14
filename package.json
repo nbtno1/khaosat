@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test:validations": "tsx tests/validations/survey.schema.test.ts",
+    "test:api": "tsx tests/api/public-survey.test.ts",
     "db:seed": "tsx scripts/seed.ts",
     "db:import-communes": "tsx scripts/import-communes.ts"
   },

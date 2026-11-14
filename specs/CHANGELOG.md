@@ -4,6 +4,26 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.2.0-milestone-2] — 2026-11-14
+
+### Đã hoàn thành (Milestone 2 — Cổng Khảo sát & Dynamic Survey Engine - Cốt lõi MVP)
+- **TASK-004 (Zod Validation Schemas & Business Hash):**
+  - Xây dựng Zod schemas cho toàn bộ 4 phần của bài khảo sát (`src/lib/validations/survey.schema.ts`).
+  - Viết 12/12 unit tests PASS (`tests/validations/survey.schema.test.ts`), xác minh TC-10 (kết thúc sớm ngoài đối tượng), TC-11 (khó khăn max 2 & lựa chọn độc quyền), TC-12 (mức độ cần học), TC-13 (hình thức học max 2).
+  - Triển khai hàm băm nghiệp vụ 4 điểm `computeBusinessHash` (SHA-256) chuẩn ADR-005: `communeCode + agencyCode + positionCode + sorted16Statuses`.
+- **TASK-005 (Public Route Handlers API):**
+  - Xây dựng 4 Route Handlers: `/api/public/survey/validate-link/[token]`, `/schema/[version]`, `/position-mapping`, `/submit`.
+  - Hỗ trợ fallback offline và pilot catalog khi chạy thử nghiệm hoặc trong giai đoạn chuyển đổi.
+  - Viết 12/12 API integration tests PASS (`tests/api/public-survey.test.ts`).
+- **TASK-006 (Giao diện Cổng Khảo sát 4 Bước - Mobile First):**
+  - Xây dựng hook quản lý state form `useSurveyFormState` với cơ chế dọn dẹp state tự động khi bấm Quay lại (Rule 9).
+  - Triển khai giao diện responsive chuẩn di động tại `/khao-sat/[token]` với Header tiến trình, huy hiệu thời gian ước tính, 16 thẻ nhóm công việc tự động xếp nhóm gợi ý theo vị trí lên trước (Rule 1).
+  - Triển khai vòng lặp Part III động, render các mức tự đánh giá theo ngữ cảnh vai trò (Rule 4), chip chọn khó khăn max 2 & độc quyền (Rule 5 & 6, ẩn khi chưa có dịp), danh mục chuyên đề học riêng biệt của từng nhóm (Rule 3) và mức độ cần học (Rule 7).
+  - Xử lý mượt mà luồng kết thúc sớm (Rule 8) khi người trả lời ngoài đối tượng.
+  - Hoàn thiện Màn hình Nộp thành công trang trọng (`SurveySuccessModal`), khóa form chống gửi trùng.
+
+---
+
 ## [1.1.0-milestone-1] — 2026-11-14
 
 ### Đã hoàn thành (Milestone 1 — Thiết lập Dự án & Database Schemas v3.3)

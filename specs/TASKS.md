@@ -60,46 +60,49 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 - **Spec liên quan:** `specs/12-VALIDATION-AND-BUSINESS-RULES.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** TASK-001
-- **File dự kiến tạo:** `src/lib/validations/survey.schema.ts`
+- **File đã tạo:** `src/lib/validations/survey.schema.ts`, `tests/validations/survey.schema.test.ts`
 - **Các bước thực hiện:**
-  1. Xây dựng Zod schemas cho Phần I (Thông tin chung).
-  2. Xây dựng Zod schemas cho Phần II (Đủ 16 nhóm công việc).
-  3. Xây dựng Zod schemas cho Phần III (Dynamic loop, ràng buộc khó khăn max 2 và mục độc quyền).
-  4. Xây dựng Zod schemas cho Phần IV và tổng thể `SurveySubmissionSchema`.
-- **Acceptance Criteria:** Validate chặt chẽ dữ liệu đầu vào, thông báo lỗi tiếng Việt thân thiện.
-- **Test Cases:** TC-10, TC-11, TC-12.
-- **Trạng thái:** `PLANNED`
+  1. Xây dựng Zod schemas cho Phần I (Thông tin chung) có kiểm tra vị trí việc làm khác và tư cách khác.
+  2. Xây dựng Zod schemas cho Phần II (Đủ 16 nhóm công việc), hàm kiểm tra ngoài đối tượng `isUserOutOfScope`.
+  3. Xây dựng Zod schemas cho Phần III (Dynamic loop, ràng buộc vai trò, khó khăn max 2 và mục độc quyền, mức độ cần học).
+  4. Xây dựng Zod schemas cho Phần IV (Hình thức học max 2) và tổng thể `SurveySubmissionSchema`.
+  5. Xây dựng hàm băm nghiệp vụ 4 điểm `computeBusinessHash` (SHA-256) chống ghi trùng không chứa PII.
+- **Acceptance Criteria:** Validate chặt chẽ dữ liệu đầu vào, thông báo lỗi tiếng Việt thân thiện, 100% test cases đạt.
+- **Test Cases:** TC-10, TC-11, TC-12, TC-13 (12/12 unit tests PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ### TASK-005: Xây dựng Public API Routes cho Cổng Khảo sát
 - **Module:** Backend API
 - **Spec liên quan:** `specs/09-API-SPECIFICATION.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** TASK-002, TASK-004
-- **File dự kiến tạo:** `src/app/api/public/survey/validate-link/[token]/route.ts`, `src/app/api/public/survey/schema/[version]/route.ts`, `src/app/api/public/survey/position-mapping/route.ts`, `src/app/api/public/survey/submit/route.ts`
+- **File đã tạo:** `src/app/api/public/survey/validate-link/[token]/route.ts`, `src/app/api/public/survey/schema/[version]/route.ts`, `src/app/api/public/survey/position-mapping/route.ts`, `src/app/api/public/survey/submit/route.ts`, `tests/api/public-survey.test.ts`
 - **Các bước thực hiện:**
-  1. Viết Route Handler xác thực token link và lấy danh mục xã của tỉnh.
-  2. Viết Route Handler trả về Schema câu hỏi phiên bản 3.3.
-  3. Viết Route Handler nhận submit bài khảo sát, validate bằng Zod, tính `businessHash` và lưu database.
-- **Acceptance Criteria:** API phản hồi chuẩn HTTP status codes, lưu dữ liệu thành công.
-- **Test Cases:** TC-14, TC-15.
-- **Trạng thái:** `PLANNED`
+  1. Viết Route Handler `validate-link` xác thực token link và lấy danh mục xã của tỉnh.
+  2. Viết Route Handler `schema/[version]` trả về Schema câu hỏi phiên bản 3.3.
+  3. Viết Route Handler `position-mapping` trả về cấu hình nhóm việc gợi ý và vai trò thường gặp.
+  4. Viết Route Handler `submit` nhận nộp bài khảo sát, validate bằng Zod, tính `businessHash`, kiểm tra nghi trùng và lưu database.
+- **Acceptance Criteria:** API phản hồi chuẩn HTTP status codes, lưu dữ liệu thành công, 100% test cases đạt.
+- **Test Cases:** TC-14, TC-15 (12/12 API tests PASS).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ### TASK-006: Xây dựng Giao diện Cổng Khảo sát 4 Bước (Public Portal UI)
 - **Module:** Frontend / UI
 - **Spec liên quan:** `specs/10-UI-UX-SPECIFICATION.md`
 - **Mức độ ưu tiên:** P0
 - **Phụ thuộc:** TASK-004, TASK-005
-- **File dự kiến tạo:** `src/app/(public)/khao-sat/[token]/page.tsx`, `src/components/survey/SurveyContainer.tsx`, `src/components/survey/StepGeneralInfo.tsx`, `src/components/survey/StepWorkgroups.tsx`, `src/components/survey/StepDynamicEvaluation.tsx`, `src/components/survey/StepLearningPreferences.tsx`, `src/components/survey/SurveySuccessModal.tsx`, `src/hooks/useSurveyFormState.ts`
+- **File đã tạo:** `src/app/(public)/khao-sat/[token]/page.tsx`, `src/components/survey/SurveyContainer.tsx`, `src/components/survey/StepGeneralInfo.tsx`, `src/components/survey/StepWorkgroups.tsx`, `src/components/survey/StepDynamicEvaluation.tsx`, `src/components/survey/StepLearningPreferences.tsx`, `src/components/survey/SurveySuccessModal.tsx`, `src/hooks/useSurveyFormState.ts`
 - **Các bước thực hiện:**
-  1. Tạo giao diện Responsive chuẩn di động với Header tiến trình và huy hiệu thời gian ước tính.
-  2. Triển khai Bước 1: Chọn tỉnh, xã, cơ quan, vị trí, tư cách, năm kinh nghiệm.
-  3. Triển khai Bước 2: Hiển thị 16 nhóm công việc, tự động xếp nhóm gợi ý lên trước, xử lý luồng kết thúc sớm (Early Exit).
-  4. Triển khai Bước 3: Vòng lặp Part III động, render các mức tự đánh giá theo ngữ cảnh vai trò, chọn khó khăn và nội dung cần học.
-  5. Triển khai Bước 4: Chọn hình thức học (max 2) và góp ý tự do.
-  6. Triển khai hook dọn dẹp state khi bấm Quay lại (Back-Navigation Cleanup).
-- **Acceptance Criteria:** Hoàn thành trải nghiệm khảo sát mượt mà trên di động và máy tính, nộp bài thành công.
-- **Test Cases:** TC-01 đến TC-14.
-- **Trạng thái:** `PLANNED`
+  1. Tạo giao diện Responsive chuẩn di động với Header tiến trình, huy hiệu thời gian ước tính và thanh % động.
+  2. Triển khai Bước 1: Chọn tỉnh (cố định), xã/phường (lọc tìm kiếm), cơ quan (11 đơn vị), vị trí (kèm ô ghi rõ khác), tư cách (chọn nhiều), năm kinh nghiệm.
+  3. Triển khai Bước 2: Hiển thị 16 nhóm công việc, tự động xếp nhóm gợi ý theo vị trí lên trước, 4 nút trạng thái loại trừ nhau, xử lý luồng kết thúc sớm (Early Exit) kèm thông báo.
+  4. Triển khai Bước 3: Vòng lặp Part III động, Câu 8 vai trò (chọn nhiều), Câu 9 tự đánh giá 4 mức theo ngữ cảnh vai trò (Rule 4), Câu 10 khó khăn max 2 & mục độc quyền (Rule 5 & 6, ẩn khi chưa có dịp), Câu 11 chuyên đề học của nhóm (Rule 3), Câu 12 mức độ cần học (Rule 7).
+  5. Triển khai Bước 4: Câu 13 hình thức học (max 2), Câu 14 góp ý tự do (max 500 ký tự), bảng tóm tắt thông tin khai báo trước khi nộp.
+  6. Triển khai hook dọn dẹp state khi bấm Quay lại (Back-Navigation Cleanup - Rule 9).
+  7. Triển khai Màn hình Hoàn thành trang trọng với lời cảm ơn từ Trường Đào tạo & Bồi dưỡng nghiệp vụ kiểm toán, khóa form chống gửi trùng.
+- **Acceptance Criteria:** Hoàn thành trải nghiệm khảo sát mượt mà trên di động và máy tính, nộp bài thành công, 100% test cases đạt.
+- **Test Cases:** TC-01 đến TC-14 (E2E & UI verified).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
 
 ---
 
