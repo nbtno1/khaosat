@@ -349,3 +349,103 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 - **Acceptance Criteria:** Quản lý trọn vẹn 34 tỉnh và 3.321 xã/phường/đặc khu, hỗ trợ thêm/sửa/xóa/bật tắt, xuất Excel, đồng bộ nguồn, 5/5 tests PASS, 30/30 routes build thành công.
 - **Test Cases:** TC-DVHC-01 đến TC-DVHC-05 (5/5 PASS).
 - **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 14/11/2026)
+
+---
+
+## MILESTONE 10 / MỞ RỘNG: PHÂN HỆ QUẢN TRỊ BỘ CÂU HỎI & NGÂN HÀNG CHUYÊN ĐỀ ĐÀO TẠO ĐỘNG (ADR-012)
+
+### TASK-019: Xây dựng Giao diện & Bộ API Quản trị Bộ Câu hỏi, Nhóm việc & Chuyên đề Khảo sát
+- **Module:** Survey Questions & Schema Builder / Admin UI / Backend Service
+- **Spec liên quan:** `specs/03-FUNCTIONAL-REQUIREMENTS.md` (FR-004, FR-005, FR-006), `specs/08-DATABASE-DESIGN.md`, `specs/DECISIONS.md` (ADR-012)
+- **Mức độ ưu tiên:** P1
+- **Phụ thuộc:** TASK-002, TASK-005, TASK-017, TASK-018
+- **File dự kiến tạo/cập nhật:**
+  - `src/models/SurveySchemaConfig.ts`: Bổ sung `title`, `description`, và mảng `questions` cấu hình 14 câu hỏi.
+  - `src/lib/validations/survey-schema-admin.schema.ts`: Bộ Zod schemas kiểm tra tính hợp lệ khi thêm/sửa câu hỏi, nhóm việc, chuyên đề, vai trò, khó khăn, hình thức học.
+  - `src/services/survey-questions-admin.service.ts`: Dịch vụ quản trị CRUD phiên bản, nhóm việc, chuyên đề, vai trò, khó khăn, hình thức học và cấu hình 14 câu hỏi.
+  - `src/app/api/admin/questions/versions/route.ts`: API danh sách phiên bản và tạo/clone phiên bản mới.
+  - `src/app/api/admin/questions/schema/[version]/route.ts`: API đọc chi tiết và lưu toàn bộ schema.
+  - `src/app/api/admin/questions/schema/[version]/workgroups/route.ts`: API quản trị nhóm công việc (thêm, sửa, xóa, sắp xếp).
+  - `src/app/api/admin/questions/schema/[version]/workgroups/[id]/topics/route.ts`: API quản trị chuyên đề đào tạo.
+  - `src/app/api/admin/questions/schema/[version]/roles/route.ts`: API cập nhật 4 vai trò và mô tả mức năng lực.
+  - `src/app/api/admin/questions/schema/[version]/difficulties/route.ts`: API cập nhật danh mục khó khăn.
+  - `src/app/api/admin/questions/schema/[version]/learning-formats/route.ts`: API cập nhật danh mục hình thức học.
+  - `src/app/api/admin/questions/schema/[version]/sections/route.ts`: API cập nhật cấu hình 14 câu hỏi.
+  - `src/app/(admin)/admin/questions/page.tsx`: Giao diện Quản trị Bộ câu hỏi (5 tabs chuyên nghiệp).
+  - `src/app/(admin)/layout.tsx`: Thêm mục "Quản trị Bộ Câu hỏi" vào Sidebar.
+  - `src/services/system-guide.service.ts`: Đăng ký phân hệ thứ 8 vào Cẩm nang Vận hành Động.
+  - `tests/services/survey-questions-admin.test.ts`: Bộ kiểm thử tự động cho toàn bộ phân hệ.
+- **Các bước thực hiện:**
+  1. Cập nhật Model Mongoose `SurveySchemaConfig`.
+  2. Xây dựng Zod validation schemas và Service `SurveyQuestionsAdminService`.
+  3. Xây dựng 8 RESTful API Route Handlers.
+  4. Xây dựng giao diện Quản trị `/admin/questions` với 5 tabs.
+  5. Tích hợp thanh điều hướng Sidebar và Cẩm nang động.
+  6. Viết bộ test và kiểm thử hệ thống.
+- **Acceptance Criteria:** Cho phép thay đổi nội dung, số lượng (thêm/xóa nhóm việc, chuyên đề, khó khăn, hình thức học), cấu trúc (thứ tự, maxSelect, độc quyền, bật/tắt) và nhân bản phiên bản mới an toàn; 100% test cases đạt; build thành công.
+- **Test Cases:** TC-QA-01 đến TC-QA-05 (5/5 PASS 100% tại `tests/services/survey-questions-admin.test.ts`).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 16/11/2026)
+
+---
+
+## MILESTONE 11: PHÂN HỆ NHẬT KÝ HỆ THỐNG (AUDIT LOGS) & PHÂN QUYỀN DUAL-ADMIN (ADR-013)
+
+### TASK-020: Rà soát Cơ chế Phân quyền Dual-Admin, Xây dựng Hệ thống Nhật ký & Giao diện Quản trị Log Cục CNTT
+- **Module:** Security & Audit Logging / RBAC Dual-Admin / Admin UI
+- **Spec liên quan:** `specs/05-USER-ROLES-AND-USE-CASES.md`, `specs/07-SYSTEM-ARCHITECTURE.md`, `specs/11-SECURITY-SPECIFICATION.md`, `specs/DECISIONS.md` (ADR-013)
+- **Mức độ ưu tiên:** P0
+- **Phụ thuộc:** TASK-013, TASK-014, TASK-018, TASK-019
+- **File đã tạo/cập nhật:**
+  - `src/models/User.ts`: Thêm `SYSTEM_ADMIN` song song `TECHNICAL_ADMIN`.
+  - `src/models/AuditLog.ts`: Schema lưu vết nhật ký đầy đủ (actor, role, action, module, description, target, details, IP, UA, status).
+  - `src/lib/auth.ts`: Quyền `VIEW_AUDIT_LOGS` đặc quyền Cục CNTT, phân quyền đồng đều cho cả 2 loại admin ở các tác vụ quản trị nghiệp vụ khác.
+  - `src/services/audit-log.service.ts`: Dịch vụ ghi log an toàn non-blocking, truy vấn phân trang đa bộ lọc, tính toán 5 chỉ số thống kê.
+  - `src/lib/audit-logger.ts`: Helper `logActionFromRequest` trích xuất IP client, User-Agent và danh tính phiên.
+  - `src/app/api/admin/audit-logs/route.ts`: API GET (chặn 403 Forbidden nếu không phải Cục CNTT, tự động ghi log cảnh báo an ninh) và POST.
+  - Tích hợp ghi log trên các endpoint: `api/auth/login`, `api/auth/logout`, `api/admin/questions/...`, `api/admin/administrative-units/...`, `api/admin/reviews/duplicates/...`, `api/admin/export/excel`, `api/admin/campaigns/qr-zip`.
+  - `src/app/(admin)/admin/audit-logs/page.tsx`: Giao diện Quản trị Nhật ký chuẩn Full-Height Zero-Page-Scroll, 4 thẻ KPIs, bộ lọc phân hệ/trạng thái, bảng cuộn dính thead, modal metadata JSON, xuất CSV, và màn hình cảnh báo truy cập trái phép.
+  - `src/app/(admin)/layout.tsx`: Bổ sung menu "Nhật ký Hệ thống" vào Sidebar (chỉ hiển thị cho `TECHNICAL_ADMIN`).
+  - `src/app/(auth)/login/page.tsx`: Cung cấp 2 nút preset 1-click: "Cục CNTT" (`cntt_admin` - có quyền xem log) và "Admin" (`admin` - chặn xem log).
+- **Các bước thực hiện:**
+  1. Chuẩn hóa 2 nhóm tài khoản quản trị: Cục CNTT (`cntt_admin`) và Admin (`admin`).
+  2. Bổ sung quyền `VIEW_AUDIT_LOGS` độc quyền cho `TECHNICAL_ADMIN`.
+  3. Xây dựng Model, Service và API Route cho Nhật ký Hệ thống.
+  4. Gắn cờ ghi log tự động trên toàn bộ các endpoint thao tác dữ liệu.
+  5. Xây dựng giao diện Quản trị Nhật ký đạt tiêu chuẩn Full-Height và Zero-Page-Scroll.
+  6. Kiểm thử xác nhận chặn 403 khi `admin` truy cập API/trang nhật ký, ghi log cảnh báo; kiểm thử `cntt_admin` tra cứu và xuất CSV thành công.
+- **Acceptance Criteria:**
+  - 2 loại tài khoản đăng nhập (`cntt_admin`, `admin`) có quyền nghiệp vụ như nhau.
+  - Duy nhất `cntt_admin` (Cục CNTT) xem được Nhật ký Hệ thống; `admin` bị chặn 403 Forbidden và ẩn menu.
+  - Mọi thao tác truy cập, đăng nhập/đăng xuất, chỉnh sửa câu hỏi, ĐVHC, thẩm tra trùng, xuất Excel, tải QR đều được lưu vết đầy đủ.
+  - Giao diện Full-Height, không cuộn page, bảng cuộn nội bộ; 0 lỗi TypeScript.
+- **Test Cases:** TC-AUDIT-01 (Đăng nhập Cục CNTT & Xem log), TC-AUDIT-02 (Đăng nhập Admin & Chặn 403 log), TC-AUDIT-03 (Tự động ghi cảnh báo an ninh), TC-AUDIT-04 (Ghi log thao tác nghiệp vụ) -> 100% PASS.
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 16/11/2026)
+
+---
+
+## MILESTONE 12: TỐI GIẢN HÓA AUTH UX, DỌN DẸP TITLE TAGS & PROGRESSIVE RENDERING ENGINE (ADR-014)
+
+### TASK-021: Tối giản hóa Giao diện Đăng nhập, Xóa bỏ Badge Kỹ thuật trên Tiêu đề & Tối ưu Chuyển Tab Bằng Progressive Item Rendering
+- **Module:** UI/UX Refinement / Performance Optimization / Auth Experience
+- **Spec liên quan:** `specs/10-UI-UX-SPECIFICATION.md`, `specs/DECISIONS.md` (ADR-014)
+- **Mức độ ưu tiên:** P1
+- **Phụ thuộc:** TASK-019, TASK-020
+- **File đã tạo/cập nhật:**
+  - `src/app/(auth)/login/page.tsx`: Tối giản hóa form đăng nhập (thu gọn card `max-w-[390px]`, bỏ khối 5 nút preset, thêm toggle mật khẩu và hàng gợi ý 1-click kín đáo `Gợi ý: Cục CNTT • Admin`).
+  - `src/hooks/useProgressiveItems.ts`: Custom hook chia nhỏ dữ liệu và nạp nối tiếp theo frame (< 16ms/frame) kèm resetKey tự động.
+  - `src/app/(admin)/admin/questions/page.tsx`: Dọn tiêu đề, tích hợp `useProgressiveItems` cho 5 tabs (14 câu hỏi, nhóm việc, chuyên đề, vai trò, khó khăn).
+  - `src/components/admin/AnalyticsTablesViewer.tsx`: Dọn tiêu đề, tích hợp progressive rows streaming cho các bảng B1 đến B6.
+  - `src/app/(admin)/admin/administrative-units/page.tsx`: Dọn tiêu đề, tích hợp progressive rendering cho 34 tỉnh.
+  - `src/app/(admin)/admin/dashboard/page.tsx`, `campaigns/page.tsx`, `guide/page.tsx`, `audit-logs/page.tsx`, `DuplicateReviewWorkbench.tsx`: Xóa sạch badge kỹ thuật.
+- **Các bước thực hiện:**
+  1. Tái cấu trúc trang `/login` thành giao diện tối giản, thanh lịch, trang nghiêm, full-height zero-page-scroll.
+  2. Rà soát và xóa bỏ toàn bộ các thẻ tag/badge mang tính kỹ thuật/dev spec trên tiêu đề toàn bộ các trang Admin.
+  3. Xây dựng hook `useProgressiveItems` và tích hợp vào các trang/tab có số lượng phần tử DOM và icon lớn.
+  4. Kiểm thử tốc độ chuyển tab tức thì (< 16ms), kiểm thử typecheck và chạy thử nghiệm.
+- **Acceptance Criteria:**
+  - Trang login tối giản, không tràn khung, cuộn bằng 0.
+  - Các trang quản trị không còn badge kỹ thuật thừa.
+  - Chuyển tab mượt mà tức thì, không bị đơ hoặc giật lag.
+  - 100% typecheck thành công, 0 lỗi TypeScript.
+- **Test Cases:** TC-PERF-01 (Kiểm tra tốc độ render frame 1 của tab < 16ms), TC-UI-01 (Kiểm tra zero-page-scroll tại `/login` và các trang Admin) -> PASS 100%.
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 16/11/2026)

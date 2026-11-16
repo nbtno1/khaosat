@@ -19,7 +19,8 @@ export interface SessionPayload {
 
 // Role labels for display
 export const ROLE_LABELS: Record<UserRole, string> = {
-  TECHNICAL_ADMIN: "Quản trị Kỹ thuật",
+  TECHNICAL_ADMIN: "Cục Công nghệ thông tin",
+  SYSTEM_ADMIN: "Quản trị viên Hệ thống (Admin)",
   CONTENT_ADMIN: "Quản trị Nội dung",
   REVIEWER: "Thẩm tra viên (Rà soát)",
   PROGRESS_MONITOR: "Theo dõi Tiến độ",
@@ -109,6 +110,7 @@ export async function verifyPassword(plainText: string, hash: string): Promise<b
  * Kiểm tra phân quyền RBAC dựa trên Matrix tại Spec 05
  */
 export type PermissionKey =
+  | "VIEW_AUDIT_LOGS"
   | "MANAGE_USERS"
   | "MANAGE_SCHEMA"
   | "MANAGE_CAMPAIGNS"
@@ -123,21 +125,39 @@ export type PermissionKey =
 
 export function hasPermission(role: UserRole, permission: PermissionKey): boolean {
   switch (permission) {
-    case "MANAGE_USERS":
+    case "VIEW_AUDIT_LOGS":
+      // ĐẶC QUYỀN DUY NHẤT: Chỉ tài khoản Cục Công nghệ thông tin mới có quyền xem Log hệ thống
       return role === "TECHNICAL_ADMIN";
+
+    case "MANAGE_USERS":
+      return role === "TECHNICAL_ADMIN" || role === "SYSTEM_ADMIN";
 
     case "MANAGE_SCHEMA":
     case "MANAGE_CAMPAIGNS":
-      return role === "TECHNICAL_ADMIN" || role === "CONTENT_ADMIN";
+      return (
+        role === "TECHNICAL_ADMIN" ||
+        role === "SYSTEM_ADMIN" ||
+        role === "CONTENT_ADMIN"
+      );
 
     case "REVIEW_DUPLICATES":
-      return role === "TECHNICAL_ADMIN" || role === "CONTENT_ADMIN" || role === "REVIEWER";
+      return (
+        role === "TECHNICAL_ADMIN" ||
+        role === "SYSTEM_ADMIN" ||
+        role === "CONTENT_ADMIN" ||
+        role === "REVIEWER"
+      );
 
     case "VIEW_RAW_DATA":
     case "VIEW_INTERNAL_TABLES":
     case "EXPORT_INTERNAL_EXCEL":
       // Tuyệt đối cấm Đầu mối địa phương xem dữ liệu thô và bảng nội bộ
-      return role === "TECHNICAL_ADMIN" || role === "CONTENT_ADMIN" || role === "REVIEWER";
+      return (
+        role === "TECHNICAL_ADMIN" ||
+        role === "SYSTEM_ADMIN" ||
+        role === "CONTENT_ADMIN" ||
+        role === "REVIEWER"
+      );
 
     case "VIEW_SUPPRESSED_TABLES":
     case "EXPORT_LOCAL_EXCEL":

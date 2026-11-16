@@ -161,18 +161,14 @@ export const DuplicateReviewWorkbench: React.FC = () => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="h-full flex flex-col overflow-hidden gap-3.5">
       {/* Header & Tiêu đề Phân hệ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 mb-1">
-            <AlertTriangle className="w-3.5 h-3.5 text-amber-700" />
-            <span>TRUNG TÂM RÀ SOÁT VÀ THẨM TRA NGHIỆP VỤ</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-            Rà soát Phiếu Nghi trùng (Duplicate Review Workbench)
+          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
+            Rà soát Phiếu Nghi trùng
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500">
+          <p className="text-xs text-slate-500">
             Thẩm tra các cặp/nhóm phiếu trùng khớp 4 điểm nghiệp vụ (cùng xã, cơ quan, vị trí và 16 lựa chọn ở Câu 6).
           </p>
         </div>
@@ -181,55 +177,55 @@ export const DuplicateReviewWorkbench: React.FC = () => {
           type="button"
           onClick={fetchDuplicates}
           disabled={isLoading || isProcessing}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold shadow-sm transition-all"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer self-start sm:self-center"
         >
-          <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin text-sky-600" : ""}`} />
+          <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin text-sky-600" : ""}`} />
           <span>Làm mới danh sách</span>
         </button>
       </div>
 
       {/* Thẻ Thống kê 4 Chỉ số cốt lõi */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-1">
-          <div className="text-xs font-semibold text-slate-500 uppercase">
+      <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs space-y-0.5">
+          <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
             Tổng phiếu nghi trùng
           </div>
-          <div className="text-2xl font-black text-slate-900">{stats.totalSuspected}</div>
-          <div className="text-xs text-slate-400">Khớp 4 tiêu chí nghiệp vụ</div>
+          <div className="text-xl sm:text-2xl font-black text-slate-900">{stats.totalSuspected}</div>
+          <div className="text-[10px] text-slate-400">Khớp 4 tiêu chí nghiệp vụ</div>
         </div>
 
-        <div className="bg-amber-50 p-4 rounded-xl border border-amber-200 shadow-sm space-y-1">
-          <div className="text-xs font-semibold text-amber-800 uppercase flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5 text-amber-600" />
+        <div className="bg-amber-50 p-3.5 rounded-xl border border-amber-200 shadow-2xs space-y-0.5">
+          <div className="text-[10px] font-semibold text-amber-800 uppercase flex items-center gap-1 tracking-wider">
+            <Clock className="w-3 h-3 text-amber-600" />
             <span>Chờ thẩm tra</span>
           </div>
-          <div className="text-2xl font-black text-amber-900">{stats.pendingReview}</div>
-          <div className="text-xs text-amber-700">Cần chuyên viên xử lý</div>
+          <div className="text-xl sm:text-2xl font-black text-amber-900">{stats.pendingReview}</div>
+          <div className="text-[10px] text-amber-700">Cần chuyên viên xử lý</div>
         </div>
 
-        <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-200 shadow-sm space-y-1">
-          <div className="text-xs font-semibold text-emerald-800 uppercase flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+        <div className="bg-emerald-50 p-3.5 rounded-xl border border-emerald-200 shadow-2xs space-y-0.5">
+          <div className="text-[10px] font-semibold text-emerald-800 uppercase flex items-center gap-1 tracking-wider">
+            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
             <span>Đã chấp nhận (Tính)</span>
           </div>
-          <div className="text-2xl font-black text-emerald-900">{stats.resolvedValid}</div>
-          <div className="text-xs text-emerald-700">Đưa vào tổng hợp B2-B6</div>
+          <div className="text-xl sm:text-2xl font-black text-emerald-900">{stats.resolvedValid}</div>
+          <div className="text-[10px] text-emerald-700">Đưa vào tổng hợp B2-B6</div>
         </div>
 
-        <div className="bg-rose-50 p-4 rounded-xl border border-rose-200 shadow-sm space-y-1">
-          <div className="text-xs font-semibold text-rose-800 uppercase flex items-center gap-1">
-            <XCircle className="w-3.5 h-3.5 text-rose-600" />
+        <div className="bg-rose-50 p-3.5 rounded-xl border border-rose-200 shadow-2xs space-y-0.5">
+          <div className="text-[10px] font-semibold text-rose-800 uppercase flex items-center gap-1 tracking-wider">
+            <XCircle className="w-3 h-3 text-rose-600" />
             <span>Đã loại trừ</span>
           </div>
-          <div className="text-2xl font-black text-rose-900">{stats.resolvedExcluded}</div>
-          <div className="text-xs text-rose-700">Thống kê lý do tại Bảng B1</div>
+          <div className="text-xl sm:text-2xl font-black text-rose-900">{stats.resolvedExcluded}</div>
+          <div className="text-[10px] text-rose-700">Thống kê lý do tại Bảng B1</div>
         </div>
       </div>
 
       {/* Thanh Lọc & Tìm kiếm */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs font-semibold text-slate-500 flex items-center gap-1">
+      <div className="shrink-0 bg-white p-3 rounded-xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="text-xs font-semibold text-slate-500 flex items-center gap-1 mr-1">
             <Filter className="w-3.5 h-3.5" />
             Lọc trạng thái:
           </span>
@@ -243,9 +239,9 @@ export const DuplicateReviewWorkbench: React.FC = () => {
               key={tab.id}
               type="button"
               onClick={() => setSelectedStatus(tab.id)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 selectedStatus === tab.id
-                  ? "bg-sky-700 text-white shadow-sm"
+                  ? "bg-sky-700 text-white shadow-2xs"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
               }`}
             >
@@ -254,35 +250,36 @@ export const DuplicateReviewWorkbench: React.FC = () => {
           ))}
         </div>
 
-        <div className="relative min-w-[240px]">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+        <div className="relative min-w-[220px]">
+          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Tìm theo xã, tỉnh, đơn vị..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-300 rounded-lg pl-9 pr-3 py-1.5 text-xs sm:text-sm text-slate-800 focus:bg-white focus:border-sky-600 focus:ring-1 focus:ring-sky-600"
+            className="w-full bg-slate-50 border border-slate-300 rounded-lg pl-8 pr-3 py-1 text-xs text-slate-800 focus:bg-white focus:border-sky-600 focus:ring-1 focus:ring-sky-600"
           />
         </div>
       </div>
 
-      {/* Danh sách các nhóm nghi trùng (Accordion & Side-by-side Diff View) */}
-      {isLoading ? (
-        <div className="bg-white p-12 rounded-xl border border-slate-200 text-center text-slate-500 text-sm">
-          Đang tải danh sách các nhóm phiếu nghi trùng...
-        </div>
-      ) : filteredGroups.length === 0 ? (
-        <div className="bg-white p-12 rounded-xl border border-slate-200 text-center space-y-2">
-          <ShieldCheck className="w-10 h-10 text-emerald-600 mx-auto" />
-          <div className="text-base font-bold text-slate-800">
-            Không có phiếu nào cần rà soát trong danh mục này
+      {/* Danh sách các nhóm nghi trùng - CUỘN ĐỘC LẬP NỘI BỘ */}
+      <div className="flex-1 min-h-0 overflow-y-auto pr-1">
+        {isLoading ? (
+          <div className="bg-white p-12 rounded-xl border border-slate-200 text-center text-slate-500 text-sm">
+            Đang tải danh sách các nhóm phiếu nghi trùng...
           </div>
-          <p className="text-xs text-slate-500">
-            Tất cả các phiếu khảo sát đều đảm bảo tính duy nhất hoặc đã được thẩm tra hoàn tất.
-          </p>
-        </div>
-      ) : (
-        <div className="space-y-4">
+        ) : filteredGroups.length === 0 ? (
+          <div className="bg-white p-12 rounded-xl border border-slate-200 text-center space-y-2">
+            <ShieldCheck className="w-10 h-10 text-emerald-600 mx-auto" />
+            <div className="text-base font-bold text-slate-800">
+              Không có phiếu nào cần rà soát trong danh mục này
+            </div>
+            <p className="text-xs text-slate-500">
+              Tất cả các phiếu khảo sát đều đảm bảo tính duy nhất hoặc đã được thẩm tra hoàn tất.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-3 pb-4">
           {filteredGroups.map((group) => {
             const isExpanded = expandedGroupId === group.duplicateGroupId;
             const hasPending = group.responses.some(
@@ -521,6 +518,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
           })}
         </div>
       )}
+      </div>
 
       {/* Modal Nhập lý do loại trừ */}
       {rejectingResponseId && (

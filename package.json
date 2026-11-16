@@ -17,6 +17,7 @@
     "test:e2e": "tsx tests/e2e/23-official-test-cases.test.ts",
     "test:guide": "tsx tests/e2e/guide-module.test.ts",
     "test:dvhc": "tsx tests/services/administrative-units.test.ts",
+    "test:questions": "tsx tests/services/survey-questions-admin.test.ts",
     "db:seed": "tsx scripts/seed.ts",
     "db:import-communes": "tsx scripts/import-communes.ts",
     "db:import-dvhc": "tsx scripts/import-dvhc.ts"

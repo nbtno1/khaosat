@@ -18,6 +18,7 @@ import {
   BookOpen,
   Sparkles,
   MapPin,
+  HelpCircle,
 } from "lucide-react";
 import { AppLogo } from "@/components/common/AppLogo";
 
@@ -83,42 +84,56 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       href: "/admin/dashboard",
       icon: LayoutDashboard,
       description: "KPIs, biểu đồ tiến độ & 34 tỉnh",
-      roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
+      roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
     },
     {
       label: "Đợt khảo sát & Mã QR",
       href: "/admin/campaigns",
       icon: QrCode,
       description: "Quản lý đợt & Tải 34 QR ZIP",
-      roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
+      roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
     },
     {
       label: "Rà soát Nghi trùng",
       href: "/admin/reviews/duplicates",
       icon: FileCheck2,
       description: "Thẩm tra phiếu nghi trùng 4 điểm",
-      roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER"],
+      roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER"],
     },
     {
       label: "Phân tích 6 Bảng & Xuất Excel",
       href: "/admin/analytics",
       icon: Layers,
       description: "Bảng B1-B6, Khoảng thiếu hụt & Excel",
-      roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
+      roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
     },
     {
       label: "Danh mục Tỉnh, Xã/Phường",
       href: "/admin/administrative-units",
       icon: MapPin,
       description: "Cấu hình 34 tỉnh & 3.321 xã/phường",
-      roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR"],
+      roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR"],
+    },
+    {
+      label: "Quản trị Bộ Câu hỏi",
+      href: "/admin/questions",
+      icon: HelpCircle,
+      description: "Cấu hình 14 câu hỏi, nhóm việc & chuyên đề",
+      roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER"],
     },
     {
       label: "Hướng dẫn sử dụng",
       href: "/admin/guide",
       icon: BookOpen,
       description: "Cẩm nang vận hành cập nhật động",
-      roles: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
+      roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
+    },
+    {
+      label: "Nhật ký Hệ thống",
+      href: "/admin/audit-logs",
+      icon: ShieldCheck,
+      description: "Lịch sử truy cập & thao tác (Cục CNTT)",
+      roles: ["TECHNICAL_ADMIN"],
     },
   ];
 
@@ -126,9 +141,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const visibleNavItems = navItems.filter((item) => item.roles.includes(userRole));
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col lg:flex-row">
+    <div className="h-screen max-h-screen w-screen overflow-hidden bg-slate-50 flex flex-col lg:flex-row">
       {/* 1. DESKTOP VERTICAL SIDEBAR (CỐ ĐỊNH BÊN TRÁI) */}
-      <aside className="hidden lg:flex w-64 xl:w-72 shrink-0 border-r border-slate-200/80 bg-white h-screen sticky top-0 z-30 shadow-xs">
+      <aside className="hidden lg:flex w-64 xl:w-72 shrink-0 border-r border-slate-200/80 bg-white h-full flex-col z-30 shadow-xs">
         <AdminSidebar
           pathname={pathname}
           visibleNavItems={visibleNavItems}
@@ -138,13 +153,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* 2. MOBILE TOPBAR & DRAWER (MÀN HÌNH NHỎ) */}
-      <div className="lg:hidden sticky top-0 z-40 bg-white border-b border-slate-200/90 shadow-xs">
+      <div className="lg:hidden shrink-0 bg-white border-b border-slate-200/90 shadow-xs z-40">
         <div className="px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
-              className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 border border-slate-200/80"
+              className="p-2 rounded-xl text-slate-600 hover:bg-slate-100 border border-slate-200/80 cursor-pointer"
               aria-label="Mở menu điều hướng"
             >
               <Menu className="w-5 h-5" />
@@ -164,7 +179,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <button
             type="button"
             onClick={handleLogout}
-            className="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+            className="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
             title="Đăng xuất"
           >
             <LogOut className="w-4 h-4" />
@@ -194,14 +209,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         )}
       </div>
 
-      {/* 3. MAIN CONTENT WORKSPACE (BÊN PHẢI) */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto space-y-6">
+      {/* 3. MAIN CONTENT WORKSPACE (BÊN PHẢI) - FULL HEIGHT, PAGE KHÔNG SCROLL */}
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+        <main className="flex-1 min-h-0 h-full w-full overflow-hidden flex flex-col">
           {children}
         </main>
 
         {/* Global Admin Footer */}
-        <footer className="bg-white border-t border-slate-200/80 py-4 px-6 text-center text-xs text-slate-500">
+        <footer className="shrink-0 bg-white border-t border-slate-200/80 py-2.5 px-6 text-center text-xs text-slate-500 z-10">
           Hệ thống Khảo sát Năng lực Quản lý Tài chính, Tài sản công cấp xã — Trường Đào tạo và Bồi dưỡng nghiệp vụ kiểm toán (Kiểm toán nhà nước)
         </footer>
       </div>
@@ -235,44 +250,43 @@ function AdminSidebar({
   onCloseMobile,
 }: AdminSidebarProps) {
   return (
-    <div className="flex flex-col h-full justify-between bg-white">
+    <div className="flex flex-col h-full bg-white overflow-hidden">
       {/* Brand & Logo Header */}
-      <div>
-        <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-          <Link
-            href="/admin/dashboard"
-            onClick={onCloseMobile}
-            className="flex items-center gap-3 group"
-          >
-            <AppLogo size="md" />
-            <div>
-              <div className="text-[10px] uppercase font-black text-sky-700 tracking-wider">
-                KIỂM TOÁN NHÀ NƯỚC
-              </div>
-              <div className="text-sm font-extrabold text-slate-900 tracking-tight leading-snug">
-                Hệ thống Quản lý Khảo sát
-              </div>
-            </div>
-          </Link>
-
-          {/* Close button on mobile */}
-          {onCloseMobile && (
-            <button
-              type="button"
-              onClick={onCloseMobile}
-              className="lg:hidden p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          )}
-        </div>
-
-        {/* Navigation Section */}
-        <div className="px-3.5 py-4 space-y-6">
+      <div className="shrink-0 p-5 border-b border-slate-100 flex items-center justify-between">
+        <Link
+          href="/admin/dashboard"
+          onClick={onCloseMobile}
+          className="flex items-center gap-3 group"
+        >
+          <AppLogo size="md" />
           <div>
-            <div className="px-3 text-[10px] font-extrabold uppercase text-slate-400 tracking-wider mb-2">
-              DANH MỤC QUẢN TRỊ
+            <div className="text-[10px] uppercase font-black text-sky-700 tracking-wider">
+              KIỂM TOÁN NHÀ NƯỚC
             </div>
+            <div className="text-sm font-extrabold text-slate-900 tracking-tight leading-snug">
+              Hệ thống Quản lý Khảo sát
+            </div>
+          </div>
+        </Link>
+
+        {/* Close button on mobile */}
+        {onCloseMobile && (
+          <button
+            type="button"
+            onClick={onCloseMobile}
+            className="lg:hidden p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
+      </div>
+
+      {/* Navigation Section - SCROLL NỘI BỘ TRONG SIDEBAR */}
+      <div className="flex-1 min-h-0 overflow-y-auto px-3.5 py-4 space-y-6">
+        <div>
+          <div className="px-3 text-[10px] font-extrabold uppercase text-slate-400 tracking-wider mb-2">
+            DANH MỤC QUẢN TRỊ
+          </div>
             <nav className="space-y-1">
               {visibleNavItems.map((item) => {
                 const Icon = item.icon;
@@ -316,11 +330,10 @@ function AdminSidebar({
               <span className="text-[10px] text-slate-400 group-hover:text-sky-600">Thái Nguyên</span>
             </a>
           </div>
-        </div>
       </div>
 
       {/* Footer User Info & Logout Button */}
-      <div className="p-4 border-t border-slate-100 bg-slate-50/60 space-y-3">
+      <div className="shrink-0 p-4 border-t border-slate-100 bg-slate-50/60 space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center font-bold text-xs shrink-0 shadow-xs border border-sky-200/60">
             <User className="w-4 h-4" />

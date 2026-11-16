@@ -293,6 +293,48 @@ export class SystemGuideService {
           "GET /api/admin/administrative-units/export",
         ],
       },
+      {
+        id: "survey_questions_admin",
+        name: "Quản trị Bộ Câu hỏi & Ngân hàng Chuyên đề Đào tạo (ADR-012)",
+        route: "/admin/questions",
+        icon: "HelpCircle",
+        description:
+          "Toàn quyền quản trị nội dung, số lượng và cấu trúc của 14 câu hỏi chuẩn, danh mục nhóm công việc, ngân hàng chuyên đề đào tạo, thang điểm 4 vai trò và tạo phiên bản khảo sát mới.",
+        allowedRoles: [
+          ROLE_LABELS.TECHNICAL_ADMIN,
+          ROLE_LABELS.CONTENT_ADMIN,
+          ROLE_LABELS.REVIEWER,
+        ],
+        keyCapabilities: [
+          "Quản lý phiên bản bộ phiếu (Versioning): Xem, nhân bản (clone) phiên bản mới (v3.4, v4.0) bảo vệ tính toàn vẹn dữ liệu cũ",
+          "Quản trị 14 câu hỏi khảo sát: Tùy biến tiêu đề, hướng dẫn trả lời, ràng buộc bắt buộc và số lượng chọn tối đa",
+          "Quản trị Danh mục Nhóm Công việc: Thêm mới, sửa tên, mô tả, sắp xếp thứ tự ưu tiên và xóa nhóm việc",
+          "Quản trị Ngân hàng Chuyên đề: Thêm mới, chỉnh sửa, phân loại chuyên đề đào tạo theo từng nhóm công việc",
+          "Quản trị 4 Vai trò & Thang Điểm: Điều chỉnh định nghĩa vai trò và mô tả chi tiết của 4 mức tự đánh giá năng lực",
+          "Quản trị Danh mục Khó khăn & Hình thức học: Tùy biến danh mục nguyên nhân (Câu 10) và phương thức đào tạo (Câu 13)",
+          "Xem trước trực tiếp (Live Preview) biểu mẫu khảo sát di động theo thời gian thực",
+        ],
+        operationalRules: [
+          "Khi thay đổi lớn về cấu trúc câu hỏi, khuyến nghị nhân bản phiên bản mới để các đợt khảo sát cũ giữ nguyên giá trị so sánh.",
+          "Chỉ Quản trị viên Kỹ thuật và Quản trị Nội dung mới có quyền lưu thay đổi hoặc tạo phiên bản mới.",
+        ],
+        apiEndpoints: [
+          "GET /api/admin/questions/versions",
+          "POST /api/admin/questions/versions",
+          "GET /api/admin/questions/schema/[version]",
+          "PUT /api/admin/questions/schema/[version]",
+          "POST /api/admin/questions/schema/[version]/workgroups",
+          "PUT /api/admin/questions/schema/[version]/workgroups",
+          "DELETE /api/admin/questions/schema/[version]/workgroups",
+          "POST /api/admin/questions/schema/[version]/workgroups/[id]/topics",
+          "PUT /api/admin/questions/schema/[version]/workgroups/[id]/topics",
+          "DELETE /api/admin/questions/schema/[version]/workgroups/[id]/topics",
+          "PUT /api/admin/questions/schema/[version]/roles",
+          "PUT /api/admin/questions/schema/[version]/difficulties",
+          "PUT /api/admin/questions/schema/[version]/learning-formats",
+          "PUT /api/admin/questions/schema/[version]/sections",
+        ],
+      },
     ];
 
     return {

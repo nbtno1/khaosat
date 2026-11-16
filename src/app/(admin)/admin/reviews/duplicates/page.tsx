@@ -10,10 +10,8 @@ export const metadata: Metadata = {
 
 export default function DuplicateReviewPage() {
   return (
-    <div className="min-h-screen bg-slate-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <DuplicateReviewWorkbench />
-      </div>
+    <div className="h-full flex flex-col p-4 sm:p-5 max-w-7xl w-full mx-auto overflow-hidden">
+      <DuplicateReviewWorkbench />
     </div>
   );
 }

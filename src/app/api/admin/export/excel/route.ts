@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AnalyticsAggregationService } from "@/services/analytics-aggregation.service";
 import { ExcelExportService } from "@/services/excel-export.service";
+import { logActionFromRequest } from "@/lib/audit-logger";
 
 export async function GET(request: NextRequest) {
   try {
@@ -26,6 +27,21 @@ export async function GET(request: NextRequest) {
     const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
     const modeSuffix = mode === "LOCAL_CONFIDENTIAL" ? "DiaPhuong_AnDanh" : "NoiBo_KiemToan";
     const filename = `BaoCao_KhaoSat_KiemToan_${modeSuffix}_${timestamp}.xlsx`;
+
+    // Ghi log xuất file Excel
+    await logActionFromRequest(request, {
+      action: "EXPORT_EXCEL",
+      module: "ANALYTICS",
+      description: `Xuất file Báo cáo tổng hợp Excel 6 Bảng (${mode === "INTERNAL" ? "Nội bộ KTNN" : "Ẩn danh Địa phương"}) cho ${provinceName}`,
+      targetResource: "Excel Report",
+      details: {
+        mode,
+        provinceCode: provinceCode || "ALL",
+        agencyCode: agencyCode || "ALL",
+        filesizeBytes: buffer.length,
+      },
+      status: "SUCCESS",
+    });
 
     return new NextResponse(new Uint8Array(buffer), {
       status: 200,

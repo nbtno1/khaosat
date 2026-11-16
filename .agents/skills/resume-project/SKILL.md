@@ -9,15 +9,15 @@ Sử dụng skill/workflow này mỗi khi bắt đầu một phiên làm việc 
 
 ## QUY TRÌNH THỰC HIỆN 8 BƯỚC
 
-### 1. Đọc Quy tắc Dự án
-- Đọc file [`AGENTS.md`](file:///Users/macbook/Desktop/khaosat/AGENTS.md) tại thư mục gốc.
-- Đọc file [`.agents/rules/project.md`](file:///Users/macbook/Desktop/khaosat/.agents/rules/project.md).
+### 1. Đọc Quy tắc Dự án & Thiết lập Môi trường
+- Đọc file [`AGENTS.md`](AGENTS.md) tại thư mục gốc và mục 5 (Hướng dẫn chạy trên thiết bị mới).
+- Đọc file [`.agents/rules/project.md`](.agents/rules/project.md).
 - Ghi nhớ: Cố định Tech Stack (Next.js 15, React 19, TypeScript Strict, MongoDB Mongoose, Tailwind CSS v4, shadcn/ui, Zod, dnd-kit, Recharts, ExcelJS, Auth.js). Không tự ý thay đổi công nghệ hoặc yêu cầu nghiệp vụ đã phê duyệt.
 
 ### 2. Khôi phục Trạng thái từ Spec và Mã nguồn
-- Đọc [`specs/PROGRESS.md`](file:///Users/macbook/Desktop/khaosat/specs/PROGRESS.md) để xác định Giai đoạn, Milestone, Task hiện tại, Blockers.
-- Đọc [`specs/TASKS.md`](file:///Users/macbook/Desktop/khaosat/specs/TASKS.md) để nắm toàn bộ task backlog.
-- Đọc [`specs/DECISIONS.md`](file:///Users/macbook/Desktop/khaosat/specs/DECISIONS.md) để nắm các quyết định kiến trúc đã chốt.
+- Đọc [`specs/PROGRESS.md`](specs/PROGRESS.md) để xác định Giai đoạn, Milestone, Task hiện tại, Blockers.
+- Đọc [`specs/TASKS.md`](specs/TASKS.md) để nắm toàn bộ task backlog.
+- Đọc [`specs/DECISIONS.md`](specs/DECISIONS.md) để nắm các quyết định kiến trúc đã chốt (đặc biệt ADR-011, ADR-012, ADR-013, ADR-014).
 - Chạy lệnh `git status` để kiểm tra mã nguồn thực tế và các thay đổi chưa commit.
 
 ### 3. Kiểm tra Tính Nhất quán giữa Tài liệu và Thực tế
@@ -25,28 +25,29 @@ Sử dụng skill/workflow này mỗi khi bắt đầu một phiên làm việc 
 - Xác định rõ: Công việc đã hoàn thành, đang dở dang, chưa bắt đầu và bị chặn.
 
 ### 4. Xác định Task Kế tiếp trong Roadmap
-- Tra cứu [`specs/15-DEVELOPMENT-ROADMAP.md`](file:///Users/macbook/Desktop/khaosat/specs/15-DEVELOPMENT-ROADMAP.md) và `specs/TASKS.md`.
+- Tra cứu [`specs/15-DEVELOPMENT-ROADMAP.md`](specs/15-DEVELOPMENT-ROADMAP.md) và `specs/TASKS.md`.
 - Tìm task có trạng thái `PLANNED` với mức ưu tiên cao nhất mà toàn bộ các task phụ thuộc đã `COMPLETED`.
 
 ### 5. Kiểm tra Điều kiện Phê duyệt Giai đoạn
 - **QUY TẮC CỐT LÕI:**
   - Nếu giai đoạn hiện tại hoặc task kế tiếp yêu cầu phê duyệt từ Product Owner / Lãnh đạo mà **chưa nhận được lệnh phê duyệt chính thức**:
     - **DỪNG LẠI NGAY LẬP TỨC.**
-    - Báo cáo rõ ràng trạng thái hiện tại, danh sách nội dung đang chờ phê duyệt, các câu hỏi mở trong `specs/ASSUMPTIONS-AND-OPEN-QUESTIONS.md`.
+    - Báo cáo rõ ràng trạng thái hiện tại, danh sách nội dung đang chờ phê duyệt, các câu hỏi mở trong [`specs/ASSUMPTIONS-AND-OPEN-QUESTIONS.md`](specs/ASSUMPTIONS-AND-OPEN-QUESTIONS.md).
     - **Tuyệt đối không tự ý viết mã nguồn ứng dụng (`src/`).**
 
 ### 6. Thực hiện Lập trình và Kiểm thử theo Spec (Khi đã được duyệt)
 - Đọc kỹ Spec chi tiết liên quan đến task trước khi sửa code.
 - Triển khai code tuân thủ TypeScript strict mode, Zod validation, Clean Architecture.
-- Viết Unit Test / Integration Test tương ứng theo `specs/13-TEST-STRATEGY.md`.
-- Chạy `npm run typecheck`, `npm run lint` và test runner để xác minh mã nguồn.
+- Tuân thủ Zero-Page-Scroll và Progressive Rendering hook cho danh sách lớn.
+- Viết Unit Test / Integration Test tương ứng theo [`specs/13-TEST-STRATEGY.md`](specs/13-TEST-STRATEGY.md).
+- Chạy `npm run typecheck`, `npm run lint` và các test suite để xác minh mã nguồn.
 
 ### 7. Cập nhật Tiến độ sau khi Hoàn thành Task
-- Cập nhật trạng thái task trong `specs/TASKS.md` sang `COMPLETED` kèm ghi chú test evidence.
-- Cập nhật `specs/PROGRESS.md`.
-- Cập nhật `specs/CHANGELOG.md` nếu có thay đổi tính năng/kiến trúc.
-- Cập nhật `specs/REQUIREMENTS-TRACEABILITY.md` nếu có liên kết file/test mới.
-- Ghi nhận quyết định kiến trúc mới vào `specs/DECISIONS.md` nếu có phát sinh.
+- Cập nhật trạng thái task trong [`specs/TASKS.md`](specs/TASKS.md) sang `COMPLETED` kèm ghi chú test evidence.
+- Cập nhật [`specs/PROGRESS.md`](specs/PROGRESS.md).
+- Cập nhật [`specs/CHANGELOG.md`](specs/CHANGELOG.md) nếu có thay đổi tính năng/kiến trúc.
+- Cập nhật [`specs/REQUIREMENTS-TRACEABILITY.md`](specs/REQUIREMENTS-TRACEABILITY.md) nếu có liên kết file/test mới.
+- Ghi nhận quyết định kiến trúc mới vào [`specs/DECISIONS.md`](specs/DECISIONS.md) dưới dạng ADR.
 
 ### 8. Báo cáo Kết quả Phiên làm việc
 - Báo cáo danh sách file đã tạo hoặc cập nhật.

@@ -111,7 +111,7 @@ export default async function SurveyPublicPage({
   (linkMeta as any).token = token;
 
   return (
-    <div className="min-h-screen bg-slate-50 py-4">
+    <div className="h-screen max-h-screen w-screen overflow-hidden bg-slate-50 flex flex-col">
       <SurveyContainer linkMeta={linkMeta} schemaData={schemaData} />
     </div>
   );

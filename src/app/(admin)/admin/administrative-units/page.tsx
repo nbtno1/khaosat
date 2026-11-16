@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useTransition } from "react";
+import { useProgressiveItems } from "@/hooks/useProgressiveItems";
 import {
   MapPin,
   Building2,
@@ -42,6 +43,14 @@ export default function AdministrativeUnitsPage() {
   const [provinceTypeFilter, setProvinceTypeFilter] = useState("ALL");
   const [provinceStatusFilter, setProvinceStatusFilter] = useState("ALL");
   const [isProvincesLoading, setIsProvincesLoading] = useState(false);
+
+  // Progressive rendering hook cho danh sách Tỉnh/Thành
+  const { visibleItems: visibleProvinces, renderedCount: provCount, totalCount: provTotal } = useProgressiveItems(provinces, {
+    initialCount: 8,
+    step: 8,
+    interval: 16,
+    resetKey: `${activeTab}-${provinceSearch}-${provinceTypeFilter}-${provinceStatusFilter}`,
+  });
 
   // Communes State
   const [communes, setCommunes] = useState<CommuneListItem[]>([]);
@@ -301,7 +310,7 @@ export default function AdministrativeUnitsPage() {
   };
 
   return (
-    <div className="space-y-8 pb-16">
+    <div className="h-full flex flex-col p-4 sm:p-5 max-w-7xl w-full mx-auto overflow-hidden gap-3">
       {/* Toast Notification */}
       {toastMessage && (
         <div
@@ -318,17 +327,13 @@ export default function AdministrativeUnitsPage() {
         </div>
       )}
 
-      {/* Page Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      {/* Page Header (Cố định) */}
+      <div className="shrink-0 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-100 text-sky-900 mb-1">
-            <MapPin className="w-3.5 h-3.5 text-sky-700" />
-            <span>CẤU HÌNH ĐỊA BÀN HÀNH CHÍNH (34 TỈNH & 3.321 XÃ/PHƯỜNG)</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
             Quản lý Danh mục Đơn vị Hành chính
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500">
+          <p className="text-xs text-slate-500">
             Cấu hình, tìm kiếm, hiệu chỉnh và phân loại danh mục 34 tỉnh/thành phố và 3.321 xã, phường, đặc khu theo chuẩn Cục Thống kê hiệu lực 2026.
           </p>
         </div>
@@ -402,8 +407,8 @@ export default function AdministrativeUnitsPage() {
         </div>
       </div>
 
-      {/* 4 Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* 4 Stats Cards (Cố định) */}
+      <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
         {/* Card 1: Tổng số Tỉnh */}
         <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between">
           <div>
@@ -485,12 +490,12 @@ export default function AdministrativeUnitsPage() {
         </div>
       </div>
 
-      {/* Tab Navigation Controls */}
-      <div className="flex items-center gap-2 border-b border-slate-200">
+      {/* Tab Navigation Controls (Cố định) */}
+      <div className="shrink-0 flex items-center gap-2 border-b border-slate-200">
         <button
           type="button"
           onClick={() => setActiveTab("provinces")}
-          className={`flex items-center gap-2 pb-3.5 px-4 text-xs sm:text-sm font-bold border-b-2 transition-all ${
+          className={`flex items-center gap-2 pb-2.5 px-3.5 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === "provinces"
               ? "border-sky-700 text-sky-800"
               : "border-transparent text-slate-500 hover:text-slate-800"
@@ -506,7 +511,7 @@ export default function AdministrativeUnitsPage() {
         <button
           type="button"
           onClick={() => setActiveTab("communes")}
-          className={`flex items-center gap-2 pb-3.5 px-4 text-xs sm:text-sm font-bold border-b-2 transition-all ${
+          className={`flex items-center gap-2 pb-2.5 px-3.5 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === "communes"
               ? "border-sky-700 text-sky-800"
               : "border-transparent text-slate-500 hover:text-slate-800"
@@ -522,14 +527,14 @@ export default function AdministrativeUnitsPage() {
 
       {/* ======================= TAB 1: PROVINCES ======================= */}
       {activeTab === "provinces" && (
-        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden space-y-4">
+        <div className="flex-1 min-h-0 bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden flex flex-col">
           {/* Table Toolbar */}
-          <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="shrink-0 p-3.5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/70">
             <div>
-              <h2 className="text-base font-extrabold text-slate-900">
+              <h2 className="text-sm font-extrabold text-slate-900">
                 Danh mục 34 Tỉnh / Thành phố Khảo sát
               </h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-[11px] text-slate-500">
                 Bấm vào một tỉnh để xem toàn bộ danh sách xã/phường hoặc hiệu chỉnh chỉ tiêu
               </p>
             </div>
@@ -543,7 +548,7 @@ export default function AdministrativeUnitsPage() {
                   placeholder="Tìm theo tên hoặc mã tỉnh..."
                   value={provinceSearch}
                   onChange={(e) => setProvinceSearch(e.target.value)}
-                  className="pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 w-52"
+                  className="pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 w-52 bg-white"
                 />
               </div>
 
@@ -575,10 +580,10 @@ export default function AdministrativeUnitsPage() {
             </div>
           </div>
 
-          {/* Provinces Table */}
-          <div className="overflow-x-auto">
+          {/* Provinces Table (Cuộn nội bộ với header sticky) */}
+          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
-              <thead>
+              <thead className="sticky top-0 bg-slate-100/95 backdrop-blur-xs z-10 text-slate-700 font-bold border-b border-slate-200 shadow-2xs">
                 <tr className="bg-slate-50/80 text-slate-600 font-bold border-b border-slate-200">
                   <th className="py-3.5 px-4 w-12 text-center">STT</th>
                   <th className="py-3.5 px-4 w-20">Mã tỉnh</th>
@@ -592,7 +597,7 @@ export default function AdministrativeUnitsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-medium">
-                {provinces.map((prov, idx) => (
+                {visibleProvinces.map((prov, idx) => (
                   <tr key={prov.provinceCode} className="hover:bg-slate-50/70 transition-colors">
                     <td className="py-3 px-4 text-center text-slate-400 font-bold">{idx + 1}</td>
                     <td className="py-3 px-4 font-mono font-bold text-sky-800">{prov.provinceCode}</td>
@@ -670,6 +675,13 @@ export default function AdministrativeUnitsPage() {
                     </td>
                   </tr>
                 ))}
+                {provCount < provTotal && (
+                  <tr>
+                    <td colSpan={9} className="py-2.5 text-center text-xs font-semibold text-slate-400 bg-slate-50/60 animate-pulse">
+                      Đang hiển thị {provCount} / {provTotal} tỉnh thành...
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -678,26 +690,26 @@ export default function AdministrativeUnitsPage() {
 
       {/* ======================= TAB 2: COMMUNES ======================= */}
       {activeTab === "communes" && (
-        <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden space-y-4">
+        <div className="flex-1 min-h-0 bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden flex flex-col">
           {/* Table Toolbar */}
-          <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="shrink-0 p-3.5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/70">
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-extrabold text-slate-900">
+                <h2 className="text-sm font-extrabold text-slate-900">
                   Danh mục Xã / Phường / Đặc khu
                 </h2>
                 {selectedProvinceForCommunes && (
                   <button
                     type="button"
                     onClick={() => setSelectedProvinceForCommunes("")}
-                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold"
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold cursor-pointer"
                   >
                     <span>Lọc: Mã {selectedProvinceForCommunes}</span>
                     <X className="w-3 h-3" />
                   </button>
                 )}
               </div>
-              <p className="text-xs text-slate-500">
+              <p className="text-[11px] text-slate-500">
                 Tìm kiếm, lọc theo loại đơn vị hành chính và chỉnh sửa thông tin cấp xã
               </p>
             </div>
@@ -734,7 +746,7 @@ export default function AdministrativeUnitsPage() {
                     setCommuneSearch(e.target.value);
                     setCommunePage(1);
                   }}
-                  className="pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 w-48"
+                  className="pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 w-48 bg-white"
                 />
               </div>
 
@@ -774,10 +786,10 @@ export default function AdministrativeUnitsPage() {
             </div>
           </div>
 
-          {/* Communes Table */}
-          <div className="overflow-x-auto">
+          {/* Communes Table (Cuộn nội bộ với header sticky) */}
+          <div className="flex-1 min-h-0 overflow-y-auto overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
-              <thead>
+              <thead className="sticky top-0 bg-slate-100/95 backdrop-blur-xs z-10 text-slate-700 font-bold border-b border-slate-200 shadow-2xs">
                 <tr className="bg-slate-50/80 text-slate-600 font-bold border-b border-slate-200">
                   <th className="py-3.5 px-4 w-12 text-center">STT</th>
                   <th className="py-3.5 px-4 w-20">Mã xã</th>
@@ -865,8 +877,8 @@ export default function AdministrativeUnitsPage() {
             </table>
           </div>
 
-          {/* Pagination Controls */}
-          <div className="p-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500">
+          {/* Pagination Controls (Cố định ở đáy card) */}
+          <div className="shrink-0 p-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 bg-slate-50/70">
             <div>
               Hiển thị từ <strong>{Math.min(communeTotal, (communePage - 1) * 25 + 1)}</strong> đến{" "}
               <strong>{Math.min(communeTotal, communePage * 25)}</strong> trong tổng số{" "}

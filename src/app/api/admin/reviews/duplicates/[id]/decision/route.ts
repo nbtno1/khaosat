@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DuplicateDetectionService } from "@/services/duplicate-detection.service";
+import { getSessionFromRequest } from "@/lib/auth";
+import { logActionFromRequest } from "@/lib/audit-logger";
 
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = getSessionFromRequest(req);
     const { id } = await params;
     const body = await req.json();
     const { decision, reason } = body;
@@ -36,10 +39,9 @@ export async function PATCH(
       );
     }
 
-    // Default admin mock reviewer context (integrated with auth session)
     const reviewerUser = {
-      id: "673628fa9c1d8f0012a45b70",
-      username: "admin_reviewer",
+      id: session?.userId || "usr_reviewer_003",
+      username: session?.username || "admin_reviewer",
     };
 
     const updated = await DuplicateDetectionService.makeDecision(
@@ -48,6 +50,17 @@ export async function PATCH(
       reason,
       reviewerUser
     );
+
+    // Ghi log thẩm tra
+    await logActionFromRequest(req, {
+      action: "REVIEW_DUPLICATE_DECISION",
+      module: "DUPLICATES",
+      description: `Thẩm tra phiếu nghi trùng ${id}: Quyết định '${decision}' - Lý do: ${reason}`,
+      targetResource: "SurveyResponse",
+      targetId: id,
+      details: { decision, reason, reviewer: reviewerUser.username },
+      status: "SUCCESS",
+    });
 
     return NextResponse.json({
       success: true,
@@ -59,7 +72,7 @@ export async function PATCH(
     return NextResponse.json(
       {
         success: false,
-        error: { code: "SERVER_ERROR", message: error.message || "Lỗi xử lý quyết định thẩm tra" },
+        error: { code: "SERVER_ERROR", message: error.message || "Lỗi xử lý thẩm tra phiếu" },
       },
       { status: 500 }
     );

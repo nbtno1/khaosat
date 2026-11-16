@@ -1,7 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { COOKIE_NAME } from "@/lib/auth";
+import { logActionFromRequest } from "@/lib/audit-logger";
 
-export async function POST(_request: NextRequest) {
+export async function POST(request: NextRequest) {
+  // Ghi log đăng xuất
+  await logActionFromRequest(request, {
+    action: "LOGOUT",
+    module: "AUTH",
+    description: "Người dùng đăng xuất phiên làm việc",
+    targetResource: "Session Auth",
+    status: "SUCCESS",
+  });
+
   const response = NextResponse.json({
     success: true,
     message: "Đăng xuất thành công",

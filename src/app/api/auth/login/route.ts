@@ -1,36 +1,69 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
 import { User, IUser, UserRole } from "@/models/User";
-import { AuditLog } from "@/models/AuditLog";
 import {
   signSessionToken,
   verifyPassword,
   COOKIE_NAME,
   ROLE_LABELS,
 } from "@/lib/auth";
+import { logActionFromRequest } from "@/lib/audit-logger";
 
-// Tài khoản dự phòng / demo phục vụ kiểm thử và môi trường offline
+// Tài khoản chuẩn hóa theo yêu cầu:
+// 1. Cục Công nghệ thông tin: cntt_admin (hoặc it_admin, cntt) - Quyền xem Log hệ thống
+// 2. Admin (Quản trị viên): admin - Toàn quyền nghiệp vụ, không xem Log hệ thống
 const FALLBACK_USERS: Record<string, {
   id: string;
   username: string;
-  passwordHash: string; // bcrypt hash for default passwords
+  passwordHash: string; // bcrypt hash for 'Admin@123456'
   fullName: string;
   role: UserRole;
   organization: string;
   assignedProvinceCodes: string[];
 }> = {
+  // 1. TÀI KHOẢN CỤC CÔNG NGHỆ THÔNG TIN (ĐẶC QUYỀN XEM LOG)
+  cntt_admin: {
+    id: "usr_cntt_001",
+    username: "cntt_admin",
+    passwordHash: "$2a$10$wOaA3wB.qQ8W5GqH1fVvEeoWf3vE9/kGvhB14z5mNkVh4Ea9aAaeS",
+    fullName: "Cán bộ Cục CNTT — Kiểm toán nhà nước",
+    role: "TECHNICAL_ADMIN",
+    organization: "Cục Công nghệ thông tin — Kiểm toán nhà nước",
+    assignedProvinceCodes: [],
+  },
+  it_admin: {
+    id: "usr_cntt_001",
+    username: "it_admin",
+    passwordHash: "$2a$10$wOaA3wB.qQ8W5GqH1fVvEeoWf3vE9/kGvhB14z5mNkVh4Ea9aAaeS",
+    fullName: "Cán bộ Cục CNTT — Kiểm toán nhà nước",
+    role: "TECHNICAL_ADMIN",
+    organization: "Cục Công nghệ thông tin — Kiểm toán nhà nước",
+    assignedProvinceCodes: [],
+  },
+  cntt: {
+    id: "usr_cntt_001",
+    username: "cntt",
+    passwordHash: "$2a$10$wOaA3wB.qQ8W5GqH1fVvEeoWf3vE9/kGvhB14z5mNkVh4Ea9aAaeS",
+    fullName: "Cán bộ Cục CNTT — Kiểm toán nhà nước",
+    role: "TECHNICAL_ADMIN",
+    organization: "Cục Công nghệ thông tin — Kiểm toán nhà nước",
+    assignedProvinceCodes: [],
+  },
+
+  // 2. TÀI KHOẢN QUẢN TRỊ VIÊN HỆ THỐNG (ADMIN NGHIỆP VỤ - TOÀN QUYỀN, KHÔNG XEM LOG)
   admin: {
-    id: "usr_admin_001",
+    id: "usr_admin_002",
     username: "admin",
-    // bcrypt hash of 'Admin@123456'
     passwordHash: "$2a$10$wOaA3wB.qQ8W5GqH1fVvEeoWf3vE9/kGvhB14z5mNkVh4Ea9aAaeS",
     fullName: "Quản trị viên Hệ thống",
-    role: "TECHNICAL_ADMIN",
+    role: "SYSTEM_ADMIN",
     organization: "Kiểm toán nhà nước",
     assignedProvinceCodes: [],
   },
+
+  // Tài khoản thẩm tra & đầu mối nghiệp vụ hỗ trợ
   reviewer: {
-    id: "usr_reviewer_002",
+    id: "usr_reviewer_003",
     username: "reviewer",
     passwordHash: "$2a$10$wOaA3wB.qQ8W5GqH1fVvEeoWf3vE9/kGvhB14z5mNkVh4Ea9aAaeS",
     fullName: "Thẩm tra viên Vũ Văn Nghiệp",
@@ -39,7 +72,7 @@ const FALLBACK_USERS: Record<string, {
     assignedProvinceCodes: [],
   },
   monitor: {
-    id: "usr_monitor_003",
+    id: "usr_monitor_004",
     username: "monitor",
     passwordHash: "$2a$10$wOaA3wB.qQ8W5GqH1fVvEeoWf3vE9/kGvhB14z5mNkVh4Ea9aAaeS",
     fullName: "Cán bộ Theo dõi Tiến độ",
@@ -48,13 +81,13 @@ const FALLBACK_USERS: Record<string, {
     assignedProvinceCodes: [],
   },
   coordinator_tn: {
-    id: "usr_coord_004",
+    id: "usr_coord_005",
     username: "coordinator_tn",
     passwordHash: "$2a$10$wOaA3wB.qQ8W5GqH1fVvEeoWf3vE9/kGvhB14z5mNkVh4Ea9aAaeS",
     fullName: "Đầu mối Tỉnh Thái Nguyên",
     role: "LOCAL_COORDINATOR",
     organization: "Sở Tài chính Thái Nguyên",
-    assignedProvinceCodes: ["20"], // Mã tỉnh Thái Nguyên
+    assignedProvinceCodes: ["20"],
   },
 };
 
@@ -98,6 +131,19 @@ export async function POST(request: NextRequest) {
     } else if (user) {
       const isValid = await verifyPassword(password, user.passwordHash);
       if (!isValid) {
+        // Ghi log đăng nhập thất bại
+        await logActionFromRequest(request, {
+          action: "LOGIN_FAILED",
+          module: "AUTH",
+          description: `Đăng nhập thất bại do sai mật khẩu tài khoản '${cleanUsername}'`,
+          targetResource: "Session Auth",
+          status: "FAILED",
+          overrideUser: {
+            username: cleanUsername,
+            role: "UNKNOWN",
+          },
+        });
+
         return NextResponse.json(
           { success: false, error: "Tên đăng nhập hoặc mật khẩu không chính xác" },
           { status: 401 }
@@ -112,6 +158,19 @@ export async function POST(request: NextRequest) {
     }
 
     if (!user) {
+      // Ghi log đăng nhập thất bại
+      await logActionFromRequest(request, {
+        action: "LOGIN_FAILED",
+        module: "AUTH",
+        description: `Đăng nhập thất bại do tài khoản '${cleanUsername}' không tồn tại hoặc sai thông tin`,
+        targetResource: "Session Auth",
+        status: "FAILED",
+        overrideUser: {
+          username: cleanUsername,
+          role: "UNKNOWN",
+        },
+      });
+
       return NextResponse.json(
         { success: false, error: "Tên đăng nhập hoặc mật khẩu không chính xác" },
         { status: 401 }
@@ -129,22 +188,24 @@ export async function POST(request: NextRequest) {
       assignedProvinceCodes: user.assignedProvinceCodes || [],
     });
 
-    // Ghi log đăng nhập (nếu kết nối được DB)
-    try {
-      await AuditLog.create({
-        actorId: user._id.toString(),
-        actorName: user.fullName,
-        actorRole: user.role,
-        action: "USER_LOGIN",
-        targetCollection: "users",
-        targetId: user._id.toString(),
-        description: `Người dùng ${user.username} đăng nhập thành công`,
-        ipAddress: request.headers.get("x-forwarded-for") || "127.0.0.1",
-        userAgent: request.headers.get("user-agent") || "",
-      });
-    } catch {
-      // Non-blocking log
-    }
+    // Ghi log đăng nhập thành công
+    const isITAdmin = user.role === "TECHNICAL_ADMIN";
+    await logActionFromRequest(request, {
+      action: "LOGIN_SUCCESS",
+      module: "AUTH",
+      description: isITAdmin
+        ? `Cán bộ Cục CNTT (${user.fullName}) đăng nhập thành công — kích hoạt quyền xem Log hệ thống`
+        : `Người dùng ${user.fullName} (${user.role}) đăng nhập thành công vào Cổng Quản trị`,
+      targetResource: "Session Auth",
+      status: "SUCCESS",
+      overrideUser: {
+        userId: user._id.toString(),
+        username: user.username,
+        fullName: user.fullName,
+        role: user.role,
+        organization: user.organization,
+      },
+    });
 
     const response = NextResponse.json({
       success: true,
@@ -157,6 +218,7 @@ export async function POST(request: NextRequest) {
         roleLabel: ROLE_LABELS[user.role as UserRole] || user.role,
         organization: user.organization,
         assignedProvinceCodes: user.assignedProvinceCodes || [],
+        canViewAuditLogs: isITAdmin,
       },
     });
 

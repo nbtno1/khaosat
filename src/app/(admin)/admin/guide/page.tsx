@@ -111,51 +111,47 @@ export default function UserGuidePage() {
   );
 
   return (
-    <div className="space-y-8 pb-16">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="h-full flex flex-col p-4 sm:p-5 max-w-7xl w-full mx-auto overflow-hidden gap-3">
+      {/* Page Header (Cố định) */}
+      <div className="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-100 text-sky-900 mb-1">
-            <Sparkles className="w-3.5 h-3.5 text-sky-700" />
-            <span>CẨM NANG VẬN HÀNH CẬP NHẬT ĐỘNG THEO PHẦN MỀM (ADR-010)</span>
-          </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
             Hướng dẫn Sử dụng & Vận hành Phần mềm
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500">
-            Nội dung được hệ thống tự động đồng bộ hóa thời gian thực theo cấu hình Schema {guideData?.schemaMeta.version || "3.3"} và các chức năng đang kích hoạt.
+          <p className="text-xs text-slate-500">
+            Nội dung được hệ thống tự động đồng bộ hóa thời gian thực theo cấu hình và các chức năng đang kích hoạt.
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 self-start sm:self-center">
           <button
             type="button"
             onClick={fetchGuideData}
             disabled={isLoading}
-            className="p-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 shadow-sm transition-all"
+            className="p-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 shadow-2xs transition-all cursor-pointer"
             title="Đồng bộ hóa dữ liệu hướng dẫn mới nhất từ hệ thống"
           >
-            <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin text-sky-600" : ""}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin text-sky-600" : ""}`} />
           </button>
 
           <button
             type="button"
             onClick={handlePrint}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs shadow-sm transition-all"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs shadow-2xs transition-all cursor-pointer"
             title="In cẩm nang hoặc lưu dưới dạng file PDF"
           >
-            <Printer className="w-4 h-4 text-slate-500" />
+            <Printer className="w-3.5 h-3.5 text-slate-500" />
             <span>In / Lưu PDF</span>
           </button>
         </div>
       </div>
 
-      {/* Dynamic Status Meta Banner */}
+      {/* Dynamic Status Meta Banner (Cố định) */}
       {guideData && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 p-4 rounded-3xl text-white shadow-md">
+        <div className="shrink-0 grid grid-cols-2 sm:grid-cols-4 gap-2.5 bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 p-3.5 rounded-2xl text-white shadow-2xs">
           <div className="border-r border-slate-800 pr-3">
             <div className="text-[10px] uppercase font-bold text-sky-400">Bộ tiêu chuẩn</div>
-            <div className="text-base font-black text-white mt-0.5">
+            <div className="text-sm font-black text-white mt-0.5">
               Phiên bản {guideData.schemaMeta.version}
             </div>
             <div className="text-[10px] text-slate-400 mt-0.5 truncate">
@@ -165,7 +161,7 @@ export default function UserGuidePage() {
 
           <div className="border-r border-slate-800 pr-3">
             <div className="text-[10px] uppercase font-bold text-sky-400">Đợt khảo sát</div>
-            <div className="text-base font-black text-white mt-0.5 truncate">
+            <div className="text-sm font-black text-white mt-0.5 truncate">
               {guideData.campaignMeta.code}
             </div>
             <div className="text-[10px] text-slate-400 mt-0.5">
@@ -175,7 +171,7 @@ export default function UserGuidePage() {
 
           <div className="border-r border-slate-800 pr-3">
             <div className="text-[10px] uppercase font-bold text-sky-400">Phân hệ chức năng</div>
-            <div className="text-base font-black text-emerald-400 mt-0.5">
+            <div className="text-sm font-black text-emerald-400 mt-0.5">
               {guideData.modules.length} Modules
             </div>
             <div className="text-[10px] text-slate-400 mt-0.5">Đang trực tuyến 100%</div>
@@ -183,7 +179,7 @@ export default function UserGuidePage() {
 
           <div>
             <div className="text-[10px] uppercase font-bold text-sky-400">Trạng thái đồng bộ</div>
-            <div className="text-base font-black text-sky-200 mt-0.5">Thời gian thực</div>
+            <div className="text-sm font-black text-sky-200 mt-0.5">Thời gian thực</div>
             <div className="text-[10px] text-slate-400 mt-0.5">
               {new Date(guideData.lastGeneratedAt).toLocaleTimeString("vi-VN")}
             </div>
@@ -192,54 +188,57 @@ export default function UserGuidePage() {
       )}
 
       {saveSuccessMsg && (
-        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center gap-2 text-xs font-bold animate-in fade-in">
+        <div className="shrink-0 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center gap-2 text-xs font-bold animate-in fade-in">
           <Check className="w-4 h-4 text-emerald-600" />
           <span>{saveSuccessMsg}</span>
         </div>
       )}
 
-      {/* Role / Audience Switcher */}
-      <div className="bg-white p-2 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Role / Audience Switcher (Cố định) */}
+      <div className="shrink-0 bg-white p-2 rounded-xl border border-slate-200/80 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-1 w-full sm:w-auto">
           <button
             type="button"
             onClick={() => setActiveAudience("ADMIN_OPERATOR")}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeAudience === "ADMIN_OPERATOR"
-                ? "bg-sky-700 text-white shadow-sm"
+                ? "bg-sky-700 text-white shadow-2xs"
                 : "text-slate-600 hover:bg-slate-100"
             }`}
           >
-            <ShieldCheck className="w-4 h-4" />
-            <span>Phân hệ Quản trị & Thao tác Chức năng (Admin)</span>
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Phân hệ Quản trị & Chức năng (Admin)</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveAudience("SURVEY_RESPONDENT")}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeAudience === "SURVEY_RESPONDENT"
-                ? "bg-sky-700 text-white shadow-sm"
+                ? "bg-sky-700 text-white shadow-2xs"
                 : "text-slate-600 hover:bg-slate-100"
             }`}
           >
-            <Smartphone className="w-4 h-4" />
-            <span>Hướng dẫn Điền Phiếu Khảo sát (Cấp Xã)</span>
+            <Smartphone className="w-3.5 h-3.5" />
+            <span>Hướng dẫn Điền Phiếu (Cấp Xã)</span>
           </button>
         </div>
 
         {/* Quick Search in Manual */}
-        <div className="relative w-full sm:w-72">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+        <div className="relative w-full sm:w-64">
+          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
             placeholder="Tìm kiếm module hoặc chức năng..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white"
           />
         </div>
       </div>
+
+      {/* Guide Content Area - CUỘN ĐỘC LẬP NỘI BỘ */}
+      <div className="flex-1 min-h-0 overflow-y-auto pr-1">
 
       {/* ========================================================================= */}
       {/* SECTION 1: PHÂN HỆ QUẢN TRỊ & THAO TÁC CHỨC NĂNG (ADMIN PORTAL)           */}
@@ -594,6 +593,7 @@ export default function UserGuidePage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

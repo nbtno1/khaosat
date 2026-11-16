@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import AdmZip from "adm-zip";
 import QRCode from "qrcode";
 import { ProgressMonitoringService } from "@/services/progress-monitoring.service";
+import { logActionFromRequest } from "@/lib/audit-logger";
 
 export async function GET(request: NextRequest) {
   try {
@@ -59,19 +60,31 @@ Phiên bản bộ phiếu: 3.3 (Quyết định số 14-KTNN)
     zip.addFile("HUONG_DAN_SU_DUNG.txt", Buffer.from(readmeContent, "utf-8"));
 
     const zipBuffer = zip.toBuffer();
+    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+    const zipFilename = `Bo_34_Ma_QR_KhaoSat_KTNN_${timestamp}.zip`;
+
+    // Ghi log tải mã QR ZIP
+    await logActionFromRequest(request, {
+      action: "DOWNLOAD_QR_ZIP",
+      module: "CAMPAIGN",
+      description: "Tải trọn bộ 34 mã QR khảo sát định dạng ZIP độ phân giải cao (512x512)",
+      targetResource: "Campaign QR Codes",
+      details: { totalProvinces: provinces.length, filesizeBytes: zipBuffer.length },
+      status: "SUCCESS",
+    });
 
     return new NextResponse(new Uint8Array(zipBuffer), {
       status: 200,
       headers: {
         "Content-Type": "application/zip",
-        "Content-Disposition": `attachment; filename="34_Ma_QR_KhaoSat_KiemToan_2026.zip"`,
+        "Content-Disposition": `attachment; filename="${zipFilename}"`,
         "Content-Length": zipBuffer.length.toString(),
       },
     });
   } catch (error: any) {
-    console.error("[QR_ZIP_EXPORT_ERROR]", error);
+    console.error("[CAMPAIGNS_QR_ZIP_ERROR]", error);
     return NextResponse.json(
-      { success: false, error: "Không thể tạo bộ nén ZIP mã QR", details: error?.message },
+      { success: false, error: "Không thể tạo tệp nén mã QR", details: error?.message },
       { status: 500 }
     );
   }

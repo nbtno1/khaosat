@@ -39,9 +39,9 @@ Trước khi thực hiện bất kỳ yêu cầu nào, Agent bắt buộc phải
 
 1. **Đọc quy tắc dự án:** Đọc file này (`AGENTS.md`) và `.agents/rules/project.md`.
 2. **Khôi phục trạng thái từ Spec:**
-   - Đọc [`specs/PROGRESS.md`](file:///Users/macbook/Desktop/khaosat/specs/PROGRESS.md) để biết Giai đoạn, Milestone và Task hiện tại.
-   - Đọc [`specs/TASKS.md`](file:///Users/macbook/Desktop/khaosat/specs/TASKS.md) để xác định backlog nhiệm vụ.
-   - Đọc [`specs/DECISIONS.md`](file:///Users/macbook/Desktop/khaosat/specs/DECISIONS.md) để nắm các quyết định kiến trúc (ADR) đã chốt.
+   - Đọc [`specs/PROGRESS.md`](specs/PROGRESS.md) để biết Giai đoạn, Milestone và Task hiện tại.
+   - Đọc [`specs/TASKS.md`](specs/TASKS.md) để xác định backlog nhiệm vụ.
+   - Đọc [`specs/DECISIONS.md`](specs/DECISIONS.md) để nắm các quyết định kiến trúc (ADR) đã chốt.
    - Đọc Spec chi tiết của module dự kiến làm việc trong `./specs/`.
 3. **Kiểm tra thực tế mã nguồn & Git:**
    - Chạy `git status` để kiểm tra các file đang sửa đổi, branch hiện tại.
@@ -70,5 +70,65 @@ Sau khi hoàn thành lập trình một task, Agent bắt buộc phải thực h
 
 ## 4. QUẢN LÝ THAY ĐỔI & XỬ LÝ XUNG ĐỘT
 
-- Khi phát hiện mâu thuẫn giữa các tài liệu nguồn hoặc giữa tài liệu với thực tế, không tự ý đưa ra phán đoán mà phải ghi nhận vào [`specs/ASSUMPTIONS-AND-OPEN-QUESTIONS.md`](file:///Users/macbook/Desktop/khaosat/specs/ASSUMPTIONS-AND-OPEN-QUESTIONS.md) để xin ý kiến Product Owner.
+- Khi phát hiện mâu thuẫn giữa các tài liệu nguồn hoặc giữa tài liệu với thực tế, không tự ý đưa ra phán đoán mà phải ghi nhận vào [`specs/ASSUMPTIONS-AND-OPEN-QUESTIONS.md`](specs/ASSUMPTIONS-AND-OPEN-QUESTIONS.md) để xin ý kiến Product Owner.
 - Mọi thay đổi Spec phải được đánh giá tác động (Impact Analysis) đến Database Schema, API Handlers, UI Components và Test Suite trước khi cập nhật mã nguồn.
+
+---
+
+## 5. HƯỚNG DẪN KHỞI CHẠY VÀ TIẾP TỤC TRÊN THIẾT BỊ MỚI (CROSS-DEVICE SETUP & RESUME)
+
+Khi chuyển sang thiết bị mới (Windows, macOS hoặc Linux), Agent hoặc Developer thực hiện tuần tự các bước sau để khôi phục môi trường phát triển:
+
+### 5.1. Cài đặt phụ thuộc & Cấu hình môi trường
+```bash
+# 1. Clone hoặc kéo mã nguồn mới nhất
+git pull origin main
+
+# 2. Cài đặt toàn bộ thư viện dependencies (Node 20+)
+npm install
+
+# 3. Tạo file cấu hình môi trường từ mẫu
+# Windows PowerShell:
+Copy-Item .env.example .env
+# Linux / macOS:
+# cp .env.example .env
+```
+
+### 5.2. Khởi tạo Cơ sở dữ liệu (Database Seed)
+Đảm bảo MongoDB đang chạy tại `mongodb://localhost:27017/khaosat_db` (hoặc cấu hình URI tương ứng trong `.env`):
+```bash
+# Nạp dữ liệu hạt giống: Schema câu hỏi 3.3, Benchmark matrix, Vị trí & Nhóm việc gợi ý, Đợt khảo sát, Tài khoản quản trị
+npm run db:seed
+```
+
+### 5.3. Tài khoản Đăng nhập Quản trị Chuẩn hóa (Dual-Admin)
+Hệ thống cấu hình 2 nhóm tài khoản đăng nhập tại `/login`:
+| Loại tài khoản | Tên đăng nhập | Mật khẩu | Quyền hạn & Đặc quyền |
+|:---|:---|:---|:---|
+| **Cục Công nghệ thông tin** | `cntt_admin` | `Admin@123456` | `TECHNICAL_ADMIN`: Toàn quyền quản trị nghiệp vụ + **Đặc quyền duy nhất xem Nhật ký Hệ thống (`/admin/audit-logs`)**. |
+| **Quản trị viên Hệ thống** | `admin` | `Admin@123456` | `SYSTEM_ADMIN`: Toàn quyền quản trị nghiệp vụ khảo sát (chặn truy cập Nhật ký Hệ thống). |
+
+### 5.4. Chạy Ứng dụng & Kiểm thử Kỹ thuật
+```bash
+# Khởi chạy máy chủ phát triển (mặc định port 3000)
+npm run dev
+
+# Kiểm tra tĩnh kiểu dữ liệu (bắt buộc 0 lỗi)
+npm run typecheck
+
+# Chạy toàn bộ các bộ kiểm thử nghiệp vụ
+npm run test:questions     # Quản trị bộ câu hỏi & chuyên đề (ADR-012)
+npm run test:validations   # Zod validation & quy tắc nghiệp vụ
+npm run test:api           # Public API khảo sát & nộp phiếu
+npm run test:duplicates    # Thuật toán phát hiện phiếu nghi trùng 4 điểm
+npm run test:analytics     # Tổng hợp số liệu 6 bảng B1 đến B6
+npm run test:excel         # Xuất báo cáo Excel đa sheet & kiểm soát bảo mật < 5
+npm run test:auth          # Xác thực RBAC & phân quyền
+npm run test:dvhc          # Quản trị ĐVHC 34 tỉnh và 3.321 xã/phường
+npm run test:guide         # Cẩm nang vận hành cập nhật động
+npm run test:e2e           # 23 Ca kiểm thử chính thức (TC-01 đến TC-23)
+```
+
+### 5.5. Tiêu chuẩn Giao diện Bắt buộc
+- **Zero-Page-Scroll & Full-Height:** Tất cả trang Admin tuyệt đối không sinh thanh cuộn toàn trang (`window.scrollY === 0`), dữ liệu dài cuộn nội bộ bên trong `overflow-y-auto`.
+- **Progressive Item Rendering:** Các màn hình danh sách lớn/nhiều tab bắt buộc dùng hook `useProgressiveItems` để chuyển tab tức thì (< 16ms), không đơ trình duyệt.

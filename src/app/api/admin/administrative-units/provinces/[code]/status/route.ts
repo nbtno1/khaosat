@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionFromRequest } from "@/lib/auth";
 import { AdministrativeUnitsService } from "@/services/administrative-units.service";
+import { logActionFromRequest } from "@/lib/audit-logger";
 
 export async function PATCH(
   request: NextRequest,
@@ -8,7 +9,8 @@ export async function PATCH(
 ) {
   try {
     const session = getSessionFromRequest(request);
-    if (session && session.role !== "TECHNICAL_ADMIN" && session.role !== "CONTENT_ADMIN") {
+    const allowedRoles = ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN"];
+    if (session && !allowedRoles.includes(session.role)) {
       return NextResponse.json(
         { success: false, error: "Bạn không có quyền thay đổi trạng thái tỉnh/thành" },
         { status: 403 }
@@ -27,6 +29,17 @@ export async function PATCH(
     }
 
     await AdministrativeUnitsService.toggleProvinceStatus(code, isActive);
+
+    await logActionFromRequest(request, {
+      action: "TOGGLE_PROVINCE_STATUS",
+      module: "ADMIN_UNITS",
+      description: `Đã ${isActive ? "kích hoạt" : "tạm dừng"} tiếp nhận dữ liệu tỉnh mã ${code}`,
+      targetResource: "Province",
+      targetId: code,
+      details: { provinceCode: code, isActive },
+      status: "SUCCESS",
+    });
+
     return NextResponse.json({
       success: true,
       message: `Đã ${isActive ? "kích hoạt" : "tạm dừng"} tỉnh/thành mã ${code}`,

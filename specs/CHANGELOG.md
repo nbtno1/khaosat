@@ -4,6 +4,101 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.13.0] — 2026-11-16
+
+### Tối Giản Hóa Auth UX, Dọn Dẹp Tiêu Đề Admin & Progressive Item Rendering Engine (ADR-014 & TASK-021)
+- **TASK-021 (Tối giản hóa giao diện Đăng nhập, Dọn dẹp Title Tags và Cơ chế Progressive Tab Rendering):**
+  - **Tối giản hóa Giao diện Đăng nhập (`src/app/(auth)/login/page.tsx`):**
+    - Loại bỏ hoàn toàn khối 5 nút preset thử nghiệm chiếm diện tích lớn.
+    - Chuyển sang form đăng nhập đơn giản, tinh tế (`max-w-[390px]`, full-height `overflow-hidden`), tuân thủ chuẩn nhận diện thương hiệu Kiểm toán nhà nước.
+    - Trường Tên đăng nhập và Mật khẩu có nút bật/tắt hiển thị mật khẩu (`Eye`/`EyeOff`).
+    - Dòng gợi ý đăng nhập một chạm kín đáo (`Gợi ý: Cục CNTT • Admin`) hỗ trợ kiểm thử nhanh mà không gây rối giao diện.
+    - Đảm bảo Zero-Page-Scroll: màn hình cố định trong khung nhìn 100vh (`window.scrollY === 0`).
+  - **Dọn dẹp Toàn bộ Badge / Tag Kỹ thuật trên Tiêu đề trang Admin:**
+    - Lược bỏ các nhãn kỹ thuật (như `TIẾN ĐỘ THỜI GIAN THỰC — BỘ TIÊU CHUẨN 3.3`, `ADR-008`, `Phiên bản 3.3`, `Đặc quyền Cục CNTT`...) trên các trang Quản trị:
+      - `src/app/(admin)/admin/dashboard/page.tsx`: Tiêu đề rút gọn “Tổng quan Khảo sát Nhu cầu Đào tạo Cấp Xã/Phường”.
+      - `src/app/(admin)/admin/campaigns/page.tsx`: Tiêu đề thanh nhã, không còn badge kỹ thuật.
+      - `src/app/(admin)/admin/administrative-units/page.tsx`: Tiêu đề tinh gọn.
+      - `src/components/admin/DuplicateReviewWorkbench.tsx`: Tiêu đề chuẩn hóa “Rà soát Phiếu Nghi trùng”.
+      - `src/components/admin/AnalyticsTablesViewer.tsx`: Tiêu đề chuẩn hóa “6 Bảng Tổng hợp Kết quả Khảo sát”.
+      - `src/app/(admin)/admin/guide/page.tsx`: Bỏ badge kỹ thuật.
+      - `src/app/(admin)/admin/audit-logs/page.tsx`: Header chuyên nghiệp, tinh giản.
+  - **Cơ chế Progressive Item Rendering Engine (`src/hooks/useProgressiveItems.ts`):**
+    - Xây dựng custom hook `useProgressiveItems<T>(items, options)`: Tự động chia nhỏ mảng dữ liệu, render ngay lập tức 3-6 item ban đầu trong frame đầu tiên (< 16ms), sau đó nạp nối tiếp các item còn lại trên từng tick kế tiếp.
+    - Hỗ trợ `resetKey: activeTab` giúp tự động reset số lượng hiển thị mỗi khi chuyển tab.
+    - Tích hợp thành công tại 3 phân hệ nặng:
+      - `src/app/(admin)/admin/questions/page.tsx`: Chuyển tab giữa 14 Câu hỏi, 16 Nhóm việc, 114 Chuyên đề, 4 Ngạch/Chức danh, Danh mục Khó khăn mượt mà tức thì không đơ trình duyệt.
+      - `src/components/admin/AnalyticsTablesViewer.tsx`: Chuyển giữa các bảng B1-B6 không giật lag.
+      - `src/app/(admin)/admin/administrative-units/page.tsx`: Tải mượt danh mục 34 tỉnh.
+  - **Đồng bộ Hướng dẫn Agent & Hỗ trợ Đa Nền tảng (Cross-Device Readiness):**
+    - Chuyển đổi toàn bộ liên kết nội bộ trong `AGENTS.md`, `.agents/rules/project.md`, `.agents/skills/resume-project/SKILL.md`, `.agents/workflows/resume-project.md` sang đường dẫn tương đối độc lập nền tảng (loại bỏ tuyệt đối đường dẫn tuyệt đối máy cũ `file:///Users/macbook/...`).
+    - Bổ sung Mục 5 trong `AGENTS.md` hướng dẫn chi tiết quy trình clone, cài đặt, cấu hình `.env`, chạy `db:seed`, khởi động dev server, thông tin đăng nhập 2 tài khoản Dual-Admin và các lệnh kiểm thử trên thiết bị mới.
+    - Cập nhật `.gitignore` loại trừ `.env` và bảo lưu `.env.example`.
+
+---
+
+## [1.12.0] — 2026-11-16
+
+### Phân hệ Nhật ký Hệ thống (Audit Logs), Phân quyền Dual-Admin & Chuẩn hóa Full-Height Zero-Page-Scroll (ADR-013 & TASK-020)
+- **TASK-020 (Rà soát Cơ chế Phân quyền, Xây dựng Hệ thống Nhật ký & Giao diện Quản trị Log):**
+  - **Mô hình Phân quyền Dual-Admin Chuẩn hóa:**
+    - Cấu hình 2 loại tài khoản quản trị trọng tâm:
+      1. **Tài khoản Cục Công nghệ thông tin** (`TECHNICAL_ADMIN` - username: `cntt_admin`, mật khẩu: `Admin@123456`): Đại diện Cục CNTT - Kiểm toán nhà nước, nắm toàn bộ quyền quản trị nghiệp vụ và sở hữu **đặc quyền duy nhất xem và kiểm tra Nhật ký Hệ thống**.
+      2. **Tài khoản Quản trị viên Hệ thống** (`SYSTEM_ADMIN` - username: `admin`, mật khẩu: `Admin@123456`): Phục vụ quản trị vận hành khảo sát, có toàn bộ quyền quản trị nghiệp vụ (Dashboard, 14 câu hỏi, ĐVHC 34 tỉnh/3.321 xã, Đợt khảo sát & QR, Thẩm tra nghi trùng, Báo cáo 6 bảng, Cẩm nang), nhưng **hoàn toàn không có quyền xem Nhật ký hệ thống**.
+    - Bổ sung quyền `VIEW_AUDIT_LOGS` chỉ cấp riêng cho `TECHNICAL_ADMIN`.
+    - Cập nhật trang đăng nhập (`/login`) với 2 nút preset trực quan cho phép 1-click chuyển đổi giữa 2 vai trò kiểm thử.
+  - **Công cụ Ghi nhận Nhật ký Tự động (Zero-Impact Audit Logger):**
+    - Thiết kế Mongoose model `AuditLog` (`src/models/AuditLog.ts`) với đầy đủ các trường: `userId`, `username`, `userFullName`, `userRole`, `organization`, `action`, `module`, `description`, `targetResource`, `targetId`, `details`, `ipAddress`, `userAgent`, `status` (`SUCCESS`, `FAILED`, `WARNING`), `createdAt` và các compound index tối ưu hóa truy vấn.
+    - Xây dựng `AuditLogService` (`src/services/audit-log.service.ts`): Ghi log phi đồng bộ (an toàn tuyệt đối, không gây ảnh hưởng luồng chính), truy vấn lọc phân trang đa tiêu chí, tính toán 5 chỉ số thống kê (Tổng log, Đăng nhập hôm nay, Thao tác thay đổi, Số lỗi, Tỷ lệ thành công).
+    - Helper `logActionFromRequest` (`src/lib/audit-logger.ts`): Tự động trích xuất IP client, User-Agent, danh tính session.
+    - Tích hợp ghi log trên toàn bộ các endpoint trọng yếu: Đăng nhập/Đăng xuất (`AUTH`), Cập nhật/Nhân bản câu hỏi (`QUESTIONS`), Thay đổi/Đồng bộ ĐVHC (`ADMIN_UNITS`), Thẩm tra/Giải quyết nghi trùng (`DUPLICATES`), Xuất Excel 6 bảng (`ANALYTICS`), Tải gói 34 QR ZIP (`CAMPAIGN`), Cố ý truy cập trái quyền (`SYSTEM/UNAUTHORIZED_LOG_ACCESS`).
+  - **Bảo mật Đa tầng & Endpoint API Nhật ký (`/api/admin/audit-logs`):**
+    - `GET /api/admin/audit-logs`: Xác thực phiên làm việc; nếu `session.role !== "TECHNICAL_ADMIN"`, trả về ngay `403 Forbidden` đồng thời tự động ghi 1 bản ghi cảnh báo an ninh (`WARNING`).
+    - `POST /api/admin/audit-logs`: Cho phép ghi nhận sự kiện client an toàn.
+  - **Giao diện Quản trị Nhật ký Hệ thống (`/admin/audit-logs`):**
+    - Thiết kế tuân thủ tiêu chuẩn Full-Height & Zero-Page-Scroll (`window.scrollY === 0`).
+    - 4 Thẻ KPIs thống kê hoạt động hệ thống.
+    - Thanh công cụ tìm kiếm và lọc đa chiều theo Phân hệ và Trạng thái.
+    - Bảng nhật ký cuộn độc lập với thanh tiêu đề dính (`sticky thead`), mã màu phân hệ và trạng thái trực quan.
+    - Modal tra cứu chi tiết bản ghi kèm định dạng payload metadata JSON.
+    - Chức năng xuất toàn bộ danh sách log ra file CSV chuẩn UTF-8.
+    - Màn hình từ chối truy cập (Access Denied) thân thiện nếu tài khoản không có quyền truy cập trực tiếp URL.
+  - **Chuẩn hóa Giao diện Toàn bộ Cổng Quản trị (Full-Height Zero-Page-Scroll):**
+    - Cấu trúc lại `src/app/(admin)/layout.tsx` với `<main className="flex-1 min-h-0 h-full w-full overflow-hidden flex flex-col">`.
+    - Cập nhật toàn bộ các trang Admin (`/admin/dashboard`, `/admin/campaigns`, `/admin/reviews/duplicates`, `/admin/analytics`, `/admin/administrative-units`, `/admin/questions`, `/admin/guide`): Header và công cụ cố định (`shrink-0`), vùng dữ liệu cuộn nội bộ (`flex-1 min-h-0 overflow-y-auto`), không phát sinh thanh cuộn trên toàn trang (`page scroll`).
+
+---
+
+## [1.11.0] — 2026-11-16
+
+### Phân hệ Quản trị Bộ Câu hỏi & Ngân hàng Chuyên đề Đào tạo Động (ADR-012 & TASK-019)
+- **TASK-019 (Xây dựng Dịch vụ & Giao diện Quản trị Bộ Câu hỏi Khảo sát Động):**
+  - Mở rộng model `SurveySchemaConfig` (`src/models/SurveySchemaConfig.ts`) với các trường `title`, `description` và mảng `questions` cấu hình 14 câu hỏi chuẩn (hỗ trợ `id`, `order`, `section`, `title`, `description`, `instruction`, `isRequired`, `maxSelect`, `isExclusiveSupported`), tương thích ngược 100% với phiên bản 3.3.
+  - Xây dựng bộ Zod Schema (`src/lib/validations/survey-schema-admin.schema.ts`) kiểm tra nghiêm ngặt tính hợp lệ của câu hỏi, nhóm việc, chuyên đề học, vai trò và phiên bản mới.
+  - Xây dựng dịch vụ `SurveyQuestionsAdminService` (`src/services/survey-questions-admin.service.ts`):
+    - Quản lý phiên bản (Versioning): Xem tổng quan các phiên bản, nhân bản (clone) phiên bản mới (v3.4, v4.0) bảo vệ tính toàn vẹn dữ liệu cũ theo đặc tả FR-004.
+    - Quản trị 14 câu hỏi: Cập nhật tiêu đề, hướng dẫn trả lời, ràng buộc bắt buộc, số lượng chọn tối đa.
+    - Quản trị Nhóm công việc: Thêm mới nhóm việc (vượt qua giới hạn 16 nhóm), chỉnh sửa tiêu đề, mô tả, sắp xếp thứ tự và xóa nhóm.
+    - Quản trị Chuyên đề đào tạo: Thêm mới, chỉnh sửa, phân loại chuyên đề con thuộc từng nhóm công việc.
+    - Quản trị 4 Vai trò & Thang Điểm: Điều chỉnh định nghĩa vai trò và diễn giải chi tiết 4 mức tự đánh giá năng lực.
+    - Quản trị Danh mục Khó khăn & Hình thức học: Tùy biến danh mục nguyên nhân (Câu 10) và phương thức đào tạo (Câu 13).
+  - Xây dựng 8 RESTful API Route Handlers có bảo vệ RBAC:
+    - `GET`, `POST /api/admin/questions/versions`
+    - `GET`, `PUT /api/admin/questions/schema/[version]`
+    - `POST`, `PUT`, `DELETE /api/admin/questions/schema/[version]/workgroups`
+    - `POST`, `PUT`, `DELETE /api/admin/questions/schema/[version]/workgroups/[id]/topics`
+    - `PUT /api/admin/questions/schema/[version]/roles`
+    - `PUT /api/admin/questions/schema/[version]/difficulties`
+    - `PUT /api/admin/questions/schema/[version]/learning-formats`
+    - `PUT /api/admin/questions/schema/[version]/sections`
+  - Xây dựng Giao diện Quản trị Đa năng tại `/admin/questions`:
+    - Header điều khiển: Chọn phiên bản, hiển thị trạng thái duyệt, nút Tạo bản mới (Clone), nút Lưu thay đổi và nút Xem trước biểu mẫu.
+    - 5 Tabs chức năng: 14 Câu hỏi & Hướng dẫn, Danh mục Nhóm Công việc, Ngân hàng Chuyên đề Đào tạo, 4 Vai trò & Thang Năng lực, Khó khăn & Hình thức học.
+  - Bổ sung menu "Quản trị Bộ Câu hỏi" vào Sidebar Admin (`src/app/(admin)/layout.tsx`) và đăng ký phân hệ thứ 8 vào Cẩm nang Vận hành Động (`src/services/system-guide.service.ts`).
+  - Viết bộ test tự động `tests/services/survey-questions-admin.test.ts` đạt 5/5 tests PASS (100%), biên dịch Next.js 32/32 routes thành công 100%.
+
+---
+
 ## [1.10.0] — 2026-11-14
 
 ### Phân hệ Cấu hình Danh mục Đơn vị Hành chính (Administrative Units Management - 34 Tỉnh & 3.321 Xã/Phường & ADR-011)
@@ -51,9 +146,9 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 ### Tinh chỉnh Giao diện (UI Refinement - Vertical Sidebar, Logo Slot & Select Beautification)
 - **Làm đẹp toàn diện các thẻ Dropdown Select (Select Beautification):**
   - Xây dựng component chuẩn hóa `Select` (`src/components/common/Select.tsx`) hiện đại hóa toàn bộ dropdowns: loại bỏ mũi tên thô mặc định của hệ điều hành (`appearance-none`), bổ sung `ChevronDown` mượt mà, tích hợp Icon ngữ cảnh bên trái (MapPin, Landmark, Briefcase, Filter), bo góc mềm mại, đổ bóng nhẹ và hiệu ứng focus ring êm ái.
-  - Nâng cấp toàn diện các trường chọn tại Cổng khảo sát cấp xã ([`StepGeneralInfo.tsx`](file:///Users/macbook/Desktop/khaosat/src/components/survey/StepGeneralInfo.tsx)) cho: Xã/Phường, Cơ quan, Vị trí việc làm.
-  - Nâng cấp Dropdown bộ lọc trạng thái tiến độ trên Dashboard Quản trị ([`page.tsx`](file:///Users/macbook/Desktop/khaosat/src/app/(admin)/admin/dashboard/page.tsx)).
-  - Bổ sung Dropdown chọn 34 Tỉnh/Thành phố trên thanh công cụ Phân tích 6 Bảng ([`AnalyticsTablesViewer.tsx`](file:///Users/macbook/Desktop/khaosat/src/components/admin/AnalyticsTablesViewer.tsx)).
+  - Nâng cấp toàn diện các trường chọn tại Cổng khảo sát cấp xã (`src/components/survey/StepGeneralInfo.tsx`) cho: Xã/Phường, Cơ quan, Vị trí việc làm.
+  - Nâng cấp Dropdown bộ lọc trạng thái tiến độ trên Dashboard Quản trị (`src/app/(admin)/admin/dashboard/page.tsx`).
+  - Bổ sung Dropdown chọn 34 Tỉnh/Thành phố trên thanh công cụ Phân tích 6 Bảng (`src/components/admin/AnalyticsTablesViewer.tsx`).
 - **Chuyển đổi Header Quản trị sang dạng Sidebar Dọc (Vertical Admin Sidebar):**
   - Chuyển toàn bộ thanh điều hướng ngang trên cùng của Cổng quản trị (`src/app/(admin)/layout.tsx`) thành thanh Sidebar dọc cố định bên trái (`w-64 xl:w-72`), tối ưu hóa không gian làm việc cho các bảng dữ liệu và biểu đồ phân tích.
   - Tích hợp Logo Kiểm toán nhà nước, danh mục 5 chức năng dạng danh sách dọc kèm icon và mô tả phụ, đường dẫn nhanh mở form khảo sát, thẻ thông tin cán bộ đăng nhập và nút đăng xuất.

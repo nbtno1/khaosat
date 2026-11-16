@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Lock, User, AlertCircle, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { Lock, User, AlertCircle, Eye, EyeOff } from "lucide-react";
 import { AppLogo } from "@/components/common/AppLogo";
 
 export default function LoginPage() {
@@ -32,11 +32,11 @@ export default function LoginPage() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        setErrorMessage(data.error || "Đăng nhập thất bại. Vui lòng thử lại.");
+        setErrorMessage(data.error || "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
         return;
       }
 
-      // Đăng nhập thành công -> Điều hướng sang Admin Dashboard
+      // Đăng nhập thành công -> Điều hướng sang Bàn làm việc Quản trị
       router.push("/admin/dashboard");
       router.refresh();
     } catch {
@@ -53,41 +53,38 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-sky-950 flex flex-col justify-center items-center px-4 py-12">
-      {/* Decorative Brand Header */}
-      <div className="text-center mb-8 max-w-lg flex flex-col items-center">
-        {/* VỊ TRÍ ĐẶT LOGO (LOGO SLOT) - Thay logo tại public/logo.png hoặc public/logo.svg */}
-        <AppLogo size="xl" className="mb-4" />
-        <div className="text-xs uppercase tracking-widest text-sky-400 font-extrabold mb-1">
-          TRƯỜNG ĐÀO TẠO VÀ BỒI DƯỠNG NGHIỆP VỤ KIỂM TOÁN
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-          Hệ thống Quản lý Khảo sát
-        </h1>
-        <p className="text-sm text-slate-300 mt-2">
-          Đánh giá năng lực quản lý tài chính, tài sản công cấp xã năm 2026
-        </p>
-      </div>
+    <div className="h-screen max-h-screen w-screen overflow-hidden bg-slate-900 flex flex-col justify-between items-center py-6 px-4">
+      {/* Vùng đệm trên */}
+      <div className="hidden sm:block" />
 
-      {/* Main Login Card */}
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-100 p-8 sm:p-10">
-        <div className="mb-6">
-          <h2 className="text-xl font-bold text-slate-900">Đăng nhập Quản trị</h2>
+      {/* Card Đăng nhập tối giản & trang trọng */}
+      <div className="w-full max-w-[390px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 sm:p-8 flex flex-col my-auto">
+        {/* Brand Header */}
+        <div className="flex flex-col items-center text-center mb-6">
+          <AppLogo size="lg" className="mb-3" />
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-sky-800">
+            KIỂM TOÁN NHÀ NƯỚC
+          </span>
+          <h1 className="text-lg font-black text-slate-900 tracking-tight mt-0.5">
+            Hệ thống Quản lý Khảo sát
+          </h1>
           <p className="text-xs text-slate-500 mt-1">
-            Dành riêng cho cán bộ Kiểm toán nhà nước và Đầu mối được cấp quyền
+            Đánh giá năng lực tài chính, tài sản công cấp xã
           </p>
         </div>
 
+        {/* Thông báo lỗi */}
         {errorMessage && (
-          <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 flex items-start gap-3 text-xs leading-relaxed">
+          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 flex items-start gap-2.5 text-xs">
             <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-            <span>{errorMessage}</span>
+            <span className="leading-snug">{errorMessage}</span>
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-5">
+        {/* Form đăng nhập */}
+        <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
               Tên đăng nhập
             </label>
             <div className="relative">
@@ -98,15 +95,16 @@ export default function LoginPage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Ví dụ: admin hoặc reviewer"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent text-sm text-slate-900 bg-slate-50/50"
+                placeholder="Nhập tên đăng nhập"
+                className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent text-xs text-slate-900 bg-slate-50/50 transition-all"
                 required
+                autoFocus
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
               Mật khẩu
             </label>
             <div className="relative">
@@ -118,13 +116,14 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Nhập mật khẩu"
-                className="w-full pl-10 pr-11 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent text-sm text-slate-900 bg-slate-50/50"
+                className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent text-xs text-slate-900 bg-slate-50/50 transition-all"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600"
+                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
+                title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
@@ -134,63 +133,42 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 px-4 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-sm shadow-lg shadow-sky-700/25 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full mt-2 py-2.5 px-4 rounded-xl bg-sky-800 hover:bg-sky-900 active:bg-sky-950 text-white font-bold text-xs shadow-md shadow-sky-800/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
           >
             {isLoading ? (
               <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
-              <>
-                <span>Đăng nhập hệ thống</span>
-                <ArrowRight className="w-4 h-4" />
-              </>
+              <span>Đăng nhập hệ thống</span>
             )}
           </button>
         </form>
 
-        {/* Quick Testing Presets */}
-        <div className="mt-8 pt-6 border-t border-slate-100">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">
-            Chọn nhanh vai trò kiểm thử (Mật khẩu: Admin@123456)
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => setPresetUser("admin", "Admin@123456")}
-              className="px-2.5 py-2 text-left rounded-lg border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
-            >
-              <div className="text-sky-700 font-bold">Admin</div>
-              <div className="text-[10px] text-slate-400">Toàn quyền kỹ thuật</div>
-            </button>
-            <button
-              type="button"
-              onClick={() => setPresetUser("reviewer", "Admin@123456")}
-              className="px-2.5 py-2 text-left rounded-lg border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
-            >
-              <div className="text-emerald-700 font-bold">Reviewer</div>
-              <div className="text-[10px] text-slate-400">Rà soát nghi trùng</div>
-            </button>
-            <button
-              type="button"
-              onClick={() => setPresetUser("monitor", "Admin@123456")}
-              className="px-2.5 py-2 text-left rounded-lg border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
-            >
-              <div className="text-violet-700 font-bold">Monitor</div>
-              <div className="text-[10px] text-slate-400">Theo dõi tiến độ</div>
-            </button>
-            <button
-              type="button"
-              onClick={() => setPresetUser("coordinator_tn", "Admin@123456")}
-              className="px-2.5 py-2 text-left rounded-lg border border-slate-200 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-colors"
-            >
-              <div className="text-amber-700 font-bold">Đầu mối tỉnh</div>
-              <div className="text-[10px] text-slate-400">Thái Nguyên (ẩn &lt;5)</div>
-            </button>
-          </div>
+        {/* Gợi ý đăng nhập nhanh (tối giản, kín đáo) */}
+        <div className="mt-5 pt-3.5 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400">
+          <span>Gợi ý:</span>
+          <button
+            type="button"
+            onClick={() => setPresetUser("cntt_admin", "Admin@123456")}
+            className="text-sky-700 hover:text-sky-900 font-semibold hover:underline cursor-pointer transition-colors"
+            title="Đăng nhập tài khoản Cục CNTT (Xem Log)"
+          >
+            Cục CNTT
+          </button>
+          <span>•</span>
+          <button
+            type="button"
+            onClick={() => setPresetUser("admin", "Admin@123456")}
+            className="text-sky-700 hover:text-sky-900 font-semibold hover:underline cursor-pointer transition-colors"
+            title="Đăng nhập tài khoản Admin Quản trị"
+          >
+            Admin
+          </button>
         </div>
       </div>
 
-      <div className="mt-8 text-center text-xs text-slate-400">
-        © 2026 Trường Đào tạo và Bồi dưỡng nghiệp vụ kiểm toán — Kiểm toán nhà nước
+      {/* Footer nhỏ gọn */}
+      <div className="text-center text-[11px] text-slate-500 py-2">
+        © 2026 Trường Đào tạo & Bồi dưỡng nghiệp vụ kiểm toán — Kiểm toán nhà nước
       </div>
     </div>
   );

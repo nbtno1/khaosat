@@ -36,15 +36,30 @@ export interface ILearningFormatConfig {
   title: string;
 }
 
+export interface IQuestionConfig {
+  id: string; // e.g. "Q01", "Q02", ..., "Q14"
+  order: number;
+  section: "PART_I" | "PART_II" | "PART_III" | "PART_IV";
+  title: string;
+  description?: string;
+  instruction?: string;
+  isRequired: boolean;
+  maxSelect?: number;
+  isExclusiveSupported?: boolean;
+}
+
 export interface ISurveySchemaConfig extends Document {
   version: string; // e.g., "3.3"
   isApproved: boolean;
   approvedAt?: Date;
   approvedBy?: string;
+  title?: string;
+  description?: string;
   workgroups: IWorkgroupConfig[];
   roles: IRoleConfig[];
   difficulties: IDifficultyConfig[];
   learningFormats: ILearningFormatConfig[];
+  questions?: IQuestionConfig[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -104,9 +119,30 @@ const LearningFormatConfigSchema = new Schema<ILearningFormatConfig>(
   { _id: false }
 );
 
+const QuestionConfigSchema = new Schema<IQuestionConfig>(
+  {
+    id: { type: String, required: true },
+    order: { type: Number, required: true },
+    section: {
+      type: String,
+      enum: ["PART_I", "PART_II", "PART_III", "PART_IV"],
+      required: true,
+    },
+    title: { type: String, required: true },
+    description: { type: String },
+    instruction: { type: String },
+    isRequired: { type: Boolean, default: true },
+    maxSelect: { type: Number },
+    isExclusiveSupported: { type: Boolean, default: false },
+  },
+  { _id: false }
+);
+
 const SurveySchemaConfigSchema = new Schema<ISurveySchemaConfig>(
   {
     version: { type: String, required: true, unique: true, trim: true },
+    title: { type: String },
+    description: { type: String },
     isApproved: { type: Boolean, default: false },
     approvedAt: { type: Date },
     approvedBy: { type: String },
@@ -114,6 +150,7 @@ const SurveySchemaConfigSchema = new Schema<ISurveySchemaConfig>(
     roles: { type: [RoleConfigSchema], required: true },
     difficulties: { type: [DifficultyConfigSchema], required: true },
     learningFormats: { type: [LearningFormatConfigSchema], required: true },
+    questions: { type: [QuestionConfigSchema], default: [] },
   },
   {
     timestamps: true,

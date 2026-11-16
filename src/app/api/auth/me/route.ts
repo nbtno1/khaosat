@@ -11,6 +11,8 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  const isITAdmin = session.role === "TECHNICAL_ADMIN";
+
   return NextResponse.json({
     success: true,
     user: {
@@ -22,6 +24,7 @@ export async function GET(request: NextRequest) {
       roleLabel: ROLE_LABELS[session.role] || session.role,
       organization: session.organization,
       assignedProvinceCodes: session.assignedProvinceCodes,
+      canViewAuditLogs: isITAdmin,
     },
   });
 }

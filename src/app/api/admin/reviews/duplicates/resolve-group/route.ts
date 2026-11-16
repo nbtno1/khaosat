@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { DuplicateDetectionService } from "@/services/duplicate-detection.service";
+import { getSessionFromRequest } from "@/lib/auth";
+import { logActionFromRequest } from "@/lib/audit-logger";
 
 export async function POST(req: NextRequest) {
   try {
+    const session = getSessionFromRequest(req);
     const body = await req.json();
     const { businessHash, keepResponseId, reason } = body;
 
@@ -22,8 +25,8 @@ export async function POST(req: NextRequest) {
     const defaultReason = reason || "Cùng một cán bộ gửi lại phiếu / gửi đúp nhiều lần";
 
     const reviewerUser = {
-      id: "673628fa9c1d8f0012a45b70",
-      username: "admin_reviewer",
+      id: session?.userId || "usr_reviewer_003",
+      username: session?.username || "admin_reviewer",
     };
 
     const result = await DuplicateDetectionService.resolveGroup(
@@ -32,6 +35,22 @@ export async function POST(req: NextRequest) {
       defaultReason,
       reviewerUser
     );
+
+    // Ghi log xử lý hàng loạt nhóm trùng
+    await logActionFromRequest(req, {
+      action: "RESOLVE_DUPLICATE_GROUP",
+      module: "DUPLICATES",
+      description: `Giải quyết nhóm nghi trùng (hash: ${businessHash.substring(0, 10)}...): Giữ lại phiếu ${keepResponseId}, loại trừ ${result.excludedCount} phiếu đúp`,
+      targetResource: "SurveyResponseGroup",
+      targetId: keepResponseId,
+      details: {
+        businessHash,
+        keepResponseId,
+        excludedCount: result.excludedCount,
+        reason: defaultReason,
+      },
+      status: "SUCCESS",
+    });
 
     return NextResponse.json({
       success: true,

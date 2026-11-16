@@ -3,7 +3,7 @@ import { AppLogo } from "@/components/common/AppLogo";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white">
+    <div className="h-screen max-h-screen w-screen overflow-y-auto flex flex-col items-center justify-center p-6 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white">
       <div className="max-w-2xl text-center flex flex-col items-center space-y-6">
         {/* VỊ TRÍ ĐẶT LOGO (LOGO SLOT) - Thay logo tại public/logo.png hoặc public/logo.svg */}
         <AppLogo size="xl" />

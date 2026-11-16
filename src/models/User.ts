@@ -1,11 +1,12 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 export type UserRole =
-  | "TECHNICAL_ADMIN"
-  | "CONTENT_ADMIN"
-  | "REVIEWER"
-  | "PROGRESS_MONITOR"
-  | "LOCAL_COORDINATOR";
+  | "TECHNICAL_ADMIN"     // Cục Công nghệ thông tin - KTNN (Toàn quyền + Log hệ thống)
+  | "SYSTEM_ADMIN"        // Quản trị viên Hệ thống (Admin nghiệp vụ - Toàn quyền, không xem Log)
+  | "CONTENT_ADMIN"       // Quản trị Nội dung
+  | "REVIEWER"            // Thẩm tra viên
+  | "PROGRESS_MONITOR"    // Giám sát tiến độ
+  | "LOCAL_COORDINATOR";  // Đầu mối địa phương
 
 export interface IUser extends Document {
   username: string;
@@ -32,7 +33,14 @@ const UserSchema = new Schema<IUser>(
     organization: { type: String, required: true },
     role: {
       type: String,
-      enum: ["TECHNICAL_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
+      enum: [
+        "TECHNICAL_ADMIN",
+        "SYSTEM_ADMIN",
+        "CONTENT_ADMIN",
+        "REVIEWER",
+        "PROGRESS_MONITOR",
+        "LOCAL_COORDINATOR",
+      ],
       required: true,
     },
     assignedProvinceCodes: { type: [String], default: [] },
