@@ -4,6 +4,37 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.14.0] — 2026-11-17
+
+### Quản Trị Người Dùng RBAC, Sổ Link Động & Lập Đề Xuất Đào Tạo 12 Mục (ADR-015 & TASK-022, 023, 024)
+- **TASK-022 (Phân hệ Quản trị Tài khoản Người dùng & Phân quyền RBAC `/admin/users`):**
+  - Xây dựng `UserAdminService` (`src/services/user-admin.service.ts`) và bộ Zod validation schemas (`src/lib/validations/user-admin.schema.ts`).
+  - Quản trị đầy đủ 6 vai trò: Cục CNTT (`TECHNICAL_ADMIN`), Quản trị viên HT (`SYSTEM_ADMIN`), Quản trị nội dung (`CONTENT_ADMIN`), Thẩm tra viên (`REVIEWER`), Giám sát tiến độ (`PROGRESS_MONITOR`), Đầu mối địa phương (`LOCAL_COORDINATOR`).
+  - Phân công địa bàn: Cho phép gán danh sách các tỉnh phụ trách trong số 34 tỉnh cho từng đầu mối.
+  - Cung cấp 6 Route Handlers API `/api/admin/users`: danh sách phân trang, thống kê người dùng, tạo mới mã hóa bcrypt salt 10, cập nhật, khóa/mở khóa tức thì, đặt lại mật khẩu và xóa an toàn (chặn xóa tài khoản hệ thống `cntt_admin` và `admin`).
+  - Giao diện Quản trị Người dùng tại `/admin/users`: Đạt chuẩn Full-Height Zero-Page-Scroll, 4 thẻ KPIs, bộ lọc vai trò/trạng thái, bảng cuộn dính thead, các modal Thêm, Sửa, Đổi mật khẩu và Xóa.
+  - Tự động ghi vết vào Nhật ký Hệ thống (`AuditLog`) với mọi hành động thêm/sửa/đổi trạng thái.
+  - Bộ kiểm thử tự động `tests/services/user-admin.test.ts` đạt 6/6 tests PASS (100%).
+- **TASK-023 (Nâng cấp Sổ Quản lý Đường dẫn Khảo sát & Vòng đời Token `/admin/campaigns`):**
+  - Xây dựng `CampaignLinkService` (`src/services/campaign-link.service.ts`) quản lý vòng đời 34 link cấp tỉnh từ MongoDB.
+  - API `GET /api/admin/campaigns/links`: Thống kê số phiếu đã nộp, thời điểm nộp cuối và trạng thái từng tỉnh.
+  - API `PATCH /api/admin/campaigns/links/[token]/status`: Đóng / Mở nhận phiếu độc lập từng tỉnh (`ACTIVE`, `PAUSED`, `EXPIRED`).
+  - API `POST /api/admin/campaigns/links/[token]/rotate`: Đổi mã bảo mật (Rotate Token) khi đường dẫn bị rò rỉ, tự động sinh mã QR mới và bảo toàn 100% dữ liệu phiếu cũ đã thu thập.
+  - Nâng cấp giao diện `/admin/campaigns`: Nạp dữ liệu thời gian thực, nút bật/tắt nhận phiếu, nút Rotate Token, tải gói ZIP 34 QR và nạp dần bằng `useProgressiveItems`.
+- **TASK-024 (Lập Bản Đề xuất Đào tạo 12 Mục Chuẩn `/admin/training-proposals` & Xuất Raw Data):**
+  - Thiết kế Mongoose Model `TrainingProposal` (`src/models/TrainingProposal.ts`) cấu trúc chuẩn 12 mục theo quy định Thuyết minh Phần V Mục 3.
+  - Xây dựng `TrainingProposalService` (`src/services/training-proposal.service.ts`): Hàm `generateDraftFromAnalytics` tự động trích xuất các chuyên đề có nhu cầu cao nhất từ B4, đối soát khoảng thiếu hụt từ B3, hình thức bồi dưỡng từ B6, vướng mắc thể chế ngoài đào tạo từ B5 để sinh bản thảo hoàn chỉnh.
+  - 5 Route Handlers API `/api/admin/training-proposals`: Lấy danh sách, tự động trích xuất, lưu trữ, cập nhật, ký duyệt và xóa.
+  - Giao diện Quản trị Đề xuất Đào tạo tại `/admin/training-proposals`: Đạt chuẩn Full-Height Zero-Page-Scroll, gồm Tab Danh sách và Tab Soạn thảo văn bản hành chính KTNN in ấn chuẩn (Print CSS) với chữ ký duyệt.
+  - Bổ sung phương thức `generateRawDataWorkbookBuffer` trong `ExcelExportService` và API `GET /api/admin/export/raw-data`: Xuất toàn bộ phiếu khảo sát thô đã mã hóa ID, tuân thủ Zero-PII, cấm địa phương truy cập, ghi log an ninh.
+  - Bổ sung nút "Dữ liệu gốc (Raw)" trên giao diện `/admin/analytics`.
+  - Bộ kiểm thử tự động `tests/services/training-proposal.test.ts` đạt 6/6 tests PASS (100%).
+- **Đồng bộ Hệ thống & Cẩm nang Hướng dẫn:**
+  - Bổ sung menu "Đề xuất Đào tạo (12 Mục)" và "Quản trị Người dùng" vào Sidebar Quản trị (`src/app/(admin)/layout.tsx`).
+  - Đăng ký 2 phân hệ `user_admin` và `audit_logs` vào Cẩm nang Vận hành Động (`src/services/system-guide.service.ts`).
+
+---
+
 ## [1.13.0] — 2026-11-16
 
 ### Tối Giản Hóa Auth UX, Dọn Dẹp Tiêu Đề Admin & Progressive Item Rendering Engine (ADR-014 & TASK-021)

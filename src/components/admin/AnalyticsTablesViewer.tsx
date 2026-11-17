@@ -221,6 +221,16 @@ export const AnalyticsTablesViewer: React.FC = () => {
               <Download className="w-3.5 h-3.5" />
               <span>Xuất Excel (Địa phương)</span>
             </a>
+            <a
+              href={`/api/admin/export/raw-data${selectedProvince ? `?provinceCode=${selectedProvince}` : ""}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold shadow-2xs transition-all"
+              title="Xuất tệp dữ liệu thô (Raw Data) đã mã hóa ID phục vụ lưu trữ và kiểm toán độc lập (Mục V.7)"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Dữ liệu gốc (Raw)</span>
+            </a>
           </div>
 
           <button

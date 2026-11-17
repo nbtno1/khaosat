@@ -335,6 +335,65 @@ export class SystemGuideService {
           "PUT /api/admin/questions/schema/[version]/sections",
         ],
       },
+      {
+        id: "user_admin",
+        name: "Quản trị Tài khoản Người dùng & Phân quyền RBAC (UC-14)",
+        route: "/admin/users",
+        icon: "Users",
+        description:
+          "Quản lý danh sách tài khoản quản trị, tạo mới chuyên viên theo khoa, phân công địa bàn phụ trách cho đầu mối địa phương, đặt lại mật khẩu và khóa/thu hồi tài khoản theo biên bản làm việc.",
+        allowedRoles: [
+          ROLE_LABELS.TECHNICAL_ADMIN,
+          ROLE_LABELS.SYSTEM_ADMIN,
+        ],
+        keyCapabilities: [
+          "Quản lý toàn bộ tài khoản với 6 vai trò: Cục CNTT, Quản trị viên HT, Quản trị nội dung, Thẩm tra viên, Giám sát tiến độ, Đầu mối địa phương",
+          "Tạo tài khoản mới, mã hóa mật khẩu an toàn bcrypt (salt 10 rounds)",
+          "Phân công địa bàn (gán tỉnh phụ trách) cho từng đầu mối địa phương",
+          "Khóa hoặc mở khóa tài khoản tức thời khi kết thúc đợt khảo sát hoặc thay đổi nhân sự",
+          "Đặt lại mật khẩu (Reset password) an toàn",
+          "Tự động ghi vết vào Nhật ký Hệ thống (Audit Log) đối với mọi thao tác thêm, sửa, đổi trạng thái",
+        ],
+        operationalRules: [
+          "Tài khoản quản trị được cấp theo danh sách trong biên bản làm việc và phải thu hồi khi kết thúc đợt hoặc thay đổi nhân sự.",
+          "Chỉ Cục Công nghệ thông tin và Quản trị viên Hệ thống mới có quyền truy cập phân hệ này.",
+          "Tuyệt đối không được xóa hoặc khóa tài khoản Cục CNTT mặc định (cntt_admin).",
+        ],
+        apiEndpoints: [
+          "GET /api/admin/users",
+          "POST /api/admin/users",
+          "PUT /api/admin/users/[id]",
+          "DELETE /api/admin/users/[id]",
+          "PATCH /api/admin/users/[id]/status",
+          "POST /api/admin/users/[id]/reset-password",
+        ],
+      },
+      {
+        id: "audit_logs",
+        name: "Nhật ký Hệ thống & Lưu vết Kiểm toán (ADR-013)",
+        route: "/admin/audit-logs",
+        icon: "ShieldCheck",
+        description:
+          "Lưu vết toàn bộ lịch sử đăng nhập, đăng xuất, cảnh báo an ninh truy cập trái quyền và mọi thao tác chỉnh sửa dữ liệu nhạy cảm của các tài khoản quản trị.",
+        allowedRoles: [
+          ROLE_LABELS.TECHNICAL_ADMIN,
+        ],
+        keyCapabilities: [
+          "Ghi nhận tự động, non-blocking toàn bộ các hành động nghiệp vụ quan trọng",
+          "Bảo mật đa tầng: Chỉ duy nhất tài khoản Cục Công nghệ thông tin (cntt_admin) có quyền xem log",
+          "Tự động phát hiện và ghi nhận cảnh báo an ninh khi tài khoản khác cố ý truy cập log trái phép",
+          "Tra cứu, tìm kiếm đa chiều theo Phân hệ, Trạng thái (SUCCESS, FAILED, WARNING), Từ khóa",
+          "Xem chi tiết payload JSON metadata và xuất báo cáo CSV chuẩn UTF-8",
+        ],
+        operationalRules: [
+          "Đặc quyền duy nhất thuộc về Cục Công nghệ thông tin - Kiểm toán nhà nước.",
+          "Mọi nỗ lực truy cập từ các vai trò khác đều bị từ chối 403 Forbidden và lập tức ghi nhận cảnh báo an ninh.",
+        ],
+        apiEndpoints: [
+          "GET /api/admin/audit-logs",
+          "POST /api/admin/audit-logs",
+        ],
+      },
     ];
 
     return {

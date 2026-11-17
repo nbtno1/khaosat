@@ -118,6 +118,8 @@ npm run typecheck
 
 # Chạy toàn bộ các bộ kiểm thử nghiệp vụ
 npm run test:questions     # Quản trị bộ câu hỏi & chuyên đề (ADR-012)
+npm run test:users         # Quản trị tài khoản người dùng & phân quyền RBAC (UC-14)
+npm run test:proposals     # Lập & duyệt Bản đề xuất đào tạo 12 mục chuẩn (BR-21)
 npm run test:validations   # Zod validation & quy tắc nghiệp vụ
 npm run test:api           # Public API khảo sát & nộp phiếu
 npm run test:duplicates    # Thuật toán phát hiện phiếu nghi trùng 4 điểm
@@ -126,6 +128,8 @@ npm run test:excel         # Xuất báo cáo Excel đa sheet & kiểm soát b�
 npm run test:auth          # Xác thực RBAC & phân quyền
 npm run test:dvhc          # Quản trị ĐVHC 34 tỉnh và 3.321 xã/phường
 npm run test:guide         # Cẩm nang vận hành cập nhật động
+npm run test:users         # Quản trị người dùng & phân quyền RBAC (ADR-015)
+npm run test:proposals     # Đề xuất đào tạo 12 mục & xuất dữ liệu thô (ADR-015)
 npm run test:e2e           # 23 Ca kiểm thử chính thức (TC-01 đến TC-23)
 ```
 

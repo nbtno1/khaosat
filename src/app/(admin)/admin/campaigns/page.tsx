@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import QRCode from "qrcode";
 import {
   QrCode,
   Download,
@@ -13,307 +12,468 @@ import {
   FileCheck,
   Search,
   Sparkles,
+  RefreshCw,
+  KeyRound,
+  PauseCircle,
+  PlayCircle,
+  Filter,
+  AlertTriangle,
+  X,
+  CheckCircle2,
 } from "lucide-react";
-import { ProgressMonitoringService } from "@/services/progress-monitoring.service";
+import { useProgressiveItems } from "@/hooks/useProgressiveItems";
 
-interface ProvinceCardItem {
-  code: string;
-  name: string;
+interface ProvinceLinkItem {
+  _id: string;
+  provinceCode: string;
+  provinceName: string;
   token: string;
+  status: "ACTIVE" | "PAUSED" | "EXPIRED";
+  qrCodeDataUrl?: string;
   surveyUrl: string;
-  qrDataUrl: string;
+  totalSubmissions: number;
+  lastSubmissionAt?: string | null;
+  updatedAt: string;
+}
+
+interface CampaignStats {
+  totalLinks: number;
+  activeLinks: number;
+  pausedLinks: number;
+  expiredLinks: number;
+  totalSubmissions: number;
 }
 
 export default function CampaignsPage() {
-  const [provinces, setProvinces] = useState<ProvinceCardItem[]>([]);
+  const [links, setLinks] = useState<ProvinceLinkItem[]>([]);
+  const [stats, setStats] = useState<CampaignStats>({
+    totalLinks: 0,
+    activeLinks: 0,
+    pausedLinks: 0,
+    expiredLinks: 0,
+    totalSubmissions: 0,
+  });
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
   const [copiedToken, setCopiedToken] = useState<string | null>(null);
-  const [isGenerating, setIsGenerating] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [rotatingLink, setRotatingLink] = useState<ProvinceLinkItem | null>(null);
+  const [actionSuccess, setActionSuccess] = useState("");
+  const [isDownloadingZip, setIsDownloadingZip] = useState(false);
 
-  useEffect(() => {
-    async function loadQRs() {
-      setIsGenerating(true);
-      const origin = window.location.origin;
-      const provList = [
-        { code: "01", name: "Thành phố Hà Nội" },
-        { code: "02", name: "Tỉnh Hà Giang" },
-        { code: "04", name: "Tỉnh Cao Bằng" },
-        { code: "06", name: "Tỉnh Bắc Kạn" },
-        { code: "08", name: "Tỉnh Tuyên Quang" },
-        { code: "10", name: "Tỉnh Lào Cai" },
-        { code: "11", name: "Tỉnh Điện Biên" },
-        { code: "12", name: "Tỉnh Lai Châu" },
-        { code: "14", name: "Tỉnh Sơn La" },
-        { code: "15", name: "Tỉnh Yên Bái" },
-        { code: "17", name: "Tỉnh Hoà Bình" },
-        { code: "19", name: "Tỉnh Thái Nguyên" },
-        { code: "20", name: "Tỉnh Lạng Sơn" },
-        { code: "22", name: "Tỉnh Quảng Ninh" },
-        { code: "24", name: "Tỉnh Bắc Giang" },
-        { code: "25", name: "Tỉnh Phú Thọ" },
-        { code: "26", name: "Tỉnh Vĩnh Phúc" },
-        { code: "27", name: "Tỉnh Bắc Ninh" },
-        { code: "30", name: "Thành phố Hải Phòng" },
-        { code: "31", name: "Tỉnh Hải Dương" },
-        { code: "33", name: "Tỉnh Hưng Yên" },
-        { code: "34", name: "Tỉnh Thái Bình" },
-        { code: "35", name: "Tỉnh Hà Nam" },
-        { code: "36", name: "Tỉnh Nam Định" },
-        { code: "37", name: "Tỉnh Ninh Bình" },
-        { code: "38", name: "Tỉnh Thanh Hóa" },
-        { code: "40", name: "Tỉnh Nghệ An" },
-        { code: "42", name: "Tỉnh Hà Tĩnh" },
-        { code: "44", name: "Tỉnh Quảng Bình" },
-        { code: "45", name: "Tỉnh Quảng Trị" },
-        { code: "46", name: "Tỉnh Thừa Thiên Huế" },
-        { code: "48", name: "Thành phố Đà Nẵng" },
-        { code: "49", name: "Tỉnh Quảng Nam" },
-        { code: "51", name: "Tỉnh Quảng Ngãi" },
-      ];
-
-      const cards: ProvinceCardItem[] = [];
-
-      for (const p of provList) {
-        const token = `pilot_dot-1-2026_p${p.code}`;
-        const surveyUrl = `${origin}/khao-sat/${token}`;
-        let qrDataUrl = "";
-        try {
-          qrDataUrl = await QRCode.toDataURL(surveyUrl, {
-            width: 280,
-            margin: 2,
-            color: {
-              dark: "#0369a1", // sky-700
-              light: "#ffffff",
-            },
-          });
-        } catch (e) {
-          console.error("QR gen error:", e);
-        }
-
-        cards.push({
-          code: p.code,
-          name: p.name,
-          token,
-          surveyUrl,
-          qrDataUrl,
-        });
+  const fetchLinks = async () => {
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/admin/campaigns/links");
+      const data = await res.json();
+      if (data.success) {
+        setLinks(data.data || []);
+        if (data.stats) setStats(data.stats);
       }
-
-      setProvinces(cards);
-      setIsGenerating(false);
+    } catch {
+      // Ignored
+    } finally {
+      setIsLoading(false);
     }
-
-    loadQRs();
-  }, []);
-
-  const handleCopyLink = (url: string, token: string) => {
-    navigator.clipboard.writeText(url);
-    setCopiedToken(token);
-    setTimeout(() => setCopiedToken(null), 2000);
   };
 
-  const handleDownloadQR = (qrDataUrl: string, provName: string, code: string) => {
+  useEffect(() => {
+    fetchLinks();
+  }, []);
+
+  const handleCopy = (token: string, url: string) => {
+    navigator.clipboard.writeText(url);
+    setCopiedToken(token);
+    setTimeout(() => setCopiedToken(null), 2500);
+  };
+
+  const handleDownloadSingleQR = (qrDataUrl: string, name: string, code: string) => {
+    if (!qrDataUrl) return;
     const a = document.createElement("a");
     a.href = qrDataUrl;
-    a.download = `QR_KhaoSat_${code}_${provName.replace(/\s+/g, "_")}.png`;
+    a.download = `QR_${code}_${name.replace(/[^a-zA-Z0-9]/g, "_")}.png`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
   };
 
-  const filtered = provinces.filter(
-    (p) =>
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.code.includes(searchQuery)
-  );
+  const handleDownloadZip = async () => {
+    try {
+      setIsDownloadingZip(true);
+      const res = await fetch("/api/admin/campaigns/qr-zip");
+      if (!res.ok) throw new Error("Không thể tải file ZIP");
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Ma_QR_34_Tinh_Khao_Sat_KTNN.zip";
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch {
+      alert("Lỗi khi tải gói file ZIP.");
+    } finally {
+      setIsDownloadingZip(false);
+    }
+  };
+
+  const handleToggleStatus = async (item: ProvinceLinkItem) => {
+    const nextStatus = item.status === "ACTIVE" ? "PAUSED" : "ACTIVE";
+    try {
+      const res = await fetch(`/api/admin/campaigns/links/${item.token}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: nextStatus }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        alert(data.error || "Không thể đổi trạng thái liên kết.");
+        return;
+      }
+      setActionSuccess(`Đã chuyển trạng thái ${item.provinceName} sang: ${nextStatus === "ACTIVE" ? "Đang nhận phiếu" : "Tạm dừng"}`);
+      fetchLinks();
+      setTimeout(() => setActionSuccess(""), 4000);
+    } catch {
+      alert("Lỗi kết nối máy chủ.");
+    }
+  };
+
+  const handleRotateToken = async () => {
+    if (!rotatingLink) return;
+    try {
+      const res = await fetch(`/api/admin/campaigns/links/${rotatingLink.token}/rotate`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        alert(data.error || "Không thể đổi mã bảo mật.");
+        return;
+      }
+      setRotatingLink(null);
+      setActionSuccess(`Đã đổi mã bảo mật và sinh mã QR mới cho ${rotatingLink.provinceName}.`);
+      fetchLinks();
+      setTimeout(() => setActionSuccess(""), 4000);
+    } catch {
+      alert("Lỗi kết nối máy chủ.");
+    }
+  };
+
+  // Filtered links
+  const filteredLinks = links.filter((p) => {
+    const matchesSearch =
+      p.provinceName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.provinceCode.includes(searchQuery) ||
+      p.token.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "ALL" || p.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  // Progressive rendering: initial 8 items, step 8
+  const { visibleItems } = useProgressiveItems(filteredLinks, {
+    initialCount: 8,
+    step: 8,
+    interval: 16,
+    resetKey: `${statusFilter}_${searchQuery}`,
+  });
 
   return (
-    <div className="h-full flex flex-col p-4 sm:p-5 max-w-7xl w-full mx-auto overflow-hidden gap-3.5">
-      {/* 1. Page Header (Cố định ở đỉnh) */}
-      <div className="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-        <div>
-          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
-            Đợt Khảo sát Năm 2026 & Bộ 34 Mã QR
-          </h1>
-          <p className="text-xs text-slate-500">
-            Mỗi tỉnh, thành phố sử dụng duy nhất một mã QR đại diện để cán bộ cấp xã quét bằng thiết bị di động.
-          </p>
-        </div>
-
-        {/* Download All 34 QRs ZIP Button */}
-        <a
-          href="/api/admin/campaigns/qr-zip"
-          download="34_Ma_QR_KhaoSat_KiemToan_2026.zip"
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow-2xs shadow-sky-700/20 transition-all self-start sm:self-center"
-          title="Tải toàn bộ 34 ảnh PNG mã QR độ nét cao trong 1 file nén ZIP"
-        >
-          <Download className="w-3.5 h-3.5" />
-          <span>Tải trọn bộ 34 Mã QR (ZIP)</span>
-        </a>
-      </div>
-
-      {/* 2. Campaign Details Banner Card (Cố định) */}
-      <div className="shrink-0 bg-white rounded-2xl border border-slate-200/80 shadow-2xs p-4 sm:p-5">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div className="space-y-2 max-w-2xl">
-            <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">
-                ĐANG MỞ KHẢO SÁT
-              </span>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700">
-                Mã đợt: DOT-1-2026
-              </span>
-            </div>
-
-            <h2 className="text-base sm:text-lg font-black text-slate-900 leading-snug">
-              Khảo sát Năng lực Quản lý Tài chính, Tài sản công cấp xã năm 2026
-            </h2>
-
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Áp dụng cơ chế đường dẫn công khai kết hợp mã QR tĩnh cấp tỉnh. Cán bộ cấp xã quét mã bằng camera điện thoại để truy cập trực tiếp form khảo sát mà không cần tạo tài khoản.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap lg:flex-col gap-2 shrink-0 text-xs">
-            <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200/70">
-              <Calendar className="w-3.5 h-3.5 text-sky-700" />
-              <span>Thời gian: <strong>15/01/2026 — 30/03/2026</strong></span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200/70">
-              <Building2 className="w-3.5 h-3.5 text-emerald-700" />
-              <span>Phạm vi: <strong>34 Tỉnh / Thành phố</strong></span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200/70">
-              <FileCheck className="w-3.5 h-3.5 text-indigo-700" />
-              <span>Đối tượng: <strong>3.321 Xã, Phường, Thị trấn</strong></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 3. Danh mục 34 QR Cards: Chiếm toàn bộ phần còn lại (flex-1 min-h-0), cuộn nội bộ */}
-      <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-white rounded-2xl border border-slate-200/80 shadow-2xs">
-        {/* Toolbar Header */}
-        <div className="shrink-0 p-3.5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/70">
+    <div className="flex flex-col h-full overflow-hidden bg-slate-50">
+      {/* 1. HEADER (FIXED, NO SCROLL) */}
+      <div className="shrink-0 bg-white border-b border-slate-200/80 px-6 py-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h2 className="text-sm font-extrabold text-slate-900">
-              Danh mục 34 Đường dẫn & Mã QR Cấp Tỉnh ({filtered.length})
-            </h2>
-            <p className="text-[11px] text-slate-500">
-              Sao chép link công khai hoặc tải mã QR riêng biệt để in vào công văn hướng dẫn
+            <h1 className="text-xl font-bold text-slate-800 tracking-tight flex items-center gap-2">
+              <QrCode className="w-6 h-6 text-blue-600" />
+              Sổ Quản lý Đường dẫn Khảo sát & Mã QR Cấp Tỉnh
+            </h1>
+            <p className="text-xs text-slate-500 mt-1">
+              Quản lý vòng đời liên kết độc lập từng tỉnh: Đóng/Mở nhận phiếu, Gia hạn và Đổi mã bảo mật (Rotate Token)
             </p>
           </div>
 
-          <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => fetchLinks()}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin text-blue-600" : ""}`} />
+              Làm mới
+            </button>
+
+            <button
+              onClick={handleDownloadZip}
+              disabled={isDownloadingZip}
+              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 rounded-lg transition-colors shadow-xs cursor-pointer"
+            >
+              <Download className={`w-4 h-4 ${isDownloadingZip ? "animate-bounce" : ""}`} />
+              {isDownloadingZip ? "Đang nén file..." : "Tải gói 34 QR (.ZIP)"}
+            </button>
+          </div>
+        </div>
+
+        {/* Success Alert Banner */}
+        {actionSuccess && (
+          <div className="mt-3 p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2 text-xs text-emerald-800 animate-in fade-in">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>{actionSuccess}</span>
+          </div>
+        )}
+
+        {/* 2. STATS CARDS */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+          <div className="bg-slate-50/80 border border-slate-200/80 rounded-lg p-3">
+            <div className="text-xs text-slate-500 font-medium">Tổng số địa bàn</div>
+            <div className="text-xl font-bold text-slate-800 mt-1">{stats.totalLinks} Tỉnh/Thành</div>
+          </div>
+          <div className="bg-emerald-50/60 border border-emerald-200/80 rounded-lg p-3">
+            <div className="text-xs text-emerald-700 font-medium flex items-center gap-1.5">
+              <PlayCircle className="w-3.5 h-3.5 text-emerald-600" />
+              Đang mở nhận phiếu
+            </div>
+            <div className="text-xl font-bold text-emerald-800 mt-1">{stats.activeLinks}</div>
+          </div>
+          <div className="bg-amber-50/60 border border-amber-200/80 rounded-lg p-3">
+            <div className="text-xs text-amber-700 font-medium flex items-center gap-1.5">
+              <PauseCircle className="w-3.5 h-3.5 text-amber-600" />
+              Đang tạm dừng
+            </div>
+            <div className="text-xl font-bold text-amber-800 mt-1">{stats.pausedLinks}</div>
+          </div>
+          <div className="bg-blue-50/60 border border-blue-200/80 rounded-lg p-3">
+            <div className="text-xs text-blue-700 font-medium flex items-center gap-1.5">
+              <FileCheck className="w-3.5 h-3.5 text-blue-600" />
+              Tổng phiếu toàn quốc
+            </div>
+            <div className="text-xl font-bold text-blue-800 mt-1">{stats.totalSubmissions}</div>
+          </div>
+        </div>
+
+        {/* 3. TOOLBAR */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mt-4">
+          <div className="relative flex-1 max-w-md">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Tìm tỉnh hoặc mã..."
+              placeholder="Tìm theo tên tỉnh, mã số hoặc token..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white"
+              className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
-        </div>
 
-        {/* Content Body: Cuộn lưới thẻ QR nội bộ */}
-        <div className="flex-1 min-h-0 overflow-y-auto p-4">
-          {isGenerating ? (
-            <div className="text-center py-12">
-              <div className="inline-block w-8 h-8 border-3 border-sky-600 border-t-transparent rounded-full animate-spin mb-2" />
-              <div className="text-xs font-bold text-slate-500">Đang khởi tạo mã QR cho 34 tỉnh...</div>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 text-xs text-slate-500">
+              <Filter className="w-3.5 h-3.5" />
+              <span>Trạng thái:</span>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
-              {filtered.map((item) => (
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+            >
+              <option value="ALL">Tất cả địa bàn</option>
+              <option value="ACTIVE">Đang nhận phiếu</option>
+              <option value="PAUSED">Đang tạm dừng</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. MAIN CARDS GRID (SCROLLS INTERNALLY) */}
+      <div className="flex-1 min-h-0 overflow-y-auto p-6">
+        {isLoading && links.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-64 text-slate-400">
+            <RefreshCw className="w-6 h-6 animate-spin text-blue-600 mb-2" />
+            <span className="text-xs font-medium">Đang nạp dữ liệu liên kết và mã QR...</span>
+          </div>
+        ) : filteredLinks.length === 0 ? (
+          <div className="text-center py-12 text-slate-400 text-xs">
+            Không tìm thấy địa bàn nào phù hợp với bộ lọc.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+            {visibleItems.map((p) => {
+              const isCopied = copiedToken === p.token;
+              const isActive = p.status === "ACTIVE";
+
+              return (
                 <div
-                  key={item.code}
-                  className="bg-white rounded-xl border border-slate-200/80 p-3.5 shadow-2xs hover:border-sky-300 hover:shadow-xs transition-all flex flex-col justify-between"
+                  key={p.provinceCode}
+                  className={`bg-white rounded-xl border transition-all duration-200 overflow-hidden flex flex-col justify-between ${
+                    isActive
+                      ? "border-slate-200/90 shadow-2xs hover:shadow-md hover:border-blue-300"
+                      : "border-amber-200 bg-amber-50/20 shadow-2xs opacity-90"
+                  }`}
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-[10px] font-mono font-bold text-sky-800 bg-sky-50 px-2 py-0.5 rounded">
-                        Mã {item.code}
+                  <div className="p-4">
+                    {/* Top Header */}
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-1.5">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                          {p.provinceCode}
+                        </span>
+                        <h3 className="font-bold text-slate-800 text-sm truncate" title={p.provinceName}>
+                          {p.provinceName}
+                        </h3>
+                      </div>
+
+                      <span
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border ${
+                          isActive
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                            : "bg-amber-50 text-amber-700 border-amber-200"
+                        }`}
+                      >
+                        <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-emerald-500" : "bg-amber-500"}`} />
+                        {isActive ? "Đang mở" : "Tạm dừng"}
                       </span>
-                      <span className="text-[10px] text-slate-400 font-semibold">Cấp Tỉnh</span>
                     </div>
-                    <h3 className="text-xs font-bold text-slate-900 line-clamp-1 mb-2.5">
-                      {item.name}
-                    </h3>
 
-                    {/* QR Preview Box */}
-                    <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 flex items-center justify-center mb-2.5 group-hover:bg-sky-50/50 transition-colors">
-                      {item.qrDataUrl ? (
-                        <img
-                          src={item.qrDataUrl}
-                          alt={`QR Code ${item.name}`}
-                          className="w-28 h-28 object-contain rounded-lg"
-                        />
-                      ) : (
-                        <div className="w-28 h-28 flex items-center justify-center text-[10px] text-slate-400">
-                          Chưa tạo mã
+                    {/* QR Code and Stats */}
+                    <div className="flex items-center gap-3 bg-slate-50 p-2.5 rounded-lg border border-slate-100 mb-3">
+                      <div className="relative group shrink-0 bg-white p-1 rounded-md border border-slate-200 shadow-2xs">
+                        {p.qrCodeDataUrl ? (
+                          <img
+                            src={p.qrCodeDataUrl}
+                            alt={`QR ${p.provinceName}`}
+                            className="w-20 h-20 object-contain rounded"
+                          />
+                        ) : (
+                          <div className="w-20 h-20 bg-slate-100 flex items-center justify-center">
+                            <QrCode className="w-8 h-8 text-slate-300" />
+                          </div>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => handleDownloadSingleQR(p.qrCodeDataUrl || "", p.provinceName, p.provinceCode)}
+                          className="absolute inset-0 bg-slate-900/60 text-white flex items-center justify-center rounded opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-medium"
+                          title="Tải ảnh QR này"
+                        >
+                          <Download className="w-4 h-4 mr-1" />
+                          Tải ảnh
+                        </button>
+                      </div>
+
+                      <div className="flex-1 min-w-0 text-[11px] space-y-1">
+                        <div className="flex items-center justify-between text-slate-500">
+                          <span>Phiếu đã nộp:</span>
+                          <span className="font-bold text-slate-800 text-xs">{p.totalSubmissions}</span>
                         </div>
-                      )}
-                    </div>
-
-                    <div className="bg-slate-100/70 p-2 rounded-lg font-mono text-[10px] text-slate-600 break-all select-all mb-2.5 line-clamp-2">
-                      {item.surveyUrl}
+                        <div className="text-slate-400 text-[10px] truncate">
+                          Mã: <code className="text-slate-600 font-mono">{p.token}</code>
+                        </div>
+                        {p.lastSubmissionAt && (
+                          <div className="text-[10px] text-slate-400 truncate">
+                            Nộp gần nhất: {new Date(p.lastSubmissionAt).toLocaleDateString("vi-VN")}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
 
-                  {/* Actions */}
-                  <div className="space-y-1.5 pt-1 border-t border-slate-100">
-                    <button
-                      type="button"
-                      onClick={() => handleCopyLink(item.surveyUrl, item.token)}
-                      className={`w-full inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        copiedToken === item.token
-                          ? "bg-emerald-600 text-white"
-                          : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                      }`}
-                    >
-                      {copiedToken === item.token ? (
-                        <>
-                          <Check className="w-3.5 h-3.5" />
-                          <span>Đã sao chép link</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5" />
-                          <span>Sao chép link</span>
-                        </>
-                      )}
-                    </button>
-
-                    <div className="grid grid-cols-2 gap-1.5">
+                  {/* Actions Footer */}
+                  <div className="px-4 py-2.5 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-1 text-xs">
+                    <div className="flex items-center gap-1">
                       <button
                         type="button"
-                        onClick={() => handleDownloadQR(item.qrDataUrl, item.name, item.code)}
-                        className="inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-[11px] font-bold bg-sky-50 text-sky-700 hover:bg-sky-100 transition-colors cursor-pointer"
-                        title="Tải ảnh PNG về máy"
+                        onClick={() => handleCopy(p.token, p.surveyUrl)}
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                          isCopied
+                            ? "bg-emerald-600 text-white"
+                            : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-100"
+                        }`}
+                        title="Sao chép đường dẫn khảo sát"
                       >
-                        <Download className="w-3 h-3" />
-                        <span>Tải ảnh QR</span>
+                        {isCopied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                        {isCopied ? "Đã chép" : "Chép link"}
                       </button>
 
                       <a
-                        href={item.surveyUrl}
+                        href={p.surveyUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-[11px] font-bold bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200 transition-colors"
-                        title="Mở biểu mẫu làm bài trên tab mới"
+                        className="p-1 text-slate-500 hover:text-blue-600 hover:bg-white rounded border border-transparent hover:border-slate-200 transition-colors"
+                        title="Mở biểu mẫu khảo sát trong tab mới"
                       >
-                        <ExternalLink className="w-3 h-3" />
-                        <span>Mở form</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
                       </a>
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                      {/* Đóng / Mở nút */}
+                      <button
+                        type="button"
+                        onClick={() => handleToggleStatus(p)}
+                        className={`p-1 rounded transition-colors cursor-pointer ${
+                          isActive
+                            ? "text-amber-600 hover:bg-amber-100"
+                            : "text-emerald-600 hover:bg-emerald-100"
+                        }`}
+                        title={isActive ? "Tạm dừng nhận phiếu tỉnh này" : "Tiếp tục nhận phiếu tỉnh này"}
+                      >
+                        {isActive ? <PauseCircle className="w-4 h-4" /> : <PlayCircle className="w-4 h-4" />}
+                      </button>
+
+                      {/* Đổi mã bảo mật (Rotate) */}
+                      <button
+                        type="button"
+                        onClick={() => setRotatingLink(p)}
+                        className="p-1 text-slate-500 hover:text-purple-600 hover:bg-purple-50 rounded transition-colors cursor-pointer"
+                        title="Đổi mã bảo mật (Rotate Token) khi liên kết bị lộ"
+                      >
+                        <KeyRound className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
+
+      {/* MODAL: XÁC NHẬN ROTATE TOKEN */}
+      {rotatingLink && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-sm overflow-hidden border border-slate-200">
+            <div className="p-5 text-center space-y-3">
+              <div className="w-12 h-12 rounded-full bg-purple-100 text-purple-600 mx-auto flex items-center justify-center">
+                <KeyRound className="w-6 h-6" />
+              </div>
+              <h3 className="font-bold text-slate-800 text-sm">Đổi mã bảo mật liên kết (Rotate Token)</h3>
+              <p className="text-xs text-slate-600 text-left">
+                Bạn sắp tạo mã bảo mật mới cho <strong className="text-slate-900">{rotatingLink.provinceName}</strong>:
+              </p>
+              <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-left text-[11px] font-mono text-slate-700">
+                Token cũ: {rotatingLink.token}
+              </div>
+              <p className="text-[11px] text-amber-700 text-left bg-amber-50 p-2 rounded border border-amber-200">
+                ⚠️ Lưu ý: Đường dẫn và mã QR cũ sẽ bị vô hiệu hóa ngay lập tức. Toàn bộ {rotatingLink.totalSubmissions} phiếu đã nộp trước đó vẫn được bảo toàn nguyên vẹn.
+              </p>
+              <div className="flex items-center justify-center gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setRotatingLink(null)}
+                  className="px-3.5 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer"
+                >
+                  Hủy bỏ
+                </button>
+                <button
+                  type="button"
+                  onClick={handleRotateToken}
+                  className="px-4 py-1.5 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-2xs cursor-pointer"
+                >
+                  Đổi mã ngay
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

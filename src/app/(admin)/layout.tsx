@@ -19,6 +19,8 @@ import {
   Sparkles,
   MapPin,
   HelpCircle,
+  Users,
+  GraduationCap,
 } from "lucide-react";
 import { AppLogo } from "@/components/common/AppLogo";
 
@@ -108,6 +110,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER", "PROGRESS_MONITOR", "LOCAL_COORDINATOR"],
     },
     {
+      label: "Đề xuất Đào tạo (12 Mục)",
+      href: "/admin/training-proposals",
+      icon: GraduationCap,
+      description: "Bản đề xuất đào tạo cho địa phương (Mục V.3)",
+      roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER"],
+    },
+    {
       label: "Danh mục Tỉnh, Xã/Phường",
       href: "/admin/administrative-units",
       icon: MapPin,
@@ -120,6 +129,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       icon: HelpCircle,
       description: "Cấu hình 14 câu hỏi, nhóm việc & chuyên đề",
       roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN", "CONTENT_ADMIN", "REVIEWER"],
+    },
+    {
+      label: "Quản trị Người dùng",
+      href: "/admin/users",
+      icon: Users,
+      description: "Tài khoản, phân quyền & địa bàn",
+      roles: ["TECHNICAL_ADMIN", "SYSTEM_ADMIN"],
     },
     {
       label: "Hướng dẫn sử dụng",

@@ -449,3 +449,60 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
   - 100% typecheck thành công, 0 lỗi TypeScript.
 - **Test Cases:** TC-PERF-01 (Kiểm tra tốc độ render frame 1 của tab < 16ms), TC-UI-01 (Kiểm tra zero-page-scroll tại `/login` và các trang Admin) -> PASS 100%.
 - **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 16/11/2026)
+
+---
+
+## MILESTONE 13: PHÂN HỆ QUẢN TRỊ NGƯỜI DÙNG, SỔ QUẢN LÝ ĐƯỜNG DẪN & ĐỀ XUẤT ĐÀO TẠO 12 MỤC (ADR-015)
+
+### TASK-022: Xây dựng Phân hệ Quản trị Tài khoản Người dùng & Phân quyền RBAC (`/admin/users`)
+- **Module:** Security / User Management / RBAC
+- **Spec liên quan:** `specs/05-USER-ROLES-AND-USE-CASES.md` (UC-14), `specs/DECISIONS.md` (ADR-015)
+- **Mức độ ưu tiên:** P0
+- **Phụ thuộc:** TASK-020
+- **File đã tạo:**
+  - `src/lib/validations/user-admin.schema.ts`: Zod schema validate tạo/sửa người dùng và đổi mật khẩu.
+  - `src/services/user-admin.service.ts`: Dịch vụ CRUD người dùng, mã hóa bcrypt, bảo vệ superadmin.
+  - `src/app/api/admin/users/route.ts`: API GET (danh sách + thống kê) & POST (tạo mới).
+  - `src/app/api/admin/users/[id]/route.ts`: API PUT & DELETE.
+  - `src/app/api/admin/users/[id]/status/route.ts`: API PATCH khóa/mở khóa.
+  - `src/app/api/admin/users/[id]/reset-password/route.ts`: API POST đổi mật khẩu.
+  - `src/app/(admin)/admin/users/page.tsx`: Giao diện Full-Height Zero-Page-Scroll, 4 thẻ KPIs, bộ lọc đa chiều, modal tạo/sửa, phân công 34 tỉnh.
+  - `tests/services/user-admin.test.ts`: Bộ kiểm thử tự động 6 ca kiểm thử.
+- **Acceptance Criteria:** Toàn quyền quản trị tài khoản 6 vai trò, gán tỉnh phụ trách, khóa/thu hồi tài khoản, đổi mật khẩu, bảo vệ không xóa admin hệ thống; 6/6 tests PASS.
+- **Test Cases:** TC-USER-01 đến TC-USER-06 (6/6 PASS 100%).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 17/11/2026)
+
+### TASK-023: Nâng cấp Sổ Quản lý Đường dẫn Khảo sát & Vòng đời Token (`/admin/campaigns`)
+- **Module:** Campaign / Link Lifecycle Management
+- **Spec liên quan:** `specs/05-USER-ROLES-AND-USE-CASES.md` (UC-09), `specs/DECISIONS.md` (ADR-015)
+- **Mức độ ưu tiên:** P1
+- **Phụ thuộc:** TASK-013, TASK-021
+- **File đã tạo/cập nhật:**
+  - `src/services/campaign-link.service.ts`: Dịch vụ quản lý vòng đời 34 link tỉnh, thống kê nộp phiếu, đổi mã bảo mật `rotateToken` sinh mã QR mới và bảo toàn dữ liệu cũ.
+  - `src/app/api/admin/campaigns/links/route.ts`: API lấy danh sách link động + KPIs.
+  - `src/app/api/admin/campaigns/links/[token]/status/route.ts`: API đóng/mở nhận phiếu từng tỉnh.
+  - `src/app/api/admin/campaigns/links/[token]/rotate/route.ts`: API đổi token bảo mật khi bị lộ.
+  - `src/app/(admin)/admin/campaigns/page.tsx`: Nâng cấp giao diện nạp dữ liệu động từ DB, nút bật/tắt nhận phiếu, nút Rotate Token, nạp dần progressive items.
+- **Acceptance Criteria:** Cho phép đóng/mở nhận phiếu độc lập từng tỉnh, đổi token và tạo mã QR mới bảo toàn phiếu cũ; 0 lỗi TypeScript.
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 17/11/2026)
+
+### TASK-024: Xây dựng Phân hệ Lập & Quản lý Bản Đề xuất Đào tạo 12 Mục Chuẩn (`/admin/training-proposals`) & Xuất Raw Data
+- **Module:** Training Proposal / Analytics Actionable Engine / Raw Data Export
+- **Spec liên quan:** `specs/02-BUSINESS-REQUIREMENTS.md` (BR-21, BR-23), `specs/DECISIONS.md` (ADR-015)
+- **Mức độ ưu tiên:** P0
+- **Phụ thuộc:** TASK-008, TASK-009, TASK-021
+- **File đã tạo/cập nhật:**
+  - `src/models/TrainingProposal.ts`: Mongoose Model lưu trữ 12 mục tiêu chí chuẩn theo quy định Thuyết minh Phần V Mục 3.
+  - `src/services/training-proposal.service.ts`: Dịch vụ tự động trích xuất số liệu 6 bảng B1-B6 thành bản thảo 12 mục tiêu chuẩn.
+  - `src/app/api/admin/training-proposals/route.ts`: API danh sách và tạo đề xuất mới.
+  - `src/app/api/admin/training-proposals/generate/route.ts`: API tự động sinh bản thảo từ 6 bảng.
+  - `src/app/api/admin/training-proposals/[id]/route.ts`: API chi tiết, cập nhật và xóa đề xuất.
+  - `src/app/api/admin/training-proposals/[id]/approve/route.ts`: API ký duyệt đề xuất.
+  - `src/app/(admin)/admin/training-proposals/page.tsx`: Giao diện Full-Height Zero-Page-Scroll gồm tab danh sách và tab soạn thảo văn bản hành chính in ấn chuẩn (Print CSS).
+  - `src/services/excel-export.service.ts`: Thêm phương thức `generateRawDataWorkbookBuffer` xuất toàn bộ phiếu thô mã hóa Zero-PII.
+  - `src/app/api/admin/export/raw-data/route.ts`: API xuất file Excel dữ liệu gốc.
+  - `src/components/admin/AnalyticsTablesViewer.tsx`: Bổ sung nút "Dữ liệu gốc (Raw)".
+  - `tests/services/training-proposal.test.ts`: Bộ kiểm thử tự động 6 ca kiểm thử.
+- **Acceptance Criteria:** Tự động sinh văn bản 12 mục chuẩn từ số liệu 6 bảng, lưu trữ, ký duyệt, in PDF; xuất file dữ liệu thô bảo mật; 6/6 tests PASS.
+- **Test Cases:** TC-PROP-01 đến TC-PROP-06 (6/6 PASS 100%).
+- **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 17/11/2026)

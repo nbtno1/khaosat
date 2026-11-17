@@ -148,6 +148,22 @@
 
 ---
 
+## ADR-015: PHÂN HỆ QUẢN TRỊ NGƯỜI DÙNG RBAC, SỔ QUẢN LÝ ĐƯỜNG DẪN ĐỘNG & BẢN ĐỀ XUẤT ĐÀO TẠO 12 MỤC CHUẨN
+- **Bối cảnh:** Đối soát chuyên sâu tài liệu nguồn `docs/` phát hiện các yêu cầu nghiệp vụ quản trị trọng yếu cần hoàn thiện:
+  1. *Quản trị tài khoản người dùng & Thu hồi quyền (Phương án triển khai Mục V.6):* Cần giao diện web để quản trị viên tạo tài khoản cho các chuyên viên Khoa Cơ sở / Chuyên ngành, phân công địa bàn (gán tỉnh) cho đầu mối địa phương, đặt lại mật khẩu và khóa/thu hồi tài khoản khi kết thúc đợt.
+  2. *Sổ quản lý đường dẫn & Vòng đời liên kết từng tỉnh (Phương án triển khai Mục V.4):* Cần chuyển trang mã QR thành sổ quản lý động, cho phép đóng/mở nhận phiếu độc lập từng tỉnh, và hỗ trợ đổi mã bảo mật (Rotate Token) khi liên kết bị rò rỉ mà không làm mất dữ liệu phiếu cũ đã nộp.
+  3. *Lập Bản Đề xuất Đào tạo cho Địa phương 12 Mục chuẩn (Thuyết minh tổng hợp Phần V Mục 2 & 3):* Toàn bộ 6 bảng B1-B6 sinh ra để phục vụ việc lập Bản Đề xuất Đào tạo. Cần giao diện và công cụ tự động trích xuất số liệu 6 bảng thành văn bản hành chính 12 mục tiêu chí chuẩn để Lãnh đạo Trường phê duyệt.
+  4. *Xuất tệp Dữ liệu gốc mã hóa (Phương án triển khai Mục V.7):* Phục vụ bàn giao dữ liệu thô cho Kiểm toán nhà nước và kiểm toán độc lập.
+- **Quyết định:**
+  1. **Xây dựng Phân hệ Quản trị Người dùng (`/admin/users`):** Dịch vụ `UserAdminService` kết hợp 6 API RESTful, mã hóa bcrypt an toàn, ghi nhận log `AuditLog`, bảo vệ không cho phép xóa tài khoản hệ thống `cntt_admin` và `admin`.
+  2. **Nâng cấp Sổ Quản lý Đường dẫn (`/admin/campaigns`):** Dịch vụ `CampaignLinkService`, API cập nhật trạng thái link và API đổi token `rotateToken` sinh mã QR mới, bảo toàn 100% dữ liệu phiếu cũ.
+  3. **Xây dựng Phân hệ Lập Đề xuất Đào tạo (`/admin/training-proposals`):** Model `TrainingProposal`, dịch vụ `TrainingProposalService` với hàm `generateDraftFromAnalytics` tự động trích xuất các chuyên đề cấp thiết, khoảng thiếu hụt và khó khăn ngoài đào tạo; giao diện văn bản hành chính in ấn chuẩn (Print CSS) với chữ ký duyệt.
+  4. **Bổ sung Export Raw Data (`/api/admin/export/raw-data`):** Xuất file Excel toàn bộ phản hồi thô đã mã hóa ID, tuân thủ Zero-PII, cấm tuyệt đối tài khoản địa phương truy cập.
+- **Trạng thái:** ĐÃ DUYỆT & TRIỂN KHAI HOÀN TẤT (APPROVED ngày 17/11/2026).
+
+
+---
+
 ## ADR-014: KIẾN TRÚC GIAO DIỆN KHÔNG CUỘN TOÀN TRANG (ZERO-PAGE-SCROLL), TỐI GIẢN HÓA AUTH UX & CƠ CHẾ STREAMING RENDER NỘI DUNG TỪNG PHẦN (PROGRESSIVE RENDERING ENGINE)
 - **Bối cảnh:**
   1. Giao diện Cổng Quản trị phát sinh thanh cuộn trên toàn bộ trang (page scroll) khiến trải nghiệm thao tác bị rời rạc, các thanh tác vụ và tiêu đề bị trôi khi cuộn xuống dưới.
@@ -168,3 +184,19 @@
      - Xây dựng custom hook `useProgressiveItems<T>(items, options)`: Render ngay lập tức lô đầu tiên (3-6 phần tử) trong frame đầu tiên (< 16ms), sau đó dùng `setTimeout(..., 16)` để nạp nối tiếp từng lô theo mỗi khung hình.
      - Bổ sung `resetKey: activeTab` để tự động làm mới bộ đếm hiển thị ngay khi người dùng bấm chuyển tab, biến thao tác chuyển tab từ đơ giật thành mượt mà tức thì.
 - **Trạng thái:** ĐÃ DUYỆT & TRIỂN KHAI HOÀN TẤT (APPROVED ngày 16/11/2026).
+
+---
+
+## ADR-015: PHÂN HỆ QUẢN TRỊ NGƯỜI DÙNG RBAC, SỔ QUẢN LÝ ĐƯỜNG DẪN ĐỘNG & BẢN ĐỀ XUẤT ĐÀO TẠO 12 MỤC CHUẨN
+- **Bối cảnh:** Đối soát chuyên sâu tài liệu nguồn `docs/` phát hiện các yêu cầu nghiệp vụ quản trị trọng yếu cần hoàn thiện:
+  1. *Quản trị tài khoản người dùng & Thu hồi quyền (Phương án triển khai Mục V.6):* Cần giao diện web để quản trị viên tạo tài khoản cho các chuyên viên Khoa Cơ sở / Chuyên ngành, phân công địa bàn (gán tỉnh) cho đầu mối địa phương, đặt lại mật khẩu và khóa/thu hồi tài khoản khi kết thúc đợt.
+  2. *Sổ quản lý đường dẫn & Vòng đời liên kết từng tỉnh (Phương án triển khai Mục V.4):* Cần chuyển trang mã QR thành sổ quản lý động, cho phép đóng/mở nhận phiếu độc lập từng tỉnh, và hỗ trợ đổi mã bảo mật (Rotate Token) khi liên kết bị rò rỉ mà không làm mất dữ liệu phiếu cũ đã nộp.
+  3. *Lập Bản Đề xuất Đào tạo cho Địa phương 12 Mục chuẩn (Thuyết minh tổng hợp Phần V Mục 2 & 3):* Toàn bộ 6 bảng B1-B6 sinh ra để phục vụ việc lập Bản Đề xuất Đào tạo. Cần giao diện và công cụ tự động trích xuất số liệu 6 bảng thành văn bản hành chính 12 mục tiêu chí chuẩn để Lãnh đạo Trường phê duyệt.
+  4. *Xuất tệp Dữ liệu gốc mã hóa (Phương án triển khai Mục V.7):* Phục vụ bàn giao dữ liệu thô cho Kiểm toán nhà nước và kiểm toán độc lập.
+- **Quyết định:**
+  1. **Xây dựng Phân hệ Quản trị Người dùng (`/admin/users`):** Dịch vụ `UserAdminService` kết hợp 6 API RESTful, mã hóa bcrypt an toàn, ghi nhận log `AuditLog`, bảo vệ không cho phép xóa tài khoản hệ thống `cntt_admin` và `admin`.
+  2. **Nâng cấp Sổ Quản lý Đường dẫn (`/admin/campaigns`):** Dịch vụ `CampaignLinkService`, API cập nhật trạng thái link và API đổi token `rotateToken` sinh mã QR mới, bảo toàn 100% dữ liệu phiếu cũ.
+  3. **Xây dựng Phân hệ Lập Đề xuất Đào tạo (`/admin/training-proposals`):** Model `TrainingProposal`, dịch vụ `TrainingProposalService` với hàm `generateDraftFromAnalytics` tự động trích xuất các chuyên đề cấp thiết, khoảng thiếu hụt và khó khăn ngoài đào tạo; giao diện văn bản hành chính in ấn chuẩn (Print CSS) với chữ ký duyệt.
+  4. **Bổ sung Export Raw Data (`/api/admin/export/raw-data`):** Xuất file Excel toàn bộ phản hồi thô đã mã hóa ID, tuân thủ Zero-PII, cấm tuyệt đối tài khoản địa phương truy cập.
+- **Trạng thái:** ĐÃ DUYỆT & TRIỂN KHAI HOÀN TẤT (APPROVED ngày 17/11/2026).
+

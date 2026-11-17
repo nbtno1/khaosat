@@ -17,22 +17,22 @@ khaosat/
 ├── AGENTS.md                              # Quy tắc thường trực & Hướng dẫn chạy đa thiết bị
 ├── docs/                                  # 20 tài liệu nghiệp vụ gốc (Bộ phiếu phiên bản 3.3)
 ├── specs/                                 # 22 tài liệu Đặc tả Kỹ thuật hoàn chỉnh
-│   ├── PROGRESS.md                        # Báo cáo tiến độ thời gian thực (21/21 Tasks COMPLETED)
-│   ├── TASKS.md                           # Backlog 21 tasks chi tiết kèm test cases
-│   ├── DECISIONS.md                       # 14 Bản ghi quyết định kiến trúc (ADR-001 đến ADR-014)
+│   ├── PROGRESS.md                        # Báo cáo tiến độ thời gian thực (24/24 Tasks COMPLETED)
+│   ├── TASKS.md                           # Backlog 24 tasks chi tiết kèm test cases (Milestone 1-13)
+│   ├── DECISIONS.md                       # 15 Bản ghi quyết định kiến trúc (ADR-001 đến ADR-015)
 │   ├── CHANGELOG.md                       # Lịch sử thay đổi hệ thống
 │   └── REQUIREMENTS-TRACEABILITY.md       # Ma trận truy vết yêu cầu (RTM)
 ├── src/                                   # Mã nguồn ứng dụng Next.js 15 App Router
 │   ├── app/
-│   │   ├── (admin)/admin/                 # Cổng Quản trị (Dashboard, Campaigns, Questions, ĐVHC...)
+│   │   ├── (admin)/admin/                 # Cổng Quản trị (Dashboard, Campaigns, Questions, ĐVHC, Đề xuất, Users...)
 │   │   ├── (auth)/login/                  # Trang đăng nhập tối giản chuẩn KTNN
 │   │   ├── (public)/khao-sat/[token]/     # Cổng Khảo sát Công khai di động 4 bước
 │   │   └── api/                           # Hệ thống RESTful Route Handlers
 │   ├── components/                        # UI Components chuẩn hóa (shadcn/ui, Recharts)
 │   ├── hooks/                             # Custom hooks (useProgressiveItems, useSurveyFormState...)
 │   ├── lib/                               # Tiện ích, db.ts, auth.ts, audit-logger.ts
-│   ├── models/                            # 9 Mongoose Models (SurveyResponse, AuditLog, Schema...)
-│   └── services/                          # Business Services (Analytics, Duplicate, Questions, DVHC...)
+│   ├── models/                            # 10 Mongoose Models (SurveyResponse, AuditLog, TrainingProposal...)
+│   └── services/                          # Business Services (Analytics, Duplicate, Questions, DVHC, Proposals, Users...)
 ├── tests/                                 # Bộ kiểm thử tự động toàn diện (Unit, Integration, E2E)
 └── README.md
 ```
@@ -153,7 +153,13 @@ npm run test:dvhc
 # 10. Cẩm nang vận hành cập nhật động (ADR-010)
 npm run test:guide
 
-# 11. Bộ 23 Ca kiểm thử chính thức toàn hệ thống (TC-01 đến TC-23)
+# 11. Phân hệ Quản trị Người dùng & Phân quyền RBAC (ADR-015)
+npm run test:users
+
+# 12. Phân hệ Lập Đề xuất Đào tạo 12 Mục & Xuất Dữ liệu Thô (ADR-015)
+npm run test:proposals
+
+# 13. Bộ 23 Ca kiểm thử chính thức toàn hệ thống (TC-01 đến TC-23)
 npm run test:e2e
 ```
 

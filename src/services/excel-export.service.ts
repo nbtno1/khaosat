@@ -530,4 +530,120 @@ export class ExcelExportService {
 
     this.autoFitColumns(ws);
   }
+
+  /**
+   * Tạo workbook chứa toàn bộ Dữ liệu thô (Raw Data) của từng phiếu khảo sát
+   * Tuân thủ Zero-PII tuyệt đối, phục vụ lưu trữ và kiểm toán độc lập
+   */
+  static async generateRawDataWorkbookBuffer(
+    responses: any[],
+    options: { campaignTitle?: string; provinceName?: string } = {}
+  ): Promise<Buffer> {
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = "Kiểm toán nhà nước - Hệ thống Khảo sát Nhu cầu Đào tạo Cấp Xã";
+    workbook.created = new Date();
+
+    const ws = workbook.addWorksheet("DuLieuGoc_RawData", { views: [{ showGridLines: true }] });
+
+    // Tiêu đề báo cáo
+    ws.mergeCells("A1:Q1");
+    const titleCell = ws.getCell("A1");
+    titleCell.value = "TỆP DỮ LIỆU GỐC KHẢO SÁT NHU CẦU ĐÀO TẠO NĂNG LỰC CẤP XÃ/PHƯỜNG (RAW DATASET)";
+    titleCell.font = { name: "Calibri", size: 14, bold: true, color: { argb: "FFFFFFFF" } };
+    titleCell.fill = NAVY_FILL;
+    titleCell.alignment = { vertical: "middle", horizontal: "center" };
+    ws.getRow(1).height = 36;
+
+    // Subtitle & Ghi chú
+    ws.mergeCells("A2:Q2");
+    const subCell = ws.getCell("A2");
+    subCell.value = `Đơn vị: ${options.provinceName || "Toàn quốc"} | Đợt: ${options.campaignTitle || "Đợt 1 năm 2026"} | Ngày xuất: ${new Date().toLocaleDateString("vi-VN")} | Tiêu chuẩn: Zero-PII (Không lưu thông tin định danh cá nhân)`;
+    subCell.font = { italic: true, size: 10, color: { argb: "FF475569" } };
+    subCell.alignment = { vertical: "middle", horizontal: "center" };
+    ws.getRow(2).height = 22;
+
+    ws.addRow([]);
+
+    // Cột tiêu đề dữ liệu thô
+    const headerRow = ws.addRow([
+      "STT",
+      "Mã Phiếu (ID)",
+      "Thời Gian Nộp",
+      "Tỉnh / Thành phố",
+      "Xã / Phường / Đặc khu",
+      "Cơ quan / Đơn vị",
+      "Vị trí việc làm",
+      "Tư cách tham gia",
+      "Thâm niên (Năm)",
+      "Trạng thái 16 nhóm việc (Số nhóm đang làm)",
+      "Đối tượng ngoài phạm vi (Early Exit)",
+      "Chuyên đề đào tạo đã chọn",
+      "Mức độ cần học (Cấp thiết)",
+      "Hình thức bồi dưỡng ưu tiên",
+      "Ý kiến / Kiến nghị tự do",
+      "Cờ nghi trùng 4 điểm",
+      "Trạng thái thẩm tra",
+    ]);
+    this.formatHeaderRow(headerRow);
+    headerRow.height = 28;
+
+    responses.forEach((resp, idx) => {
+      const part1 = resp.part1 || {};
+      const part2 = resp.part2 || {};
+      const part3 = resp.part3 || [];
+      const part4 = resp.part4 || {};
+
+      // Đếm số nhóm việc đang làm
+      let doingCount = 0;
+      if (part2.workgroupStatuses) {
+        doingCount = Object.values(part2.workgroupStatuses).filter(
+          (st) => st === "DOING"
+        ).length;
+      }
+
+      // Tổng hợp chuyên đề đã chọn
+      const selectedTopics: string[] = [];
+      const urgencyLevels: string[] = [];
+      if (Array.isArray(part3)) {
+        part3.forEach((p: any) => {
+          if (p.selectedTopicIds && p.selectedTopicIds.length > 0) {
+            selectedTopics.push(...p.selectedTopicIds);
+          }
+          if (p.urgencyLevel) {
+            urgencyLevels.push(`N${p.workgroupId}: ${p.urgencyLevel}`);
+          }
+        });
+      }
+
+      const row = ws.addRow([
+        idx + 1,
+        resp._id ? resp._id.toString() : `RESP_${idx + 1}`,
+        resp.createdAt ? new Date(resp.createdAt).toLocaleString("vi-VN") : "",
+        part1.provinceName || part1.provinceCode || "",
+        part1.communeName || part1.communeCode || "",
+        part1.agencyName || part1.agencyCode || "",
+        part1.positionName || part1.positionCode || "",
+        Array.isArray(part1.capacityCodes) ? part1.capacityCodes.join(", ") : "",
+        part1.yearsOfExperience !== undefined ? part1.yearsOfExperience : "",
+        `${doingCount} nhóm đang làm`,
+        resp.isOutOfScope ? "Ngoài phạm vi" : "Hợp lệ",
+        selectedTopics.join("; ") || "Không chọn",
+        urgencyLevels.join("; ") || "Không có",
+        Array.isArray(part4.selectedLearningFormatIds) ? part4.selectedLearningFormatIds.join(", ") : "",
+        part4.suggestions || "",
+        resp.isSuspectedDuplicate ? "Nghi trùng" : "Bình thường",
+        resp.reviewStatus || "VALID",
+      ]);
+
+      row.eachCell((cell) => {
+        cell.border = THIN_BORDER;
+        cell.alignment = { vertical: "middle" };
+      });
+    });
+
+    this.autoFitColumns(ws);
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    return Buffer.from(buffer);
+  }
 }

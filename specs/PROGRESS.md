@@ -30,6 +30,11 @@ Báo cáo trạng thái dự án thời gian thực theo phương pháp Spec-Dri
     - Dọn dẹp sạch sẽ toàn bộ các badge/tag kỹ thuật trên tiêu đề các trang Admin.
     - Cơ chế Progressive Item Rendering Engine (`useProgressiveItems`): Render ngay frame đầu 3-6 items trong < 16ms, streaming mượt mà trên 5 tabs Quản trị Câu hỏi, 6 Bảng Phân tích, và 34 Tỉnh ĐVHC.
     - Đồng bộ hóa toàn diện hướng dẫn Agent (`AGENTS.md`, `.agents/`) hỗ trợ làm việc đa thiết bị (Cross-Device Readiness).
+  - **Milestone 13 HOÀN THÀNH 100% (TASK-022, TASK-023, TASK-024 & ADR-015):**
+    - **Quản trị Người dùng & Phân quyền RBAC (`/admin/users`):** Dịch vụ `UserAdminService`, 6 RESTful APIs, giao diện Full-Height Zero-Page-Scroll, 4 thẻ KPIs, phân công địa bàn 34 tỉnh, khóa/mở khóa tài khoản, đổi mật khẩu, bảo vệ superadmin. 6/6 tests PASS.
+    - **Sổ Quản lý Đường dẫn & Vòng đời Token (`/admin/campaigns`):** Dịch vụ `CampaignLinkService`, APIs đóng/mở nhận phiếu từng tỉnh, đổi mã bảo mật `rotateToken` sinh mã QR mới và bảo toàn dữ liệu cũ.
+    - **Bản Đề xuất Đào tạo 12 Mục Chuẩn (`/admin/training-proposals`):** Model `TrainingProposal`, dịch vụ `TrainingProposalService` tự động sinh bản thảo 12 mục chuẩn từ số liệu 6 bảng, giao diện soạn thảo văn bản hành chính in ấn chuẩn (Print CSS), ký duyệt điện tử. 6/6 tests PASS.
+    - **Xuất Dữ liệu Thô Mã hóa (Raw Data Export):** Endpoint `GET /api/admin/export/raw-data` và nút bấm tại `/admin/analytics` xuất file Excel danh sách toàn bộ phiếu khảo sát ẩn danh phục vụ lưu trữ kiểm toán độc lập.
 - **Công việc chưa hoàn thành:** Không còn task tồn đọng. 100% Backlog đã hoàn thành.
 - **Vướng mắc / Điểm chặn (Blockers):** Không có blocker nào.
 - **Kết quả kiểm thử toàn diện:**
@@ -42,8 +47,9 @@ Báo cáo trạng thái dự án thời gian thực theo phương pháp Spec-Dri
   - `npm run test:e2e`: 23/23 OFFICIAL BUSINESS TESTS PASS (100%).
   - `npm run test:guide`: 5/5 GROUPS PASS (100%).
   - `npm run test:dvhc`: 5/5 TESTS PASS (100%).
-  - `tests/services/survey-questions-admin.test.ts`: 5/5 TESTS PASS (100%).
-  - `RBAC & Audit Log Verification Script`: 5/5 TESTS PASS (100%).
+  - `npm run test:questions`: 5/5 TESTS PASS (100%).
+  - `npm run test:users`: 6/6 TESTS PASS (100%).
+  - `npm run test:proposals`: 6/6 TESTS PASS (100%).
   - `npm run typecheck`: PASS (0 errors).
 
 ---
@@ -64,4 +70,5 @@ Báo cáo trạng thái dự án thời gian thực theo phương pháp Spec-Dri
 | **M10** | Quản trị Bộ Câu hỏi & Chuyên đề Đào tạo | 1 | 1/1 | **100%** | **HOÀN THÀNH** |
 | **M11** | Phân hệ Nhật ký Hệ thống & Dual-Admin RBAC | 1 | 1/1 | **100%** | **HOÀN THÀNH** |
 | **M12** | Tối Giản Auth UX & Progressive Tab Rendering | 1 | 1/1 | **100%** | **HOÀN THÀNH** |
-| **TỔNG CỘNG** | **Toàn bộ Dự án** | **21** | **21/21 Code (100%)** | **100% HOÀN THÀNH** | **READY FOR GO-LIVE** |
+| **M13** | Quản trị Người dùng, Sổ Link & Đề xuất Đào tạo | 3 | 3/3 | **100%** | **HOÀN THÀNH** |
+| **TỔNG CỘNG** | **Toàn bộ Dự án** | **24** | **24/24 Code (100%)** | **100% HOÀN THÀNH** | **READY FOR GO-LIVE** |
