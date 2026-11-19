@@ -3,13 +3,11 @@
 import React, { useState } from "react";
 import { WorkgroupStatus, ALL_WORKGROUP_IDS } from "@/lib/validations/survey.schema";
 import {
-  Briefcase,
-  Sparkles,
   Info,
   ChevronDown,
   ChevronUp,
-  ChevronLeft,
-  ChevronRight,
+  ArrowLeft,
+  ArrowRight,
   AlertCircle,
   Send,
 } from "lucide-react";
@@ -36,32 +34,27 @@ interface StepWorkgroupsProps {
 const STATUS_OPTIONS: Array<{
   id: WorkgroupStatus;
   label: string;
-  colorClass: string;
   activeClass: string;
 }> = [
   {
     id: "DANG_THUC_HIEN",
     label: "Đang thực hiện",
-    colorClass: "hover:border-emerald-500 hover:bg-emerald-50 text-emerald-800",
-    activeClass: "bg-emerald-600 text-white border-emerald-600 shadow-sm",
+    activeClass: "bg-[#edf9f2] text-[#12633c] border-2 border-[#12633c] font-semibold shadow-xs",
   },
   {
     id: "CHUA_CO_DIP",
-    label: "Được giao nhưng chưa có dịp",
-    colorClass: "hover:border-amber-500 hover:bg-amber-50 text-amber-800",
-    activeClass: "bg-amber-600 text-white border-amber-600 shadow-sm",
+    label: "Được giao, chưa có dịp",
+    activeClass: "bg-[#fef6eb] text-[#a14a07] border-2 border-[#a14a07] font-semibold shadow-xs",
   },
   {
     id: "CHI_PHOI_HOP",
     label: "Chỉ phối hợp",
-    colorClass: "hover:border-blue-400 hover:bg-blue-50 text-blue-800",
-    activeClass: "bg-blue-600 text-white border-blue-600 shadow-sm",
+    activeClass: "bg-[#edf4fc] text-[#12457a] border-2 border-[#12457a] font-semibold shadow-xs",
   },
   {
     id: "KHONG_DUOC_GIAO",
     label: "Không được giao",
-    colorClass: "hover:border-slate-400 hover:bg-slate-100 text-slate-700",
-    activeClass: "bg-slate-700 text-white border-slate-700 shadow-sm",
+    activeClass: "bg-[#f1f5f9] text-[#334155] border-2 border-[#475569] font-semibold shadow-xs",
   },
 ];
 
@@ -71,7 +64,6 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
   otherWorkText,
   setOtherWorkText,
   sortedWorkgroups,
-  suggestedWorkgroupIds,
   isOutOfScope,
   onBack,
   onNext,
@@ -82,14 +74,12 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const answeredCount = Object.keys(workgroupStatuses).length;
-  const suggestedSet = new Set(suggestedWorkgroupIds);
 
   const toggleExpand = (id: string) => {
     setExpandedWgId((prev) => (prev === id ? null : id));
   };
 
   const handleNext = () => {
-    // Verify all 16 workgroups are answered
     const unanswered = ALL_WORKGROUP_IDS.filter((id) => !workgroupStatuses[id]);
     if (unanswered.length > 0) {
       setErrorMsg(
@@ -108,107 +98,70 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Banner hướng dẫn sắp xếp theo vị trí */}
-      <div className="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-lg space-y-2">
-        <div className="flex items-center gap-2 text-sky-900 font-semibold text-sm uppercase">
-          <Sparkles className="w-4 h-4 text-sky-600" />
-          <span>Phần II — Các nhóm công việc về tài chính, tài sản công</span>
-        </div>
-        <p className="text-xs text-sky-800 leading-relaxed">
-          Các nhóm công việc gắn với vị trí của đồng chí đã được tự động xếp lên đầu danh sách để thuận tiện lựa chọn. Đồng chí vui lòng xem hết cả 16 nhóm và chọn đúng thực tế công việc được phân công.
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+        <p className="text-[16px] text-slate-600 leading-relaxed">
+          Các nhóm công việc gắn với vị trí của đồng chí đã được xếp lên đầu danh sách. Vui lòng chọn đúng thực tế cho đủ 16 nhóm.
         </p>
-        <div className="text-xs font-medium text-slate-600 pt-1">
-          Đã chọn: <span className="text-sky-700 font-bold">{answeredCount}/16</span> nhóm công việc
-        </div>
+        <span className="shrink-0 text-[15px] font-semibold text-[#12457a] bg-[#eaf2fc] px-3.5 py-1.5 rounded-full self-start sm:self-center">
+          Đã chọn: {answeredCount} / 16
+        </span>
       </div>
 
       {errorMsg && (
-        <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg flex items-center gap-2 text-sm">
-          <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-600" />
+        <div className="bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-xl flex items-center gap-3 text-[15.5px] font-medium">
+          <AlertCircle className="w-5 h-5 shrink-0 text-rose-600" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      {/* Danh sách 16 nhóm công việc */}
-      <div className="space-y-4">
+      {/* 16 Workgroups List - Clean Hairline Dividers, High Readability */}
+      <div className="divide-y divide-slate-100">
         {sortedWorkgroups.map((wg, idx) => {
-          const isSuggested = suggestedSet.has(wg.id);
           const currentStatus = workgroupStatuses[wg.id];
           const isExpanded = expandedWgId === wg.id;
 
           return (
-            <div
-              key={wg.id}
-              className={`bg-white rounded-xl border transition-all shadow-sm overflow-hidden ${
-                currentStatus
-                  ? "border-slate-300"
-                  : isSuggested
-                  ? "border-sky-300 ring-1 ring-sky-200"
-                  : "border-slate-200"
-              }`}
-            >
-              {/* Header của thẻ nhóm */}
-              <div className="p-4 sm:p-5 space-y-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-bold bg-slate-100 text-slate-800">
-                        {wg.id}
-                      </span>
-                      {isSuggested && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold bg-sky-100 text-sky-800">
-                          <Sparkles className="w-3 h-3 text-sky-600" />
-                          Gợi ý theo vị trí
-                        </span>
-                      )}
-                    </div>
-                    <h4 className="text-base font-semibold text-slate-900 leading-snug">
-                      {wg.title}
-                    </h4>
-                  </div>
+            <div key={wg.id} className="py-5 first:pt-1 space-y-3.5">
+              <div className="flex items-start justify-between gap-3">
+                <h4 className="text-[19px] sm:text-[20px] font-bold text-[#0e1c2e] leading-snug">
+                  {idx + 1}. {wg.title}
+                </h4>
 
-                  <button
-                    type="button"
-                    onClick={() => toggleExpand(wg.id)}
-                    className="text-slate-400 hover:text-slate-600 p-1 flex-shrink-0"
-                    title="Xem chi tiết ví dụ công việc"
-                  >
-                    {isExpanded ? (
-                      <ChevronUp className="w-5 h-5" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5" />
-                    )}
-                  </button>
+                <button
+                  type="button"
+                  onClick={() => toggleExpand(wg.id)}
+                  className="shrink-0 inline-flex items-center gap-1 text-[14.5px] font-medium text-slate-500 hover:text-[#12457a] px-2.5 py-1.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                  title="Xem mô tả ví dụ công việc"
+                >
+                  <span className="hidden sm:inline">{isExpanded ? "Thu gọn" : "Chi tiết"}</span>
+                  {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+              </div>
+
+              {isExpanded && (
+                <div className="bg-[#f8fafc] px-4 py-3 rounded-xl border border-slate-200/80 text-[15px] text-slate-600 leading-relaxed">
+                  {wg.description}
                 </div>
+              )}
 
-                {/* Mô tả chi tiết (Expander) */}
-                {isExpanded && (
-                  <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-700 leading-relaxed space-y-1">
-                    <div className="font-semibold text-slate-800">Gồm những việc như:</div>
-                    <p>{wg.description}</p>
-                  </div>
-                )}
-
-                {/* 4 Lựa chọn loại trừ lẫn nhau */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
-                  {STATUS_OPTIONS.map((opt) => {
-                    const isSelected = currentStatus === opt.id;
-                    return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        onClick={() => updateWorkgroupStatus(wg.id, opt.id)}
-                        className={`min-h-[44px] px-2.5 py-2 rounded-lg border text-xs sm:text-sm font-medium transition-all text-center flex items-center justify-center ${
-                          isSelected
-                            ? opt.activeClass
-                            : `bg-slate-50 border-slate-200 ${opt.colorClass}`
-                        }`}
-                      >
-                        {opt.label}
-                      </button>
-                    );
-                  })}
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+                {STATUS_OPTIONS.map((opt) => {
+                  const isSelected = currentStatus === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => updateWorkgroupStatus(wg.id, opt.id)}
+                      className={`min-h-[50px] px-3.5 py-2.5 rounded-[10px] text-[16px] text-center flex items-center justify-center transition-all duration-150 cursor-pointer active:scale-[0.985] ${
+                        isSelected
+                          ? opt.activeClass
+                          : "bg-white border-[1.5px] border-slate-300/90 text-slate-700 font-medium hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           );
@@ -216,48 +169,46 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
       </div>
 
       {/* Câu 7: Việc khác */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
-        <label className="block text-sm font-semibold text-slate-800">
-          Câu 7: Những công việc tài chính, tài sản công khác đồng chí đang làm nhưng chưa có trong 16 nhóm trên (nếu có)
+      <div className="pt-6 border-t border-slate-200/80 space-y-2.5">
+        <label className="block text-[19px] font-bold text-[#0e1c2e]">
+          Câu 7. Công việc tài chính, tài sản công khác (nếu có)
         </label>
-        <p className="text-xs text-slate-500">
-          Không bắt buộc. Tối đa 500 ký tự.
-        </p>
+        <p className="text-[15px] text-slate-500">Không bắt buộc. Tối đa 500 ký tự.</p>
         <textarea
           rows={3}
           maxLength={500}
           value={otherWorkText}
           onChange={(e) => setOtherWorkText(e.target.value)}
           placeholder="Nhập nội dung công việc khác nếu có..."
-          className="w-full bg-white border border-slate-300 focus:border-sky-600 focus:ring-1 focus:ring-sky-600 rounded-lg p-3 text-sm text-slate-800"
+          className="w-full bg-[#f8fafc] hover:bg-white focus:bg-white border-[1.5px] border-slate-300 focus:border-[#12457a] focus:ring-4 focus:ring-[#12457a]/12 rounded-[11px] p-4 text-[17px] text-[#0e1c2e] outline-none transition-all"
         />
-        <div className="text-right text-xs text-slate-400">
-          {otherWorkText.length}/500 ký tự
+        <div className="text-right text-[14px] text-slate-400">
+          {otherWorkText.length} / 500 ký tự
         </div>
       </div>
 
-      {/* Thông báo Ngoài đối tượng (Early Exit - Rule 8) */}
+      {/* Early Exit Notice */}
       {isOutOfScope && answeredCount === 16 && (
-        <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl space-y-2 text-emerald-900">
-          <div className="flex items-center gap-2 font-semibold text-sm">
+        <div className="bg-emerald-50 border border-emerald-200 p-5 rounded-xl space-y-2 text-emerald-900">
+          <div className="flex items-center gap-2 font-bold text-[17px]">
             <Info className="w-5 h-5 text-emerald-600" />
             <span>Xác nhận hoàn thành khảo sát sớm</span>
           </div>
-          <p className="text-xs leading-relaxed">
-            Đồng chí không trực tiếp thực hiện hoặc tham mưu các nhóm công việc trong danh mục này (toàn bộ 16 nhóm đều là Chỉ phối hợp hoặc Không được giao). Sau khi bấm nút bên dưới, phiếu sẽ kết thúc và ghi nhận thành công. Trân trọng cảm ơn sự phối hợp của đồng chí!
+          <p className="text-[15.5px] leading-relaxed">
+            Đồng chí không trực tiếp thực hiện hoặc tham mưu các nhóm công việc trong danh mục này. Sau khi bấm nút bên dưới, phiếu sẽ kết thúc và ghi nhận thành công.
           </p>
         </div>
       )}
 
-      {/* Nút Điều hướng */}
-      <div className="flex items-center justify-between gap-4 pt-2">
+      {/* Navigation Footer */}
+      <div className="flex items-center justify-between gap-4 pt-6 border-t border-slate-100">
         <button
           type="button"
           onClick={onBack}
-          className="px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 font-medium text-sm flex items-center gap-1 transition-colors"
+          className="h-[50px] px-5 rounded-[11px] border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-[16.5px] inline-flex items-center gap-2 transition-all cursor-pointer active:scale-95"
         >
-          <ChevronLeft className="w-4 h-4" />
-          <span>Quay lại Phần I</span>
+          <ArrowLeft className="w-5 h-5" />
+          <span>Quay lại</span>
         </button>
 
         {isOutOfScope && answeredCount === 16 ? (
@@ -265,19 +216,19 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
             type="button"
             disabled={isSubmitting}
             onClick={onSubmitEarlyExit}
-            className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm shadow flex items-center gap-2 transition-colors disabled:opacity-50"
+            className="h-[52px] px-7 rounded-[11px] bg-gradient-to-b from-[#18804e] to-[#12633c] text-white font-semibold text-[17.5px] shadow-md inline-flex items-center gap-2.5 transition-all disabled:opacity-50 cursor-pointer"
           >
-            <Send className="w-4 h-4" />
+            <Send className="w-5 h-5" />
             <span>{isSubmitting ? "Đang gửi phiếu..." : "Gửi phiếu kết thúc"}</span>
           </button>
         ) : (
           <button
             type="button"
             onClick={handleNext}
-            className="px-6 py-3 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-medium text-sm shadow flex items-center gap-1 transition-colors"
+            className="h-[52px] px-7 rounded-[11px] civic-btn-primary font-semibold text-[17.5px] inline-flex items-center gap-2.5 cursor-pointer"
           >
-            <span>Tiếp tục sang Phần III: Đánh giá chi tiết</span>
-            <ChevronRight className="w-4 h-4" />
+            <span>Tiếp tục</span>
+            <ArrowRight className="w-5 h-5" />
           </button>
         )}
       </div>

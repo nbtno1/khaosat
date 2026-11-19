@@ -354,7 +354,7 @@ export default function UsersAdminPage() {
               <Users className="w-6 h-6 text-blue-600" />
               Quản trị Tài khoản & Phân quyền Người dùng
             </h1>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-[15px] text-slate-500 mt-1">
               Quản lý danh sách tài khoản quản trị, phân công địa bàn và kiểm soát truy cập (RBAC)
             </p>
           </div>
@@ -362,7 +362,7 @@ export default function UsersAdminPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => fetchUsers()}
-              className="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
+              className="inline-flex items-center gap-2 px-3 py-2 text-[15px] font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-blue-600" : ""}`} />
               Làm mới
@@ -370,7 +370,7 @@ export default function UsersAdminPage() {
 
             <button
               onClick={openAddModal}
-              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-xs cursor-pointer"
             >
               <UserPlus className="w-4 h-4" />
               Thêm tài khoản
@@ -380,7 +380,7 @@ export default function UsersAdminPage() {
 
         {/* Success Alert Banner */}
         {actionSuccess && (
-          <div className="mt-3 p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2 text-xs text-emerald-800 animate-in fade-in">
+          <div className="mt-3 p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2 text-[15px] text-emerald-800 animate-in fade-in">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>{actionSuccess}</span>
           </div>
@@ -389,25 +389,25 @@ export default function UsersAdminPage() {
         {/* 2. STATS CARDS */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
           <div className="bg-slate-50/80 border border-slate-200/80 rounded-lg p-3">
-            <div className="text-xs text-slate-500 font-medium">Tổng số tài khoản</div>
+            <div className="text-[15px] text-slate-500 font-medium">Tổng số tài khoản</div>
             <div className="text-xl font-bold text-slate-800 mt-1">{stats.totalUsers}</div>
           </div>
           <div className="bg-emerald-50/60 border border-emerald-200/80 rounded-lg p-3">
-            <div className="text-xs text-emerald-700 font-medium flex items-center gap-1.5">
+            <div className="text-[15px] text-emerald-700 font-medium flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
               Đang hoạt động
             </div>
             <div className="text-xl font-bold text-emerald-800 mt-1">{stats.activeUsers}</div>
           </div>
           <div className="bg-rose-50/60 border border-rose-200/80 rounded-lg p-3">
-            <div className="text-xs text-rose-700 font-medium flex items-center gap-1.5">
+            <div className="text-[15px] text-rose-700 font-medium flex items-center gap-1.5">
               <Lock className="w-3.5 h-3.5 text-rose-600" />
               Đã tạm khóa
             </div>
             <div className="text-xl font-bold text-rose-800 mt-1">{stats.lockedUsers}</div>
           </div>
           <div className="bg-blue-50/60 border border-blue-200/80 rounded-lg p-3">
-            <div className="text-xs text-blue-700 font-medium flex items-center gap-1.5">
+            <div className="text-[15px] text-blue-700 font-medium flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-blue-600" />
               Đầu mối địa phương
             </div>
@@ -424,19 +424,19 @@ export default function UsersAdminPage() {
               placeholder="Tìm theo tên đăng nhập, họ tên, email, cơ quan..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full pl-9 pr-3 py-1.5 text-[15px] bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
             />
           </form>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-xs text-slate-500">
+            <div className="flex items-center gap-1.5 text-[15px] text-slate-500">
               <Filter className="w-3.5 h-3.5" />
               <span>Vai trò:</span>
             </div>
             <select
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value)}
-              className="text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+              className="text-[15px] bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
             >
               <option value="ALL">Tất cả vai trò</option>
               <option value="TECHNICAL_ADMIN">Cục CNTT</option>
@@ -450,7 +450,7 @@ export default function UsersAdminPage() {
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+              className="text-[15px] bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
             >
               <option value="ALL">Tất cả trạng thái</option>
               <option value="ACTIVE">Đang hoạt động</option>
@@ -463,7 +463,7 @@ export default function UsersAdminPage() {
       {/* 4. MAIN DATA TABLE (SCROLLS INTERNALLY) */}
       <div className="flex-1 min-h-0 overflow-y-auto p-6">
         <div className="bg-white border border-slate-200/80 rounded-xl shadow-2xs overflow-hidden">
-          <table className="w-full text-left border-collapse text-xs">
+          <table className="w-full text-left border-collapse text-[15px]">
             <thead className="bg-slate-50/90 border-b border-slate-200 sticky top-0 z-10">
               <tr>
                 <th className="py-3 px-4 font-semibold text-slate-600">Tài khoản & Người dùng</th>
@@ -513,7 +513,7 @@ export default function UsersAdminPage() {
                                 </span>
                               )}
                             </div>
-                            <div className="text-[11px] text-slate-500 font-mono flex items-center gap-2 mt-0.5">
+                            <div className="text-[14px] text-slate-500 font-mono flex items-center gap-2 mt-0.5">
                               <span>@{u.username}</span>
                               <span>•</span>
                               <span className="flex items-center gap-1">
@@ -527,7 +527,7 @@ export default function UsersAdminPage() {
 
                       <td className="py-3 px-4">
                         <span
-                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium border ${roleMeta.color}`}
+                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[14px] font-medium border ${roleMeta.color}`}
                         >
                           <Shield className="w-3 h-3" />
                           {roleMeta.label}
@@ -549,20 +549,20 @@ export default function UsersAdminPage() {
                               return (
                                 <span
                                   key={code}
-                                  className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] bg-slate-100 text-slate-700 border border-slate-200"
+                                  className="inline-flex items-center px-1.5 py-0.5 rounded text-[13.5px] bg-slate-100 text-slate-700 border border-slate-200"
                                 >
                                   {p ? p.name : code}
                                 </span>
                               );
                             })}
                             {u.assignedProvinceCodes.length > 3 && (
-                              <span className="text-[10px] text-slate-500">
+                              <span className="text-[13.5px] text-slate-500">
                                 +{u.assignedProvinceCodes.length - 3} tỉnh
                               </span>
                             )}
                           </div>
                         ) : (
-                          <span className="text-slate-400 text-[11px] italic">Toàn quốc</span>
+                          <span className="text-slate-400 text-[14px] italic">Toàn quốc</span>
                         )}
                       </td>
 
@@ -571,7 +571,7 @@ export default function UsersAdminPage() {
                           type="button"
                           onClick={() => handleToggleStatus(u)}
                           disabled={u.username === "cntt_admin"}
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium transition-colors cursor-pointer ${
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[14px] font-medium transition-colors cursor-pointer ${
                             u.isActive
                               ? "bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100"
                               : "bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100"
@@ -592,7 +592,7 @@ export default function UsersAdminPage() {
                         </button>
                       </td>
 
-                      <td className="py-3 px-4 text-slate-500 text-[11px]">
+                      <td className="py-3 px-4 text-slate-500 text-[14px]">
                         {u.lastLoginAt ? (
                           <div className="flex items-center gap-1 text-slate-600">
                             <Clock className="w-3 h-3 text-slate-400 shrink-0" />
@@ -650,7 +650,7 @@ export default function UsersAdminPage() {
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden border border-slate-200">
             <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-              <h3 className="font-semibold text-slate-800 text-sm flex items-center gap-2">
+              <h3 className="font-semibold text-slate-800 text-[16px] flex items-center gap-2">
                 <UserPlus className="w-4 h-4 text-blue-600" />
                 Thêm Tài khoản Người dùng Mới
               </h3>
@@ -662,7 +662,7 @@ export default function UsersAdminPage() {
               </button>
             </div>
 
-            <form onSubmit={handleCreateUser} className="p-5 space-y-3.5 text-xs">
+            <form onSubmit={handleCreateUser} className="p-5 space-y-3.5 text-[15px]">
               {formError && (
                 <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4 shrink-0 text-rose-500" />
@@ -778,7 +778,7 @@ export default function UsersAdminPage() {
                 <label className="block font-medium text-slate-700 mb-1">
                   Địa bàn phụ trách ({formData.assignedProvinceCodes.length} tỉnh được chọn)
                 </label>
-                <div className="max-h-28 overflow-y-auto p-2 bg-slate-50 border border-slate-200 rounded-lg grid grid-cols-2 gap-1 text-[11px]">
+                <div className="max-h-28 overflow-y-auto p-2 bg-slate-50 border border-slate-200 rounded-lg grid grid-cols-2 gap-1 text-[14px]">
                   {PROVINCE_OPTIONS.map((p) => {
                     const isChecked = formData.assignedProvinceCodes.includes(p.code);
                     return (
@@ -838,7 +838,7 @@ export default function UsersAdminPage() {
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden border border-slate-200">
             <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-              <h3 className="font-semibold text-slate-800 text-sm flex items-center gap-2">
+              <h3 className="font-semibold text-slate-800 text-[16px] flex items-center gap-2">
                 <Edit className="w-4 h-4 text-blue-600" />
                 Chỉnh sửa Tài khoản: @{editingUser.username}
               </h3>
@@ -850,7 +850,7 @@ export default function UsersAdminPage() {
               </button>
             </div>
 
-            <form onSubmit={handleUpdateUser} className="p-5 space-y-3.5 text-xs">
+            <form onSubmit={handleUpdateUser} className="p-5 space-y-3.5 text-[15px]">
               {formError && (
                 <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-lg text-rose-700 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4 shrink-0 text-rose-500" />
@@ -916,7 +916,7 @@ export default function UsersAdminPage() {
                 <label className="block font-medium text-slate-700 mb-1">
                   Địa bàn phụ trách ({formData.assignedProvinceCodes.length} tỉnh được chọn)
                 </label>
-                <div className="max-h-28 overflow-y-auto p-2 bg-slate-50 border border-slate-200 rounded-lg grid grid-cols-2 gap-1 text-[11px]">
+                <div className="max-h-28 overflow-y-auto p-2 bg-slate-50 border border-slate-200 rounded-lg grid grid-cols-2 gap-1 text-[14px]">
                   {PROVINCE_OPTIONS.map((p) => {
                     const isChecked = formData.assignedProvinceCodes.includes(p.code);
                     return (
@@ -977,7 +977,7 @@ export default function UsersAdminPage() {
         <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-sm overflow-hidden border border-slate-200">
             <div className="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-              <h3 className="font-semibold text-slate-800 text-sm flex items-center gap-2">
+              <h3 className="font-semibold text-slate-800 text-[16px] flex items-center gap-2">
                 <Key className="w-4 h-4 text-amber-600" />
                 Đặt lại Mật khẩu
               </h3>
@@ -989,7 +989,7 @@ export default function UsersAdminPage() {
               </button>
             </div>
 
-            <form onSubmit={handleResetPassword} className="p-5 space-y-3.5 text-xs">
+            <form onSubmit={handleResetPassword} className="p-5 space-y-3.5 text-[15px]">
               <p className="text-slate-600">
                 Đặt lại mật khẩu cho tài khoản <strong className="text-slate-900">@{resettingUser.username}</strong> ({resettingUser.fullName}):
               </p>
@@ -1040,22 +1040,22 @@ export default function UsersAdminPage() {
               <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 mx-auto flex items-center justify-center">
                 <AlertTriangle className="w-6 h-6" />
               </div>
-              <h3 className="font-bold text-slate-800 text-sm">Xác nhận xóa tài khoản</h3>
-              <p className="text-xs text-slate-600">
+              <h3 className="font-bold text-slate-800 text-[16px]">Xác nhận xóa tài khoản</h3>
+              <p className="text-[15px] text-slate-600">
                 Bạn có chắc chắn muốn xóa tài khoản <strong className="text-slate-900">@{deletingUser.username}</strong> ({deletingUser.fullName})? Hành động này không thể hoàn tác.
               </p>
               <div className="flex items-center justify-center gap-2 pt-2">
                 <button
                   type="button"
                   onClick={() => setDeletingUser(null)}
-                  className="px-3.5 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer"
+                  className="px-3.5 py-1.5 text-[15px] text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer"
                 >
                   Hủy bỏ
                 </button>
                 <button
                   type="button"
                   onClick={handleDeleteUser}
-                  className="px-4 py-1.5 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-lg shadow-2xs cursor-pointer"
+                  className="px-4 py-1.5 text-[15px] font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-lg shadow-2xs cursor-pointer"
                 >
                   Xác nhận xóa
                 </button>

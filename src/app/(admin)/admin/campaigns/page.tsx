@@ -190,7 +190,7 @@ export default function CampaignsPage() {
               <QrCode className="w-6 h-6 text-blue-600" />
               Sổ Quản lý Đường dẫn Khảo sát & Mã QR Cấp Tỉnh
             </h1>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-[15px] text-slate-500 mt-1">
               Quản lý vòng đời liên kết độc lập từng tỉnh: Đóng/Mở nhận phiếu, Gia hạn và Đổi mã bảo mật (Rotate Token)
             </p>
           </div>
@@ -198,7 +198,7 @@ export default function CampaignsPage() {
           <div className="flex items-center gap-2.5">
             <button
               onClick={() => fetchLinks()}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-[15px] font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin text-blue-600" : ""}`} />
               Làm mới
@@ -207,7 +207,7 @@ export default function CampaignsPage() {
             <button
               onClick={handleDownloadZip}
               disabled={isDownloadingZip}
-              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 rounded-lg transition-colors shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 rounded-lg transition-colors shadow-xs cursor-pointer"
             >
               <Download className={`w-4 h-4 ${isDownloadingZip ? "animate-bounce" : ""}`} />
               {isDownloadingZip ? "Đang nén file..." : "Tải gói 34 QR (.ZIP)"}
@@ -217,7 +217,7 @@ export default function CampaignsPage() {
 
         {/* Success Alert Banner */}
         {actionSuccess && (
-          <div className="mt-3 p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2 text-xs text-emerald-800 animate-in fade-in">
+          <div className="mt-3 p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2 text-[15px] text-emerald-800 animate-in fade-in">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>{actionSuccess}</span>
           </div>
@@ -226,25 +226,25 @@ export default function CampaignsPage() {
         {/* 2. STATS CARDS */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
           <div className="bg-slate-50/80 border border-slate-200/80 rounded-lg p-3">
-            <div className="text-xs text-slate-500 font-medium">Tổng số địa bàn</div>
+            <div className="text-[15px] text-slate-500 font-medium">Tổng số địa bàn</div>
             <div className="text-xl font-bold text-slate-800 mt-1">{stats.totalLinks} Tỉnh/Thành</div>
           </div>
           <div className="bg-emerald-50/60 border border-emerald-200/80 rounded-lg p-3">
-            <div className="text-xs text-emerald-700 font-medium flex items-center gap-1.5">
+            <div className="text-[15px] text-emerald-700 font-medium flex items-center gap-1.5">
               <PlayCircle className="w-3.5 h-3.5 text-emerald-600" />
               Đang mở nhận phiếu
             </div>
             <div className="text-xl font-bold text-emerald-800 mt-1">{stats.activeLinks}</div>
           </div>
           <div className="bg-amber-50/60 border border-amber-200/80 rounded-lg p-3">
-            <div className="text-xs text-amber-700 font-medium flex items-center gap-1.5">
+            <div className="text-[15px] text-amber-700 font-medium flex items-center gap-1.5">
               <PauseCircle className="w-3.5 h-3.5 text-amber-600" />
               Đang tạm dừng
             </div>
             <div className="text-xl font-bold text-amber-800 mt-1">{stats.pausedLinks}</div>
           </div>
           <div className="bg-blue-50/60 border border-blue-200/80 rounded-lg p-3">
-            <div className="text-xs text-blue-700 font-medium flex items-center gap-1.5">
+            <div className="text-[15px] text-blue-700 font-medium flex items-center gap-1.5">
               <FileCheck className="w-3.5 h-3.5 text-blue-600" />
               Tổng phiếu toàn quốc
             </div>
@@ -261,19 +261,19 @@ export default function CampaignsPage() {
               placeholder="Tìm theo tên tỉnh, mã số hoặc token..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className="w-full pl-9 pr-3 py-1.5 text-[15px] bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
             />
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-xs text-slate-500">
+            <div className="flex items-center gap-1.5 text-[15px] text-slate-500">
               <Filter className="w-3.5 h-3.5" />
               <span>Trạng thái:</span>
             </div>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
+              className="text-[15px] bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
             >
               <option value="ALL">Tất cả địa bàn</option>
               <option value="ACTIVE">Đang nhận phiếu</option>
@@ -288,10 +288,10 @@ export default function CampaignsPage() {
         {isLoading && links.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 text-slate-400">
             <RefreshCw className="w-6 h-6 animate-spin text-blue-600 mb-2" />
-            <span className="text-xs font-medium">Đang nạp dữ liệu liên kết và mã QR...</span>
+            <span className="text-[15px] font-medium">Đang nạp dữ liệu liên kết và mã QR...</span>
           </div>
         ) : filteredLinks.length === 0 ? (
-          <div className="text-center py-12 text-slate-400 text-xs">
+          <div className="text-center py-12 text-slate-400 text-[15px]">
             Không tìm thấy địa bàn nào phù hợp với bộ lọc.
           </div>
         ) : (
@@ -313,16 +313,16 @@ export default function CampaignsPage() {
                     {/* Top Header */}
                     <div className="flex items-center justify-between gap-2 mb-3">
                       <div className="flex items-center gap-1.5">
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                        <span className="px-2 py-0.5 rounded text-[13.5px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
                           {p.provinceCode}
                         </span>
-                        <h3 className="font-bold text-slate-800 text-sm truncate" title={p.provinceName}>
+                        <h3 className="font-bold text-slate-800 text-[16px] truncate" title={p.provinceName}>
                           {p.provinceName}
                         </h3>
                       </div>
 
                       <span
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border ${
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[13.5px] font-medium border ${
                           isActive
                             ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                             : "bg-amber-50 text-amber-700 border-amber-200"
@@ -350,7 +350,7 @@ export default function CampaignsPage() {
                         <button
                           type="button"
                           onClick={() => handleDownloadSingleQR(p.qrCodeDataUrl || "", p.provinceName, p.provinceCode)}
-                          className="absolute inset-0 bg-slate-900/60 text-white flex items-center justify-center rounded opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-medium"
+                          className="absolute inset-0 bg-slate-900/60 text-white flex items-center justify-center rounded opacity-0 group-hover:opacity-100 transition-opacity text-[13.5px] font-medium"
                           title="Tải ảnh QR này"
                         >
                           <Download className="w-4 h-4 mr-1" />
@@ -358,16 +358,16 @@ export default function CampaignsPage() {
                         </button>
                       </div>
 
-                      <div className="flex-1 min-w-0 text-[11px] space-y-1">
+                      <div className="flex-1 min-w-0 text-[14px] space-y-1">
                         <div className="flex items-center justify-between text-slate-500">
                           <span>Phiếu đã nộp:</span>
-                          <span className="font-bold text-slate-800 text-xs">{p.totalSubmissions}</span>
+                          <span className="font-bold text-slate-800 text-[15px]">{p.totalSubmissions}</span>
                         </div>
-                        <div className="text-slate-400 text-[10px] truncate">
+                        <div className="text-slate-400 text-[13.5px] truncate">
                           Mã: <code className="text-slate-600 font-mono">{p.token}</code>
                         </div>
                         {p.lastSubmissionAt && (
-                          <div className="text-[10px] text-slate-400 truncate">
+                          <div className="text-[13.5px] text-slate-400 truncate">
                             Nộp gần nhất: {new Date(p.lastSubmissionAt).toLocaleDateString("vi-VN")}
                           </div>
                         )}
@@ -376,12 +376,12 @@ export default function CampaignsPage() {
                   </div>
 
                   {/* Actions Footer */}
-                  <div className="px-4 py-2.5 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-1 text-xs">
+                  <div className="px-4 py-2.5 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-1 text-[15px]">
                     <div className="flex items-center gap-1">
                       <button
                         type="button"
                         onClick={() => handleCopy(p.token, p.surveyUrl)}
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded text-[14px] font-medium transition-colors cursor-pointer ${
                           isCopied
                             ? "bg-emerald-600 text-white"
                             : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-100"
@@ -444,28 +444,28 @@ export default function CampaignsPage() {
               <div className="w-12 h-12 rounded-full bg-purple-100 text-purple-600 mx-auto flex items-center justify-center">
                 <KeyRound className="w-6 h-6" />
               </div>
-              <h3 className="font-bold text-slate-800 text-sm">Đổi mã bảo mật liên kết (Rotate Token)</h3>
-              <p className="text-xs text-slate-600 text-left">
+              <h3 className="font-bold text-slate-800 text-[16px]">Đổi mã bảo mật liên kết (Rotate Token)</h3>
+              <p className="text-[15px] text-slate-600 text-left">
                 Bạn sắp tạo mã bảo mật mới cho <strong className="text-slate-900">{rotatingLink.provinceName}</strong>:
               </p>
-              <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-left text-[11px] font-mono text-slate-700">
+              <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-left text-[14px] font-mono text-slate-700">
                 Token cũ: {rotatingLink.token}
               </div>
-              <p className="text-[11px] text-amber-700 text-left bg-amber-50 p-2 rounded border border-amber-200">
+              <p className="text-[14px] text-amber-700 text-left bg-amber-50 p-2 rounded border border-amber-200">
                 ⚠️ Lưu ý: Đường dẫn và mã QR cũ sẽ bị vô hiệu hóa ngay lập tức. Toàn bộ {rotatingLink.totalSubmissions} phiếu đã nộp trước đó vẫn được bảo toàn nguyên vẹn.
               </p>
               <div className="flex items-center justify-center gap-2 pt-2">
                 <button
                   type="button"
                   onClick={() => setRotatingLink(null)}
-                  className="px-3.5 py-1.5 text-xs text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer"
+                  className="px-3.5 py-1.5 text-[15px] text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer"
                 >
                   Hủy bỏ
                 </button>
                 <button
                   type="button"
                   onClick={handleRotateToken}
-                  className="px-4 py-1.5 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-2xs cursor-pointer"
+                  className="px-4 py-1.5 text-[15px] font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-2xs cursor-pointer"
                 >
                   Đổi mã ngay
                 </button>

@@ -4,6 +4,41 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.15.0] — 2026-11-19 (`feat/ui-modernization-2026-11`)
+
+### Nâng cấp Toàn diện Hệ thống Giao diện Công vụ Hiện đại (Đồng bộ 10 trang Admin, Đăng nhập & 4 bước Phiếu khảo sát)
+- **Hệ thống Phông chữ & Thiết kế (`src/app/layout.tsx`, `src/app/globals.css`, `src/components/common/Select.tsx`):**
+  - Tích hợp phông chữ tiếng Việt hiện đại `Be Vietnam Pro` qua `next/font/google`.
+  - Chuẩn hóa nền không gian làm việc dịu mắt (`.civic-ambient-bg`), độ nổi bề mặt đa lớp (`.civic-panel`, `.civic-kpi`), dải viền thương hiệu Kiểm toán nhà nước (`.civic-top-accent`) và hiệu ứng tương tác mượt `cubic-bezier(0.22, 1, 0.36, 1)`.
+  - Nâng cấp `Select` dùng chung: cỡ chữ `15–18px`, chiều cao vùng bấm `42–54px`, bỏ nhãn viết hoa nhỏ `10–12px`.
+- **Cổng Quản trị & Đăng nhập (`src/app/(admin)/layout.tsx`, `src/app/(auth)/login/page.tsx`, `src/app/(admin)/admin/**`, `src/components/admin/**`):**
+  - Tinh gọn Sidebar Quản trị: chữ `15.5px` (cao `44px`), bỏ toàn bộ dòng mô tả phụ `10px`, giữ nguyên phân quyền RBAC và Zero-Page-Scroll.
+  - Nâng cấp Dashboard (`/admin/dashboard`) và `ProgressCharts`: 4 thẻ KPI có biểu đồ mini trực quan (sparkline, vòng tròn tỷ lệ hợp lệ, trạng thái chờ duyệt, cụm cột xã), thanh tab gạch chân hiện đại, bảng tiến độ 6 cột sạch sẽ chữ `16px`.
+  - Đồng bộ thang chữ (`15–16px` nội dung/bảng, `24–28px` tiêu đề trang, loại bỏ chữ `9–11px`), bề mặt `.civic-panel` / `.civic-kpi` và nút `.civic-btn-primary` trên toàn bộ 9 phân hệ quản trị còn lại (`campaigns`, `duplicates`, `analytics`, `training-proposals`, `administrative-units`, `questions`, `users`, `guide`, `audit-logs`).
+- **Cổng Khảo sát Công khai 4 Bước (`src/components/survey/**`):**
+  - Chuyển sang bố cục tờ phiếu trung tâm (`max-w-[960px]`) nổi êm trên nền dịu, thanh tiến trình mảnh liên tục và chỉ báo 4 bước kết nối.
+  - Nâng câu hỏi lên `20–21px`, ô chọn và thẻ đáp án `17.5–18px` (cao `50–54px`); Bước 2 tô màu ngữ nghĩa dịu mắt khi chọn trạng thái; Bước 3 hiển thị trọn vẹn mô tả 4 mức năng lực (bỏ `line-clamp-3`); Bước 4 làm rõ tóm tắt và nút gửi màu xanh lục.
+
+## [Phương án 02 — Dễ đọc, tập trung — chỉ tài liệu] — 2026-11-19
+
+- Tạo HTML riêng `docs/DE-XUAT-GIAO-DIEN-02-DE-DOC-2026-11-19.html`, không ghi đè bản trước; so sánh dùng snapshot đầu lượt được giữ riêng. Nội dung 18px, tiêu đề 32px, KPI 40px; sidebar xanh mực, dải chỉ số, biểu đồ đọc trực tiếp và phiếu một cột.
+- Giảm nhãn/mã lặp, sparkline, so sánh chưa có dữ liệu, thanh công cụ và thông tin kỹ thuật không cần thiết trong luồng gửi thử. Thêm chuyển động sidebar/progress thực tế 200ms, chart/table giữ chiều cao, trạng thái bấm/focus và reduced motion.
+- Giữ dữ liệu/nghiệp vụ của prototype trước, 23 ảnh gốc, đối chiếu trước/sau và in PDF. Mọi số liệu là minh hoạ và thao tác chỉ ở bộ nhớ trình duyệt.
+- 281 kiểm tra PASS, 135 trường hợp bố cục/chữ/chủ đề, 0 lỗi JavaScript, 0 yêu cầu mạng; bằng chứng tại `output/playwright/ui-studio/clear/qa.json`. Không sửa ứng dụng/API/database/stack hay trạng thái task ứng dụng.
+
+## [Đánh giá quy tắc & thiết kế lại prototype — chưa triển khai ứng dụng] — 2026-11-19
+
+- Đánh giá `quy-tac-giao-dien-web.md` theo phạm vi KHAOSAT; ghi rõ xung đột về cỡ chữ, cuộn trang, thời gian và giới hạn mô phỏng. Không thay quy tắc/Spec nghiệp vụ đã duyệt.
+- Sửa trực tiếp HTML đề xuất: một điều hướng chính; KPI có ngữ cảnh, biểu đồ 2:1, bảng lưới và công cụ cột, nhóm B3, menu thao tác dòng, stepper, dark mode và cài đặt hiển thị trong tab. Giữ nghiệp vụ, 23 ảnh gốc và in/PDF; dữ liệu minh họa vẫn tách rõ khỏi khảo sát thật.
+- Kiểm tra Chrome: 293 kiểm tra PASS, 159 trường hợp bố cục/chữ/chủ đề, 0 lỗi JavaScript và 0 yêu cầu mạng. Bằng chứng mới trong `output/playwright/ui-studio/redesign/qa.json`; không dùng kết quả bản cũ để nghiệm thu bản mới.
+- Không sửa `src/`, database, API, stack hoặc trạng thái task ứng dụng.
+
+## [Tài liệu thiết kế — chưa triển khai ứng dụng] — 2026-11-18
+
+- Nâng `docs/DE-XUAT-CAI-TIEN-GIAO-DIEN-2026-11-18.html` thành prototype HTML tự chứa: đủ 10 trang Admin, đăng nhập, B1–B6 và phiếu 4 bước có tương tác/validation/rẽ nhánh. Bổ sung Design System, responsive, keyboard/focus, reduced motion, đối chiếu trước/sau và in.
+- Giữ nguyên bản báo cáo trước cùng 23 ảnh, thêm 4 ảnh prototype. Dữ liệu và thay đổi đều ghi rõ demo; không sửa source ứng dụng, DB/API hoặc phát hành phiên bản chức năng mới.
+- Đã chạy 777 kiểm tra hành vi/bố cục, 136 trường hợp viewport/phóng chữ; 0 lỗi JavaScript/ảnh và 0 yêu cầu mạng. Bằng chứng nằm tại `output/playwright/ui-studio/interactive-qa.json`, `bundle-verification.json`; các khác biệt nghiệp vụ cần chốt được ghi trong ASSUMPTIONS-AND-OPEN-QUESTIONS.
+
 ## [1.14.0] — 2026-11-17
 
 ### Quản Trị Người Dùng RBAC, Sổ Link Động & Lập Đề Xuất Đào Tạo 12 Mục (ADR-015 & TASK-022, 023, 024)

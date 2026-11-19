@@ -10,7 +10,9 @@
   - *Warning:* `hsl(38, 92%, 50%)` — Cảnh báo phiếu nghi trùng, thông báo thoát sớm.
   - *Destructive:* `hsl(0, 84%, 60%)` — Thao tác hủy, loại phiếu, báo lỗi.
   - *Background:* `hsl(210, 20%, 98%)` (Light mode dịu mắt, độ tương phản cao đạt chuẩn WCAG 2.1 AA).
-- **Typography:** Phông chữ hệ thống không chân hiện đại hỗ trợ đầy đủ tiếng Việt: `Inter`, `system-ui`, `-apple-system`, `Roboto`, `sans-serif`. Cỡ chữ tối thiểu cho body trên di động là `16px`.
+- **Typography:** Phông chữ tiếng Việt hiện đại `Be Vietnam Pro` (tải qua `next/font/google`), fallback `Segoe UI Variable`, `system-ui`, `sans-serif`.
+  - **Cổng Quản trị (Admin):** Tiêu đề trang `24–28px`, menu `15.5px` (cao `44px`), bảng dữ liệu `15.5–16px`, số KPI `32–36px` (`tabular-nums`), không dùng chữ `10–12px` cho nhãn nghiệp vụ.
+  - **Cổng Khảo sát (Public):** Câu hỏi `20–21px`, ô chọn (`Select`) và đáp án `17.5–18px` (chiều cao vùng bấm `50–54px`) trên cả Desktop và Di động.
 
 ---
 

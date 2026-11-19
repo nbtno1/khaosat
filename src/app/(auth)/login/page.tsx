@@ -36,7 +36,6 @@ export default function LoginPage() {
         return;
       }
 
-      // Đăng nhập thành công -> Điều hướng sang Bàn làm việc Quản trị
       router.push("/admin/dashboard");
       router.refresh();
     } catch {
@@ -53,50 +52,45 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-screen max-h-screen w-screen overflow-hidden bg-slate-900 flex flex-col justify-between items-center py-6 px-4">
-      {/* Vùng đệm trên */}
+    <div className="h-screen max-h-screen w-screen overflow-hidden civic-ambient-bg flex flex-col justify-between items-center py-8 px-4">
       <div className="hidden sm:block" />
 
-      {/* Card Đăng nhập tối giản & trang trọng */}
-      <div className="w-full max-w-[390px] bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 sm:p-8 flex flex-col my-auto">
-        {/* Brand Header */}
-        <div className="flex flex-col items-center text-center mb-6">
-          <AppLogo size="lg" className="mb-3" />
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-sky-800">
-            KIỂM TOÁN NHÀ NƯỚC
+      <div className="w-full max-w-[440px] civic-panel civic-top-accent rounded-2xl p-8 sm:p-10 flex flex-col my-auto overflow-hidden">
+        <div className="flex flex-col items-center text-center mb-7">
+          <AppLogo size="lg" className="mb-3.5" />
+          <span className="text-[13.5px] font-bold uppercase tracking-[0.06em] text-[#12457a]">
+            Kiểm toán nhà nước
           </span>
-          <h1 className="text-lg font-black text-slate-900 tracking-tight mt-0.5">
+          <h1 className="text-[24px] font-bold text-[#0e1c2e] tracking-[-0.025em] mt-1">
             Hệ thống Quản lý Khảo sát
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-[15px] text-slate-500 mt-1.5">
             Đánh giá năng lực tài chính, tài sản công cấp xã
           </p>
         </div>
 
-        {/* Thông báo lỗi */}
         {errorMessage && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 flex items-start gap-2.5 text-xs">
-            <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-            <span className="leading-snug">{errorMessage}</span>
+          <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 flex items-start gap-2.5 text-[14.5px]">
+            <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+            <span className="leading-snug font-medium">{errorMessage}</span>
           </div>
         )}
 
-        {/* Form đăng nhập */}
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-[15px] font-semibold text-slate-700 mb-2">
               Tên đăng nhập
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                <User className="w-4 h-4" />
+                <User className="w-5 h-5" />
               </div>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Nhập tên đăng nhập"
-                className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent text-xs text-slate-900 bg-slate-50/50 transition-all"
+                className="w-full h-[48px] pl-11 pr-4 rounded-[11px] border-[1.5px] border-slate-300 bg-[#f8fafc] hover:bg-white focus:bg-white focus:outline-none focus:border-[#12457a] focus:ring-4 focus:ring-[#12457a]/12 text-[16px] text-[#0e1c2e] transition-all"
                 required
                 autoFocus
               />
@@ -104,28 +98,28 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+            <label className="block text-[15px] font-semibold text-slate-700 mb-2">
               Mật khẩu
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                <Lock className="w-4 h-4" />
+                <Lock className="w-5 h-5" />
               </div>
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Nhập mật khẩu"
-                className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent text-xs text-slate-900 bg-slate-50/50 transition-all"
+                className="w-full h-[48px] pl-11 pr-12 rounded-[11px] border-[1.5px] border-slate-300 bg-[#f8fafc] hover:bg-white focus:bg-white focus:outline-none focus:border-[#12457a] focus:ring-4 focus:ring-[#12457a]/12 text-[16px] text-[#0e1c2e] transition-all"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
+                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-[#12457a] transition-colors cursor-pointer"
                 title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
               >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -133,32 +127,31 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-2 py-2.5 px-4 rounded-xl bg-sky-800 hover:bg-sky-900 active:bg-sky-950 text-white font-bold text-xs shadow-md shadow-sky-800/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+            className="w-full h-[50px] mt-2 px-5 rounded-[11px] civic-btn-primary font-semibold text-[16.5px] flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
           >
             {isLoading ? (
-              <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span className="inline-block w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
             ) : (
               <span>Đăng nhập hệ thống</span>
             )}
           </button>
         </form>
 
-        {/* Gợi ý đăng nhập nhanh (tối giản, kín đáo) */}
-        <div className="mt-5 pt-3.5 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400">
-          <span>Gợi ý:</span>
+        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-3 text-[14px] text-slate-500">
+          <span>Đăng nhập nhanh:</span>
           <button
             type="button"
             onClick={() => setPresetUser("cntt_admin", "Admin@123456")}
-            className="text-sky-700 hover:text-sky-900 font-semibold hover:underline cursor-pointer transition-colors"
+            className="text-[#12457a] hover:underline font-semibold cursor-pointer"
             title="Đăng nhập tài khoản Cục CNTT (Xem Log)"
           >
             Cục CNTT
           </button>
-          <span>•</span>
+          <span className="text-slate-300">•</span>
           <button
             type="button"
             onClick={() => setPresetUser("admin", "Admin@123456")}
-            className="text-sky-700 hover:text-sky-900 font-semibold hover:underline cursor-pointer transition-colors"
+            className="text-[#12457a] hover:underline font-semibold cursor-pointer"
             title="Đăng nhập tài khoản Admin Quản trị"
           >
             Admin
@@ -166,8 +159,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Footer nhỏ gọn */}
-      <div className="text-center text-[11px] text-slate-500 py-2">
+      <div className="text-center text-[14px] text-slate-500 py-2">
         © 2026 Trường Đào tạo & Bồi dưỡng nghiệp vụ kiểm toán — Kiểm toán nhà nước
       </div>
     </div>

@@ -314,7 +314,7 @@ export default function AdministrativeUnitsPage() {
       {/* Toast Notification */}
       {toastMessage && (
         <div
-          className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-xl text-xs font-bold text-white transition-all animate-in slide-in-from-bottom duration-200 ${
+          className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-xl text-[15px] font-bold text-white transition-all animate-in slide-in-from-bottom duration-200 ${
             toastMessage.type === "success" ? "bg-emerald-600" : "bg-rose-600"
           }`}
         >
@@ -330,10 +330,10 @@ export default function AdministrativeUnitsPage() {
       {/* Page Header (Cố định) */}
       <div className="shrink-0 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
+          <h1 className="text-[24px] sm:text-[28px] font-bold text-[#0e1c2e] tracking-[-0.03em] leading-snug">
             Quản lý Danh mục Đơn vị Hành chính
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-[15px] text-slate-500">
             Cấu hình, tìm kiếm, hiệu chỉnh và phân loại danh mục 34 tỉnh/thành phố và 3.321 xã, phường, đặc khu theo chuẩn Cục Thống kê hiệu lực 2026.
           </p>
         </div>
@@ -345,7 +345,7 @@ export default function AdministrativeUnitsPage() {
             type="button"
             onClick={handleSyncSource}
             disabled={isSyncing}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs shadow-sm transition-all"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-[15px] shadow-sm transition-all"
             title="Đồng bộ lại danh mục gốc từ real-provinces.json và real-communes.json"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? "animate-spin text-sky-600" : "text-slate-500"}`} />
@@ -357,7 +357,7 @@ export default function AdministrativeUnitsPage() {
             href={`/api/admin/administrative-units/export?format=excel${
               selectedProvinceForCommunes ? `&provinceCode=${selectedProvinceForCommunes}` : ""
             }`}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition-all"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[15px] shadow-sm transition-all"
             title="Xuất danh mục ĐVHC ra file Excel .xlsx"
           >
             <FileSpreadsheet className="w-3.5 h-3.5" />
@@ -378,7 +378,7 @@ export default function AdministrativeUnitsPage() {
               });
               setIsProvinceModalOpen(true);
             }}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow-sm transition-all"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl civic-btn-primary font-bold text-[15px] shadow-sm transition-all"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Thêm Tỉnh</span>
@@ -399,7 +399,7 @@ export default function AdministrativeUnitsPage() {
               });
               setIsCommuneModalOpen(true);
             }}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-sm transition-all"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-[15px] shadow-sm transition-all"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Thêm Xã/Phường</span>
@@ -412,13 +412,13 @@ export default function AdministrativeUnitsPage() {
         {/* Card 1: Tổng số Tỉnh */}
         <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <div className="text-[15px] font-bold text-slate-500 uppercase tracking-wider">
               Tổng số Tỉnh / Thành phố
             </div>
-            <div className="text-2xl font-black text-slate-900 mt-1">
+            <div className="text-[30px] font-bold tabular-nums tracking-[-0.025em] text-slate-900 mt-1">
               {(stats?.totalProvinces || 34).toLocaleString()}
             </div>
-            <div className="text-[11px] font-semibold text-sky-700 mt-1">
+            <div className="text-[14px] font-semibold text-sky-700 mt-1">
               {stats?.activeProvinces || 34} tỉnh đang kích hoạt khảo sát
             </div>
           </div>
@@ -430,13 +430,13 @@ export default function AdministrativeUnitsPage() {
         {/* Card 2: Tổng số Xã */}
         <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <div className="text-[15px] font-bold text-slate-500 uppercase tracking-wider">
               Xã / Phường / Đặc khu
             </div>
-            <div className="text-2xl font-black text-emerald-700 mt-1">
+            <div className="text-[30px] font-bold tabular-nums tracking-[-0.025em] text-emerald-700 mt-1">
               {(stats?.totalCommunes || 3321).toLocaleString()}
             </div>
-            <div className="text-[11px] font-semibold text-emerald-600 mt-1">
+            <div className="text-[14px] font-semibold text-emerald-600 mt-1">
               100% địa bàn cấp cơ sở được quản lý
             </div>
           </div>
@@ -448,10 +448,10 @@ export default function AdministrativeUnitsPage() {
         {/* Card 3: Phân loại cấp xã */}
         <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <div className="text-[15px] font-bold text-slate-500 uppercase tracking-wider">
               Cơ cấu Đơn vị cấp xã
             </div>
-            <div className="text-xs font-bold text-slate-800 mt-1 space-y-0.5">
+            <div className="text-[15px] font-bold text-slate-800 mt-1 space-y-0.5">
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-blue-500" />
                 <span>Phường: <strong>{stats?.communesByType?.phuong || 709}</strong></span>
@@ -474,13 +474,13 @@ export default function AdministrativeUnitsPage() {
         {/* Card 4: Cơ sở pháp lý & Hiệu lực */}
         <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm flex items-center justify-between">
           <div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+            <div className="text-[15px] font-bold text-slate-500 uppercase tracking-wider">
               Căn cứ Pháp lý & Hiệu lực
             </div>
-            <div className="text-sm font-extrabold text-slate-900 mt-1">
+            <div className="text-[16px] font-extrabold text-slate-900 mt-1">
               Hiệu lực năm 2026
             </div>
-            <div className="text-[11px] text-slate-500 mt-1 line-clamp-2">
+            <div className="text-[14px] text-slate-500 mt-1 line-clamp-2">
               QĐ 19/2025/QĐ-TTg & các nghị quyết UBTVQH về sắp xếp ĐVHC
             </div>
           </div>
@@ -495,7 +495,7 @@ export default function AdministrativeUnitsPage() {
         <button
           type="button"
           onClick={() => setActiveTab("provinces")}
-          className={`flex items-center gap-2 pb-2.5 px-3.5 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 pb-2.5 px-3.5 text-[15px] sm:text-[16px] font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === "provinces"
               ? "border-sky-700 text-sky-800"
               : "border-transparent text-slate-500 hover:text-slate-800"
@@ -503,7 +503,7 @@ export default function AdministrativeUnitsPage() {
         >
           <Landmark className="w-4 h-4" />
           <span>Danh mục 34 Tỉnh / Thành phố</span>
-          <span className="px-2 py-0.5 rounded-full text-[10px] bg-sky-100 text-sky-800 font-extrabold">
+          <span className="px-2 py-0.5 rounded-full text-[13.5px] bg-sky-100 text-sky-800 font-extrabold">
             {provinces.length}
           </span>
         </button>
@@ -511,7 +511,7 @@ export default function AdministrativeUnitsPage() {
         <button
           type="button"
           onClick={() => setActiveTab("communes")}
-          className={`flex items-center gap-2 pb-2.5 px-3.5 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 pb-2.5 px-3.5 text-[15px] sm:text-[16px] font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === "communes"
               ? "border-sky-700 text-sky-800"
               : "border-transparent text-slate-500 hover:text-slate-800"
@@ -519,7 +519,7 @@ export default function AdministrativeUnitsPage() {
         >
           <MapPin className="w-4 h-4" />
           <span>Danh mục Xã / Phường / Đặc khu</span>
-          <span className="px-2 py-0.5 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-extrabold">
+          <span className="px-2 py-0.5 rounded-full text-[13.5px] bg-emerald-100 text-emerald-800 font-extrabold">
             {communeTotal || 3321}
           </span>
         </button>
@@ -531,10 +531,10 @@ export default function AdministrativeUnitsPage() {
           {/* Table Toolbar */}
           <div className="shrink-0 p-3.5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/70">
             <div>
-              <h2 className="text-sm font-extrabold text-slate-900">
+              <h2 className="text-[16px] font-extrabold text-slate-900">
                 Danh mục 34 Tỉnh / Thành phố Khảo sát
               </h2>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[14px] text-slate-500">
                 Bấm vào một tỉnh để xem toàn bộ danh sách xã/phường hoặc hiệu chỉnh chỉ tiêu
               </p>
             </div>
@@ -548,7 +548,7 @@ export default function AdministrativeUnitsPage() {
                   placeholder="Tìm theo tên hoặc mã tỉnh..."
                   value={provinceSearch}
                   onChange={(e) => setProvinceSearch(e.target.value)}
-                  className="pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 w-52 bg-white"
+                  className="pl-9 pr-3 min-h-[42px] py-2 rounded-[10px] border-[1.5px] border-slate-300 text-[15px] text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 w-52 bg-white"
                 />
               </div>
 
@@ -582,8 +582,8 @@ export default function AdministrativeUnitsPage() {
 
           {/* Provinces Table (Cuộn nội bộ với header sticky) */}
           <div className="flex-1 min-h-0 overflow-y-auto overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead className="sticky top-0 bg-slate-100/95 backdrop-blur-xs z-10 text-slate-700 font-bold border-b border-slate-200 shadow-2xs">
+            <table className="w-full text-left text-[15px] border-collapse">
+              <thead className="sticky top-0 bg-[#f4f7fb] z-10 text-slate-700 font-bold border-b border-slate-200 shadow-2xs">
                 <tr className="bg-slate-50/80 text-slate-600 font-bold border-b border-slate-200">
                   <th className="py-3.5 px-4 w-12 text-center">STT</th>
                   <th className="py-3.5 px-4 w-20">Mã tỉnh</th>
@@ -605,7 +605,7 @@ export default function AdministrativeUnitsPage() {
                     <td className="py-3 px-4 text-slate-600">{prov.fullName}</td>
                     <td className="py-3 px-4 text-center">
                       <span
-                        className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        className={`inline-block px-2 py-0.5 rounded-full text-[13.5px] font-bold ${
                           prov.type.includes("Thành phố")
                             ? "bg-purple-100 text-purple-800"
                             : "bg-blue-100 text-blue-800"
@@ -635,7 +635,7 @@ export default function AdministrativeUnitsPage() {
                       <button
                         type="button"
                         onClick={() => handleToggleProvinceStatus(prov.provinceCode, prov.isActive)}
-                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold cursor-pointer transition-colors ${
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[13.5px] font-bold cursor-pointer transition-colors ${
                           prov.isActive
                             ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
                             : "bg-slate-200 text-slate-600 hover:bg-slate-300"
@@ -677,7 +677,7 @@ export default function AdministrativeUnitsPage() {
                 ))}
                 {provCount < provTotal && (
                   <tr>
-                    <td colSpan={9} className="py-2.5 text-center text-xs font-semibold text-slate-400 bg-slate-50/60 animate-pulse">
+                    <td colSpan={9} className="py-2.5 text-center text-[15px] font-semibold text-slate-400 bg-slate-50/60 animate-pulse">
                       Đang hiển thị {provCount} / {provTotal} tỉnh thành...
                     </td>
                   </tr>
@@ -695,21 +695,21 @@ export default function AdministrativeUnitsPage() {
           <div className="shrink-0 p-3.5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/70">
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-sm font-extrabold text-slate-900">
+                <h2 className="text-[16px] font-extrabold text-slate-900">
                   Danh mục Xã / Phường / Đặc khu
                 </h2>
                 {selectedProvinceForCommunes && (
                   <button
                     type="button"
                     onClick={() => setSelectedProvinceForCommunes("")}
-                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold cursor-pointer"
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[13.5px] bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold cursor-pointer"
                   >
                     <span>Lọc: Mã {selectedProvinceForCommunes}</span>
                     <X className="w-3 h-3" />
                   </button>
                 )}
               </div>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[14px] text-slate-500">
                 Tìm kiếm, lọc theo loại đơn vị hành chính và chỉnh sửa thông tin cấp xã
               </p>
             </div>
@@ -746,7 +746,7 @@ export default function AdministrativeUnitsPage() {
                     setCommuneSearch(e.target.value);
                     setCommunePage(1);
                   }}
-                  className="pl-9 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 w-48 bg-white"
+                  className="pl-9 pr-3 min-h-[42px] py-2 rounded-[10px] border-[1.5px] border-slate-300 text-[15px] text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 w-48 bg-white"
                 />
               </div>
 
@@ -788,8 +788,8 @@ export default function AdministrativeUnitsPage() {
 
           {/* Communes Table (Cuộn nội bộ với header sticky) */}
           <div className="flex-1 min-h-0 overflow-y-auto overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead className="sticky top-0 bg-slate-100/95 backdrop-blur-xs z-10 text-slate-700 font-bold border-b border-slate-200 shadow-2xs">
+            <table className="w-full text-left text-[15px] border-collapse">
+              <thead className="sticky top-0 bg-[#f4f7fb] z-10 text-slate-700 font-bold border-b border-slate-200 shadow-2xs">
                 <tr className="bg-slate-50/80 text-slate-600 font-bold border-b border-slate-200">
                   <th className="py-3.5 px-4 w-12 text-center">STT</th>
                   <th className="py-3.5 px-4 w-20">Mã xã</th>
@@ -812,7 +812,7 @@ export default function AdministrativeUnitsPage() {
                     <td className="py-3 px-4 font-bold text-slate-900">{com.name}</td>
                     <td className="py-3 px-4 text-center">
                       <span
-                        className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        className={`inline-block px-2 py-0.5 rounded-full text-[13.5px] font-bold ${
                           com.type === "Phường"
                             ? "bg-blue-100 text-blue-800"
                             : com.type === "Đặc khu"
@@ -826,10 +826,10 @@ export default function AdministrativeUnitsPage() {
                     <td className="py-3 px-4 font-semibold text-slate-700">
                       {com.provinceName} ({com.provinceCode})
                     </td>
-                    <td className="py-3 px-4 text-[11px] text-slate-500 max-w-[200px] truncate" title={com.resolution}>
+                    <td className="py-3 px-4 text-[14px] text-slate-500 max-w-[200px] truncate" title={com.resolution}>
                       {com.resolution || "—"}
                     </td>
-                    <td className="py-3 px-4 text-center text-[11px] text-slate-500">
+                    <td className="py-3 px-4 text-center text-[14px] text-slate-500">
                       {com.population ? `${com.population.toLocaleString()} người` : "—"}
                       {com.areaKm2 ? ` • ${com.areaKm2} km²` : ""}
                     </td>
@@ -837,7 +837,7 @@ export default function AdministrativeUnitsPage() {
                       <button
                         type="button"
                         onClick={() => handleToggleCommuneStatus(com.communeCode, com.isActive)}
-                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold cursor-pointer transition-colors ${
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[13.5px] font-bold cursor-pointer transition-colors ${
                           com.isActive
                             ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
                             : "bg-slate-200 text-slate-600 hover:bg-slate-300"
@@ -878,7 +878,7 @@ export default function AdministrativeUnitsPage() {
           </div>
 
           {/* Pagination Controls (Cố định ở đáy card) */}
-          <div className="shrink-0 p-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 bg-slate-50/70">
+          <div className="shrink-0 p-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[15px] text-slate-500 bg-slate-50/70">
             <div>
               Hiển thị từ <strong>{Math.min(communeTotal, (communePage - 1) * 25 + 1)}</strong> đến{" "}
               <strong>{Math.min(communeTotal, communePage * 25)}</strong> trong tổng số{" "}
@@ -890,7 +890,7 @@ export default function AdministrativeUnitsPage() {
                 type="button"
                 onClick={() => setCommunePage((p) => Math.max(1, p - 1))}
                 disabled={communePage <= 1}
-                className="px-3 py-1.5 rounded-xl border border-slate-200 font-bold hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"
+                className="px-3 min-h-[42px] py-2 rounded-[10px] border-[1.5px] border-slate-300 font-bold hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
                 <span>Trước</span>
@@ -904,7 +904,7 @@ export default function AdministrativeUnitsPage() {
                 type="button"
                 onClick={() => setCommunePage((p) => Math.min(communeTotalPages, p + 1))}
                 disabled={communePage >= communeTotalPages}
-                className="px-3 py-1.5 rounded-xl border border-slate-200 font-bold hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"
+                className="px-3 min-h-[42px] py-2 rounded-[10px] border-[1.5px] border-slate-300 font-bold hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1"
               >
                 <span>Sau</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -934,7 +934,7 @@ export default function AdministrativeUnitsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleSaveProvince} className="space-y-4 text-xs">
+            <form onSubmit={handleSaveProvince} className="space-y-4 text-[15px]">
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block font-bold text-slate-700 mb-1">Mã Tỉnh (2 số) *</label>
@@ -1024,7 +1024,7 @@ export default function AdministrativeUnitsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold shadow-sm"
+                  className="px-5 py-2 rounded-xl civic-btn-primary font-bold shadow-sm"
                 >
                   Lưu thay đổi
                 </button>
@@ -1054,7 +1054,7 @@ export default function AdministrativeUnitsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleSaveCommune} className="space-y-4 text-xs">
+            <form onSubmit={handleSaveCommune} className="space-y-4 text-[15px]">
               <div>
                 <label className="block font-bold text-slate-700 mb-1">Thuộc Tỉnh / Thành phố *</label>
                 <Select

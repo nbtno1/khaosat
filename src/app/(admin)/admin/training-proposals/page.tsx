@@ -209,7 +209,7 @@ export default function TrainingProposalsPage() {
               <GraduationCap className="w-6 h-6 text-blue-600" />
               Lập & Quản lý Bản Đề xuất Đào tạo cho Địa phương
             </h1>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-[15px] text-slate-500 mt-1">
               Quy chuẩn 12 Mục tiêu chí theo Thuyết minh Phần V Mục 3 (Căn cứ số liệu 6 bảng, khoảng thiếu hụt và ma trận chuẩn)
             </p>
           </div>
@@ -217,7 +217,7 @@ export default function TrainingProposalsPage() {
           <div className="flex items-center gap-2.5">
             <button
               onClick={() => fetchProposals()}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-[15px] font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-blue-600" : ""}`} />
               Làm mới
@@ -226,7 +226,7 @@ export default function TrainingProposalsPage() {
             <button
               onClick={() => handleGenerateDraft()}
               disabled={generating}
-              className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 rounded-lg transition-colors shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 rounded-lg transition-colors shadow-xs cursor-pointer"
             >
               <Sparkles className={`w-4 h-4 ${generating ? "animate-spin" : ""}`} />
               {generating ? "Đang trích xuất 6 bảng..." : "Tự động sinh Đề xuất Mới"}
@@ -236,7 +236,7 @@ export default function TrainingProposalsPage() {
 
         {/* Success Alert Banner */}
         {actionSuccess && (
-          <div className="mt-3 p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2 text-xs text-emerald-800 animate-in fade-in">
+          <div className="mt-3 p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2 text-[15px] text-emerald-800 animate-in fade-in">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>{actionSuccess}</span>
           </div>
@@ -247,7 +247,7 @@ export default function TrainingProposalsPage() {
           <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg">
             <button
               onClick={() => setActiveTab("LIST")}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+              className={`px-3 py-1.5 text-[15px] font-semibold rounded-md transition-all cursor-pointer ${
                 activeTab === "LIST"
                   ? "bg-white text-blue-600 shadow-2xs"
                   : "text-slate-600 hover:text-slate-900"
@@ -260,7 +260,7 @@ export default function TrainingProposalsPage() {
                 if (!currentProposal) handleGenerateDraft();
                 else setActiveTab("EDITOR");
               }}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-[15px] font-semibold rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeTab === "EDITOR"
                   ? "bg-white text-blue-600 shadow-2xs"
                   : "text-slate-600 hover:text-slate-900"
@@ -274,7 +274,7 @@ export default function TrainingProposalsPage() {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 font-medium flex items-center gap-1">
+            <span className="text-[15px] text-slate-500 font-medium flex items-center gap-1">
               <MapPin className="w-3.5 h-3.5 text-slate-400" />
               Địa bàn:
             </span>
@@ -286,7 +286,7 @@ export default function TrainingProposalsPage() {
                   handleGenerateDraft(e.target.value);
                 }
               }}
-              className="text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer font-medium text-slate-700"
+              className="text-[15px] bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer font-medium text-slate-700"
             >
               {PROVINCE_OPTIONS.map((p) => (
                 <option key={p.code} value={p.code}>
@@ -303,7 +303,7 @@ export default function TrainingProposalsPage() {
         {activeTab === "LIST" ? (
           /* TAB 1: DANH SÁCH ĐỀ XUẤT ĐÃ LẬP */
           <div className="bg-white border border-slate-200/80 rounded-xl shadow-2xs overflow-hidden">
-            <table className="w-full text-left border-collapse text-xs">
+            <table className="w-full text-left border-collapse text-[15px]">
               <thead className="bg-slate-50/90 border-b border-slate-200 sticky top-0 z-10">
                 <tr>
                   <th className="py-3 px-4 font-semibold text-slate-600">Địa bàn / Tiêu đề Bản Đề xuất</th>
@@ -339,8 +339,8 @@ export default function TrainingProposalsPage() {
                       className="hover:bg-slate-50/80 transition-colors cursor-pointer"
                     >
                       <td className="py-3.5 px-4">
-                        <div className="font-bold text-slate-900 text-sm">{item.title}</div>
-                        <div className="text-[11px] text-slate-500 flex items-center gap-2 mt-0.5">
+                        <div className="font-bold text-slate-900 text-[16px]">{item.title}</div>
+                        <div className="text-[14px] text-slate-500 flex items-center gap-2 mt-0.5">
                           <span className="font-semibold text-blue-600">{item.provinceName}</span>
                           <span>•</span>
                           <span>Bộ phiếu v{item.schemaVersion || "3.3"}</span>
@@ -352,7 +352,7 @@ export default function TrainingProposalsPage() {
                           <strong>{item.item2_dataBasis?.validCount || 0}</strong> phiếu hợp lệ /{" "}
                           <strong>{item.item2_dataBasis?.totalCommunes || 0}</strong> xã
                         </div>
-                        <div className="text-[10px] text-slate-400 mt-0.5">
+                        <div className="text-[13.5px] text-slate-400 mt-0.5">
                           {item.item2_dataBasis?.outOfScopeCount || 0} ngoài phạm vi
                         </div>
                       </td>
@@ -363,16 +363,16 @@ export default function TrainingProposalsPage() {
                         </span>
                       </td>
 
-                      <td className="py-3.5 px-4 text-slate-600 text-[11px]">
+                      <td className="py-3.5 px-4 text-slate-600 text-[14px]">
                         <div>{item.item12_approval?.createdByName || "Chuyên viên"}</div>
-                        <div className="text-[10px] text-slate-400">
+                        <div className="text-[13.5px] text-slate-400">
                           {new Date(item.proposalDate).toLocaleDateString("vi-VN")}
                         </div>
                       </td>
 
                       <td className="py-3.5 px-4 text-center">
                         <span
-                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium border ${
+                          className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[14px] font-medium border ${
                             item.status === "APPROVED"
                               ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                               : "bg-slate-100 text-slate-700 border-slate-200"
@@ -395,7 +395,7 @@ export default function TrainingProposalsPage() {
                               setCurrentProposal(item);
                               setActiveTab("EDITOR");
                             }}
-                            className="px-2.5 py-1 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                            className="px-2.5 py-1 text-[15px] font-semibold text-blue-600 hover:bg-blue-50 rounded transition-colors"
                           >
                             Xem & Sửa
                           </button>
@@ -420,9 +420,9 @@ export default function TrainingProposalsPage() {
             {/* Editor Action Bar (Fixed on top of document) */}
             <div className="bg-white border border-slate-200/90 rounded-xl p-3 shadow-xs flex flex-wrap items-center justify-between gap-2 sticky top-0 z-20 print:hidden">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-slate-700">Trạng thái văn bản:</span>
+                <span className="text-[15px] font-semibold text-slate-700">Trạng thái văn bản:</span>
                 <span
-                  className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${
+                  className={`px-2.5 py-0.5 rounded-full text-[14px] font-bold border ${
                     currentProposal?.status === "APPROVED"
                       ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                       : "bg-amber-50 text-amber-700 border-amber-200"
@@ -436,7 +436,7 @@ export default function TrainingProposalsPage() {
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 shadow-2xs cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[15px] font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 shadow-2xs cursor-pointer"
                 >
                   <Printer className="w-3.5 h-3.5" />
                   In / Xuất PDF
@@ -445,7 +445,7 @@ export default function TrainingProposalsPage() {
                 <button
                   type="button"
                   onClick={handleSaveProposal}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-2xs cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-2xs cursor-pointer"
                 >
                   <Save className="w-3.5 h-3.5" />
                   Lưu Đề xuất
@@ -455,7 +455,7 @@ export default function TrainingProposalsPage() {
                   <button
                     type="button"
                     onClick={handleApproveProposal}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-2xs cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-[15px] font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-2xs cursor-pointer"
                   >
                     <Check className="w-3.5 h-3.5" />
                     Ký duyệt Đề xuất
@@ -469,22 +469,22 @@ export default function TrainingProposalsPage() {
               <div className="bg-white border border-slate-200 rounded-2xl p-8 sm:p-12 shadow-md text-slate-800 print:shadow-none print:border-none print:p-0">
                 {/* Header Hành chính */}
                 <div className="grid grid-cols-2 gap-4 border-b border-slate-200 pb-6 mb-6">
-                  <div className="text-center font-bold text-xs uppercase leading-relaxed">
+                  <div className="text-center font-bold text-[15px] uppercase leading-relaxed">
                     <div>KIỂM TOÁN NHÀ NƯỚC</div>
                     <div className="font-semibold text-blue-900">
                       TRƯỜNG ĐÀO TẠO VÀ BỒI DƯỠNG NGHIỆP VỤ KIỂM TOÁN
                     </div>
-                    <div className="text-[10px] font-normal text-slate-500 mt-1">
+                    <div className="text-[13.5px] font-normal text-slate-500 mt-1">
                       Số: ..... /ĐX-ĐTBD
                     </div>
                   </div>
 
-                  <div className="text-center font-bold text-xs uppercase leading-relaxed">
+                  <div className="text-center font-bold text-[15px] uppercase leading-relaxed">
                     <div>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
                     <div className="font-semibold text-slate-700 underline underline-offset-4">
                       Độc lập - Tự do - Hạnh phúc
                     </div>
-                    <div className="text-[11px] font-normal italic text-slate-500 mt-1 capitalize">
+                    <div className="text-[14px] font-normal italic text-slate-500 mt-1 capitalize">
                       Hà Nội, ngày {new Date().getDate()} tháng {new Date().getMonth() + 1} năm {new Date().getFullYear()}
                     </div>
                   </div>
@@ -495,16 +495,16 @@ export default function TrainingProposalsPage() {
                   <h2 className="text-lg sm:text-xl font-bold uppercase tracking-tight text-slate-900">
                     BẢN ĐỀ XUẤT ĐÀO TẠO CHO ĐỊA PHƯƠNG
                   </h2>
-                  <p className="text-xs font-semibold text-blue-700 mt-1">
+                  <p className="text-[15px] font-semibold text-blue-700 mt-1">
                     (Phục vụ Đợt khảo sát nhu cầu bồi dưỡng năng lực cấp xã/phường - Bộ phiếu v{currentProposal.schemaVersion || "3.3"})
                   </p>
                 </div>
 
                 {/* NỘI DUNG 12 MỤC CHUẨN */}
-                <div className="space-y-6 text-xs leading-relaxed">
+                <div className="space-y-6 text-[15px] leading-relaxed">
                   {/* MỤC 1 */}
                   <div className="bg-slate-50/70 p-3.5 rounded-lg border border-slate-200">
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-1">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-1">
                       1. Địa phương, Ngày lập, Phiên bản bộ phiếu
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-slate-700">
@@ -522,7 +522,7 @@ export default function TrainingProposalsPage() {
 
                   {/* MỤC 2 */}
                   <div className="bg-slate-50/70 p-3.5 rounded-lg border border-slate-200">
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-1">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-1">
                       2. Căn cứ số liệu khảo sát (từ Bảng B1, B6)
                     </h4>
                     <p className="text-slate-700">
@@ -534,11 +534,11 @@ export default function TrainingProposalsPage() {
 
                   {/* MỤC 3 */}
                   <div>
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-2">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-2">
                       3. Danh mục Nội dung / Chuyên đề đào tạo đề xuất (Mỗi dòng một nội dung)
                     </h4>
                     <div className="overflow-x-auto border border-slate-200 rounded-lg">
-                      <table className="w-full text-left border-collapse text-[11px]">
+                      <table className="w-full text-left border-collapse text-[14px]">
                         <thead className="bg-slate-100 border-b border-slate-200">
                           <tr>
                             <th className="p-2 font-semibold text-slate-700">Nhóm công việc</th>
@@ -569,7 +569,7 @@ export default function TrainingProposalsPage() {
 
                   {/* MỤC 4 */}
                   <div>
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-1">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-1">
                       4. Lý do lựa chọn chuyên đề
                     </h4>
                     <textarea
@@ -578,13 +578,13 @@ export default function TrainingProposalsPage() {
                       onChange={(e) =>
                         setCurrentProposal({ ...currentProposal, item4_selectionReasons: e.target.value })
                       }
-                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-xs"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-[15px]"
                     />
                   </div>
 
                   {/* MỤC 5 */}
                   <div>
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-1">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-1">
                       5. Khoảng thiếu hụt theo tự đánh giá so với Ma trận chuẩn (Bảng B3)
                     </h4>
                     <textarea
@@ -593,13 +593,13 @@ export default function TrainingProposalsPage() {
                       onChange={(e) =>
                         setCurrentProposal({ ...currentProposal, item5_capacityGapAnalysis: e.target.value })
                       }
-                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-xs"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-[15px]"
                     />
                   </div>
 
                   {/* MỤC 6 */}
                   <div>
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-1">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-1">
                       6. Hình thức đào tạo đề xuất (Căn cứ Bảng B6)
                     </h4>
                     <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 space-y-1">
@@ -614,7 +614,7 @@ export default function TrainingProposalsPage() {
 
                   {/* MỤC 7 */}
                   <div>
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-1">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-1">
                       7. Thời lượng và Thời gian tổ chức đề xuất
                     </h4>
                     <input
@@ -623,13 +623,13 @@ export default function TrainingProposalsPage() {
                       onChange={(e) =>
                         setCurrentProposal({ ...currentProposal, item7_timingAndDuration: e.target.value })
                       }
-                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-xs"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-[15px]"
                     />
                   </div>
 
                   {/* MỤC 8 */}
                   <div>
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-1">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-1">
                       8. Phương án bồi dưỡng cho nhóm cán bộ "Chưa có dịp thực hiện"
                     </h4>
                     <textarea
@@ -638,13 +638,13 @@ export default function TrainingProposalsPage() {
                       onChange={(e) =>
                         setCurrentProposal({ ...currentProposal, item8_noChanceModule: e.target.value })
                       }
-                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-xs"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-[15px]"
                     />
                   </div>
 
                   {/* MỤC 9 */}
                   <div>
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-1">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-1">
                       9. Phương án xử lý nhóm đối tượng nhỏ (Dưới 5 người)
                     </h4>
                     <textarea
@@ -653,13 +653,13 @@ export default function TrainingProposalsPage() {
                       onChange={(e) =>
                         setCurrentProposal({ ...currentProposal, item9_smallGroupStrategy: e.target.value })
                       }
-                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-xs"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-[15px]"
                     />
                   </div>
 
                   {/* MỤC 10 */}
                   <div>
-                    <h4 className="font-bold text-slate-900 text-xs uppercase mb-1">
+                    <h4 className="font-bold text-slate-900 text-[15px] uppercase mb-1">
                       10. Kiến nghị ngoài đào tạo (Cơ chế, văn bản, công cụ - từ Bảng B5)
                     </h4>
                     <textarea
@@ -671,12 +671,12 @@ export default function TrainingProposalsPage() {
                           item10_institutionalRecommendations: e.target.value,
                         })
                       }
-                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-xs font-mono"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-[15px] font-mono"
                     />
                   </div>
 
                   {/* MỤC 11 */}
-                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-900 text-[11px] leading-relaxed">
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-900 text-[14px] leading-relaxed">
                     <h4 className="font-bold uppercase text-amber-800 mb-1">
                       11. Giới hạn pháp lý bắt buộc
                     </h4>
@@ -684,10 +684,10 @@ export default function TrainingProposalsPage() {
                   </div>
 
                   {/* MỤC 12: CHỮ KÝ PHÊ DUYỆT */}
-                  <div className="grid grid-cols-2 gap-8 pt-8 border-t border-slate-200 text-center text-xs">
+                  <div className="grid grid-cols-2 gap-8 pt-8 border-t border-slate-200 text-center text-[15px]">
                     <div>
                       <div className="font-bold uppercase text-slate-700">NGƯỜI LẬP ĐỀ XUẤT</div>
-                      <div className="text-[11px] text-slate-500 mb-16">
+                      <div className="text-[14px] text-slate-500 mb-16">
                         {currentProposal.item12_approval?.createdByTitle || "Khoa Cơ sở / Chuyên ngành"}
                       </div>
                       <div className="font-bold text-slate-900">
@@ -697,7 +697,7 @@ export default function TrainingProposalsPage() {
 
                     <div>
                       <div className="font-bold uppercase text-slate-700">LÃNH ĐẠO TRƯỜNG PHÊ DUYỆT</div>
-                      <div className="text-[11px] text-slate-500 mb-16">
+                      <div className="text-[14px] text-slate-500 mb-16">
                         {currentProposal.item12_approval?.approvedByTitle || "Giám đốc"}
                       </div>
                       <div className="font-bold text-slate-900 flex items-center justify-center gap-1.5">
@@ -707,7 +707,7 @@ export default function TrainingProposalsPage() {
                         <span>{currentProposal.item12_approval?.approvedByName || "(Chưa phê duyệt)"}</span>
                       </div>
                       {currentProposal.item12_approval?.approvedAt && (
-                        <div className="text-[10px] text-emerald-700 font-medium mt-1">
+                        <div className="text-[13.5px] text-emerald-700 font-medium mt-1">
                           Đã ký duyệt ngày {new Date(currentProposal.item12_approval.approvedAt).toLocaleDateString("vi-VN")}
                         </div>
                       )}

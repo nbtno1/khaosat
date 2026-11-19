@@ -3,15 +3,7 @@
 import React, { useState } from "react";
 import { LearningFormat, Part4Data, Part1Data } from "@/lib/validations/survey.schema";
 import { SchemaConfigData } from "@/hooks/useSurveyFormState";
-import {
-  GraduationCap,
-  MessageSquare,
-  ChevronLeft,
-  Send,
-  AlertCircle,
-  CheckCircle,
-  FileText,
-} from "lucide-react";
+import { ArrowLeft, Send, AlertCircle } from "lucide-react";
 
 interface StepLearningPreferencesProps {
   part4: Partial<Part4Data>;
@@ -50,7 +42,7 @@ export const StepLearningPreferences: React.FC<StepLearningPreferencesProps> = (
         };
       } else {
         if (existing.length >= 2) {
-          return prev; // Max 2 items
+          return prev;
         }
         return {
           ...prev,
@@ -70,77 +62,62 @@ export const StepLearningPreferences: React.FC<StepLearningPreferencesProps> = (
   };
 
   return (
-    <div className="space-y-6">
-      {/* Banner Phần IV */}
-      <div className="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-lg space-y-1">
-        <h3 className="text-sm font-semibold text-sky-900 uppercase tracking-wide flex items-center gap-1.5">
-          <GraduationCap className="w-4 h-4 text-sky-600" />
-          <span>Phần IV — Hình thức học và Ý kiến đóng góp</span>
-        </h3>
-        <p className="text-xs text-sky-800">
-          Bước cuối cùng: Vui lòng cho biết hình thức học tập phù hợp nhất và gửi gắm ý kiến tới Kiểm toán nhà nước.
-        </p>
-      </div>
-
+    <div className="divide-y divide-slate-100">
       {(errorMsg || submitError) && (
-        <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg flex items-center gap-2 text-sm">
-          <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-600" />
+        <div className="mb-6 bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-xl flex items-center gap-3 text-[15.5px] font-medium">
+          <AlertCircle className="w-5 h-5 shrink-0 text-rose-600" />
           <span>{errorMsg || submitError}</span>
         </div>
       )}
 
-      {/* CÂU 13: HÌNH THỨC HỌC (CHỌN TỐI ĐA 2) */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <div>
-          <label className="block text-sm font-bold text-slate-900 mb-1">
-            Câu 13: Hình thức bồi dưỡng phù hợp nhất với điều kiện của đồng chí (chọn tối đa 2) <span className="text-red-500">*</span>
-          </label>
-          <p className="text-xs text-slate-500 mb-3">
-            Hệ thống tự động khóa khi đồng chí đã chọn đủ 2 hình thức.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {schemaData.learningFormats.map((fmt) => {
-              const isSelected = selectedFormats.includes(fmt.id as LearningFormat);
-              return (
-                <div
-                  key={fmt.id}
-                  onClick={() => toggleFormat(fmt.id as LearningFormat)}
-                  className={`p-3.5 rounded-xl border cursor-pointer text-xs sm:text-sm transition-all flex items-center justify-between ${
-                    isSelected
-                      ? "bg-sky-50 border-sky-600 text-sky-950 font-semibold"
-                      : selectedFormats.length >= 2
-                      ? "bg-slate-50 border-slate-200 text-slate-400 opacity-60 cursor-not-allowed"
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                  }`}
-                >
-                  <span>{fmt.title}</span>
-                  <input
-                    type="checkbox"
-                    checked={isSelected}
-                    disabled={!isSelected && selectedFormats.length >= 2}
-                    onChange={() => {}}
-                    className="w-4 h-4 text-sky-600 rounded border-slate-300 focus:ring-sky-500 ml-2"
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="text-right text-xs text-slate-400 mt-2">
-            Đã chọn: {selectedFormats.length}/2 hình thức
-          </div>
+      {/* Câu 13: Hình thức học */}
+      <section className="pb-7">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-4">
+          <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug">
+            Câu 13. Hình thức bồi dưỡng phù hợp nhất (Chọn tối đa 2) <span className="text-rose-600">*</span>
+          </h3>
+          <span className="text-[15px] font-semibold text-[#12457a] shrink-0">
+            Đã chọn: {selectedFormats.length} / 2
+          </span>
         </div>
-      </div>
 
-      {/* CÂU 14: Ý KIẾN KHÁC */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
-        <div className="flex items-center gap-2 text-slate-800 font-semibold text-sm">
-          <MessageSquare className="w-4 h-4 text-sky-700" />
-          <span>Câu 14: Ý kiến khác về nhu cầu đào tạo, bồi dưỡng (nếu có)</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          {schemaData.learningFormats.map((fmt) => {
+            const isSelected = selectedFormats.includes(fmt.id as LearningFormat);
+            const isDisabled = !isSelected && selectedFormats.length >= 2;
+            return (
+              <label
+                key={fmt.id}
+                onClick={() => !isDisabled && toggleFormat(fmt.id as LearningFormat)}
+                className={`flex items-center gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] border-[1.5px] text-[18px] transition-all duration-150 select-none ${
+                  isSelected
+                    ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-[#12457a] text-[#0b2d52] font-semibold shadow-xs cursor-pointer"
+                    : isDisabled
+                    ? "bg-slate-50 border-slate-200 text-slate-400 opacity-60 cursor-not-allowed"
+                    : "bg-white border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe] cursor-pointer"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={isSelected}
+                  disabled={isDisabled}
+                  onChange={() => {}}
+                  className="w-[21px] h-[21px] accent-[#12457a] rounded shrink-0"
+                />
+                <span>{fmt.title}</span>
+              </label>
+            );
+          })}
         </div>
-        <p className="text-xs text-slate-500">
-          Không bắt buộc. Tối đa 500 ký tự.
+      </section>
+
+      {/* Câu 14: Ý kiến khác */}
+      <section className="py-7">
+        <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-1.5">
+          Câu 14. Ý kiến đề xuất khác (Không bắt buộc)
+        </h3>
+        <p className="text-[15px] text-slate-500 mb-3.5">
+          Đề xuất cụ thể về nội dung, phương pháp hoặc thời gian tổ chức tập huấn (tối đa 500 ký tự).
         </p>
 
         <textarea
@@ -150,67 +127,68 @@ export const StepLearningPreferences: React.FC<StepLearningPreferencesProps> = (
           onChange={(e) =>
             setPart4((prev) => ({ ...prev, generalFeedback: e.target.value }))
           }
-          placeholder="Nhập ý kiến, đề xuất cụ thể về nội dung, phương pháp, thời gian tổ chức tập huấn..."
-          className="w-full bg-white border border-slate-300 focus:border-sky-600 focus:ring-1 focus:ring-sky-600 rounded-lg p-3 text-xs sm:text-sm text-slate-800"
+          placeholder="Nhập ý kiến, đề xuất của đồng chí..."
+          className="w-full bg-[#f8fafc] hover:bg-white focus:bg-white border-[1.5px] border-slate-300 focus:border-[#12457a] focus:ring-4 focus:ring-[#12457a]/12 rounded-[11px] p-4 text-[17.5px] text-[#0e1c2e] outline-none transition-all"
         />
-        <div className="text-right text-xs text-slate-400">
-          {(part4.generalFeedback || "").length}/500 ký tự
+        <div className="text-right text-[14px] text-slate-400 mt-1.5">
+          {(part4.generalFeedback || "").length} / 500 ký tự
         </div>
-      </div>
+      </section>
 
-      {/* TÓM TẮT XÁC NHẬN */}
-      <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-2">
-        <div className="font-bold text-slate-800 flex items-center gap-1.5 uppercase tracking-wide">
-          <FileText className="w-4 h-4 text-slate-600" />
-          <span>Tóm tắt thông tin khai báo</span>
+      {/* Tóm tắt thông tin khai báo */}
+      <section className="py-7">
+        <div className="bg-gradient-to-r from-[#f2f7fd] to-[#f8fafc] border border-[#d4e1f0] rounded-[12px] p-5 text-[15.5px] text-slate-700 space-y-2">
+          <div className="font-bold text-[#0e1c2e] text-[16.5px] mb-1">
+            Tóm tắt thông tin khai báo
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+            <div>
+              <span className="text-slate-500">Địa bàn: </span>
+              <strong className="font-semibold text-[#0e1c2e]">
+                {part1.communeName}, {part1.provinceName}
+              </strong>
+            </div>
+            <div>
+              <span className="text-slate-500">Cơ quan: </span>
+              <strong className="font-semibold text-[#0e1c2e]">{part1.agencyName}</strong>
+            </div>
+            <div>
+              <span className="text-slate-500">Vị trí việc làm: </span>
+              <strong className="font-semibold text-[#0e1c2e]">
+                {part1.positionCode?.includes("KHAC")
+                  ? part1.positionOtherText
+                  : part1.positionName}
+              </strong>
+            </div>
+            <div>
+              <span className="text-slate-500">Số nhóm đánh giá sâu: </span>
+              <strong className="font-semibold text-[#12633c]">
+                {activeWorkgroupsCount} nhóm công việc
+              </strong>
+            </div>
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 pt-1">
-          <div>
-            <span className="text-slate-500">Địa bàn: </span>
-            <span className="font-medium text-slate-900">
-              {part1.communeName}, {part1.provinceName}
-            </span>
-          </div>
-          <div>
-            <span className="text-slate-500">Cơ quan: </span>
-            <span className="font-medium text-slate-900">{part1.agencyName}</span>
-          </div>
-          <div>
-            <span className="text-slate-500">Vị trí việc làm: </span>
-            <span className="font-medium text-slate-900">
-              {part1.positionCode?.includes("KHAC")
-                ? part1.positionOtherText
-                : part1.positionName}
-            </span>
-          </div>
-          <div>
-            <span className="text-slate-500">Số nhóm công việc đánh giá: </span>
-            <span className="font-medium text-emerald-700 font-bold">
-              {activeWorkgroupsCount} nhóm
-            </span>
-          </div>
-        </div>
-      </div>
+      </section>
 
-      {/* Nút Điều hướng & Nộp bài */}
-      <div className="flex items-center justify-between gap-4 pt-2">
+      {/* Navigation & Submit */}
+      <div className="pt-7 flex items-center justify-between gap-4">
         <button
           type="button"
           onClick={onBackToPart3}
-          className="px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 font-medium text-sm flex items-center gap-1 transition-colors"
+          className="h-[50px] px-5 rounded-[11px] border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-[16.5px] inline-flex items-center gap-2 transition-all cursor-pointer active:scale-95"
         >
-          <ChevronLeft className="w-4 h-4" />
-          <span>Quay lại Phần III</span>
+          <ArrowLeft className="w-5 h-5" />
+          <span>Quay lại</span>
         </button>
 
         <button
           type="button"
           disabled={isSubmitting}
           onClick={handleConfirmSubmit}
-          className="px-8 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base shadow-md flex items-center gap-2 transition-all disabled:opacity-50"
+          className="h-[52px] px-7 sm:px-8 rounded-[11px] bg-gradient-to-b from-[#18804e] to-[#12633c] hover:from-[#157347] hover:to-[#0f5132] text-white font-semibold text-[17.5px] shadow-[0_6px_16px_-4px_rgba(18,99,60,0.38)] inline-flex items-center gap-2.5 transition-all disabled:opacity-50 cursor-pointer active:scale-95"
         >
           <Send className="w-5 h-5" />
-          <span>{isSubmitting ? "Đang gửi phiếu..." : "XÁC NHẬN VÀ GỬI PHIẾU"}</span>
+          <span>{isSubmitting ? "Đang gửi phiếu..." : "Xác nhận & Gửi phiếu"}</span>
         </button>
       </div>
     </div>

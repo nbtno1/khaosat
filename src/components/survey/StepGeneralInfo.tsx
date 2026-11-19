@@ -4,17 +4,7 @@ import React, { useState } from "react";
 import { Part1Data } from "@/lib/validations/survey.schema";
 import { SurveyLinkMeta } from "@/hooks/useSurveyFormState";
 import { Select } from "@/components/common/Select";
-import {
-  Building2,
-  User,
-  Clock,
-  CheckCircle2,
-  ChevronRight,
-  AlertCircle,
-  MapPin,
-  Landmark,
-  Briefcase,
-} from "lucide-react";
+import { ArrowRight, AlertCircle, Lock } from "lucide-react";
 
 interface StepGeneralInfoProps {
   part1: Partial<Part1Data>;
@@ -23,7 +13,6 @@ interface StepGeneralInfoProps {
   onNext: () => void;
 }
 
-// 11 Agencies
 const AGENCIES = [
   { code: "UBND", name: "Lãnh đạo Ủy ban nhân dân xã/phường" },
   { code: "HDND", name: "Hội đồng nhân dân xã/phường" },
@@ -38,7 +27,6 @@ const AGENCIES = [
   { code: "DON_VI_KHAC", name: "Đơn vị khác được giao dự toán từ ngân sách cấp xã" },
 ];
 
-// Positions by Agency
 const POSITIONS_BY_AGENCY: Record<string, Array<{ code: string; name: string }>> = {
   UBND: [
     { code: "CHU_TICH_UBND", name: "Chủ tịch Ủy ban nhân dân" },
@@ -104,7 +92,6 @@ const POSITIONS_BY_AGENCY: Record<string, Array<{ code: string; name: string }>>
   ],
 };
 
-// Capacities (Question 4)
 const CAPACITIES = [
   { id: "CAN_BO", title: "Cán bộ" },
   { id: "CONG_CHUC", title: "Công chức" },
@@ -113,7 +100,7 @@ const CAPACITIES = [
   { id: "KHONG_CHUYEN_TRACH", title: "Người hoạt động không chuyên trách" },
   { id: "NGUOI_LAO_DONG", title: "Người lao động" },
   { id: "KHAC", title: "Khác (ghi rõ)" },
-];
+] as const;
 
 export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
   part1,
@@ -122,11 +109,6 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
   onNext,
 }) => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [communeSearch, setCommuneSearch] = useState("");
-
-  const filteredCommunes = linkMeta.communes.filter((c) =>
-    c.name.toLowerCase().includes(communeSearch.toLowerCase())
-  );
 
   const handleAgencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const code = e.target.value;
@@ -164,7 +146,7 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
     }));
   };
 
-  const toggleCapacity = (capId: any) => {
+  const toggleCapacity = (capId: Part1Data["capacities"][number]) => {
     setPart1((prev) => {
       const existing = prev.capacities || [];
       const updated = existing.includes(capId)
@@ -180,7 +162,7 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
 
   const validateAndProceed = () => {
     if (!part1.communeCode) {
-      setErrorMsg("Vui lòng chọn Xã/Phường/Thị trấn.");
+      setErrorMsg("Vui lòng chọn Xã, phường, thị trấn nơi công tác.");
       return;
     }
     if (!part1.agencyCode) {
@@ -188,7 +170,7 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
       return;
     }
     if (!part1.positionCode) {
-      setErrorMsg("Vui lòng chọn Vị trí việc làm.");
+      setErrorMsg("Vui lòng chọn Vị trí việc làm hiện tại.");
       return;
     }
     if (part1.positionCode.includes("KHAC") && !part1.positionOtherText?.trim()) {
@@ -215,84 +197,68 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
   const currentPositions = POSITIONS_BY_AGENCY[part1.agencyCode || ""] || [];
 
   return (
-    <div className="space-y-6">
-      {/* Banner giới thiệu */}
-      <div className="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-lg">
-        <h3 className="text-sm font-semibold text-sky-900 uppercase tracking-wide">
-          Phần I — Thông tin chung của người trả lời
-        </h3>
-        <p className="text-xs text-sky-700 mt-1">
-          Khảo sát phục vụ xây dựng kế hoạch bồi dưỡng năng lực của Kiểm toán nhà nước. Toàn bộ thông tin được bảo mật ẩn danh hoàn toàn (Zero-PII).
-        </p>
-      </div>
-
+    <div className="divide-y divide-slate-100">
       {errorMsg && (
-        <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg flex items-center gap-2 text-sm">
-          <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-600" />
+        <div className="mb-6 bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-xl flex items-center gap-3 text-[15.5px] font-medium">
+          <AlertCircle className="w-5 h-5 shrink-0 text-rose-600" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      {/* 1. Tỉnh / Thành phố (Cố định theo Link) */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <div className="flex items-center gap-2 text-slate-800 font-medium">
-          <Building2 className="w-5 h-5 text-sky-700" />
-          <span>Địa bàn hành chính</span>
-        </div>
+      {/* Câu 1: Địa bàn công tác */}
+      <section className="pb-7">
+        <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-4">
+          1. Địa bàn công tác hiện tại <span className="text-rose-600">*</span>
+        </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-              <span>Tỉnh / Thành phố</span>
+            <label className="block text-[15.5px] font-semibold text-slate-600 mb-2">
+              Tỉnh, thành phố
             </label>
             <div className="relative flex items-center">
-              <div className="pointer-events-none absolute left-3.5 w-4 h-4 text-sky-700 z-10">
-                <MapPin className="w-full h-full" />
-              </div>
               <input
                 type="text"
                 readOnly
                 value={linkMeta.provinceName}
-                className="w-full bg-slate-100 border border-slate-200/90 text-slate-800 rounded-xl sm:rounded-2xl pl-10 pr-4 py-2.5 text-xs sm:text-sm font-bold cursor-not-allowed shadow-2xs"
+                className="w-full min-h-[54px] bg-[#f4f6f9] border-[1.5px] border-slate-200 text-slate-600 rounded-[11px] px-4 pr-11 text-[18px] font-medium cursor-not-allowed"
               />
+              <Lock className="w-[18px] h-[18px] text-slate-400 absolute right-4 pointer-events-none" />
             </div>
           </div>
 
           <Select
-            label="Xã / Phường / Thị trấn"
+            label="Xã, phường, thị trấn"
             required
-            icon={MapPin}
-            sizeVariant="md"
+            sizeVariant="lg"
             value={part1.communeCode || ""}
             onChange={handleCommuneChange}
           >
-            <option value="">-- Bấm để chọn Xã/Phường --</option>
-            {filteredCommunes.map((c) => (
+            <option value="">Chọn xã, phường, thị trấn...</option>
+            {linkMeta.communes.map((c) => (
               <option key={c.code} value={c.code}>
                 {c.name} {c.districtName ? `(${c.districtName})` : ""}
               </option>
             ))}
           </Select>
         </div>
-      </div>
+      </section>
 
-      {/* 2. Cơ quan & Vị trí việc làm */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <div className="flex items-center gap-2 text-slate-800 font-medium">
-          <User className="w-5 h-5 text-sky-700" />
-          <span>Cơ quan và Vị trí việc làm</span>
-        </div>
+      {/* Câu 2 & 3: Cơ quan và Vị trí việc làm */}
+      <section className="py-7">
+        <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-4">
+          2. Cơ quan và Vị trí việc làm hiện tại <span className="text-rose-600">*</span>
+        </h3>
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <Select
-            label="Câu 2: Cơ quan, đơn vị công tác"
+            label="Cơ quan, đơn vị công tác"
             required
-            icon={Landmark}
-            sizeVariant="md"
+            sizeVariant="lg"
             value={part1.agencyCode || ""}
             onChange={handleAgencyChange}
           >
-            <option value="">-- Bấm để chọn Cơ quan, đơn vị --</option>
+            <option value="">Chọn cơ quan, đơn vị...</option>
             {AGENCIES.map((a) => (
               <option key={a.code} value={a.code}>
                 {a.name}
@@ -300,150 +266,145 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
             ))}
           </Select>
 
-          {part1.agencyCode && (
-            <Select
-              label="Câu 3: Vị trí việc làm của đồng chí"
-              required
-              icon={Briefcase}
-              sizeVariant="md"
-              value={part1.positionCode || ""}
-              onChange={handlePositionChange}
-            >
-              <option value="">-- Bấm để chọn Vị trí việc làm --</option>
-              {currentPositions.map((p) => (
-                <option key={p.code} value={p.code}>
-                  {p.name}
-                </option>
-              ))}
-            </Select>
-          )}
-
-          {part1.positionCode?.includes("KHAC") && (
-            <div>
-              <label className="flex items-center gap-1.5 text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                <span>Ghi rõ chức danh vị trí khác</span>
-                <span className="text-rose-500 font-black">*</span>
-              </label>
-              <input
-                type="text"
-                value={part1.positionOtherText || ""}
-                onChange={(e) =>
-                  setPart1((prev) => ({ ...prev, positionOtherText: e.target.value }))
-                }
-                placeholder="Ví dụ: Cán bộ giao thông - thủy lợi..."
-                className="w-full bg-slate-50/60 hover:bg-white focus:bg-white border border-slate-300/80 hover:border-slate-400 text-slate-900 rounded-xl sm:rounded-2xl px-4 py-2.5 text-xs sm:text-sm font-medium shadow-2xs focus:outline-none focus:border-sky-600 focus:ring-4 focus:ring-sky-500/10 transition-all"
-              />
-            </div>
-          )}
+          <Select
+            label="Vị trí việc làm hiện tại"
+            required
+            sizeVariant="lg"
+            disabled={!part1.agencyCode}
+            value={part1.positionCode || ""}
+            onChange={handlePositionChange}
+          >
+            <option value="">
+              {part1.agencyCode ? "Chọn vị trí việc làm..." : "Chọn cơ quan, đơn vị trước"}
+            </option>
+            {currentPositions.map((p) => (
+              <option key={p.code} value={p.code}>
+                {p.name}
+              </option>
+            ))}
+          </Select>
         </div>
-      </div>
 
-      {/* 3. Tư cách làm việc (Câu 4 - Chọn nhiều) */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <div>
-          <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">
-            Câu 4: Tư cách làm việc của đồng chí (chọn các mục phù hợp) <span className="text-red-500">*</span>
-          </label>
-          <p className="text-xs text-slate-500 mb-3">
-            Đồng chí có thể tích chọn nhiều mục nếu kiêm nhiệm hoặc có nhiều tư cách.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {CAPACITIES.map((cap) => {
-              const checked = part1.capacities?.includes(cap.id as any);
-              return (
-                <label
-                  key={cap.id}
-                  onClick={() => toggleCapacity(cap.id)}
-                  className={`flex items-center gap-3 p-3 rounded-lg border text-sm cursor-pointer transition-colors ${
-                    checked
-                      ? "bg-sky-50 border-sky-600 text-sky-950 font-medium"
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={!!checked}
-                    onChange={() => {}}
-                    className="w-4 h-4 text-sky-600 rounded border-slate-300 focus:ring-sky-500"
-                  />
-                  <span>{cap.title}</span>
-                </label>
-              );
-            })}
+        {part1.positionCode?.includes("KHAC") && (
+          <div className="mt-4">
+            <label className="block text-[15.5px] font-semibold text-slate-700 mb-2">
+              Ghi rõ chức danh vị trí khác <span className="text-rose-600">*</span>
+            </label>
+            <input
+              type="text"
+              value={part1.positionOtherText || ""}
+              onChange={(e) =>
+                setPart1((prev) => ({ ...prev, positionOtherText: e.target.value }))
+              }
+              placeholder="Ví dụ: Cán bộ giao thông - thủy lợi..."
+              className="w-full min-h-[54px] bg-[#f8fafc] hover:bg-white focus:bg-white border-[1.5px] border-slate-300 text-[#0e1c2e] rounded-[11px] px-4 text-[18px] focus:outline-none focus:border-[#12457a] focus:ring-4 focus:ring-[#12457a]/12 transition-all"
+            />
           </div>
+        )}
+      </section>
 
-          {part1.capacities?.includes("KHAC" as any) && (
-            <div className="mt-3">
-              <input
-                type="text"
-                value={part1.capacityOtherText || ""}
-                onChange={(e) =>
-                  setPart1((prev) => ({ ...prev, capacityOtherText: e.target.value }))
-                }
-                placeholder="Ghi rõ tư cách khác..."
-                className="w-full bg-white border border-slate-300 focus:border-sky-600 focus:ring-1 focus:ring-sky-600 rounded-lg px-3 py-2 text-sm text-slate-800"
-              />
-            </div>
-          )}
+      {/* Câu 4: Tư cách làm việc */}
+      <section className="py-7">
+        <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-1.5">
+          3. Tư cách làm việc của đồng chí <span className="text-rose-600">*</span>
+        </h3>
+        <p className="text-[15.5px] text-slate-500 mb-4">
+          Có thể chọn nhiều mục nếu kiêm nhiệm.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          {CAPACITIES.map((cap) => {
+            const checked = part1.capacities?.includes(cap.id);
+            return (
+              <label
+                key={cap.id}
+                onClick={() => toggleCapacity(cap.id)}
+                className={`flex items-center gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] border-[1.5px] text-[18px] cursor-pointer transition-all duration-150 select-none ${
+                  checked
+                    ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-[#12457a] text-[#0b2d52] font-semibold shadow-xs"
+                    : "bg-white border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={!!checked}
+                  onChange={() => {}}
+                  className="w-[21px] h-[21px] accent-[#12457a] rounded shrink-0"
+                />
+                <span>{cap.title}</span>
+              </label>
+            );
+          })}
         </div>
-      </div>
 
-      {/* 4. Số năm làm công việc (Câu 5 - Chọn 1) */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-        <div className="flex items-center gap-2 text-slate-800 font-medium">
-          <Clock className="w-5 h-5 text-sky-700" />
-          <span>Kinh nghiệm công tác</span>
-        </div>
+        {part1.capacities?.includes("KHAC") && (
+          <div className="mt-4">
+            <input
+              type="text"
+              value={part1.capacityOtherText || ""}
+              onChange={(e) =>
+                setPart1((prev) => ({ ...prev, capacityOtherText: e.target.value }))
+              }
+              placeholder="Ghi rõ tư cách khác..."
+              className="w-full min-h-[54px] bg-white border-[1.5px] border-slate-300 focus:border-[#12457a] focus:ring-4 focus:ring-[#12457a]/12 rounded-[11px] px-4 text-[18px] text-[#0e1c2e] outline-none"
+            />
+          </div>
+        )}
+      </section>
 
-        <div>
-          <label className="block text-xs font-semibold text-slate-600 uppercase mb-3">
-            Câu 5: Số năm đồng chí làm công việc quản lý tài chính, tài sản công <span className="text-red-500">*</span>
-          </label>
+      {/* Câu 5: Số năm kinh nghiệm */}
+      <section className="py-7">
+        <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-4">
+          4. Số năm làm công việc quản lý tài chính, tài sản công <span className="text-rose-600">*</span>
+        </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {[
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          {(
+            [
               { id: "UNDER_1", title: "Dưới 1 năm" },
               { id: "FROM_1_TO_3", title: "Từ 1 đến 3 năm" },
               { id: "OVER_3", title: "Trên 3 năm" },
-            ].map((exp) => {
-              const selected = part1.experienceYears === exp.id;
-              return (
-                <label
-                  key={exp.id}
-                  onClick={() =>
-                    setPart1((prev) => ({ ...prev, experienceYears: exp.id as any }))
-                  }
-                  className={`flex items-center justify-center p-3 rounded-lg border text-sm cursor-pointer transition-all ${
-                    selected
-                      ? "bg-sky-700 text-white border-sky-700 font-medium shadow-sm"
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="experienceYears"
-                    checked={selected}
-                    onChange={() => {}}
-                    className="sr-only"
-                  />
-                  <span>{exp.title}</span>
-                </label>
-              );
-            })}
-          </div>
+            ] as const
+          ).map((exp) => {
+            const selected = part1.experienceYears === exp.id;
+            return (
+              <label
+                key={exp.id}
+                onClick={() =>
+                  setPart1((prev) => ({ ...prev, experienceYears: exp.id }))
+                }
+                className={`flex items-center justify-center min-h-[54px] px-4 py-3 rounded-[11px] border-[1.5px] text-[18px] cursor-pointer transition-all duration-150 select-none ${
+                  selected
+                    ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-[#12457a] text-[#0b2d52] font-semibold shadow-xs"
+                    : "bg-white border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="experienceYears"
+                  checked={selected}
+                  onChange={() => {}}
+                  className="sr-only"
+                />
+                <span>{exp.title}</span>
+              </label>
+            );
+          })}
         </div>
-      </div>
+      </section>
 
-      {/* Nút Tiếp tục */}
-      <div className="pt-2">
+      {/* Footer Action */}
+      <div className="pt-7 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <span className="text-[15.5px] text-slate-500">
+          Phiếu không yêu cầu họ tên, số điện thoại hay CCCD.
+        </span>
         <button
           type="button"
           onClick={validateAndProceed}
-          className="w-full bg-sky-700 hover:bg-sky-800 text-white font-medium py-3.5 px-6 rounded-xl shadow flex items-center justify-center gap-2 transition-colors text-base"
+          className="h-[52px] px-7 rounded-[11px] civic-btn-primary text-[18px] font-semibold inline-flex items-center justify-center gap-2.5 cursor-pointer"
         >
-          <span>Tiếp tục sang Phần II: Nhóm công việc</span>
-          <ChevronRight className="w-5 h-5" />
+          <span>Tiếp tục</span>
+          <ArrowRight className="w-5 h-5" />
         </button>
       </div>
     </div>

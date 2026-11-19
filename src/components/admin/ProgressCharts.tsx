@@ -31,8 +31,8 @@ export const ProgressCharts: React.FC<ProgressChartsProps> = ({
   if (!isMounted) {
     return (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="h-72 bg-slate-100 rounded-3xl animate-pulse" />
-        <div className="h-72 bg-slate-100 rounded-3xl animate-pulse" />
+        <div className="h-72 bg-slate-100 rounded-2xl animate-pulse" />
+        <div className="h-72 bg-slate-100 rounded-2xl animate-pulse" />
       </div>
     );
   }
@@ -40,53 +40,51 @@ export const ProgressCharts: React.FC<ProgressChartsProps> = ({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* 1. Daily Submissions Timeline Chart */}
-      <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-        <div className="flex items-center justify-between mb-4">
+      <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+        <div className="flex items-start justify-between mb-5 gap-3">
           <div>
-            <h3 className="text-sm font-bold text-slate-900">
-              Tiến độ Thu thập Phiếu theo Ngày
+            <h3 className="text-[18px] font-bold text-[#0e1c2e]">
+              Phiếu tiếp nhận theo ngày
             </h3>
-            <p className="text-xs text-slate-500">
-              Số lượng phiếu mới tiếp nhận và đường tích lũy toàn quốc
+            <p className="text-[14.5px] text-slate-500 mt-0.5">
+              Số lượng phiếu mới tiếp nhận theo từng ngày trên toàn quốc
             </p>
           </div>
-          <div className="flex items-center gap-3 text-xs font-semibold">
-            <span className="flex items-center gap-1.5 text-sky-700">
-              <span className="w-2.5 h-2.5 rounded-full bg-sky-600 inline-block" />
-              Phiếu theo ngày
-            </span>
-          </div>
+          <span className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#12457a] shrink-0">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#1d5ca3] inline-block" />
+            Theo ngày
+          </span>
         </div>
 
         <div className="h-64 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={dailyTimeline} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <AreaChart data={dailyTimeline} margin={{ top: 10, right: 12, left: -16, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorSubmissions" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0284c7" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#0284c7" stopOpacity={0.0} />
+                  <stop offset="5%" stopColor="#1d5ca3" stopOpacity={0.32} />
+                  <stop offset="95%" stopColor="#1d5ca3" stopOpacity={0.0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#eef2f6" vertical={false} />
               <XAxis
                 dataKey="date"
-                tick={{ fontSize: 11, fill: "#64748b" }}
-                axisLine={{ stroke: "#e2e8f0" }}
+                tick={{ fontSize: 13.5, fill: "#475569" }}
+                axisLine={{ stroke: "#cbd5e1" }}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fontSize: 11, fill: "#64748b" }}
-                axisLine={{ stroke: "#e2e8f0" }}
+                tick={{ fontSize: 13.5, fill: "#475569" }}
+                axisLine={{ stroke: "#cbd5e1" }}
                 tickLine={false}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#0f172a",
-                  borderRadius: "12px",
+                  backgroundColor: "#0e1c2e",
+                  borderRadius: "10px",
                   border: "none",
                   color: "#fff",
-                  fontSize: "12px",
-                  boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                  fontSize: "14px",
+                  boxShadow: "0 10px 20px -5px rgba(15, 23, 42, 0.25)",
                 }}
                 labelStyle={{ fontWeight: "bold", color: "#93c5fd" }}
                 formatter={(val: number) => [`${val} phiếu`, "Số phiếu"]}
@@ -94,7 +92,7 @@ export const ProgressCharts: React.FC<ProgressChartsProps> = ({
               <Area
                 type="monotone"
                 dataKey="submissions"
-                stroke="#0284c7"
+                stroke="#12457a"
                 strokeWidth={3}
                 fillOpacity={1}
                 fill="url(#colorSubmissions)"
@@ -105,48 +103,54 @@ export const ProgressCharts: React.FC<ProgressChartsProps> = ({
       </div>
 
       {/* 2. Top Provinces Bar Chart */}
-      <div className="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-        <div className="flex items-center justify-between mb-4">
+      <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+        <div className="flex items-start justify-between mb-5 gap-3">
           <div>
-            <h3 className="text-sm font-bold text-slate-900">
-              Top Địa phương có Tiến độ Cao nhất
+            <h3 className="text-[18px] font-bold text-[#0e1c2e]">
+              Địa phương có tiến độ cao nhất
             </h3>
-            <p className="text-xs text-slate-500">
+            <p className="text-[14.5px] text-slate-500 mt-0.5">
               Số lượng phiếu thu thập phân bổ theo tỉnh, thành phố
             </p>
           </div>
-          <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800">
-            Tích cực
+          <span className="px-3 py-1 rounded-full text-[13.5px] font-semibold bg-emerald-50 text-emerald-800 shrink-0">
+            Tiến độ tích cực
           </span>
         </div>
 
         <div className="h-64 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={topProvinces} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+            <BarChart data={topProvinces} margin={{ top: 10, right: 12, left: -16, bottom: 0 }}>
+              <defs>
+                <linearGradient id="civicBarGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#2563eb" />
+                  <stop offset="100%" stopColor="#0f3d6e" />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#eef2f6" vertical={false} />
               <XAxis
                 dataKey="name"
-                tick={{ fontSize: 11, fill: "#64748b" }}
-                axisLine={{ stroke: "#e2e8f0" }}
+                tick={{ fontSize: 13.5, fill: "#475569" }}
+                axisLine={{ stroke: "#cbd5e1" }}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fontSize: 11, fill: "#64748b" }}
-                axisLine={{ stroke: "#e2e8f0" }}
+                tick={{ fontSize: 13.5, fill: "#475569" }}
+                axisLine={{ stroke: "#cbd5e1" }}
                 tickLine={false}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#0f172a",
-                  borderRadius: "12px",
+                  backgroundColor: "#0e1c2e",
+                  borderRadius: "10px",
                   border: "none",
                   color: "#fff",
-                  fontSize: "12px",
+                  fontSize: "14px",
                 }}
-                labelStyle={{ fontWeight: "bold", color: "#86efac" }}
+                labelStyle={{ fontWeight: "bold", color: "#93c5fd" }}
                 formatter={(val: number) => [`${val} phiếu`, "Thu thập"]}
               />
-              <Bar dataKey="submissions" fill="#059669" radius={[8, 8, 0, 0]} barSize={28} />
+              <Bar dataKey="submissions" fill="url(#civicBarGrad)" radius={[6, 6, 0, 0]} barSize={32} />
             </BarChart>
           </ResponsiveContainer>
         </div>
