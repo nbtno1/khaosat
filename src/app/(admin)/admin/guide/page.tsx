@@ -115,10 +115,10 @@ export default function UserGuidePage() {
       {/* Page Header (Cố định) */}
       <div className="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
+          <h1 className="text-[24px] sm:text-[28px] font-bold text-[#0e1c2e] tracking-[-0.03em] leading-snug">
             Hướng dẫn Sử dụng & Vận hành Phần mềm
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-[15px] text-slate-500">
             Nội dung được hệ thống tự động đồng bộ hóa thời gian thực theo cấu hình và các chức năng đang kích hoạt.
           </p>
         </div>
@@ -137,7 +137,7 @@ export default function UserGuidePage() {
           <button
             type="button"
             onClick={handlePrint}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-xs shadow-2xs transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-[15px] shadow-2xs transition-all cursor-pointer"
             title="In cẩm nang hoặc lưu dưới dạng file PDF"
           >
             <Printer className="w-3.5 h-3.5 text-slate-500" />
@@ -148,39 +148,39 @@ export default function UserGuidePage() {
 
       {/* Dynamic Status Meta Banner (Cố định) */}
       {guideData && (
-        <div className="shrink-0 grid grid-cols-2 sm:grid-cols-4 gap-2.5 bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 p-3.5 rounded-2xl text-white shadow-2xs">
-          <div className="border-r border-slate-800 pr-3">
-            <div className="text-[10px] uppercase font-bold text-sky-400">Bộ tiêu chuẩn</div>
-            <div className="text-sm font-black text-white mt-0.5">
+        <div className="shrink-0 grid grid-cols-2 sm:grid-cols-4 civic-panel civic-top-accent rounded-[14px] overflow-hidden divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80">
+          <div className="px-4 py-3.5 bg-gradient-to-b from-[#f6f9fe] to-white">
+            <div className="text-[13.5px] font-semibold text-[#12457a]">Bộ tiêu chuẩn</div>
+            <div className="text-[17px] font-bold text-[#0e1c2e] mt-0.5">
               Phiên bản {guideData.schemaMeta.version}
             </div>
-            <div className="text-[10px] text-slate-400 mt-0.5 truncate">
+            <div className="text-[13.5px] text-slate-500 mt-0.5 truncate">
               {guideData.schemaMeta.totalWorkgroups} nhóm việc · {guideData.schemaMeta.totalRoles} vai trò
             </div>
           </div>
 
-          <div className="border-r border-slate-800 pr-3">
-            <div className="text-[10px] uppercase font-bold text-sky-400">Đợt khảo sát</div>
-            <div className="text-sm font-black text-white mt-0.5 truncate">
+          <div className="px-4 py-3.5 bg-gradient-to-b from-[#f6f9fe] to-white">
+            <div className="text-[13.5px] font-semibold text-[#12457a]">Đợt khảo sát</div>
+            <div className="text-[17px] font-bold text-[#0e1c2e] mt-0.5 truncate">
               {guideData.campaignMeta.code}
             </div>
-            <div className="text-[10px] text-slate-400 mt-0.5">
+            <div className="text-[13.5px] text-slate-500 mt-0.5">
               {guideData.campaignMeta.participatingProvincesCount} tỉnh · Mục tiêu {guideData.campaignMeta.totalNationalTarget.toLocaleString()}
             </div>
           </div>
 
-          <div className="border-r border-slate-800 pr-3">
-            <div className="text-[10px] uppercase font-bold text-sky-400">Phân hệ chức năng</div>
-            <div className="text-sm font-black text-emerald-400 mt-0.5">
+          <div className="px-4 py-3.5 bg-gradient-to-b from-[#f3fbf6] to-white">
+            <div className="text-[13.5px] font-semibold text-[#12633c]">Phân hệ chức năng</div>
+            <div className="text-[17px] font-bold text-[#12633c] mt-0.5">
               {guideData.modules.length} Modules
             </div>
-            <div className="text-[10px] text-slate-400 mt-0.5">Đang trực tuyến 100%</div>
+            <div className="text-[13.5px] text-slate-500 mt-0.5">Đang trực tuyến 100%</div>
           </div>
 
-          <div>
-            <div className="text-[10px] uppercase font-bold text-sky-400">Trạng thái đồng bộ</div>
-            <div className="text-sm font-black text-sky-200 mt-0.5">Thời gian thực</div>
-            <div className="text-[10px] text-slate-400 mt-0.5">
+          <div className="px-4 py-3.5 bg-gradient-to-b from-[#f8fafc] to-white">
+            <div className="text-[13.5px] font-semibold text-slate-600">Trạng thái đồng bộ</div>
+            <div className="text-[17px] font-bold text-[#0f3d6e] mt-0.5">Thời gian thực</div>
+            <div className="text-[13.5px] text-slate-500 mt-0.5">
               {new Date(guideData.lastGeneratedAt).toLocaleTimeString("vi-VN")}
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function UserGuidePage() {
       )}
 
       {saveSuccessMsg && (
-        <div className="shrink-0 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center gap-2 text-xs font-bold animate-in fade-in">
+        <div className="shrink-0 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center gap-2 text-[15px] font-bold animate-in fade-in">
           <Check className="w-4 h-4 text-emerald-600" />
           <span>{saveSuccessMsg}</span>
         </div>
@@ -200,7 +200,7 @@ export default function UserGuidePage() {
           <button
             type="button"
             onClick={() => setActiveAudience("ADMIN_OPERATOR")}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[15px] font-bold transition-all cursor-pointer ${
               activeAudience === "ADMIN_OPERATOR"
                 ? "bg-sky-700 text-white shadow-2xs"
                 : "text-slate-600 hover:bg-slate-100"
@@ -213,7 +213,7 @@ export default function UserGuidePage() {
           <button
             type="button"
             onClick={() => setActiveAudience("SURVEY_RESPONDENT")}
-            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+            className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[15px] font-bold transition-all cursor-pointer ${
               activeAudience === "SURVEY_RESPONDENT"
                 ? "bg-sky-700 text-white shadow-2xs"
                 : "text-slate-600 hover:bg-slate-100"
@@ -232,7 +232,7 @@ export default function UserGuidePage() {
             placeholder="Tìm kiếm module hoặc chức năng..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white"
+            className="w-full pl-8 pr-3 min-h-[42px] py-2 rounded-[10px] border-[1.5px] border-slate-300 text-[15px] text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 bg-white"
           />
         </div>
       </div>
@@ -247,30 +247,27 @@ export default function UserGuidePage() {
         <div className="space-y-6">
           {/* 1. Dynamic Modules Explorer (Cập nhật động theo phần mềm) */}
           <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
+            <div className="p-6 border-b border-slate-100 flex flex-col gap-4 bg-[#f8fafd]">
               <div>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-100 text-sky-800">
-                  DYNAMIC MODULES DISCOVERY
-                </span>
-                <h2 className="text-base font-extrabold text-slate-900 mt-1">
-                  1. Hướng dẫn Thao tác Từng Chức năng Đang Vận hành ({filteredModules.length} Modules)
+                <h2 className="text-[19px] font-bold text-[#0e1c2e]">
+                  1. Hướng dẫn thao tác từng phân hệ đang vận hành ({filteredModules.length} phân hệ)
                 </h2>
-                <p className="text-xs text-slate-500">
-                  Mỗi chức năng được hệ thống tự động bóc tách phạm vi quyền hạn, đường dẫn và quy tắc vận hành
+                <p className="text-[15px] text-slate-500 mt-1">
+                  Chọn một phân hệ bên dưới để xem phạm vi quyền hạn, đường dẫn truy cập và quy tắc vận hành chi tiết.
                 </p>
               </div>
 
-              {/* Module Quick Pill Tabs */}
-              <div className="flex items-center gap-1 overflow-x-auto max-w-full pb-1">
+              {/* Module Quick Pill Tabs - Wrapped cleanly with no horizontal scroll */}
+              <div className="flex flex-wrap items-center gap-2">
                 {guideData.modules.map((m) => (
                   <button
                     key={m.id}
                     type="button"
                     onClick={() => setSelectedModuleId(m.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                    className={`px-3.5 py-2 rounded-[10px] text-[14.5px] font-semibold transition-all cursor-pointer ${
                       selectedModuleId === m.id
-                        ? "bg-sky-700 text-white shadow-sm"
-                        : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100"
+                        ? "bg-[#0f3d6e] text-white shadow-sm"
+                        : "bg-white text-slate-700 border border-slate-200/90 hover:border-[#12457a]/50 hover:bg-[#f2f7fd]"
                     }`}
                   >
                     {m.name.split("(")[0].trim()}
@@ -289,34 +286,34 @@ export default function UserGuidePage() {
                   <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                     <div className="space-y-2 max-w-2xl">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-sky-50 text-sky-800 border border-sky-200">
+                        <span className="font-mono text-[15px] font-bold px-2.5 py-1 rounded-lg bg-sky-50 text-sky-800 border border-sky-200">
                           {activeMod.route}
                         </span>
                         <a
                           href={activeMod.route.replace("[token]", "pilot_dot-1-2026_p20")}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-sky-600 hover:text-sky-800 font-semibold"
+                          className="inline-flex items-center gap-1 text-[15px] text-sky-600 hover:text-sky-800 font-semibold"
                         >
                           <span>Mở trực tiếp</span>
                           <ExternalLink className="w-3.5 h-3.5" />
                         </a>
                       </div>
                       <h3 className="text-lg font-black text-slate-900">{activeMod.name}</h3>
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                      <p className="text-[15px] sm:text-[16px] text-slate-600 leading-relaxed">
                         {activeMod.description}
                       </p>
                     </div>
 
                     <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 lg:w-80 shrink-0 space-y-2">
-                      <div className="text-[10px] font-bold uppercase text-slate-400">
+                      <div className="text-[13.5px] font-bold uppercase text-slate-400">
                         Vai trò được phép truy cập
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {activeMod.allowedRoles.map((role, idx) => (
                           <span
                             key={idx}
-                            className="px-2 py-1 rounded-lg bg-white border border-slate-200 text-[11px] font-bold text-slate-800 shadow-2xs"
+                            className="px-2 py-1 rounded-lg bg-white border border-slate-200 text-[14px] font-bold text-slate-800 shadow-2xs"
                           >
                             {role}
                           </span>
@@ -328,11 +325,11 @@ export default function UserGuidePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                     {/* Key capabilities */}
                     <div className="p-4 rounded-2xl bg-sky-50/60 border border-sky-100 space-y-2">
-                      <div className="font-bold text-sky-950 text-xs sm:text-sm flex items-center gap-2">
+                      <div className="font-bold text-sky-950 text-[15px] sm:text-[16px] flex items-center gap-2">
                         <CheckCircle2 className="w-4 h-4 text-sky-700" />
                         <span>Các Thao tác & Năng lực Cốt lõi</span>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-slate-700">
+                      <ul className="space-y-1.5 text-[15px] text-slate-700">
                         {activeMod.keyCapabilities.map((cap, i) => (
                           <li key={i} className="flex items-start gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-sky-600 shrink-0 mt-1.5" />
@@ -344,11 +341,11 @@ export default function UserGuidePage() {
 
                     {/* Operational rules */}
                     <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-100 space-y-2">
-                      <div className="font-bold text-amber-950 text-xs sm:text-sm flex items-center gap-2">
+                      <div className="font-bold text-amber-950 text-[15px] sm:text-[16px] flex items-center gap-2">
                         <AlertTriangle className="w-4 h-4 text-amber-600" />
                         <span>Ràng buộc Nghiệp vụ & Cảnh báo</span>
                       </div>
-                      <ul className="space-y-1.5 text-xs text-slate-700">
+                      <ul className="space-y-1.5 text-[15px] text-slate-700">
                         {activeMod.operationalRules.map((rule, i) => (
                           <li key={i} className="flex items-start gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0 mt-1.5" />
@@ -360,19 +357,19 @@ export default function UserGuidePage() {
                   </div>
 
                   {/* API Endpoints */}
-                  <div className="p-3.5 rounded-xl bg-slate-900 text-slate-200 font-mono text-xs space-y-1">
-                    <div className="text-[10px] uppercase font-bold text-slate-400">
-                      Giao diện Lập trình (REST API Endpoints):
+                  <div className="p-4 rounded-xl bg-[#f4f7fb] border border-[#d4e0ec] font-mono text-[14.5px] space-y-1.5">
+                    <div className="font-sans text-[13.5px] font-bold text-slate-600 mb-1">
+                      Giao diện Lập trình (REST API Endpoints)
                     </div>
                     {activeMod.apiEndpoints.map((ep, i) => (
-                      <div key={i} className="text-sky-400">{ep}</div>
+                      <div key={i} className="text-[#0f3d6e] font-medium">{ep}</div>
                     ))}
                   </div>
 
                   {/* In-app Note Editing Section */}
                   <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                     <div className="flex items-center justify-between">
-                      <div className="font-bold text-slate-800 text-xs flex items-center gap-2">
+                      <div className="font-bold text-slate-800 text-[15px] flex items-center gap-2">
                         <Edit3 className="w-4 h-4 text-slate-600" />
                         <span>Ghi chú Bổ sung của Ban Chỉ đạo cho Chức năng này</span>
                       </div>
@@ -385,7 +382,7 @@ export default function UserGuidePage() {
                               guideData.adminCustomNotes[activeMod.id] || ""
                             )
                           }
-                          className="px-2.5 py-1 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition-colors"
+                          className="px-2.5 py-1 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-[15px] font-semibold text-slate-700 transition-colors"
                         >
                           Sửa ghi chú
                         </button>
@@ -399,14 +396,14 @@ export default function UserGuidePage() {
                           value={editNoteText}
                           onChange={(e) => setEditNoteText(e.target.value)}
                           placeholder="Nhập ghi chú hướng dẫn riêng biệt cho cán bộ sử dụng chức năng này..."
-                          className="w-full p-3 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-600 bg-white"
+                          className="w-full p-3 rounded-xl border border-slate-300 text-[15px] text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-600 bg-white"
                         />
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
                             onClick={() => handleSaveNote(activeMod.id)}
                             disabled={isSavingNote}
-                            className="px-3.5 py-1.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs flex items-center gap-1.5 transition-colors disabled:opacity-50"
+                            className="px-3.5 py-1.5 rounded-xl civic-btn-primary font-bold text-[15px] flex items-center gap-1.5 transition-colors disabled:opacity-50"
                           >
                             <Save className="w-3.5 h-3.5" />
                             <span>{isSavingNote ? "Đang lưu..." : "Lưu vào Database"}</span>
@@ -414,14 +411,14 @@ export default function UserGuidePage() {
                           <button
                             type="button"
                             onClick={() => setEditingSectionKey(null)}
-                            className="px-3.5 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-xs transition-colors"
+                            className="px-3.5 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-[15px] transition-colors"
                           >
                             Hủy bỏ
                           </button>
                         </div>
                       </div>
                     ) : (
-                      <div className="text-xs text-slate-600 italic">
+                      <div className="text-[15px] text-slate-600 italic">
                         {guideData.adminCustomNotes[activeMod.id] ? (
                           <div className="p-2.5 bg-white rounded-xl border border-slate-200 not-italic text-slate-800 leading-relaxed">
                             {guideData.adminCustomNotes[activeMod.id]}
@@ -452,7 +449,7 @@ export default function UserGuidePage() {
                   <h2 className="text-base font-extrabold text-slate-900">
                     2. Cấu trúc Nghiệp vụ Động: 16 Nhóm Công việc & 4 Vai trò (Phiên bản {guideData.schemaMeta.version})
                   </h2>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-[15px] text-slate-500">
                     Cập nhật thời gian thực từ cơ sở dữ liệu SurveySchemaConfig
                   </p>
                 </div>
@@ -461,9 +458,9 @@ export default function UserGuidePage() {
             </button>
 
             {expandedSection === "sec_schema" && (
-              <div className="p-6 pt-0 border-t border-slate-100 space-y-6 text-xs sm:text-sm">
+              <div className="p-6 pt-0 border-t border-slate-100 space-y-6 text-[15px] sm:text-[16px]">
                 <div>
-                  <h3 className="font-bold text-slate-900 text-xs sm:text-sm mb-3">
+                  <h3 className="font-bold text-slate-900 text-[15px] sm:text-[16px] mb-3">
                     Danh sách 16 Nhóm Công việc Cấp Xã & Số Chuyên đề Đào tạo:
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
@@ -473,14 +470,14 @@ export default function UserGuidePage() {
                         className="p-3 rounded-xl bg-slate-50 border border-slate-200/70 space-y-1"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="font-mono font-bold text-sky-800 text-xs bg-sky-50 px-1.5 py-0.5 rounded">
+                          <span className="font-mono font-bold text-sky-800 text-[15px] bg-sky-50 px-1.5 py-0.5 rounded">
                             {wg.id}
                           </span>
-                          <span className="text-[10px] font-bold text-slate-500">
+                          <span className="text-[13.5px] font-bold text-slate-500">
                             {wg.topicsCount} chuyên đề
                           </span>
                         </div>
-                        <div className="font-bold text-slate-900 text-xs line-clamp-1">
+                        <div className="font-bold text-slate-900 text-[15px] line-clamp-1">
                           {wg.title}
                         </div>
                       </div>
@@ -489,22 +486,22 @@ export default function UserGuidePage() {
                 </div>
 
                 <div className="pt-4 border-t border-slate-100">
-                  <h3 className="font-bold text-slate-900 text-xs sm:text-sm mb-3">
+                  <h3 className="font-bold text-slate-900 text-[15px] sm:text-[16px] mb-3">
                     Mô tả 4 Cấp độ Năng lực theo Ngữ cảnh Từng Vai trò:
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {guideData.schemaMeta.roles.map((role) => (
                       <div
                         key={role.id}
-                        className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-2 text-xs"
+                        className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70 space-y-2 text-[15px]"
                       >
                         <div className="font-bold text-slate-900 flex items-center justify-between">
-                          <span className="text-sm font-extrabold text-sky-900">{role.title}</span>
-                          <span className="font-mono text-[10px] text-slate-400 font-bold bg-white px-2 py-0.5 rounded border">
+                          <span className="text-[16px] font-extrabold text-sky-900">{role.title}</span>
+                          <span className="font-mono text-[13.5px] text-slate-400 font-bold bg-white px-2 py-0.5 rounded border">
                             {role.id}
                           </span>
                         </div>
-                        <p className="text-[11px] text-slate-500">{role.description}</p>
+                        <p className="text-[14px] text-slate-500">{role.description}</p>
                         <div className="space-y-1 pt-1 font-medium">
                           <div><strong className="text-slate-700">Mức 1:</strong> {role.level1}</div>
                           <div><strong className="text-slate-700">Mức 2:</strong> {role.level2}</div>
@@ -528,61 +525,61 @@ export default function UserGuidePage() {
         <div className="space-y-6">
           <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-8 space-y-6">
             <div>
-              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
+              <span className="px-2.5 py-1 rounded-full text-[15px] font-bold bg-sky-100 text-sky-800">
                 CẨM NANG NGƯỜI TRẢ LỜI CẤP XÃ
               </span>
               <h2 className="text-lg font-black text-slate-900 mt-2">
                 Quy trình 4 Bước Tham gia Khảo sát Trực tuyến trên Di động
               </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              <p className="text-[15px] sm:text-[16px] text-slate-500 mt-1">
                 Bộ phiếu phiên bản {guideData.schemaMeta.version} gồm {guideData.schemaMeta.totalWorkgroups} nhóm công việc chuẩn hóa. Hệ thống tự động lưu trữ và bảo vệ danh tính 100%.
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
-                  <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-xs">1</span>
+                <div className="flex items-center gap-2 font-bold text-slate-900 text-[16px]">
+                  <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-[15px]">1</span>
                   <span>Bước 1: Điền Thông tin Hành chính (Phần I)</span>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-[15px] text-slate-600 leading-relaxed">
                   Quét mã QR của tỉnh bằng điện thoại hoặc nhấp vào đường link trong công văn. Chọn Tỉnh, Xã, Cơ quan (Đảng ủy, HĐND, UBND...) và chức danh thực tế của bạn.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
-                  <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-xs">2</span>
+                <div className="flex items-center gap-2 font-bold text-slate-900 text-[16px]">
+                  <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-[15px]">2</span>
                   <span>Bước 2: Khai báo {guideData.schemaMeta.totalWorkgroups} Nhóm Công việc (Phần II)</span>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-[15px] text-slate-600 leading-relaxed">
                   Hệ thống tự động xếp các nhóm công việc thường gặp của chức vụ bạn lên đầu. Chọn 1 trong 4 trạng thái cho từng nhóm việc (Đang làm, Chưa có dịp, Chỉ phối hợp, Không được giao).
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
-                  <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-xs">3</span>
+                <div className="flex items-center gap-2 font-bold text-slate-900 text-[16px]">
+                  <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-[15px]">3</span>
                   <span>Bước 3: Tự Đánh giá & Chọn Nhu cầu Học (Phần III)</span>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-[15px] text-slate-600 leading-relaxed">
                   Lần lượt trả lời từng nhóm được phân công: chọn vai trò → tự chấm điểm năng lực (Mức 1 đến 4) → chọn tối đa 2 khó khăn → chọn chuyên đề học và mức độ cấp thiết.
                 </p>
               </div>
 
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                <div className="flex items-center gap-2 font-bold text-slate-900 text-sm">
-                  <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-xs">4</span>
+                <div className="flex items-center gap-2 font-bold text-slate-900 text-[16px]">
+                  <span className="w-6 h-6 rounded-lg bg-sky-700 text-white flex items-center justify-center text-[15px]">4</span>
                   <span>Bước 4: Chọn Hình thức Học & Gửi Phiếu (Phần IV)</span>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Chọn tối đa 2 hình thức học tập phù hợp (trong {guideData.schemaMeta.learningFormats.length} hình thức cho phép), ghi ý kiến tự do (nếu có) và nhấn nút "Gửi kết quả khảo sát".
+                <p className="text-[15px] text-slate-600 leading-relaxed">
+                  Chọn tối đa 2 hình thức học tập phù hợp (trong {guideData.schemaMeta.learningFormats.length} hình thức cho phép), ghi ý kiến tự do (nếu có) và nhấn nút &quot;Gửi kết quả khảo sát&quot;.
                 </p>
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-1 text-xs">
-              <strong className="flex items-center gap-2 text-emerald-800 text-sm">
+            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-1 text-[15px]">
+              <strong className="flex items-center gap-2 text-emerald-800 text-[16px]">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
                 Cam kết Không Thu thập Dữ liệu Nhận dạng Cá nhân (Zero-PII):
               </strong>

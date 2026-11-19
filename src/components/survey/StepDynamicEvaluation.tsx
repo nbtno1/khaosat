@@ -193,7 +193,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
 
     if (currentPart3Index < totalActive - 1) {
       setCurrentPart3Index((prev) => prev + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      document.getElementById("survey-scroll-container")?.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
     } else {
       onNextToPart4();
     }
@@ -203,7 +203,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
     setErrorMsg(null);
     if (currentPart3Index > 0) {
       setCurrentPart3Index((prev) => prev - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      document.getElementById("survey-scroll-container")?.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
     } else {
       onBackToPart2();
     }
@@ -249,111 +249,105 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
       </div>
 
       {errorMsg && (
-        <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg flex items-center gap-2 text-sm">
-          <AlertCircle className="w-5 h-5 flex-shrink-0 text-red-600" />
+        <div className="bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-xl flex items-center gap-3 text-[15.5px] font-medium">
+          <AlertCircle className="w-5 h-5 shrink-0 text-rose-600" />
           <span>{errorMsg}</span>
         </div>
       )}
 
       {/* Header nhóm công việc hiện tại */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
-        <div className="flex items-center gap-2">
-          <span className="px-2.5 py-0.5 rounded text-xs font-bold bg-sky-100 text-sky-800">
-            {currentWgId}
-          </span>
+      <div className="pb-6 border-b border-slate-100 space-y-2.5">
+        <div className="flex items-center gap-2.5 flex-wrap">
           <span
-            className={`px-2.5 py-0.5 rounded text-xs font-semibold ${
+            className={`px-3 py-1 rounded-full text-[13.5px] font-semibold ${
               currentStatus === "DANG_THUC_HIEN"
-                ? "bg-emerald-100 text-emerald-800"
-                : "bg-amber-100 text-amber-800"
+                ? "bg-[#edf9f2] text-[#12633c]"
+                : "bg-[#fef6eb] text-[#a14a07]"
             }`}
           >
             {currentStatus === "DANG_THUC_HIEN"
               ? "Đang thực hiện"
-              : "Được giao nhưng chưa có dịp"}
+              : "Được giao, chưa có dịp"}
+          </span>
+          <span className="text-[14.5px] font-medium text-slate-500">
+            Nhóm {currentPart3Index + 1} / {totalActive}
           </span>
         </div>
-        <h3 className="text-lg font-bold text-slate-900 leading-snug">
+        <h3 className="text-[21px] sm:text-[22px] font-bold text-[#0e1c2e] leading-snug">
           {currentWgDef?.title}
         </h3>
-        <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-          <span className="font-semibold text-slate-700">Phạm vi công việc: </span>
-          {currentWgDef?.description}
-        </p>
+        {currentWgDef?.description && (
+          <p className="text-[15.5px] text-slate-600 leading-relaxed">
+            {currentWgDef.description}
+          </p>
+        )}
       </div>
 
       {/* CÂU 8: VAI TRÒ THỰC HIỆN (CHỌN NHIỀU) */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+      <div className="pb-7 border-b border-slate-100 space-y-4">
         <div>
-          <label className="block text-sm font-bold text-slate-900 mb-1">
-            Câu 8: Vai trò của đồng chí đối với nhóm công việc này <span className="text-red-500">*</span>
+          <label className="block text-[20px] font-bold text-[#0e1c2e] mb-1">
+            Câu 8. Vai trò của đồng chí đối với nhóm công việc này <span className="text-rose-600">*</span>
           </label>
-          <p className="text-xs text-slate-500 mb-3">
-            Có thể chọn nhiều vai trò nếu đồng chí kiêm nhiệm hoặc tham gia nhiều công đoạn.
+          <p className="text-[15px] text-slate-500">
+            Có thể chọn nhiều vai trò nếu kiêm nhiệm hoặc tham gia nhiều công đoạn.
           </p>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {schemaData.roles.map((r) => {
-              const isSelected = selectedRoles.includes(r.roleId);
-              return (
-                <div
-                  key={r.roleId}
-                  onClick={() => toggleRole(r.roleId)}
-                  className={`p-3.5 rounded-xl border cursor-pointer transition-all ${
-                    isSelected
-                      ? "bg-sky-50 border-sky-600 ring-1 ring-sky-500"
-                      : "bg-slate-50 border-slate-200 hover:bg-slate-100"
-                  }`}
-                >
-                  <div className="flex items-start gap-3">
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
-                      onChange={() => {}}
-                      className="mt-1 w-4 h-4 text-sky-600 rounded border-slate-300 focus:ring-sky-500"
-                    />
-                    <div className="space-y-0.5">
-                      <div className="text-sm font-bold text-slate-900">{r.title}</div>
-                      <div className="text-xs text-slate-600">{r.description}</div>
-                    </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          {schemaData.roles.map((r) => {
+            const isSelected = selectedRoles.includes(r.roleId);
+            return (
+              <label
+                key={r.roleId}
+                className={`block p-4 rounded-[11px] cursor-pointer transition-all duration-150 select-none ${
+                  isSelected
+                    ? "bg-[#e0edfc] border-2 border-[#0f3d6e] shadow-xs"
+                    : "bg-white border-[1.5px] border-slate-300/90 hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                }`}
+              >
+                <div className="flex items-start gap-3.5">
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleRole(r.roleId)}
+                    className="mt-1 w-[20px] h-[20px] accent-[#0f3d6e] rounded shrink-0 cursor-pointer"
+                  />
+                  <div className="space-y-1">
+                    <div className="text-[17.5px] font-semibold text-[#0e1c2e]">{r.title}</div>
+                    <div className="text-[14.5px] text-slate-600 leading-relaxed">{r.description}</div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </label>
+            );
+          })}
         </div>
       </div>
 
-      {/* CÂU 9: THANG TỰ ĐÁNH GIÁ 4 MỨC THEO VAI TRÒ (RULE 4) */}
+      {/* CÂU 9: THANG TỰ ĐÁNH GIÁ 4 MỨC THEO VAI TRÒ (HIỂN THỊ ĐẦY ĐỦ, KHÔNG LINE-CLAMP) */}
       {selectedRoles.length > 0 && (
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div className="pb-7 border-b border-slate-100 space-y-5">
           <div>
-            <label className="block text-sm font-bold text-slate-900 mb-1">
-              Câu 9: Mức tự đánh giá khả năng thực hiện đối với từng vai trò đã chọn <span className="text-red-500">*</span>
+            <label className="block text-[20px] font-bold text-[#0e1c2e] mb-1">
+              Câu 9. Mức tự đánh giá khả năng thực hiện theo từng vai trò <span className="text-rose-600">*</span>
             </label>
-            <p className="text-xs text-slate-500">
-              Chọn mức phản ánh đúng nhất năng lực thực tế. Bấm vào từng mức để xem mô tả chuẩn.
+            <p className="text-[15px] text-slate-500">
+              Chọn mức phản ánh đúng nhất năng lực thực tế hiện nay.
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-5">
             {selectedRoles.map((rId) => {
               const roleDef = schemaData.roles.find((ro) => ro.roleId === rId);
               const curLevel = selfEvals.find((e) => e.roleId === rId)?.level;
 
               return (
-                <div
-                  key={rId}
-                  className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-sky-600" />
-                    <h5 className="text-sm font-bold text-slate-900">
-                      Vai trò: {roleDef?.title}
-                    </h5>
-                  </div>
+                <div key={rId} className="space-y-3">
+                  <h5 className="text-[17px] font-bold text-[#12457a]">
+                    Vai trò: {roleDef?.title}
+                  </h5>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     {[1, 2, 3, 4].map((lvl) => {
                       const isSelected = curLevel === lvl;
                       const lvlKey = String(lvl) as "1" | "2" | "3" | "4";
@@ -364,33 +358,21 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
                           key={lvl}
                           type="button"
                           onClick={() => setSelfAssessedLevel(rId, lvl)}
-                          className={`p-2.5 rounded-lg border text-left flex flex-col justify-between transition-all min-h-[90px] ${
+                          aria-pressed={isSelected}
+                          className={`p-4 rounded-[12px] text-left flex flex-col justify-start gap-1.5 transition-all duration-150 cursor-pointer ${
                             isSelected
-                              ? "bg-sky-700 text-white border-sky-700 shadow"
-                              : "bg-white border-slate-200 hover:border-sky-300 text-slate-800"
+                              ? "bg-[#0f3d6e] border-2 border-[#0f3d6e] text-white shadow-sm"
+                              : "bg-white border-[1.5px] border-slate-300/90 hover:border-[#12457a]/60 hover:bg-[#f8fbfe] text-[#0e1c2e]"
                           }`}
                         >
-                          <div className="text-xs font-bold uppercase mb-1">
-                            Mức {lvl}
-                          </div>
-                          <div
-                            className={`text-xs line-clamp-3 leading-tight ${
-                              isSelected ? "text-sky-100" : "text-slate-600"
-                            }`}
-                          >
+                          <div className="text-[16.5px] font-bold">Mức {lvl}</div>
+                          <div className={`text-[14.5px] leading-relaxed ${isSelected ? "text-blue-100" : "text-slate-600"}`}>
                             {desc}
                           </div>
                         </button>
                       );
                     })}
                   </div>
-
-                  {curLevel && (
-                    <div className="text-xs text-sky-800 bg-sky-50 p-2.5 rounded-lg border border-sky-200">
-                      <span className="font-semibold">Mô tả Mức {curLevel}: </span>
-                      {roleDef?.levelDescriptions[String(curLevel) as "1" | "2" | "3" | "4"]}
-                    </div>
-                  )}
                 </div>
               );
             })}
@@ -398,162 +380,158 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
         </div>
       )}
 
-      {/* CÂU 10: KHÓ KHĂN CHÍNH (CHỈ HIỂN THỊ KHI ĐANG THỰC HIỆN - RULE 5 & 6) */}
+      {/* CÂU 10: KHÓ KHĂN CHÍNH (TỐI ĐA 2 & ĐỘC QUYỀN) */}
       {currentStatus === "DANG_THUC_HIEN" && (
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
-          <div>
-            <label className="block text-sm font-bold text-slate-900 mb-1">
-              Câu 10: Khó khăn chính gặp phải trong nhóm công việc này (chọn tối đa 2) <span className="text-red-500">*</span>
-            </label>
-            <p className="text-xs text-slate-500 mb-3">
-              Mục "Không gặp khó khăn đáng kể" là lựa chọn độc quyền (không chọn cùng các mục khác).
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {schemaData.difficulties.map((d) => {
-                const isSelected = selectedDiffs.includes(d.id);
-                return (
-                  <div
-                    key={d.id}
-                    onClick={() => toggleDifficulty(d.id, d.isExclusive)}
-                    className={`p-3 rounded-lg border cursor-pointer text-xs sm:text-sm transition-all flex items-center justify-between ${
-                      isSelected
-                        ? "bg-sky-50 border-sky-600 text-sky-950 font-semibold"
-                        : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                    }`}
-                  >
-                    <span>{d.title}</span>
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
-                      onChange={() => {}}
-                      className="w-4 h-4 text-sky-600 rounded border-slate-300 focus:ring-sky-500 ml-2"
-                    />
-                  </div>
-                );
-              })}
+        <div className="pb-7 border-b border-slate-100 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+            <div>
+              <label className="block text-[20px] font-bold text-[#0e1c2e] mb-1">
+                Câu 10. Khó khăn chính gặp phải (Chọn tối đa 2) <span className="text-rose-600">*</span>
+              </label>
+              <p className="text-[15px] text-slate-500">
+                Mục &ldquo;Không gặp khó khăn đáng kể&rdquo; không chọn cùng các mục khác.
+              </p>
             </div>
-            <div className="text-right text-xs text-slate-400 mt-1">
-              Đã chọn: {selectedDiffs.length}/2 khó khăn
-            </div>
+            <span className="text-[15px] font-semibold text-[#12457a] shrink-0">
+              Đã chọn: {selectedDiffs.length} / 2
+            </span>
           </div>
-        </div>
-      )}
 
-      {/* CÂU 11: NỘI DUNG CẦN HỌC (RULE 3) */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
-        <div>
-          <label className="block text-sm font-bold text-slate-900 mb-1">
-            Câu 11: Nội dung cần được đào tạo, bồi dưỡng trong nhóm này
-          </label>
-          <p className="text-xs text-slate-500 mb-3">
-            Chọn các chuyên đề cụ thể đồng chí có nhu cầu nâng cao kiến thức, kỹ năng.
-          </p>
-
-          <div className="space-y-2">
-            {currentWgDef?.learningTopics.map((top) => {
-              const isSelected = selectedTopics.includes(top.topicId);
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {schemaData.difficulties.map((d) => {
+              const isSelected = selectedDiffs.includes(d.id);
               return (
                 <label
-                  key={top.topicId}
-                  onClick={() => toggleLearningTopic(top.topicId)}
-                  className={`flex items-start gap-3 p-3 rounded-lg border text-xs sm:text-sm cursor-pointer transition-all ${
+                  key={d.id}
+                  className={`flex items-center gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] text-[17.5px] cursor-pointer transition-all duration-150 select-none ${
                     isSelected
-                      ? "bg-sky-50 border-sky-600 text-sky-950 font-medium"
-                      : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                      ? "bg-[#e0edfc] border-2 border-[#0f3d6e] text-[#0a2747] font-semibold shadow-xs"
+                      : "bg-white border-[1.5px] border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
                   }`}
                 >
                   <input
                     type="checkbox"
                     checked={isSelected}
-                    onChange={() => {}}
-                    className="mt-0.5 w-4 h-4 text-sky-600 rounded border-slate-300 focus:ring-sky-500 flex-shrink-0"
+                    onChange={() => toggleDifficulty(d.id, d.isExclusive)}
+                    className="w-[20px] h-[20px] accent-[#0f3d6e] rounded shrink-0 cursor-pointer"
                   />
-                  <span>{top.topicTitle}</span>
+                  <span>{d.title}</span>
                 </label>
               );
             })}
           </div>
-
-          {selectedTopics.some((t) => t.toLowerCase().includes("khac")) && (
-            <div className="mt-3">
-              <input
-                type="text"
-                placeholder="Ghi rõ nội dung học khác..."
-                value={evalData.topicOtherText || ""}
-                onChange={(e) =>
-                  updateWorkgroupEvaluation(currentWgId, (prev) => ({
-                    ...prev,
-                    topicOtherText: e.target.value,
-                  }))
-                }
-                className="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs sm:text-sm text-slate-800"
-              />
-            </div>
-          )}
         </div>
+      )}
+
+      {/* CÂU 11: NỘI DUNG CẦN HỌC */}
+      <div className="pb-7 border-b border-slate-100 space-y-4">
+        <div>
+          <label className="block text-[20px] font-bold text-[#0e1c2e] mb-1">
+            Câu 11. Nội dung cần được đào tạo, bồi dưỡng trong nhóm này
+          </label>
+          <p className="text-[15px] text-slate-500">
+            Chọn các chuyên đề cụ thể đồng chí có nhu cầu nâng cao kiến thức, kỹ năng.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {currentWgDef?.learningTopics.map((top) => {
+            const isSelected = selectedTopics.includes(top.topicId);
+            return (
+              <label
+                key={top.topicId}
+                className={`flex items-start gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] text-[17.5px] cursor-pointer transition-all duration-150 select-none ${
+                  isSelected
+                    ? "bg-[#e0edfc] border-2 border-[#0f3d6e] text-[#0a2747] font-semibold shadow-xs"
+                    : "bg-white border-[1.5px] border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={isSelected}
+                  onChange={() => toggleLearningTopic(top.topicId)}
+                  className="mt-1 w-[20px] h-[20px] accent-[#0f3d6e] rounded shrink-0 cursor-pointer"
+                />
+                <span>{top.topicTitle}</span>
+              </label>
+            );
+          })}
+        </div>
+
+        {selectedTopics.some((t) => t.toLowerCase().includes("khac")) && (
+          <div className="mt-3">
+            <input
+              type="text"
+              placeholder="Ghi rõ nội dung học khác..."
+              value={evalData.topicOtherText || ""}
+              onChange={(e) =>
+                updateWorkgroupEvaluation(currentWgId, (prev) => ({
+                  ...prev,
+                  topicOtherText: e.target.value,
+                }))
+              }
+              className="w-full min-h-[52px] bg-white border-[1.5px] border-slate-300 focus:border-[#12457a] focus:ring-4 focus:ring-[#12457a]/12 rounded-[11px] px-4 text-[17.5px] text-[#0e1c2e] outline-none"
+            />
+          </div>
+        )}
       </div>
 
-      {/* CÂU 12: MỨC ĐỘ CẦN HỌC (CHỈ HIỂN THỊ KHI CÂU 11 ĐƯỢC CHỌN - RULE 7) */}
+      {/* CÂU 12: MỨC ĐỘ CẦN HỌC */}
       {selectedTopics.length > 0 && (
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
-          <div>
-            <label className="block text-sm font-bold text-slate-900 mb-1">
-              Câu 12: Mức độ cấp thiết cần học đối với nhóm này <span className="text-red-500">*</span>
-            </label>
-            <p className="text-xs text-slate-500 mb-3">
-              Chọn một mức thời gian mong muốn tổ chức bồi dưỡng.
-            </p>
+        <div className="pb-7 border-b border-slate-100 space-y-4">
+          <label className="block text-[20px] font-bold text-[#0e1c2e]">
+            Câu 12. Mức độ cấp thiết cần học đối với nhóm này <span className="text-rose-600">*</span>
+          </label>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {[
-                { id: "URGENT_6M", label: "Cần học ngay (trong 6 tháng tới)" },
-                { id: "WITHIN_YEAR", label: "Cần học trong năm" },
-                { id: "AFTER_YEAR", label: "Có thể học sau một năm" },
-              ].map((urg) => {
-                const isSelected = evalData.urgencyLevel === urg.id;
-                return (
-                  <button
-                    key={urg.id}
-                    type="button"
-                    onClick={() => setUrgency(urg.id as UrgencyLevel)}
-                    className={`p-3 rounded-lg border text-xs sm:text-sm font-medium transition-all text-center ${
-                      isSelected
-                        ? "bg-sky-700 text-white border-sky-700 shadow"
-                        : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                    }`}
-                  >
-                    {urg.label}
-                  </button>
-                );
-              })}
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            {[
+              { id: "URGENT_6M", label: "Cần học ngay (trong 6 tháng)" },
+              { id: "WITHIN_YEAR", label: "Cần học trong năm" },
+              { id: "AFTER_YEAR", label: "Có thể học sau 1 năm" },
+            ].map((urg) => {
+              const isSelected = evalData.urgencyLevel === urg.id;
+              return (
+                <button
+                  key={urg.id}
+                  type="button"
+                  onClick={() => setUrgency(urg.id as UrgencyLevel)}
+                  aria-pressed={isSelected}
+                  className={`min-h-[52px] px-4 py-3 rounded-[11px] text-[17px] text-center transition-all duration-150 cursor-pointer ${
+                    isSelected
+                      ? "bg-[#0f3d6e] border-2 border-[#0f3d6e] text-white font-semibold shadow-sm"
+                      : "bg-white border-[1.5px] border-slate-300/90 text-slate-700 font-medium hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                  }`}
+                >
+                  {urg.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
 
       {/* Điều hướng giữa các nhóm */}
-      <div className="flex items-center justify-between gap-4 pt-2">
+      <div className="survey-actions flex items-center justify-between gap-4 pt-4">
         <button
           type="button"
           onClick={handlePrevGroup}
-          className="px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 font-medium text-sm flex items-center gap-1 transition-colors"
+          className="h-[50px] px-5 rounded-[11px] border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-[16.5px] inline-flex items-center gap-2 transition-all cursor-pointer active:scale-95"
         >
-          <ChevronLeft className="w-4 h-4" />
-          <span>{currentPart3Index === 0 ? "Quay lại Phần II" : "Nhóm trước"}</span>
+          <ChevronLeft className="w-5 h-5" />
+          <span>{currentPart3Index === 0 ? "Quay lại" : "Nhóm trước"}</span>
         </button>
 
         <button
           type="button"
           onClick={handleNextGroup}
-          className="px-6 py-3 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-medium text-sm shadow flex items-center gap-1 transition-colors"
+          className="h-[52px] px-7 rounded-[11px] civic-btn-primary font-semibold text-[17.5px] inline-flex items-center gap-2 cursor-pointer"
         >
           <span>
             {currentPart3Index < totalActive - 1
-              ? `Đánh giá nhóm tiếp theo (${currentPart3Index + 2}/${totalActive})`
-              : "Tiếp tục sang Phần IV: Hình thức học"}
+              ? `Nhóm tiếp theo (${currentPart3Index + 2}/${totalActive})`
+              : "Tiếp tục sang Bước 4"}
           </span>
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-5 h-5" />
         </button>
       </div>
     </div>

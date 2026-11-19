@@ -1,0 +1,128 @@
+{
+  "date": "2026-11-19",
+  "base": "acbc5806ec811063f9d8b161b7b4a5ee8e533cdf",
+  "feature": "a84883a24261db7d54b9c747528fe721201918e5",
+  "technicalChecks": [
+    {
+      "name": "typecheck",
+      "code": 0
+    },
+    {
+      "name": "lint",
+      "code": 0
+    },
+    {
+      "name": "build",
+      "code": 0
+    }
+  ],
+  "testSuites": [
+    {
+      "name": "test:validations",
+      "code": 0,
+      "seconds": 7
+    },
+    {
+      "name": "test:api",
+      "code": 0,
+      "seconds": 22
+    },
+    {
+      "name": "test:duplicates",
+      "code": 0,
+      "seconds": 2
+    },
+    {
+      "name": "test:analytics",
+      "code": 0,
+      "seconds": 14
+    },
+    {
+      "name": "test:excel",
+      "code": 0,
+      "seconds": 18
+    },
+    {
+      "name": "test:auth",
+      "code": 0,
+      "seconds": 14
+    },
+    {
+      "name": "test:e2e",
+      "code": 0,
+      "seconds": 19
+    },
+    {
+      "name": "test:guide",
+      "code": 0
+    },
+    {
+      "name": "test:dvhc",
+      "code": 0,
+      "seconds": 30
+    },
+    {
+      "name": "test:questions",
+      "code": 0,
+      "database": "isolated-mongodb-27027"
+    },
+    {
+      "name": "test:users",
+      "code": 0
+    },
+    {
+      "name": "test:proposals",
+      "code": 0
+    }
+  ],
+  "browser": {
+    "checks": 54,
+    "failed": 0,
+    "javascriptErrors": [],
+    "finalLayoutChecks": 18,
+    "widths": [
+      320,
+      375,
+      390,
+      768,
+      1366,
+      1440
+    ],
+    "mobileLoginViewport": "320x568",
+    "writesBlocked": true,
+    "dataMode": "offline seed/fallback; not production survey results"
+  },
+  "databaseTests": {
+    "scripts": [
+      "test:questions",
+      "test:users",
+      "test:proposals"
+    ],
+    "uri": "mongodb://127.0.0.1:27027/khaosat_ui_review",
+    "separateProcess": true,
+    "separateDataDirectory": true
+  },
+  "lintWarnings": 9,
+  "protectedSourceChanges": [],
+  "originalWorkingFiles": [
+    {
+      "path": "specs/ASSUMPTIONS-AND-OPEN-QUESTIONS.md",
+      "unchanged": true
+    },
+    {
+      "path": "specs/PROGRESS.md",
+      "unchanged": true
+    },
+    {
+      "path": "src/app/(admin)/admin/dashboard/page.tsx",
+      "unchanged": true
+    },
+    {
+      "path": "src/app/globals.css",
+      "unchanged": true
+    }
+  ],
+  "originalUntrackedFilesPreserved": true,
+  "provinceAndCommuneDataMatchFeatureCommit": true,
+  "existingDependencyVersionChanges": []
+}

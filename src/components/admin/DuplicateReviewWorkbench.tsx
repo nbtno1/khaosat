@@ -165,10 +165,10 @@ export const DuplicateReviewWorkbench: React.FC = () => {
       {/* Header & Tiêu đề Phân hệ */}
       <div className="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
+          <h1 className="text-[24px] sm:text-[28px] font-bold text-[#0e1c2e] tracking-[-0.03em] leading-snug">
             Rà soát Phiếu Nghi trùng
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-[15px] text-slate-500">
             Thẩm tra các cặp/nhóm phiếu trùng khớp 4 điểm nghiệp vụ (cùng xã, cơ quan, vị trí và 16 lựa chọn ở Câu 6).
           </p>
         </div>
@@ -177,7 +177,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
           type="button"
           onClick={fetchDuplicates}
           disabled={isLoading || isProcessing}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold shadow-2xs transition-all cursor-pointer self-start sm:self-center"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-[15px] font-bold shadow-2xs transition-all cursor-pointer self-start sm:self-center"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin text-sky-600" : ""}`} />
           <span>Làm mới danh sách</span>
@@ -187,45 +187,45 @@ export const DuplicateReviewWorkbench: React.FC = () => {
       {/* Thẻ Thống kê 4 Chỉ số cốt lõi */}
       <div className="shrink-0 grid grid-cols-2 lg:grid-cols-4 gap-3">
         <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs space-y-0.5">
-          <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="text-[13.5px] font-semibold text-slate-500 uppercase tracking-wider">
             Tổng phiếu nghi trùng
           </div>
-          <div className="text-xl sm:text-2xl font-black text-slate-900">{stats.totalSuspected}</div>
-          <div className="text-[10px] text-slate-400">Khớp 4 tiêu chí nghiệp vụ</div>
+          <div className="text-[28px] sm:text-[32px] font-bold tabular-nums tracking-[-0.025em] text-slate-900">{stats.totalSuspected}</div>
+          <div className="text-[13.5px] text-slate-400">Khớp 4 tiêu chí nghiệp vụ</div>
         </div>
 
         <div className="bg-amber-50 p-3.5 rounded-xl border border-amber-200 shadow-2xs space-y-0.5">
-          <div className="text-[10px] font-semibold text-amber-800 uppercase flex items-center gap-1 tracking-wider">
+          <div className="text-[13.5px] font-semibold text-amber-800 uppercase flex items-center gap-1 tracking-wider">
             <Clock className="w-3 h-3 text-amber-600" />
             <span>Chờ thẩm tra</span>
           </div>
-          <div className="text-xl sm:text-2xl font-black text-amber-900">{stats.pendingReview}</div>
-          <div className="text-[10px] text-amber-700">Cần chuyên viên xử lý</div>
+          <div className="text-[28px] sm:text-[32px] font-bold tabular-nums tracking-[-0.025em] text-amber-900">{stats.pendingReview}</div>
+          <div className="text-[13.5px] text-amber-700">Cần chuyên viên xử lý</div>
         </div>
 
         <div className="bg-emerald-50 p-3.5 rounded-xl border border-emerald-200 shadow-2xs space-y-0.5">
-          <div className="text-[10px] font-semibold text-emerald-800 uppercase flex items-center gap-1 tracking-wider">
+          <div className="text-[13.5px] font-semibold text-emerald-800 uppercase flex items-center gap-1 tracking-wider">
             <CheckCircle2 className="w-3 h-3 text-emerald-600" />
             <span>Đã chấp nhận (Tính)</span>
           </div>
-          <div className="text-xl sm:text-2xl font-black text-emerald-900">{stats.resolvedValid}</div>
-          <div className="text-[10px] text-emerald-700">Đưa vào tổng hợp B2-B6</div>
+          <div className="text-[28px] sm:text-[32px] font-bold tabular-nums tracking-[-0.025em] text-emerald-900">{stats.resolvedValid}</div>
+          <div className="text-[13.5px] text-emerald-700">Đưa vào tổng hợp B2-B6</div>
         </div>
 
         <div className="bg-rose-50 p-3.5 rounded-xl border border-rose-200 shadow-2xs space-y-0.5">
-          <div className="text-[10px] font-semibold text-rose-800 uppercase flex items-center gap-1 tracking-wider">
+          <div className="text-[13.5px] font-semibold text-rose-800 uppercase flex items-center gap-1 tracking-wider">
             <XCircle className="w-3 h-3 text-rose-600" />
             <span>Đã loại trừ</span>
           </div>
-          <div className="text-xl sm:text-2xl font-black text-rose-900">{stats.resolvedExcluded}</div>
-          <div className="text-[10px] text-rose-700">Thống kê lý do tại Bảng B1</div>
+          <div className="text-[28px] sm:text-[32px] font-bold tabular-nums tracking-[-0.025em] text-rose-900">{stats.resolvedExcluded}</div>
+          <div className="text-[13.5px] text-rose-700">Thống kê lý do tại Bảng B1</div>
         </div>
       </div>
 
       {/* Thanh Lọc & Tìm kiếm */}
       <div className="shrink-0 bg-white p-3 rounded-xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-xs font-semibold text-slate-500 flex items-center gap-1 mr-1">
+          <span className="text-[15px] font-semibold text-slate-500 flex items-center gap-1 mr-1">
             <Filter className="w-3.5 h-3.5" />
             Lọc trạng thái:
           </span>
@@ -239,7 +239,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
               key={tab.id}
               type="button"
               onClick={() => setSelectedStatus(tab.id)}
-              className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-2.5 py-1 rounded-lg text-[15px] font-semibold transition-all cursor-pointer ${
                 selectedStatus === tab.id
                   ? "bg-sky-700 text-white shadow-2xs"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
@@ -257,7 +257,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
             placeholder="Tìm theo xã, tỉnh, đơn vị..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-300 rounded-lg pl-8 pr-3 py-1 text-xs text-slate-800 focus:bg-white focus:border-sky-600 focus:ring-1 focus:ring-sky-600"
+            className="w-full bg-slate-50 border border-slate-300 rounded-lg pl-8 pr-3 py-1 text-[15px] text-slate-800 focus:bg-white focus:border-sky-600 focus:ring-1 focus:ring-sky-600"
           />
         </div>
       </div>
@@ -265,7 +265,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
       {/* Danh sách các nhóm nghi trùng - CUỘN ĐỘC LẬP NỘI BỘ */}
       <div className="flex-1 min-h-0 overflow-y-auto pr-1">
         {isLoading ? (
-          <div className="bg-white p-12 rounded-xl border border-slate-200 text-center text-slate-500 text-sm">
+          <div className="bg-white p-12 rounded-xl border border-slate-200 text-center text-slate-500 text-[16px]">
             Đang tải danh sách các nhóm phiếu nghi trùng...
           </div>
         ) : filteredGroups.length === 0 ? (
@@ -274,7 +274,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
             <div className="text-base font-bold text-slate-800">
               Không có phiếu nào cần rà soát trong danh mục này
             </div>
-            <p className="text-xs text-slate-500">
+            <p className="text-[15px] text-slate-500">
               Tất cả các phiếu khảo sát đều đảm bảo tính duy nhất hoặc đã được thẩm tra hoàn tất.
             </p>
           </div>
@@ -297,21 +297,21 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                 <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/60 border-b border-slate-100">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-900 flex items-center gap-1">
+                      <span className="px-2 py-0.5 rounded text-[15px] font-bold bg-amber-100 text-amber-900 flex items-center gap-1">
                         <AlertTriangle className="w-3 h-3 text-amber-700" />
                         Nhóm nghi trùng ({group.count} phiếu)
                       </span>
-                      <span className="text-xs font-semibold text-slate-600">
+                      <span className="text-[15px] font-semibold text-slate-600">
                         {group.communeName}, {group.provinceName}
                       </span>
                     </div>
 
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                    <h3 className="text-[16px] sm:text-base font-bold text-slate-900">
                       {group.agencyName} —{" "}
                       <span className="text-sky-800">{group.positionTitle}</span>
                     </h3>
 
-                    <div className="text-xs text-slate-500 font-mono">
+                    <div className="text-[15px] text-slate-500 font-mono">
                       Hash: {group.businessHash.substring(0, 20)}...
                     </div>
                   </div>
@@ -322,7 +322,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                         type="button"
                         disabled={isProcessing}
                         onClick={() => handleQuickResolveGroup(group)}
-                        className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1 disabled:opacity-50"
+                        className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[15px] font-semibold shadow-sm transition-all flex items-center gap-1 disabled:opacity-50"
                         title="Tự động giữ phiếu nộp sau cùng và loại các phiếu nộp trước"
                       >
                         <Sparkles className="w-3.5 h-3.5" />
@@ -337,7 +337,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                           prev === group.duplicateGroupId ? null : group.duplicateGroupId
                         )
                       }
-                      className="px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-white text-slate-700 text-xs font-semibold flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-white text-slate-700 text-[15px] font-semibold flex items-center gap-1"
                     >
                       <span>{isExpanded ? "Thu gọn so sánh" : "So sánh chi tiết"}</span>
                       {isExpanded ? (
@@ -352,7 +352,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                 {/* Side-by-side Diff View khi bung chi tiết */}
                 {isExpanded && (
                   <div className="p-4 sm:p-6 space-y-4">
-                    <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide">
+                    <div className="text-[15px] font-semibold text-slate-700 uppercase tracking-wide">
                       So sánh song song các phiếu trong nhóm ({group.responses.length} phiếu):
                     </div>
 
@@ -376,10 +376,10 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                             {/* Header Phiếu */}
                             <div className="flex items-center justify-between border-b border-slate-200 pb-2">
                               <div className="space-y-0.5">
-                                <div className="text-xs font-bold text-slate-800">
+                                <div className="text-[15px] font-bold text-slate-800">
                                   Phiếu #{rIdx + 1} (ID: {res._id.substring(0, 8)}...)
                                 </div>
-                                <div className="text-xs text-slate-500 flex items-center gap-1">
+                                <div className="text-[15px] text-slate-500 flex items-center gap-1">
                                   <Clock className="w-3 h-3" />
                                   <span>
                                     {new Date(res.submittedAt).toLocaleString("vi-VN")}
@@ -388,7 +388,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                               </div>
 
                               <span
-                                className={`px-2 py-0.5 rounded text-xs font-bold ${
+                                className={`px-2 py-0.5 rounded text-[15px] font-bold ${
                                   isValid
                                     ? "bg-emerald-100 text-emerald-800"
                                     : isExcluded
@@ -405,7 +405,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                             </div>
 
                             {/* Chi tiết nội dung khai báo */}
-                            <div className="space-y-2 text-xs text-slate-700">
+                            <div className="space-y-2 text-[15px] text-slate-700">
                               <div>
                                 <span className="font-semibold text-slate-600">
                                   Tư cách làm việc:{" "}
@@ -469,13 +469,13 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                                     <span className="font-semibold text-slate-600">
                                       Ý kiến khác:{" "}
                                     </span>
-                                    <span className="italic">"{res.part4.otherOpinions}"</span>
+                                    <span className="italic">&quot;{res.part4.otherOpinions}&quot;</span>
                                   </div>
                                 )}
                               </div>
 
                               {res.exclusionReason && (
-                                <div className="text-xs text-rose-700 bg-rose-50 p-2 rounded border border-rose-200">
+                                <div className="text-[15px] text-rose-700 bg-rose-50 p-2 rounded border border-rose-200">
                                   <strong>Lý do loại trừ: </strong>
                                   {res.exclusionReason}
                                 </div>
@@ -488,7 +488,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                                 type="button"
                                 disabled={isProcessing || isValid}
                                 onClick={() => handleApprove(res._id)}
-                                className="flex-1 py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition-all disabled:opacity-40"
+                                className="flex-1 py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[15px] font-semibold shadow-sm transition-all disabled:opacity-40"
                               >
                                 {isValid ? "Đã duyệt hợp lệ" : "Chấp nhận (Tính)"}
                               </button>
@@ -502,7 +502,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                                     "Cùng một cán bộ gửi lại phiếu do nhầm lẫn / gửi đúp"
                                   );
                                 }}
-                                className="flex-1 py-1.5 px-3 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow-sm transition-all disabled:opacity-40"
+                                className="flex-1 py-1.5 px-3 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-[15px] font-semibold shadow-sm transition-all disabled:opacity-40"
                               >
                                 {isExcluded ? "Đã loại trừ" : "Loại trừ phiếu"}
                               </button>
@@ -529,12 +529,12 @@ export const DuplicateReviewWorkbench: React.FC = () => {
               <span>Xác nhận loại trừ phiếu khảo sát</span>
             </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-[15px] text-slate-600 leading-relaxed">
               Phiếu này sẽ bị loại khỏi các bảng tổng hợp nhu cầu đào tạo (B2 đến B6), nhưng vẫn được thống kê số lượng và lý do loại tại Bảng B1.
             </p>
 
             <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-[15px] font-semibold text-slate-700">
                 Lý do loại trừ <span className="text-red-500">*</span>
               </label>
               <textarea
@@ -542,7 +542,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                 value={rejectReason}
                 onChange={(e) => setRejectReason(e.target.value)}
                 placeholder="Nhập lý do thẩm tra chi tiết..."
-                className="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-xs text-slate-800 focus:border-rose-600 focus:ring-1 focus:ring-rose-600"
+                className="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-[15px] text-slate-800 focus:border-rose-600 focus:ring-1 focus:ring-rose-600"
               />
             </div>
 
@@ -551,7 +551,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                 type="button"
                 disabled={isProcessing}
                 onClick={() => setRejectingResponseId(null)}
-                className="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 text-xs font-semibold hover:bg-slate-50"
+                className="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 text-[15px] font-semibold hover:bg-slate-50"
               >
                 Hủy bỏ
               </button>
@@ -559,7 +559,7 @@ export const DuplicateReviewWorkbench: React.FC = () => {
                 type="button"
                 disabled={isProcessing || !rejectReason.trim()}
                 onClick={handleConfirmReject}
-                className="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow disabled:opacity-50"
+                className="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-[15px] font-semibold shadow disabled:opacity-50"
               >
                 {isProcessing ? "Đang xử lý..." : "Xác nhận loại trừ"}
               </button>

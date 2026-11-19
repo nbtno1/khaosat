@@ -12,9 +12,9 @@ async function runGuideModuleTests() {
     assert.ok(fs.existsSync(guidePagePath), "File /admin/guide/page.tsx phải tồn tại");
 
     const content = fs.readFileSync(guidePagePath, "utf-8");
-    assert.ok(content.includes("CẨM NANG VẬN HÀNH CẬP NHẬT ĐỘNG THEO PHẦN MỀM (ADR-010)"));
+    assert.ok(content.includes("guideData.modules"));
     assert.ok(content.includes("Hướng dẫn Sử dụng & Vận hành Phần mềm"));
-    assert.ok(content.includes("DYNAMIC MODULES DISCOVERY"));
+    assert.ok(content.includes("filteredModules"));
     assert.ok(content.includes("Cam kết Không Thu thập Dữ liệu Nhận dạng Cá nhân (Zero-PII)"));
     assert.ok(content.includes("/api/public/guide"));
     assert.ok(content.includes("/api/admin/guide/sections/"));

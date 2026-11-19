@@ -72,3 +72,10 @@ Báo cáo trạng thái dự án thời gian thực theo phương pháp Spec-Dri
 | **M12** | Tối Giản Auth UX & Progressive Tab Rendering | 1 | 1/1 | **100%** | **HOÀN THÀNH** |
 | **M13** | Quản trị Người dùng, Sổ Link & Đề xuất Đào tạo | 3 | 3/3 | **100%** | **HOÀN THÀNH** |
 | **TỔNG CỘNG** | **Toàn bộ Dự án** | **24** | **24/24 Code (100%)** | **100% HOÀN THÀNH** | **READY FOR GO-LIVE** |
+
+
+## Cập nhật 19/11/2026 — TASK-025: Hợp nhất giao diện
+
+Đã rà soát ba commit UI kết thúc ở `a84883a`, sửa lỗi màn hình nhỏ, cuộn nội bộ, font, label/focus và số thứ tự hiển thị. Typecheck, lint, build và 12 bộ kiểm thử đều exit 0; 54 kiểm tra trình duyệt và 18 kiểm tra bố cục qua. CRUD kiểm tra trên MongoDB riêng. Không đổi backend/dữ liệu; giữ nguyên WIP ở worktree gốc.
+
+Bằng chứng: [UI-MERGE-2026-11-19](reviews/UI-MERGE-2026-11-19.md). Hình thức bàn giao: merge commit giữ lịch sử trên main; push thường và đối chiếu SHA remote. Không triển khai hoặc seed database.

@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f5f6f8;
+  --foreground: #111b27;
+  --navy: #0f3d6e;
+  --navy-mid: #154e8a;
+  --gold: #c8962e;
+  --ease-civic: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html,
@@ -14,6 +18,89 @@ body {
   overflow: hidden;
   color: var(--foreground);
   background: var(--background);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-be-vietnam), "Be Vietnam Pro", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+.civic-ambient-bg {
+  background: radial-gradient(circle at 14% 0%, #eaf2fc 0%, #f5f6f8 46%, #f4f2ec 100%);
+}
+
+.civic-top-accent {
+  position: relative;
+}
+
+.civic-top-accent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #0f3d6e 0%, #1d63b8 68%, #c8962e 100%);
+  pointer-events: none;
+}
+
+.civic-panel {
+  background: #ffffff;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 14px 32px -12px rgba(15, 38, 68, 0.09);
+}
+
+.civic-kpi {
+  background: #ffffff;
+  border: 1px solid rgba(203, 213, 225, 0.82);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 10px 24px -10px rgba(15, 38, 68, 0.09);
+  transition: transform 0.2s var(--ease-civic), box-shadow 0.2s var(--ease-civic), border-color 0.2s var(--ease-civic);
+}
+
+.civic-kpi:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04), 0 14px 28px -10px rgba(15, 38, 68, 0.13);
+}
+
+.civic-btn-primary {
+  background: linear-gradient(180deg, #154e8a 0%, #0f3d6e 100%);
+  color: #ffffff;
+  border: 1px solid #0f3d6e;
+  box-shadow: 0 4px 12px -2px rgba(15, 61, 110, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transition: transform 0.16s var(--ease-civic), box-shadow 0.2s var(--ease-civic), background 0.2s var(--ease-civic);
+}
+
+.civic-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #12457a 0%, #0b3057 100%);
+  box-shadow: 0 6px 16px -3px rgba(15, 61, 110, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.civic-btn-primary:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* Smooth subtle scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.65);
+}
+
+/* Keep survey navigation reachable on small screens and with enlarged text. */
+@media (max-width: 639px) {
+  .survey-actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .survey-actions > button { width: 100%; height: auto; min-height: 50px; padding: 12px 16px; white-space: normal; }
+}
+:where(button, a, input, select, textarea, [tabindex]):focus-visible { outline: 3px solid #1d63b8; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+label:has(input:focus-visible) { outline: 3px solid #1d63b8; outline-offset: 3px; }

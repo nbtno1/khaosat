@@ -87,7 +87,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
   const renderCell = (val: number) => {
     if (isSuppressed && val >= 1 && val < 5) {
       return (
-        <span className="text-amber-700 font-semibold italic text-xs">
+        <span className="text-amber-700 font-semibold italic text-[15px]">
           dưới 5 - không công bố
         </span>
       );
@@ -149,10 +149,10 @@ export const AnalyticsTablesViewer: React.FC = () => {
       {/* Header (Cố định ở đỉnh) */}
       <div className="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
+          <h1 className="text-[24px] sm:text-[28px] font-bold text-[#0e1c2e] tracking-[-0.03em] leading-snug">
             6 Bảng Tổng hợp Kết quả Khảo sát
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-[15px] text-slate-500">
             Hệ thống tự động tổng hợp số liệu từ các phản hồi hợp lệ, tính toán khoảng thiếu hụt năng lực theo ma trận chuẩn.
           </p>
         </div>
@@ -179,7 +179,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsSuppressed(!isSuppressed)}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[15px] font-semibold border transition-all cursor-pointer ${
               isSuppressed
                 ? "bg-amber-50 border-amber-300 text-amber-900 shadow-2xs"
                 : "bg-white border-slate-300 text-slate-700 hover:bg-slate-50"
@@ -205,7 +205,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
               href={`/api/admin/export/excel?mode=INTERNAL${selectedProvince ? `&provinceCode=${selectedProvince}` : ""}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-2xs transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-[15px] font-bold shadow-2xs transition-all"
               title="Xuất trọn bộ 6 Sheet Excel bản số liệu đầy đủ cho Kiểm toán nhà nước"
             >
               <Download className="w-3.5 h-3.5" />
@@ -215,7 +215,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
               href={`/api/admin/export/excel?mode=LOCAL_CONFIDENTIAL${selectedProvince ? `&provinceCode=${selectedProvince}` : ""}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-emerald-600 text-emerald-800 hover:bg-emerald-50 text-xs font-bold shadow-2xs transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-emerald-600 text-emerald-800 hover:bg-emerald-50 text-[15px] font-bold shadow-2xs transition-all"
               title="Xuất trọn bộ 6 Sheet Excel đã áp dụng quy tắc ẩn danh số liệu nhỏ <5 người cho địa phương"
             >
               <Download className="w-3.5 h-3.5" />
@@ -225,7 +225,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
               href={`/api/admin/export/raw-data${selectedProvince ? `?provinceCode=${selectedProvince}` : ""}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold shadow-2xs transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-[15px] font-bold shadow-2xs transition-all"
               title="Xuất tệp dữ liệu thô (Raw Data) đã mã hóa ID phục vụ lưu trữ và kiểm toán độc lập (Mục V.7)"
             >
               <Download className="w-3.5 h-3.5" />
@@ -262,7 +262,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-[15px] font-bold whitespace-nowrap transition-all cursor-pointer ${
                 isActive
                   ? "bg-sky-700 text-white shadow-xs"
                   : "text-slate-600 hover:bg-slate-100"
@@ -278,12 +278,12 @@ export const AnalyticsTablesViewer: React.FC = () => {
       {/* Content Area - CUỘN ĐỘC LẬP NỘI BỘ TRONG CONTAINER */}
       <div className="flex-1 min-h-0 overflow-y-auto pr-1">
         {isLoading ? (
-          <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center text-slate-500 text-sm">
+          <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center text-slate-500 text-[16px]">
             <RefreshCw className="w-6 h-6 animate-spin text-sky-600 mx-auto mb-2" />
             <div>Đang tính toán tổng hợp dữ liệu...</div>
           </div>
         ) : !data ? (
-          <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center text-slate-500 text-sm">
+          <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center text-slate-500 text-[16px]">
             Chưa có dữ liệu khảo sát.
           </div>
         ) : (
@@ -292,18 +292,18 @@ export const AnalyticsTablesViewer: React.FC = () => {
             {activeTab === "b1" && (
               <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden p-4 sm:p-5 space-y-3">
                 <div className="border-b border-slate-100 pb-2.5">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                  <h3 className="text-[16px] sm:text-base font-bold text-slate-900">
                     {data.b1?.title}
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-[15px] text-slate-500 mt-0.5">
                     Tổng số người được tổng hợp: <strong>{data.b1?.totalIncluded}</strong> | Số phiếu loại: <strong>{data.b1?.totalExcluded}</strong> | Số xã có người trả lời: <strong>{data.b1?.communesCount}</strong>
                   </p>
                 </div>
 
                 <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse">
+                  <table className="w-full text-[15px] text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-100 text-slate-700 font-bold uppercase text-[10px]">
+                      <tr className="bg-slate-100 text-slate-700 font-bold uppercase text-[13.5px]">
                         <th className="p-2.5 border-b">Cơ quan, đơn vị / Vị trí việc làm</th>
                         <th className="p-2.5 border-b text-center">Số người tổng hợp</th>
                         <th className="p-2.5 border-b text-center">Ngoài đối tượng</th>
@@ -326,7 +326,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
                     </tbody>
                   </table>
                   {b1Count < b1Total && (
-                    <div className="py-2 text-center text-[11px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
+                    <div className="py-2 text-center text-[14px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
                       Đang tải {b1Count} / {b1Total} cơ quan...
                     </div>
                   )}
@@ -338,18 +338,18 @@ export const AnalyticsTablesViewer: React.FC = () => {
             {activeTab === "b2" && (
               <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden p-4 sm:p-5 space-y-3">
                 <div className="border-b border-slate-100 pb-2.5">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                  <h3 className="text-[16px] sm:text-base font-bold text-slate-900">
                     {data.b2?.title}
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-[15px] text-slate-500 mt-0.5">
                     Mẫu số dòng: Tổng người trong đối tượng = <strong>{data.b2?.denominator}</strong> người. Tổng 4 cột = 100%.
                   </p>
                 </div>
 
                 <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse">
+                  <table className="w-full text-[15px] text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-100 text-slate-700 font-bold uppercase text-[10px]">
+                      <tr className="bg-slate-100 text-slate-700 font-bold uppercase text-[13.5px]">
                         <th className="p-2.5 border-b">Nhóm công việc (N01 - N16)</th>
                         <th className="p-2.5 border-b text-center bg-emerald-50 text-emerald-900">
                           Đang thực hiện
@@ -393,7 +393,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
                     </tbody>
                   </table>
                   {b2Count < b2Total && (
-                    <div className="py-2 text-center text-[11px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
+                    <div className="py-2 text-center text-[14px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
                       Đang tải {b2Count} / {b2Total} nhóm công việc...
                     </div>
                   )}
@@ -405,18 +405,18 @@ export const AnalyticsTablesViewer: React.FC = () => {
             {activeTab === "b3" && (
               <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden p-4 sm:p-5 space-y-3">
                 <div className="border-b border-slate-100 pb-2.5 space-y-1">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                  <h3 className="text-[16px] sm:text-base font-bold text-slate-900">
                     {data.b3?.title}
                   </h3>
-                  <p className="text-xs text-sky-800 font-semibold italic bg-sky-50 p-2 rounded-lg border border-sky-100">
+                  <p className="text-[15px] text-sky-800 font-semibold italic bg-sky-50 p-2 rounded-lg border border-sky-100">
                     *{data.b3?.subtitle}*
                   </p>
                 </div>
 
                 <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse">
+                  <table className="w-full text-[15px] text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-100 text-slate-700 font-bold uppercase text-[10px]">
+                      <tr className="bg-slate-100 text-slate-700 font-bold uppercase text-[13.5px]">
                         <th className="p-2.5 border-b">Nhóm x Vai trò</th>
                         <th className="p-2.5 border-b text-center">Mẫu số</th>
                         <th className="p-2.5 border-b text-center">Mức 1</th>
@@ -507,7 +507,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
                     </tbody>
                   </table>
                   {b3Count < b3Total && (
-                    <div className="py-2 text-center text-[11px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
+                    <div className="py-2 text-center text-[14px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
                       Đang tải {b3Count} / {b3Total} hàng chỉ số...
                     </div>
                   )}
@@ -519,13 +519,13 @@ export const AnalyticsTablesViewer: React.FC = () => {
             {activeTab === "b4" && (
               <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden p-4 sm:p-5 space-y-3">
                 <div className="border-b border-slate-100 pb-2.5">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                  <h3 className="text-[16px] sm:text-base font-bold text-slate-900">
                     {data.b4?.title}
                   </h3>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse">
-                    <thead className="sticky top-0 bg-slate-100 text-slate-700 font-bold uppercase text-[10px] shadow-2xs">
+                  <table className="w-full text-[15px] text-left border-collapse">
+                    <thead className="sticky top-0 bg-slate-100 text-slate-700 font-bold uppercase text-[13.5px] shadow-2xs">
                       <tr>
                         <th className="p-2.5 border-b">Nhóm & Chuyên đề học</th>
                         <th className="p-2.5 border-b text-center">Tổng người chọn</th>
@@ -564,7 +564,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
                     </tbody>
                   </table>
                   {b4Count < b4Total && (
-                    <div className="py-2 text-center text-[11px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
+                    <div className="py-2 text-center text-[14px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
                       Đang tải {b4Count} / {b4Total} chuyên đề...
                     </div>
                   )}
@@ -576,13 +576,13 @@ export const AnalyticsTablesViewer: React.FC = () => {
             {activeTab === "b5" && (
               <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden p-4 sm:p-5 space-y-3">
                 <div className="border-b border-slate-100 pb-2.5">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                  <h3 className="text-[16px] sm:text-base font-bold text-slate-900">
                     {data.b5?.title}
                   </h3>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse">
-                    <thead className="sticky top-0 bg-slate-100 text-slate-700 font-bold uppercase text-[10px] shadow-2xs">
+                  <table className="w-full text-[15px] text-left border-collapse">
+                    <thead className="sticky top-0 bg-slate-100 text-slate-700 font-bold uppercase text-[13.5px] shadow-2xs">
                       <tr>
                         <th className="p-2.5 border-b">Nhóm công việc</th>
                         <th className="p-2.5 border-b">Khó khăn</th>
@@ -600,7 +600,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
                           <td className="p-2.5 text-slate-800">{row.difficultyTitle}</td>
                           <td className="p-2.5 text-center">
                             <span
-                              className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                              className={`px-2 py-0.5 rounded text-[13.5px] font-bold ${
                                 row.category === "DAO_TAO"
                                   ? "bg-emerald-100 text-emerald-800"
                                   : row.category === "NGOAI_DAO_TAO"
@@ -626,7 +626,7 @@ export const AnalyticsTablesViewer: React.FC = () => {
                     </tbody>
                   </table>
                   {b5Count < b5Total && (
-                    <div className="py-2 text-center text-[11px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
+                    <div className="py-2 text-center text-[14px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
                       Đang tải {b5Count} / {b5Total} mục khó khăn...
                     </div>
                   )}
@@ -638,14 +638,14 @@ export const AnalyticsTablesViewer: React.FC = () => {
             {activeTab === "b6" && (
               <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden p-4 sm:p-5 space-y-3">
                 <div className="border-b border-slate-100 pb-2.5">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                  <h3 className="text-[16px] sm:text-base font-bold text-slate-900">
                     {data.b6?.title}
                   </h3>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-xs text-left border-collapse">
+                  <table className="w-full text-[15px] text-left border-collapse">
                     <thead>
-                      <tr className="bg-slate-100 text-slate-700 font-bold uppercase text-[10px]">
+                      <tr className="bg-slate-100 text-slate-700 font-bold uppercase text-[13.5px]">
                         <th className="p-2.5 border-b">Hình thức đào tạo, bồi dưỡng</th>
                         <th className="p-2.5 border-b text-center">Mẫu số tổng hợp</th>
                         <th className="p-2.5 border-b text-center">Số người lựa chọn</th>
@@ -672,19 +672,19 @@ export const AnalyticsTablesViewer: React.FC = () => {
                     </tbody>
                   </table>
                   {b6Count < b6Total && (
-                    <div className="py-2 text-center text-[11px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
+                    <div className="py-2 text-center text-[14px] font-semibold text-slate-400 animate-pulse bg-slate-50/60 border-t border-slate-100">
                       Đang tải {b6Count} / {b6Total} hình thức học...
                     </div>
                   )}
                 </div>
 
                 {/* Giới hạn dữ liệu cố định */}
-                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1">
-                  <div className="font-bold text-slate-800 uppercase tracking-wide text-[10px]">
+                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-[15px] text-slate-600 space-y-1">
+                  <div className="font-bold text-slate-800 uppercase tracking-wide text-[13.5px]">
                     Giới hạn dữ liệu cố định (Spec 02):
                   </div>
                   {data.b6?.limitations?.map((lim: string, idx: number) => (
-                    <p key={idx} className="text-[11px]">• {lim}</p>
+                    <p key={idx} className="text-[14px]">• {lim}</p>
                   ))}
                 </div>
               </div>

@@ -33,3 +33,7 @@ dist/
 
 # Build cache
 *.tsbuildinfo
+
+# Local review and browser artifacts
+/output/
+/.playwright-cli/

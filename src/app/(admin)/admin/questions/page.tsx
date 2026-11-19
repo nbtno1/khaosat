@@ -501,7 +501,7 @@ export default function QuestionsAdminPage() {
           ) : (
             <AlertTriangle className="w-5 h-5 text-red-600 shrink-0" />
           )}
-          <span className="text-sm font-medium">{message.text}</span>
+          <span className="text-[16px] font-medium">{message.text}</span>
           <button onClick={() => setMessage(null)} className="ml-2 hover:opacity-70">
             <X className="w-4 h-4" />
           </button>
@@ -519,7 +519,7 @@ export default function QuestionsAdminPage() {
               <h1 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight leading-snug">
                 Quản trị Bộ Câu hỏi & Ngân hàng Chuyên đề
               </h1>
-              <p className="text-xs text-slate-500">
+              <p className="text-[15px] text-slate-500">
                 Toàn quyền tùy biến nội dung, số lượng và cấu trúc 14 câu hỏi, nhóm việc & chuyên đề đào tạo
               </p>
             </div>
@@ -529,11 +529,11 @@ export default function QuestionsAdminPage() {
         <div className="flex flex-wrap items-center gap-2">
           {/* Version Switcher */}
           <div className="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-xl border border-slate-200">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Phiên bản:</span>
+            <span className="text-[14px] font-semibold text-slate-500 uppercase tracking-wider">Phiên bản:</span>
             <select
               value={selectedVersion}
               onChange={(e) => setSelectedVersion(e.target.value)}
-              className="bg-transparent text-xs font-bold text-blue-900 focus:outline-hidden cursor-pointer"
+              className="bg-transparent text-[15px] font-bold text-blue-900 focus:outline-hidden cursor-pointer"
             >
               {versions.map((v) => (
                 <option key={v.version} value={v.version}>
@@ -550,7 +550,7 @@ export default function QuestionsAdminPage() {
               setCloneTitle(`Bộ phiếu khảo sát chuẩn phiên bản 3.${versions.length + 3}`);
               setIsCloneModalOpen(true);
             }}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-2xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[15px] font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl shadow-2xs transition-colors cursor-pointer"
           >
             <Copy className="w-3.5 h-3.5 text-slate-500" />
             Tạo bản mới (Clone)
@@ -560,7 +560,7 @@ export default function QuestionsAdminPage() {
           <button
             onClick={handleSaveAll}
             disabled={isSaving}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-2xs transition-colors disabled:opacity-60 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-2xs transition-colors disabled:opacity-60 cursor-pointer"
           >
             <Save className="w-3.5 h-3.5" />
             {isSaving ? "Đang lưu..." : "Lưu Thay Đổi"}
@@ -571,7 +571,7 @@ export default function QuestionsAdminPage() {
             href="/khao-sat/pilot_dot-1-2026_p20"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100/80 border border-indigo-200/80 rounded-xl transition-colors"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[15px] font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100/80 border border-indigo-200/80 rounded-xl transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             Xem trước
@@ -584,15 +584,15 @@ export default function QuestionsAdminPage() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/20 text-white border border-white/30">
+              <span className="px-2 py-0.5 rounded-full text-[13.5px] font-bold uppercase tracking-wider bg-white/20 text-white border border-white/30">
                 Phiên bản v{selectedVersion}
               </span>
               {isApproved ? (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1">
+                <span className="px-2 py-0.5 rounded-full text-[13.5px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1">
                   <CheckCircle2 className="w-3 h-3" /> Đã phê duyệt chính thức
                 </span>
               ) : (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                <span className="px-2 py-0.5 rounded-full text-[13.5px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-400/30">
                   Bản nháp / Đang cấu hình
                 </span>
               )}
@@ -600,22 +600,22 @@ export default function QuestionsAdminPage() {
             <h2 className="text-base font-bold text-white leading-tight">{schemaTitle}</h2>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 text-xs bg-white/10 p-2 rounded-xl backdrop-blur-xs border border-white/15">
+          <div className="flex flex-wrap items-center gap-3 text-[15px] bg-white/10 p-2 rounded-xl backdrop-blur-xs border border-white/15">
             <div>
-              <p className="text-blue-200 text-[10px]">Nhóm công việc:</p>
-              <p className="text-sm font-extrabold text-white">{workgroups.length} nhóm</p>
+              <p className="text-blue-200 text-[13.5px]">Nhóm công việc:</p>
+              <p className="text-[16px] font-extrabold text-white">{workgroups.length} nhóm</p>
             </div>
             <div className="w-px h-6 bg-white/20" />
             <div>
-              <p className="text-blue-200 text-[10px]">Chuyên đề đào tạo:</p>
-              <p className="text-sm font-extrabold text-white">
+              <p className="text-blue-200 text-[13.5px]">Chuyên đề đào tạo:</p>
+              <p className="text-[16px] font-extrabold text-white">
                 {workgroups.reduce((acc, w) => acc + (w.learningTopics?.length || 0), 0)} chuyên đề
               </p>
             </div>
             <div className="w-px h-6 bg-white/20" />
             <div>
-              <p className="text-blue-200 text-[10px]">Tổng số câu hỏi:</p>
-              <p className="text-sm font-extrabold text-white">{questions.length} câu</p>
+              <p className="text-blue-200 text-[13.5px]">Tổng số câu hỏi:</p>
+              <p className="text-[16px] font-extrabold text-white">{questions.length} câu</p>
             </div>
           </div>
         </div>
@@ -625,7 +625,7 @@ export default function QuestionsAdminPage() {
       <div className="shrink-0 flex border-b border-slate-200 overflow-x-auto no-scrollbar gap-1">
         <button
           onClick={() => setActiveTab("questions")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-3 text-[16px] font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
             activeTab === "questions"
               ? "border-blue-600 text-blue-700 bg-blue-50/50 rounded-t-xl"
               : "border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300"
@@ -637,7 +637,7 @@ export default function QuestionsAdminPage() {
 
         <button
           onClick={() => setActiveTab("workgroups")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-3 text-[16px] font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
             activeTab === "workgroups"
               ? "border-blue-600 text-blue-700 bg-blue-50/50 rounded-t-xl"
               : "border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300"
@@ -649,7 +649,7 @@ export default function QuestionsAdminPage() {
 
         <button
           onClick={() => setActiveTab("topics")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-3 text-[16px] font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
             activeTab === "topics"
               ? "border-blue-600 text-blue-700 bg-blue-50/50 rounded-t-xl"
               : "border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300"
@@ -661,7 +661,7 @@ export default function QuestionsAdminPage() {
 
         <button
           onClick={() => setActiveTab("roles")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-3 text-[16px] font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
             activeTab === "roles"
               ? "border-blue-600 text-blue-700 bg-blue-50/50 rounded-t-xl"
               : "border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300"
@@ -673,7 +673,7 @@ export default function QuestionsAdminPage() {
 
         <button
           onClick={() => setActiveTab("other")}
-          className={`flex items-center gap-2 px-4 py-3 text-sm font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-3 text-[16px] font-semibold border-b-2 transition-all whitespace-nowrap cursor-pointer ${
             activeTab === "other"
               ? "border-blue-600 text-blue-700 bg-blue-50/50 rounded-t-xl"
               : "border-transparent text-slate-600 hover:text-slate-900 hover:border-slate-300"
@@ -689,7 +689,7 @@ export default function QuestionsAdminPage() {
         {/* TAB CONTENT 1: 14 QUESTIONS */}
         {activeTab === "questions" && (
         <div className="space-y-4">
-          <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-4 text-xs text-amber-900 flex items-start gap-3">
+          <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-4 text-[15px] text-amber-900 flex items-start gap-3">
             <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold">Quy chuẩn cấu trúc 14 Câu hỏi theo Bộ phiếu 3.3:</p>
@@ -707,10 +707,10 @@ export default function QuestionsAdminPage() {
               >
                 <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
                   <div className="flex items-center gap-2.5">
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-blue-100 text-blue-800">
+                    <span className="px-2.5 py-1 rounded-lg text-[15px] font-extrabold bg-blue-100 text-blue-800">
                       Câu {q.order} ({q.id})
                     </span>
-                    <span className="text-xs font-semibold text-slate-500 uppercase">
+                    <span className="text-[15px] font-semibold text-slate-500 uppercase">
                       {q.section === "PART_I"
                         ? "Phần I: Thông tin chung"
                         : q.section === "PART_II"
@@ -722,7 +722,7 @@ export default function QuestionsAdminPage() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <label className="flex items-center gap-1.5 text-xs text-slate-600 cursor-pointer">
+                    <label className="flex items-center gap-1.5 text-[15px] text-slate-600 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={q.isRequired}
@@ -733,7 +733,7 @@ export default function QuestionsAdminPage() {
                     </label>
 
                     {q.maxSelect !== undefined && (
-                      <div className="flex items-center gap-1 text-xs text-slate-600">
+                      <div className="flex items-center gap-1 text-[15px] text-slate-600">
                         <span>Chọn tối đa:</span>
                         <input
                           type="number"
@@ -743,7 +743,7 @@ export default function QuestionsAdminPage() {
                           onChange={(e) =>
                             handleUpdateQuestion(q.id, "maxSelect", parseInt(e.target.value) || 1)
                           }
-                          className="w-14 px-2 py-1 text-xs border border-slate-300 rounded-md text-center font-bold"
+                          className="w-14 px-2 py-1 text-[15px] border border-slate-300 rounded-md text-center font-bold"
                         />
                         <span>mục</span>
                       </div>
@@ -753,19 +753,19 @@ export default function QuestionsAdminPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                       Tiêu đề hiển thị câu hỏi:
                     </label>
                     <input
                       type="text"
                       value={q.title}
                       onChange={(e) => handleUpdateQuestion(q.id, "title", e.target.value)}
-                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden font-medium"
+                      className="w-full px-3 py-2 text-[16px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden font-medium"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                       Hướng dẫn trả lời (dưới tiêu đề):
                     </label>
                     <input
@@ -773,19 +773,19 @@ export default function QuestionsAdminPage() {
                       value={q.instruction || ""}
                       onChange={(e) => handleUpdateQuestion(q.id, "instruction", e.target.value)}
                       placeholder="Ví dụ: Chọn tối đa 2 hình thức..."
-                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden text-slate-600"
+                      className="w-full px-3 py-2 text-[16px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden text-slate-600"
                     />
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                       Mô tả / Diễn giải nghiệp vụ chi tiết:
                     </label>
                     <textarea
                       rows={2}
                       value={q.description || ""}
                       onChange={(e) => handleUpdateQuestion(q.id, "description", e.target.value)}
-                      className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden text-slate-600"
+                      className="w-full px-3 py-2 text-[15px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden text-slate-600"
                     />
                   </div>
                 </div>
@@ -793,7 +793,7 @@ export default function QuestionsAdminPage() {
             ))}
           </div>
           {renderedQCount < totalQCount && (
-            <div className="py-2.5 text-center text-xs font-semibold text-slate-400 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 animate-pulse">
+            <div className="py-2.5 text-center text-[15px] font-semibold text-slate-400 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 animate-pulse">
               Đang hiển thị {renderedQCount} / {totalQCount} câu hỏi...
             </div>
           )}
@@ -811,13 +811,13 @@ export default function QuestionsAdminPage() {
                 placeholder="Tìm kiếm nhóm theo mã (N01...) hoặc tên..."
                 value={wgSearch}
                 onChange={(e) => setWgSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-xs border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
+                className="w-full pl-9 pr-4 py-2 text-[15px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
               />
             </div>
 
             <button
               onClick={handleOpenAddWg}
-              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               Thêm Nhóm Công Việc Mới
@@ -834,21 +834,21 @@ export default function QuestionsAdminPage() {
               >
                 <div className="flex items-start gap-3 flex-1">
                   <div className="flex flex-col items-center">
-                    <span className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 font-extrabold text-sm flex items-center justify-center border border-blue-100">
+                    <span className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 font-extrabold text-[16px] flex items-center justify-center border border-blue-100">
                       {wg.id}
                     </span>
-                    <span className="text-[10px] text-slate-400 font-semibold mt-1">#{wg.order}</span>
+                    <span className="text-[13.5px] text-slate-400 font-semibold mt-1">#{wg.order}</span>
                   </div>
 
                   <div className="space-y-1">
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
+                    <h3 className="text-[16px] sm:text-base font-bold text-slate-900 leading-snug">
                       {wg.title}
                     </h3>
-                    <p className="text-xs text-slate-500 line-clamp-2 max-w-3xl">
+                    <p className="text-[15px] text-slate-500 line-clamp-2 max-w-3xl">
                       {wg.description || "Chưa có mô tả chi tiết."}
                     </p>
                     <div className="flex items-center gap-2 pt-1">
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-indigo-50 text-indigo-700">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[14px] font-semibold bg-indigo-50 text-indigo-700">
                         <BookOpen className="w-3 h-3" />
                         {wg.learningTopics?.length || 0} chuyên đề đào tạo
                       </span>
@@ -876,7 +876,7 @@ export default function QuestionsAdminPage() {
 
                   <button
                     onClick={() => handleOpenEditWg(wg)}
-                    className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[15px] font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors cursor-pointer"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                     Sửa
@@ -884,7 +884,7 @@ export default function QuestionsAdminPage() {
 
                   <button
                     onClick={() => handleDeleteWg(wg.id)}
-                    className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[15px] font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors cursor-pointer"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     Xóa
@@ -895,7 +895,7 @@ export default function QuestionsAdminPage() {
           })}
           </div>
           {renderedWgCount < totalWgCount && (
-            <div className="py-2.5 text-center text-xs font-semibold text-slate-400 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 animate-pulse">
+            <div className="py-2.5 text-center text-[15px] font-semibold text-slate-400 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 animate-pulse">
               Đang hiển thị {renderedWgCount} / {totalWgCount} nhóm công việc...
             </div>
           )}
@@ -906,7 +906,7 @@ export default function QuestionsAdminPage() {
       {activeTab === "topics" && (
         <div className="space-y-4">
           <div className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs space-y-3">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+            <label className="block text-[15px] font-bold text-slate-700 uppercase tracking-wider">
               Chọn Nhóm Công Việc để Quản trị Chuyên đề Đào tạo:
             </label>
             <div className="flex flex-wrap gap-1.5 max-h-40 overflow-y-auto p-1 bg-slate-50 rounded-xl border border-slate-200/60">
@@ -914,7 +914,7 @@ export default function QuestionsAdminPage() {
                 <button
                   key={wg.id}
                   onClick={() => setSelectedWgForTopics(wg.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-lg text-[15px] font-bold transition-all cursor-pointer ${
                     selectedWgForTopics === wg.id
                       ? "bg-blue-600 text-white shadow-xs"
                       : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-100"
@@ -933,14 +933,14 @@ export default function QuestionsAdminPage() {
                   <h3 className="text-base font-bold text-slate-900">
                     Chuyên đề đào tạo thuộc nhóm [{currentWgForTopics.id}] {currentWgForTopics.title}
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-[15px] text-slate-500">
                     Hiện có {currentWgForTopics.learningTopics?.length || 0} chuyên đề được cấu hình cho nhóm này.
                   </p>
                 </div>
 
                 <button
                   onClick={handleOpenAddTopic}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   Thêm Chuyên Đề Mới
@@ -954,10 +954,10 @@ export default function QuestionsAdminPage() {
                     className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-blue-200 transition-all flex items-start justify-between gap-3"
                   >
                     <div className="space-y-1">
-                      <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-md bg-blue-100 text-blue-800">
+                      <span className="text-[14px] font-mono font-bold px-2 py-0.5 rounded-md bg-blue-100 text-blue-800">
                         {t.topicId}
                       </span>
-                      <p className="text-sm font-semibold text-slate-900 leading-snug pt-1">
+                      <p className="text-[16px] font-semibold text-slate-900 leading-snug pt-1">
                         {t.topicTitle}
                       </p>
                     </div>
@@ -982,7 +982,7 @@ export default function QuestionsAdminPage() {
                 ))}
               </div>
               {renderedTopicCount < totalTopicCount && (
-                <div className="py-2 text-center text-xs font-semibold text-slate-400 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 animate-pulse">
+                <div className="py-2 text-center text-[15px] font-semibold text-slate-400 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 animate-pulse">
                   Đang hiển thị {renderedTopicCount} / {totalTopicCount} chuyên đề...
                 </div>
               )}
@@ -994,7 +994,7 @@ export default function QuestionsAdminPage() {
       {/* TAB CONTENT 4: ROLES & LEVEL DESCRIPTIONS */}
       {activeTab === "roles" && (
         <div className="space-y-4">
-          <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-4 text-xs text-blue-900">
+          <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-4 text-[15px] text-blue-900">
             <p className="font-semibold">Mô hình 4 Vai trò & Thang Điểm Năng lực 4 Mức (Câu 8 & Câu 9):</p>
             <p className="text-blue-800 mt-0.5">
               Người trả lời sẽ đọc kỹ diễn giải của 4 mức này tương ứng với vai trò mình đã chọn để tự đánh giá mức năng lực thực tế.
@@ -1009,12 +1009,12 @@ export default function QuestionsAdminPage() {
               >
                 <div className="border-b border-slate-100 pb-3 flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center border border-indigo-100">
+                    <span className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 font-bold text-[15px] flex items-center justify-center border border-indigo-100">
                       V{rIdx + 1}
                     </span>
                     <div>
                       <h3 className="text-base font-bold text-slate-900">{r.title}</h3>
-                      <p className="text-xs text-slate-500">Mã vai trò: {r.roleId}</p>
+                      <p className="text-[15px] text-slate-500">Mã vai trò: {r.roleId}</p>
                     </div>
                   </div>
 
@@ -1027,7 +1027,7 @@ export default function QuestionsAdminPage() {
                         prev.map((item) => (item.roleId === r.roleId ? { ...item, title: val } : item))
                       );
                     }}
-                    className="px-3 py-1.5 text-xs border border-slate-300 rounded-lg text-slate-800 font-semibold"
+                    className="px-3 py-1.5 text-[15px] border border-slate-300 rounded-lg text-slate-800 font-semibold"
                   />
                 </div>
 
@@ -1035,7 +1035,7 @@ export default function QuestionsAdminPage() {
                   {(["1", "2", "3", "4"] as const).map((lvl) => (
                     <div key={lvl} className="p-3 rounded-xl border border-slate-200/80 bg-slate-50/60 space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-slate-800">
+                        <span className="text-[15px] font-bold text-slate-800">
                           {lvl === "1"
                             ? "Mức 1: Chưa đáp ứng"
                             : lvl === "2"
@@ -1044,7 +1044,7 @@ export default function QuestionsAdminPage() {
                             ? "Mức 3: Cơ bản đáp ứng"
                             : "Mức 4: Đáp ứng tốt"}
                         </span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-sm bg-slate-200 text-slate-700">
+                        <span className="text-[13.5px] font-mono px-1.5 py-0.5 rounded-sm bg-slate-200 text-slate-700">
                           Level {lvl}
                         </span>
                       </div>
@@ -1064,7 +1064,7 @@ export default function QuestionsAdminPage() {
                             )
                           );
                         }}
-                        className="w-full p-2 text-xs border border-slate-300 rounded-lg focus:border-blue-500 focus:outline-hidden text-slate-700"
+                        className="w-full p-2 text-[15px] border border-slate-300 rounded-lg focus:border-blue-500 focus:outline-hidden text-slate-700"
                       />
                     </div>
                   ))}
@@ -1073,7 +1073,7 @@ export default function QuestionsAdminPage() {
             ))}
           </div>
           {renderedRoleCount < totalRoleCount && (
-            <div className="py-2.5 text-center text-xs font-semibold text-slate-400 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 animate-pulse">
+            <div className="py-2.5 text-center text-[15px] font-semibold text-slate-400 bg-slate-50/70 rounded-xl border border-dashed border-slate-200 animate-pulse">
               Đang hiển thị {renderedRoleCount} / {totalRoleCount} vai trò & mức năng lực...
             </div>
           )}
@@ -1088,7 +1088,7 @@ export default function QuestionsAdminPage() {
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h3 className="text-base font-bold text-slate-900">Danh mục Khó khăn (Câu 10)</h3>
-                <p className="text-xs text-slate-500">Tối đa 2 mục hoặc mục độc quyền</p>
+                <p className="text-[15px] text-slate-500">Tối đa 2 mục hoặc mục độc quyền</p>
               </div>
 
               <button
@@ -1099,7 +1099,7 @@ export default function QuestionsAdminPage() {
                     { id: newId, title: "Nội dung khó khăn mới", isExclusive: false },
                   ]);
                 }}
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[15px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" /> Thêm
               </button>
@@ -1112,7 +1112,7 @@ export default function QuestionsAdminPage() {
                   className="p-3 rounded-xl border border-slate-200 bg-slate-50/60 flex items-center justify-between gap-3"
                 >
                   <div className="flex items-center gap-2 flex-1">
-                    <span className="text-xs font-mono font-bold text-slate-500 w-8">{d.id}</span>
+                    <span className="text-[15px] font-mono font-bold text-slate-500 w-8">{d.id}</span>
                     <input
                       type="text"
                       value={d.title}
@@ -1122,12 +1122,12 @@ export default function QuestionsAdminPage() {
                           prev.map((item) => (item.id === d.id ? { ...item, title: val } : item))
                         );
                       }}
-                      className="flex-1 px-2 py-1 text-xs border border-slate-300 rounded-lg text-slate-800"
+                      className="flex-1 px-2 py-1 text-[15px] border border-slate-300 rounded-lg text-slate-800"
                     />
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <label className="flex items-center gap-1 text-[11px] text-slate-600 cursor-pointer">
+                    <label className="flex items-center gap-1 text-[14px] text-slate-600 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={!!d.isExclusive}
@@ -1153,7 +1153,7 @@ export default function QuestionsAdminPage() {
               ))}
             </div>
             {renderedDiffCount < totalDiffCount && (
-              <div className="py-1.5 text-center text-[11px] font-semibold text-slate-400 animate-pulse">
+              <div className="py-1.5 text-center text-[14px] font-semibold text-slate-400 animate-pulse">
                 Đang nạp {renderedDiffCount} / {totalDiffCount} khó khăn...
               </div>
             )}
@@ -1164,7 +1164,7 @@ export default function QuestionsAdminPage() {
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h3 className="text-base font-bold text-slate-900">Danh mục Hình thức học (Câu 13)</h3>
-                <p className="text-xs text-slate-500">Các phương thức bồi dưỡng ưu tiên</p>
+                <p className="text-[15px] text-slate-500">Các phương thức bồi dưỡng ưu tiên</p>
               </div>
 
               <button
@@ -1175,7 +1175,7 @@ export default function QuestionsAdminPage() {
                     { id: newId, title: "Hình thức học mới" },
                   ]);
                 }}
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 text-[15px] font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" /> Thêm
               </button>
@@ -1188,7 +1188,7 @@ export default function QuestionsAdminPage() {
                   className="p-3 rounded-xl border border-slate-200 bg-slate-50/60 flex items-center justify-between gap-3"
                 >
                   <div className="flex items-center gap-2 flex-1">
-                    <span className="text-xs font-mono font-bold text-slate-500 w-8">{f.id}</span>
+                    <span className="text-[15px] font-mono font-bold text-slate-500 w-8">{f.id}</span>
                     <input
                       type="text"
                       value={f.title}
@@ -1198,7 +1198,7 @@ export default function QuestionsAdminPage() {
                           prev.map((item) => (item.id === f.id ? { ...item, title: val } : item))
                         );
                       }}
-                      className="flex-1 px-2 py-1 text-xs border border-slate-300 rounded-lg text-slate-800"
+                      className="flex-1 px-2 py-1 text-[15px] border border-slate-300 rounded-lg text-slate-800"
                     />
                   </div>
 
@@ -1212,7 +1212,7 @@ export default function QuestionsAdminPage() {
               ))}
             </div>
             {renderedFmtCount < totalFmtCount && (
-              <div className="py-1.5 text-center text-[11px] font-semibold text-slate-400 animate-pulse">
+              <div className="py-1.5 text-center text-[14px] font-semibold text-slate-400 animate-pulse">
                 Đang nạp {renderedFmtCount} / {totalFmtCount} hình thức học...
               </div>
             )}
@@ -1234,7 +1234,7 @@ export default function QuestionsAdminPage() {
 
             <form onSubmit={handleCloneVersion} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                   Số hiệu phiên bản mới (ví dụ: 3.4, 4.0):
                 </label>
                 <input
@@ -1243,12 +1243,12 @@ export default function QuestionsAdminPage() {
                   placeholder="3.4"
                   value={cloneNewVersion}
                   onChange={(e) => setCloneNewVersion(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden font-mono font-bold"
+                  className="w-full px-3 py-2 text-[16px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden font-mono font-bold"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                   Tiêu đề bộ phiếu:
                 </label>
                 <input
@@ -1256,11 +1256,11 @@ export default function QuestionsAdminPage() {
                   required
                   value={cloneTitle}
                   onChange={(e) => setCloneTitle(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
+                  className="w-full px-3 py-2 text-[16px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
                 />
               </div>
 
-              <div className="p-3 rounded-xl bg-blue-50 border border-blue-100 text-xs text-blue-800">
+              <div className="p-3 rounded-xl bg-blue-50 border border-blue-100 text-[15px] text-blue-800">
                 Toàn bộ 14 câu hỏi, nhóm việc, chuyên đề đào tạo của phiên bản hiện tại (v{selectedVersion}) sẽ được nhân bản sang phiên bản mới.
               </div>
 
@@ -1268,13 +1268,13 @@ export default function QuestionsAdminPage() {
                 <button
                   type="button"
                   onClick={() => setIsCloneModalOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  className="px-4 py-2 text-[15px] font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+                  className="px-4 py-2 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
                 >
                   Tạo Phiên Bản
                 </button>
@@ -1300,7 +1300,7 @@ export default function QuestionsAdminPage() {
             <form onSubmit={handleSaveWg} className="space-y-4">
               {!editingWg && (
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                     Mã nhóm công việc (ví dụ: N17):
                   </label>
                   <input
@@ -1308,13 +1308,13 @@ export default function QuestionsAdminPage() {
                     required
                     value={wgIdInput}
                     onChange={(e) => setWgIdInput(e.target.value.toUpperCase())}
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden font-mono font-bold"
+                    className="w-full px-3 py-2 text-[16px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden font-mono font-bold"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                   Tên nhóm công việc:
                 </label>
                 <input
@@ -1323,12 +1323,12 @@ export default function QuestionsAdminPage() {
                   placeholder="Nhập tên nhóm công việc..."
                   value={wgTitleInput}
                   onChange={(e) => setWgTitleInput(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
+                  className="w-full px-3 py-2 text-[16px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                   Mô tả / Diễn giải phạm vi công việc:
                 </label>
                 <textarea
@@ -1336,7 +1336,7 @@ export default function QuestionsAdminPage() {
                   placeholder="Mô tả các phần việc, hồ sơ, nhiệm vụ liên quan..."
                   value={wgDescInput}
                   onChange={(e) => setWgDescInput(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
+                  className="w-full px-3 py-2 text-[15px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
                 />
               </div>
 
@@ -1344,13 +1344,13 @@ export default function QuestionsAdminPage() {
                 <button
                   type="button"
                   onClick={() => setIsWgModalOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  className="px-4 py-2 text-[15px] font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+                  className="px-4 py-2 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
                 >
                   {editingWg ? "Lưu Thay Đổi" : "Thêm Nhóm"}
                 </button>
@@ -1376,7 +1376,7 @@ export default function QuestionsAdminPage() {
             <form onSubmit={handleSaveTopic} className="space-y-4">
               {!editingTopic && (
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                     Mã chuyên đề (ví dụ: {selectedWgForTopics}_08):
                   </label>
                   <input
@@ -1384,13 +1384,13 @@ export default function QuestionsAdminPage() {
                     required
                     value={topicIdInput}
                     onChange={(e) => setTopicIdInput(e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden font-mono font-bold"
+                    className="w-full px-3 py-2 text-[16px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden font-mono font-bold"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                <label className="block text-[15px] font-semibold text-slate-700 mb-1">
                   Tên nội dung / chuyên đề đào tạo:
                 </label>
                 <input
@@ -1399,7 +1399,7 @@ export default function QuestionsAdminPage() {
                   placeholder="Nhập tên chuyên đề tập huấn..."
                   value={topicTitleInput}
                   onChange={(e) => setTopicTitleInput(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
+                  className="w-full px-3 py-2 text-[16px] border border-slate-300 rounded-xl focus:border-blue-500 focus:outline-hidden"
                 />
               </div>
 
@@ -1407,13 +1407,13 @@ export default function QuestionsAdminPage() {
                 <button
                   type="button"
                   onClick={() => setIsTopicModalOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+                  className="px-4 py-2 text-[15px] font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
+                  className="px-4 py-2 text-[15px] font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs transition-colors cursor-pointer"
                 >
                   {editingTopic ? "Lưu Chuyên Đề" : "Thêm Chuyên Đề"}
                 </button>

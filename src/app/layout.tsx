@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
+import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
+
+const beVietnamPro = Be_Vietnam_Pro({
+  subsets: ["vietnamese", "latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-be-vietnam",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Hệ thống Khảo sát Nhu cầu Đào tạo Cấp Xã/Phường",
@@ -12,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className="h-full overflow-hidden">
-      <body className="h-full max-h-screen overflow-hidden bg-slate-50 text-slate-900 antialiased">
+    <html lang="vi" className={`h-full overflow-hidden ${beVietnamPro.variable}`}>
+      <body className="h-full max-h-screen overflow-hidden text-[#111b27] antialiased civic-ambient-bg">
         {children}
       </body>
     </html>

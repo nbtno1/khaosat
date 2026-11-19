@@ -28,3 +28,12 @@ Bảng ma trận này liên kết chặt chẽ toàn bộ chuỗi phát triển:
 | `Phương án...` V.6 & ADR-015 | BR-22 (Quản trị Người dùng & Thu hồi quyền) | FR-027 (User Admin & Assignment) | `UserAdminService`<br>`/api/admin/users/...` | `src/services/user-admin.service.ts`<br>`src/app/(admin)/admin/users/page.tsx` | TC-USER-01 đến TC-USER-06 (6/6 PASS) | Hoàn thành (COMPLETED) |
 | `Phương án...` V.4 & ADR-015 | BR-23 (Sổ Quản lý Link & Đổi Token theo tỉnh) | FR-008, FR-028 (Link Lifecycle & Rotation) | `CampaignLinkService`<br>`/api/admin/campaigns/links/...` | `src/services/campaign-link.service.ts`<br>`src/app/(admin)/admin/campaigns/page.tsx` | Campaign Links API & Typecheck (PASS) | Hoàn thành (COMPLETED) |
 | `Thuyết minh...` V.3 & ADR-015 | BR-24 (Bản Đề xuất Đào tạo 12 Mục & Raw Data) | FR-029 (12-Point Proposal & Raw Export) | `TrainingProposal`<br>`/api/admin/training-proposals/...`<br>`/api/admin/export/raw-data` | `src/services/training-proposal.service.ts`<br>`src/app/(admin)/admin/training-proposals/page.tsx` | TC-PROP-01 đến TC-PROP-06 (6/6 PASS) | Hoàn thành (COMPLETED) |
+
+
+## Theo dõi bảo trì giao diện — TASK-025 (19/11/2026)
+
+| Yêu cầu hiện hành | Thực hiện | Xác minh |
+|---|---|---|
+| Spec 10, Spec 14; giữ BR-03 đến BR-09 và ADR-014 | `src/app/(admin)/`, `src/app/(auth)/login/page.tsx`, `src/components/survey/`, `src/components/common/Select.tsx`, `src/app/globals.css` | 12 script kiểm thử; 54 kiểm tra trình duyệt; 18 kiểm tra bố cục; [evidence](evidence/ui-modernization-2026-11-19.json) |
+
+Không bổ sung yêu cầu nghiệp vụ hoặc thay đổi mapping database/API. Các task đã hoàn thành trước đó giữ nguyên.

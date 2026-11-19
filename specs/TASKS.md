@@ -506,3 +506,13 @@ Toàn bộ quá trình phát triển được phân rã thành các nhiệm vụ
 - **Acceptance Criteria:** Tự động sinh văn bản 12 mục chuẩn từ số liệu 6 bảng, lưu trữ, ký duyệt, in PDF; xuất file dữ liệu thô bảo mật; 6/6 tests PASS.
 - **Test Cases:** TC-PROP-01 đến TC-PROP-06 (6/6 PASS 100%).
 - **Trạng thái:** `COMPLETED` (Đã hoàn thành ngày 17/11/2026)
+
+
+### TASK-025: Rà soát và hợp nhất UI modernization tháng 11/2026
+
+- **Phê duyệt:** Yêu cầu trực tiếp của người dùng ngày 19/11/2026; nhánh `feat/ui-modernization-2026-11`, commit `a84883a`.
+- **Phạm vi:** Giao diện Admin/đăng nhập/khảo sát; sửa lỗi responsive, cuộn, focus và nhãn. Không đổi backend, database hoặc nghiệp vụ.
+- **Spec:** `10-UI-UX-SPECIFICATION.md`, `14-ACCEPTANCE-CRITERIA.md`; giữ ADR-012 đến ADR-015.
+- **Acceptance Criteria:** Giữ lịch sử Git và WIP gốc; không đổi dữ liệu; typecheck/lint/build exit 0; 12 bộ test exit 0; 54 kiểm tra trình duyệt và 18 kiểm tra bố cục qua.
+- **Bằng chứng:** [Rà soát](reviews/UI-MERGE-2026-11-19.md), [JSON](evidence/ui-modernization-2026-11-19.json). Lint còn 9 cảnh báo cũ, 0 lỗi.
+- **Trạng thái:** `COMPLETED` (19/11/2026; xem lịch sử merge trên main và báo cáo kiểm thử).

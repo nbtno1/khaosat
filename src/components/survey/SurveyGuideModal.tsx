@@ -147,7 +147,7 @@ export const SurveyGuideModal: React.FC<SurveyGuideModalProps> = ({ isOpen, onCl
                     Bước 4: Đề xuất Hình thức Học & Gửi Phiếu (Phần IV)
                   </h3>
                   <p className="text-slate-600 text-xs mt-0.5">
-                    Chọn tối đa 2 hình thức bồi dưỡng phù hợp nhất, ghi ý kiến đóng góp tự do (nếu có), kiểm tra lại bảng tóm tắt và nhấn nút <strong className="text-emerald-700">"Gửi kết quả khảo sát"</strong>.
+                    Chọn tối đa 2 hình thức bồi dưỡng phù hợp nhất, ghi ý kiến đóng góp tự do (nếu có), kiểm tra lại bảng tóm tắt và nhấn nút <strong className="text-emerald-700">&quot;Gửi kết quả khảo sát&quot;</strong>.
                   </p>
                 </div>
               </div>
@@ -162,7 +162,7 @@ export const SurveyGuideModal: React.FC<SurveyGuideModalProps> = ({ isOpen, onCl
                   <span>Quy tắc Kết thúc Sớm (Ngoài phạm vi)</span>
                 </div>
                 <p className="text-xs leading-relaxed text-amber-900/90">
-                  Nếu bạn chọn toàn bộ 16 nhóm công việc đều là <em>"Không được phân công"</em> hoặc <em>"Chỉ phối hợp"</em>, hệ thống sẽ xác định bạn thuộc diện ngoài đối tượng và kết thúc khảo sát ngay sau Bước 2 (không cần làm Bước 3 và Bước 4).
+                  Nếu bạn chọn toàn bộ 16 nhóm công việc đều là <em>&quot;Không được phân công&quot;</em> hoặc <em>&quot;Chỉ phối hợp&quot;</em>, hệ thống sẽ xác định bạn thuộc diện ngoài đối tượng và kết thúc khảo sát ngay sau Bước 2 (không cần làm Bước 3 và Bước 4).
                 </p>
               </div>
 
@@ -173,8 +173,8 @@ export const SurveyGuideModal: React.FC<SurveyGuideModalProps> = ({ isOpen, onCl
                 </div>
                 <ul className="list-disc pl-4 text-xs space-y-1 text-slate-600">
                   <li>Chỉ được chọn <strong>tối đa 2 mục</strong> khó khăn cho mỗi nhóm công việc.</li>
-                  <li>Nếu chọn mục <em>"Không gặp khó khăn đáng kể"</em> thì không được chọn kèm bất kỳ mục nào khác.</li>
-                  <li>Nếu nhóm công việc ở trạng thái <em>"Chưa có dịp thực hiện"</em>, Câu 10 khó khăn sẽ tự động được ẩn.</li>
+                  <li>Nếu chọn mục <em>&quot;Không gặp khó khăn đáng kể&quot;</em> thì không được chọn kèm bất kỳ mục nào khác.</li>
+                  <li>Nếu nhóm công việc ở trạng thái <em>&quot;Chưa có dịp thực hiện&quot;</em>, Câu 10 khó khăn sẽ tự động được ẩn.</li>
                 </ul>
               </div>
 
@@ -197,7 +197,7 @@ export const SurveyGuideModal: React.FC<SurveyGuideModalProps> = ({ isOpen, onCl
                   1. Tôi có thể quay lại sửa câu trả lời trước đó không?
                 </div>
                 <p className="text-xs text-slate-600 mt-1">
-                  Được. Bạn có thể bấm nút "Quay lại" ở bất kỳ bước nào. Khi bạn thay đổi trạng thái của một nhóm công việc, hệ thống sẽ tự động dọn dẹp các câu trả lời không còn phù hợp để bảo đảm tính nhất quán dữ liệu.
+                  Được. Bạn có thể bấm nút &quot;Quay lại&quot; ở bất kỳ bước nào. Khi bạn thay đổi trạng thái của một nhóm công việc, hệ thống sẽ tự động dọn dẹp các câu trả lời không còn phù hợp để bảo đảm tính nhất quán dữ liệu.
                 </p>
               </div>
 
