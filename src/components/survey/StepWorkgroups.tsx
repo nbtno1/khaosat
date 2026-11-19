@@ -10,6 +10,7 @@ import {
   ArrowRight,
   AlertCircle,
   Send,
+  Sparkles,
 } from "lucide-react";
 
 interface StepWorkgroupsProps {
@@ -36,27 +37,27 @@ const STATUS_OPTIONS: Array<{
   label: string;
   activeClass: string;
 }> = [
-  {
-    id: "DANG_THUC_HIEN",
-    label: "Đang thực hiện",
-    activeClass: "bg-[#edf9f2] text-[#12633c] border-2 border-[#12633c] font-semibold shadow-xs",
-  },
-  {
-    id: "CHUA_CO_DIP",
-    label: "Được giao, chưa có dịp",
-    activeClass: "bg-[#fef6eb] text-[#a14a07] border-2 border-[#a14a07] font-semibold shadow-xs",
-  },
-  {
-    id: "CHI_PHOI_HOP",
-    label: "Chỉ phối hợp",
-    activeClass: "bg-[#edf4fc] text-[#12457a] border-2 border-[#12457a] font-semibold shadow-xs",
-  },
-  {
-    id: "KHONG_DUOC_GIAO",
-    label: "Không được giao",
-    activeClass: "bg-[#f1f5f9] text-[#334155] border-2 border-[#475569] font-semibold shadow-xs",
-  },
-];
+    {
+      id: "DANG_THUC_HIEN",
+      label: "Đang thực hiện",
+      activeClass: "bg-[#edf9f2] text-[#12633c] border-2 border-[#12633c] font-semibold shadow-xs",
+    },
+    {
+      id: "CHUA_CO_DIP",
+      label: "Được giao, chưa có dịp",
+      activeClass: "bg-[#fef6eb] text-[#a14a07] border-2 border-[#a14a07] font-semibold shadow-xs",
+    },
+    {
+      id: "CHI_PHOI_HOP",
+      label: "Chỉ phối hợp",
+      activeClass: "bg-[#edf4fc] text-[#12457a] border-2 border-[#12457a] font-semibold shadow-xs",
+    },
+    {
+      id: "KHONG_DUOC_GIAO",
+      label: "Không được giao",
+      activeClass: "bg-[#f1f5f9] text-[#334155] border-2 border-[#475569] font-semibold shadow-xs",
+    },
+  ];
 
 export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
   workgroupStatuses,
@@ -64,6 +65,7 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
   otherWorkText,
   setOtherWorkText,
   sortedWorkgroups,
+  suggestedWorkgroupIds,
   isOutOfScope,
   onBack,
   onNext,
@@ -74,6 +76,7 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const answeredCount = Object.keys(workgroupStatuses).length;
+  const suggestedSet = new Set(suggestedWorkgroupIds);
 
   const toggleExpand = (id: string) => {
     setExpandedWgId((prev) => (prev === id ? null : id));
@@ -114,23 +117,43 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
         </div>
       )}
 
-      {/* 16 Workgroups List - Clean Hairline Dividers, High Readability */}
-      <div className="divide-y divide-slate-100">
+      {/* 16 Workgroups List - Highlighted Suggested Groups, Same Clean Layout */}
+      <div className="space-y-3">
         {sortedWorkgroups.map((wg, idx) => {
+          const isSuggested = suggestedSet.has(wg.id);
           const currentStatus = workgroupStatuses[wg.id];
           const isExpanded = expandedWgId === wg.id;
 
           return (
-            <div key={wg.id} className="py-5 first:pt-1 space-y-3.5">
+            <div
+              key={wg.id}
+              className={`space-y-3.5 transition-all ${
+                isSuggested
+                  ? "bg-gradient-to-r from-[#f1f7fe] to-[#f9fbff] border border-[#c8dcf4] border-l-4 border-l-[#12457a] rounded-[12px] px-4 sm:px-5 py-4 shadow-[0_2px_10px_-4px_rgba(18,69,122,0.12)]"
+                  : "py-4 px-1 border-b border-slate-100 last:border-b-0"
+              }`}
+            >
               <div className="flex items-start justify-between gap-3">
-                <h4 className="text-[19px] sm:text-[20px] font-bold text-[#0e1c2e] leading-snug">
-                  {idx + 1}. {wg.title}
-                </h4>
+                <div className="space-y-1.5">
+                  {isSuggested && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[13px] font-semibold bg-[#e2eefb] text-[#0f3d6e]">
+                      <Sparkles className="w-3.5 h-3.5 text-[#1d5ca3]" />
+                      <span>Gợi ý theo vị trí của đồng chí</span>
+                    </span>
+                  )}
+                  <h4
+                    className={`text-[19px] sm:text-[20px] font-bold leading-snug ${
+                      isSuggested ? "text-[#0c2d52]" : "text-[#0e1c2e]"
+                    }`}
+                  >
+                    {idx + 1}. {wg.title}
+                  </h4>
+                </div>
 
                 <button
                   type="button"
                   onClick={() => toggleExpand(wg.id)}
-                  className="shrink-0 inline-flex items-center gap-1 text-[14.5px] font-medium text-slate-500 hover:text-[#12457a] px-2.5 py-1.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                  className="shrink-0 inline-flex items-center gap-1 text-[14.5px] font-medium text-slate-500 hover:text-[#12457a] px-2.5 py-1.5 rounded-lg hover:bg-white/80 transition-colors cursor-pointer"
                   title="Xem mô tả ví dụ công việc"
                 >
                   <span className="hidden sm:inline">{isExpanded ? "Thu gọn" : "Chi tiết"}</span>
@@ -139,7 +162,7 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
               </div>
 
               {isExpanded && (
-                <div className="bg-[#f8fafc] px-4 py-3 rounded-xl border border-slate-200/80 text-[15px] text-slate-600 leading-relaxed">
+                <div className="bg-white/90 px-4 py-3 rounded-xl border border-slate-200/80 text-[15px] text-slate-600 leading-relaxed">
                   {wg.description}
                 </div>
               )}

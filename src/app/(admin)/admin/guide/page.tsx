@@ -148,39 +148,39 @@ export default function UserGuidePage() {
 
       {/* Dynamic Status Meta Banner (Cố định) */}
       {guideData && (
-        <div className="shrink-0 grid grid-cols-2 sm:grid-cols-4 gap-2.5 bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 p-3.5 rounded-2xl text-white shadow-2xs">
-          <div className="border-r border-slate-800 pr-3">
-            <div className="text-[13.5px] uppercase font-bold text-sky-400">Bộ tiêu chuẩn</div>
-            <div className="text-[16px] font-black text-white mt-0.5">
+        <div className="shrink-0 grid grid-cols-2 sm:grid-cols-4 civic-panel civic-top-accent rounded-[14px] overflow-hidden divide-y sm:divide-y-0 sm:divide-x divide-slate-200/80">
+          <div className="px-4 py-3.5 bg-gradient-to-b from-[#f6f9fe] to-white">
+            <div className="text-[13.5px] font-semibold text-[#12457a]">Bộ tiêu chuẩn</div>
+            <div className="text-[17px] font-bold text-[#0e1c2e] mt-0.5">
               Phiên bản {guideData.schemaMeta.version}
             </div>
-            <div className="text-[13.5px] text-slate-400 mt-0.5 truncate">
+            <div className="text-[13.5px] text-slate-500 mt-0.5 truncate">
               {guideData.schemaMeta.totalWorkgroups} nhóm việc · {guideData.schemaMeta.totalRoles} vai trò
             </div>
           </div>
 
-          <div className="border-r border-slate-800 pr-3">
-            <div className="text-[13.5px] uppercase font-bold text-sky-400">Đợt khảo sát</div>
-            <div className="text-[16px] font-black text-white mt-0.5 truncate">
+          <div className="px-4 py-3.5 bg-gradient-to-b from-[#f6f9fe] to-white">
+            <div className="text-[13.5px] font-semibold text-[#12457a]">Đợt khảo sát</div>
+            <div className="text-[17px] font-bold text-[#0e1c2e] mt-0.5 truncate">
               {guideData.campaignMeta.code}
             </div>
-            <div className="text-[13.5px] text-slate-400 mt-0.5">
+            <div className="text-[13.5px] text-slate-500 mt-0.5">
               {guideData.campaignMeta.participatingProvincesCount} tỉnh · Mục tiêu {guideData.campaignMeta.totalNationalTarget.toLocaleString()}
             </div>
           </div>
 
-          <div className="border-r border-slate-800 pr-3">
-            <div className="text-[13.5px] uppercase font-bold text-sky-400">Phân hệ chức năng</div>
-            <div className="text-[16px] font-black text-emerald-400 mt-0.5">
+          <div className="px-4 py-3.5 bg-gradient-to-b from-[#f3fbf6] to-white">
+            <div className="text-[13.5px] font-semibold text-[#12633c]">Phân hệ chức năng</div>
+            <div className="text-[17px] font-bold text-[#12633c] mt-0.5">
               {guideData.modules.length} Modules
             </div>
-            <div className="text-[13.5px] text-slate-400 mt-0.5">Đang trực tuyến 100%</div>
+            <div className="text-[13.5px] text-slate-500 mt-0.5">Đang trực tuyến 100%</div>
           </div>
 
-          <div>
-            <div className="text-[13.5px] uppercase font-bold text-sky-400">Trạng thái đồng bộ</div>
-            <div className="text-[16px] font-black text-sky-200 mt-0.5">Thời gian thực</div>
-            <div className="text-[13.5px] text-slate-400 mt-0.5">
+          <div className="px-4 py-3.5 bg-gradient-to-b from-[#f8fafc] to-white">
+            <div className="text-[13.5px] font-semibold text-slate-600">Trạng thái đồng bộ</div>
+            <div className="text-[17px] font-bold text-[#0f3d6e] mt-0.5">Thời gian thực</div>
+            <div className="text-[13.5px] text-slate-500 mt-0.5">
               {new Date(guideData.lastGeneratedAt).toLocaleTimeString("vi-VN")}
             </div>
           </div>
@@ -360,12 +360,12 @@ export default function UserGuidePage() {
                   </div>
 
                   {/* API Endpoints */}
-                  <div className="p-3.5 rounded-xl bg-slate-900 text-slate-200 font-mono text-[15px] space-y-1">
-                    <div className="text-[13.5px] uppercase font-bold text-slate-400">
-                      Giao diện Lập trình (REST API Endpoints):
+                  <div className="p-4 rounded-xl bg-[#f4f7fb] border border-[#d4e0ec] font-mono text-[14.5px] space-y-1.5">
+                    <div className="font-sans text-[13.5px] font-bold text-slate-600 mb-1">
+                      Giao diện Lập trình (REST API Endpoints)
                     </div>
                     {activeMod.apiEndpoints.map((ep, i) => (
-                      <div key={i} className="text-sky-400">{ep}</div>
+                      <div key={i} className="text-[#0f3d6e] font-medium">{ep}</div>
                     ))}
                   </div>
 
