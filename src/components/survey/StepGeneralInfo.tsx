@@ -318,18 +318,16 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
             return (
               <label
                 key={cap.id}
-                onClick={() => toggleCapacity(cap.id)}
-                className={`flex items-center gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] border-[1.5px] text-[18px] cursor-pointer transition-all duration-150 select-none ${
-                  checked
-                    ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-[#12457a] text-[#0b2d52] font-semibold shadow-xs"
-                    : "bg-white border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
-                }`}
+                className={`flex items-center gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] text-[18px] cursor-pointer transition-all duration-150 select-none ${checked
+                    ? "bg-[#e0edfc] border-2 border-[#0f3d6e] text-[#0a2747] font-semibold shadow-xs"
+                    : "bg-white border-[1.5px] border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                  }`}
               >
                 <input
                   type="checkbox"
                   checked={!!checked}
-                  onChange={() => {}}
-                  className="w-[21px] h-[21px] accent-[#12457a] rounded shrink-0"
+                  onChange={() => toggleCapacity(cap.id)}
+                  className="w-[21px] h-[21px] accent-[#0f3d6e] rounded shrink-0 cursor-pointer"
                 />
                 <span>{cap.title}</span>
               </label>
@@ -370,20 +368,18 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
             return (
               <label
                 key={exp.id}
-                onClick={() =>
-                  setPart1((prev) => ({ ...prev, experienceYears: exp.id }))
-                }
-                className={`flex items-center justify-center min-h-[54px] px-4 py-3 rounded-[11px] border-[1.5px] text-[18px] cursor-pointer transition-all duration-150 select-none ${
-                  selected
-                    ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-[#12457a] text-[#0b2d52] font-semibold shadow-xs"
-                    : "bg-white border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
-                }`}
+                className={`flex items-center justify-center min-h-[54px] px-4 py-3 rounded-[11px] text-[18px] cursor-pointer transition-all duration-150 select-none ${selected
+                    ? "bg-[#0f3d6e] border-2 border-[#0f3d6e] text-white font-semibold shadow-sm"
+                    : "bg-white border-[1.5px] border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                  }`}
               >
                 <input
                   type="radio"
                   name="experienceYears"
                   checked={selected}
-                  onChange={() => {}}
+                  onChange={() =>
+                    setPart1((prev) => ({ ...prev, experienceYears: exp.id }))
+                  }
                   className="sr-only"
                 />
                 <span>{exp.title}</span>

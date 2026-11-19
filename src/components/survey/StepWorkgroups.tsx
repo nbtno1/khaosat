@@ -40,22 +40,22 @@ const STATUS_OPTIONS: Array<{
     {
       id: "DANG_THUC_HIEN",
       label: "Đang thực hiện",
-      activeClass: "bg-[#edf9f2] text-[#12633c] border-2 border-[#12633c] font-semibold shadow-xs",
+      activeClass: "bg-[#12633c] text-white border-2 border-[#12633c] font-semibold shadow-sm",
     },
     {
       id: "CHUA_CO_DIP",
       label: "Được giao, chưa có dịp",
-      activeClass: "bg-[#fef6eb] text-[#a14a07] border-2 border-[#a14a07] font-semibold shadow-xs",
+      activeClass: "bg-[#b45309] text-white border-2 border-[#b45309] font-semibold shadow-sm",
     },
     {
       id: "CHI_PHOI_HOP",
       label: "Chỉ phối hợp",
-      activeClass: "bg-[#edf4fc] text-[#12457a] border-2 border-[#12457a] font-semibold shadow-xs",
+      activeClass: "bg-[#12457a] text-white border-2 border-[#12457a] font-semibold shadow-sm",
     },
     {
       id: "KHONG_DUOC_GIAO",
       label: "Không được giao",
-      activeClass: "bg-[#f1f5f9] text-[#334155] border-2 border-[#475569] font-semibold shadow-xs",
+      activeClass: "bg-[#334155] text-white border-2 border-[#334155] font-semibold shadow-sm",
     },
   ];
 

@@ -247,30 +247,27 @@ export default function UserGuidePage() {
         <div className="space-y-6">
           {/* 1. Dynamic Modules Explorer (Cập nhật động theo phần mềm) */}
           <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-50/50">
+            <div className="p-6 border-b border-slate-100 flex flex-col gap-4 bg-[#f8fafd]">
               <div>
-                <span className="px-2.5 py-0.5 rounded-full text-[13.5px] font-extrabold bg-sky-100 text-sky-800">
-                  DYNAMIC MODULES DISCOVERY
-                </span>
-                <h2 className="text-base font-extrabold text-slate-900 mt-1">
-                  1. Hướng dẫn Thao tác Từng Chức năng Đang Vận hành ({filteredModules.length} Modules)
+                <h2 className="text-[19px] font-bold text-[#0e1c2e]">
+                  1. Hướng dẫn thao tác từng phân hệ đang vận hành ({filteredModules.length} phân hệ)
                 </h2>
-                <p className="text-[15px] text-slate-500">
-                  Mỗi chức năng được hệ thống tự động bóc tách phạm vi quyền hạn, đường dẫn và quy tắc vận hành
+                <p className="text-[15px] text-slate-500 mt-1">
+                  Chọn một phân hệ bên dưới để xem phạm vi quyền hạn, đường dẫn truy cập và quy tắc vận hành chi tiết.
                 </p>
               </div>
 
-              {/* Module Quick Pill Tabs */}
-              <div className="flex items-center gap-1 overflow-x-auto max-w-full pb-1">
+              {/* Module Quick Pill Tabs - Wrapped cleanly with no horizontal scroll */}
+              <div className="flex flex-wrap items-center gap-2">
                 {guideData.modules.map((m) => (
                   <button
                     key={m.id}
                     type="button"
                     onClick={() => setSelectedModuleId(m.id)}
-                    className={`px-3 py-1.5 rounded-xl text-[15px] font-bold whitespace-nowrap transition-all ${
+                    className={`px-3.5 py-2 rounded-[10px] text-[14.5px] font-semibold transition-all cursor-pointer ${
                       selectedModuleId === m.id
-                        ? "bg-sky-700 text-white shadow-sm"
-                        : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100"
+                        ? "bg-[#0f3d6e] text-white shadow-sm"
+                        : "bg-white text-slate-700 border border-slate-200/90 hover:border-[#12457a]/50 hover:bg-[#f2f7fd]"
                     }`}
                   >
                     {m.name.split("(")[0].trim()}

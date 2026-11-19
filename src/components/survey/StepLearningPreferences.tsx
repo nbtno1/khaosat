@@ -88,21 +88,20 @@ export const StepLearningPreferences: React.FC<StepLearningPreferencesProps> = (
             return (
               <label
                 key={fmt.id}
-                onClick={() => !isDisabled && toggleFormat(fmt.id as LearningFormat)}
-                className={`flex items-center gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] border-[1.5px] text-[18px] transition-all duration-150 select-none ${
+                className={`flex items-center gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] text-[18px] transition-all duration-150 select-none ${
                   isSelected
-                    ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-[#12457a] text-[#0b2d52] font-semibold shadow-xs cursor-pointer"
+                    ? "bg-[#e0edfc] border-2 border-[#0f3d6e] text-[#0a2747] font-semibold shadow-xs cursor-pointer"
                     : isDisabled
-                    ? "bg-slate-50 border-slate-200 text-slate-400 opacity-60 cursor-not-allowed"
-                    : "bg-white border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe] cursor-pointer"
+                    ? "bg-slate-50 border-[1.5px] border-slate-200 text-slate-400 opacity-60 cursor-not-allowed"
+                    : "bg-white border-[1.5px] border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe] cursor-pointer"
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={isSelected}
                   disabled={isDisabled}
-                  onChange={() => {}}
-                  className="w-[21px] h-[21px] accent-[#12457a] rounded shrink-0"
+                  onChange={() => !isDisabled && toggleFormat(fmt.id as LearningFormat)}
+                  className="w-[21px] h-[21px] accent-[#0f3d6e] rounded shrink-0 cursor-pointer"
                 />
                 <span>{fmt.title}</span>
               </label>

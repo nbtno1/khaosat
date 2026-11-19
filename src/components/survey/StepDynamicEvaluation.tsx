@@ -298,28 +298,27 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
           {schemaData.roles.map((r) => {
             const isSelected = selectedRoles.includes(r.roleId);
             return (
-              <div
+              <label
                 key={r.roleId}
-                onClick={() => toggleRole(r.roleId)}
-                className={`p-4 rounded-[11px] border-[1.5px] cursor-pointer transition-all duration-150 ${
+                className={`block p-4 rounded-[11px] cursor-pointer transition-all duration-150 select-none ${
                   isSelected
-                    ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-[#12457a] shadow-xs"
-                    : "bg-white border-slate-300/90 hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                    ? "bg-[#e0edfc] border-2 border-[#0f3d6e] shadow-xs"
+                    : "bg-white border-[1.5px] border-slate-300/90 hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
                 }`}
               >
                 <div className="flex items-start gap-3.5">
                   <input
                     type="checkbox"
                     checked={isSelected}
-                    onChange={() => {}}
-                    className="mt-1 w-[20px] h-[20px] accent-[#12457a] rounded shrink-0"
+                    onChange={() => toggleRole(r.roleId)}
+                    className="mt-1 w-[20px] h-[20px] accent-[#0f3d6e] rounded shrink-0 cursor-pointer"
                   />
                   <div className="space-y-1">
                     <div className="text-[17.5px] font-semibold text-[#0e1c2e]">{r.title}</div>
                     <div className="text-[14.5px] text-slate-600 leading-relaxed">{r.description}</div>
                   </div>
                 </div>
-              </div>
+              </label>
             );
           })}
         </div>
@@ -361,12 +360,12 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
                           onClick={() => setSelfAssessedLevel(rId, lvl)}
                           className={`p-4 rounded-[12px] text-left flex flex-col justify-start gap-1.5 transition-all duration-150 cursor-pointer ${
                             isSelected
-                              ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-2 border-[#12457a] text-[#0b2d52] shadow-xs"
+                              ? "bg-[#0f3d6e] border-2 border-[#0f3d6e] text-white shadow-sm"
                               : "bg-white border-[1.5px] border-slate-300/90 hover:border-[#12457a]/60 hover:bg-[#f8fbfe] text-[#0e1c2e]"
                           }`}
                         >
                           <div className="text-[16.5px] font-bold">Mức {lvl}</div>
-                          <div className="text-[14.5px] text-slate-600 leading-relaxed">
+                          <div className={`text-[14.5px] leading-relaxed ${isSelected ? "text-blue-100" : "text-slate-600"}`}>
                             {desc}
                           </div>
                         </button>
@@ -403,18 +402,17 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
               return (
                 <label
                   key={d.id}
-                  onClick={() => toggleDifficulty(d.id, d.isExclusive)}
-                  className={`flex items-center gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] border-[1.5px] text-[17.5px] cursor-pointer transition-all duration-150 select-none ${
+                  className={`flex items-center gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] text-[17.5px] cursor-pointer transition-all duration-150 select-none ${
                     isSelected
-                      ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-[#12457a] text-[#0b2d52] font-semibold shadow-xs"
-                      : "bg-white border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                      ? "bg-[#e0edfc] border-2 border-[#0f3d6e] text-[#0a2747] font-semibold shadow-xs"
+                      : "bg-white border-[1.5px] border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
                   }`}
                 >
                   <input
                     type="checkbox"
                     checked={isSelected}
-                    onChange={() => {}}
-                    className="w-[20px] h-[20px] accent-[#12457a] rounded shrink-0"
+                    onChange={() => toggleDifficulty(d.id, d.isExclusive)}
+                    className="w-[20px] h-[20px] accent-[#0f3d6e] rounded shrink-0 cursor-pointer"
                   />
                   <span>{d.title}</span>
                 </label>
@@ -441,18 +439,17 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
             return (
               <label
                 key={top.topicId}
-                onClick={() => toggleLearningTopic(top.topicId)}
-                className={`flex items-start gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] border-[1.5px] text-[17.5px] cursor-pointer transition-all duration-150 select-none ${
+                className={`flex items-start gap-3.5 min-h-[54px] px-4 py-3 rounded-[11px] text-[17.5px] cursor-pointer transition-all duration-150 select-none ${
                   isSelected
-                    ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-[#12457a] text-[#0b2d52] font-semibold shadow-xs"
-                    : "bg-white border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
+                    ? "bg-[#e0edfc] border-2 border-[#0f3d6e] text-[#0a2747] font-semibold shadow-xs"
+                    : "bg-white border-[1.5px] border-slate-300/90 text-[#111b27] hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
                 }`}
               >
                 <input
                   type="checkbox"
                   checked={isSelected}
-                  onChange={() => {}}
-                  className="mt-1 w-[20px] h-[20px] accent-[#12457a] rounded shrink-0"
+                  onChange={() => toggleLearningTopic(top.topicId)}
+                  className="mt-1 w-[20px] h-[20px] accent-[#0f3d6e] rounded shrink-0 cursor-pointer"
                 />
                 <span>{top.topicTitle}</span>
               </label>
@@ -499,7 +496,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
                   onClick={() => setUrgency(urg.id as UrgencyLevel)}
                   className={`min-h-[52px] px-4 py-3 rounded-[11px] text-[17px] text-center transition-all duration-150 cursor-pointer ${
                     isSelected
-                      ? "bg-gradient-to-b from-[#f0f6fe] to-[#e8f2fc] border-2 border-[#12457a] text-[#0b2d52] font-semibold shadow-xs"
+                      ? "bg-[#0f3d6e] border-2 border-[#0f3d6e] text-white font-semibold shadow-sm"
                       : "bg-white border-[1.5px] border-slate-300/90 text-slate-700 font-medium hover:border-[#12457a]/60 hover:bg-[#f8fbfe]"
                   }`}
                 >
