@@ -20,6 +20,7 @@
     "test:questions": "tsx tests/services/survey-questions-admin.test.ts",
     "test:users": "tsx tests/services/user-admin.test.ts",
     "test:proposals": "tsx tests/services/training-proposal.test.ts",
+    "test:scroll": "tsx tests/utils/survey-scroll.test.ts",
     "db:seed": "tsx scripts/seed.ts",
     "db:import-communes": "tsx scripts/import-communes.ts",
     "db:import-dvhc": "tsx scripts/import-dvhc.ts"

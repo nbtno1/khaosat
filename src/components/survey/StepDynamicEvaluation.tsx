@@ -17,6 +17,7 @@ import {
   Calendar,
   Layers,
 } from "lucide-react";
+import { scrollToQuestion } from "@/lib/survey-scroll";
 
 interface StepDynamicEvaluationProps {
   activeWorkgroupIds: string[];
@@ -156,6 +157,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
   const validateCurrentGroup = (): boolean => {
     if (selectedRoles.length === 0) {
       setErrorMsg("Vui lòng chọn ít nhất một vai trò ở Câu 8.");
+      scrollToQuestion("question-8");
       return false;
     }
 
@@ -166,6 +168,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
         setErrorMsg(
           `Vui lòng chọn mức tự đánh giá ở Câu 9 cho vai trò "${roleDef?.title}".`
         );
+        scrollToQuestion(`role-eval-${r}`);
         return false;
       }
     }
@@ -174,6 +177,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
       setErrorMsg(
         "Vui lòng chọn khó khăn chính ở Câu 10 (chọn tối đa 2 mục hoặc 'Không gặp khó khăn đáng kể')."
       );
+      scrollToQuestion("question-10");
       return false;
     }
 
@@ -181,6 +185,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
       setErrorMsg(
         "Đồng chí đã chọn nội dung học ở Câu 11, vui lòng chọn mức độ cần học ở Câu 12."
       );
+      scrollToQuestion("question-12");
       return false;
     }
 
@@ -284,7 +289,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
       </div>
 
       {/* CÂU 8: VAI TRÒ THỰC HIỆN (CHỌN NHIỀU) */}
-      <div className="pb-7 border-b border-slate-100 space-y-4">
+      <div id="question-8" className="pb-7 border-b border-slate-100 space-y-4 transition-all">
         <div>
           <label className="block text-[20px] font-bold text-[#0e1c2e] mb-1">
             Câu 8. Vai trò của đồng chí đối với nhóm công việc này <span className="text-rose-600">*</span>
@@ -326,7 +331,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
 
       {/* CÂU 9: THANG TỰ ĐÁNH GIÁ 4 MỨC THEO VAI TRÒ (HIỂN THỊ ĐẦY ĐỦ, KHÔNG LINE-CLAMP) */}
       {selectedRoles.length > 0 && (
-        <div className="pb-7 border-b border-slate-100 space-y-5">
+        <div id="question-9" className="pb-7 border-b border-slate-100 space-y-5 transition-all">
           <div>
             <label className="block text-[20px] font-bold text-[#0e1c2e] mb-1">
               Câu 9. Mức tự đánh giá khả năng thực hiện theo từng vai trò <span className="text-rose-600">*</span>
@@ -342,9 +347,9 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
               const curLevel = selfEvals.find((e) => e.roleId === rId)?.level;
 
               return (
-                <div key={rId} className="space-y-3">
+                <div key={rId} id={`role-eval-${rId}`} className="space-y-3 p-3.5 -mx-3.5 rounded-xl transition-all">
                   <h5 className="text-[17px] font-bold text-[#12457a]">
-                    Vai trò: {roleDef?.title}
+                    Vai trò: {roleDef?.title} <span className="text-rose-600 text-[15px]">*</span>
                   </h5>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -382,7 +387,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
 
       {/* CÂU 10: KHÓ KHĂN CHÍNH (TỐI ĐA 2 & ĐỘC QUYỀN) */}
       {currentStatus === "DANG_THUC_HIEN" && (
-        <div className="pb-7 border-b border-slate-100 space-y-4">
+        <div id="question-10" className="pb-7 border-b border-slate-100 space-y-4 transition-all">
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <div>
               <label className="block text-[20px] font-bold text-[#0e1c2e] mb-1">
@@ -424,7 +429,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
       )}
 
       {/* CÂU 11: NỘI DUNG CẦN HỌC */}
-      <div className="pb-7 border-b border-slate-100 space-y-4">
+      <div id="question-11" className="pb-7 border-b border-slate-100 space-y-4 transition-all">
         <div>
           <label className="block text-[20px] font-bold text-[#0e1c2e] mb-1">
             Câu 11. Nội dung cần được đào tạo, bồi dưỡng trong nhóm này
@@ -478,7 +483,7 @@ export const StepDynamicEvaluation: React.FC<StepDynamicEvaluationProps> = ({
 
       {/* CÂU 12: MỨC ĐỘ CẦN HỌC */}
       {selectedTopics.length > 0 && (
-        <div className="pb-7 border-b border-slate-100 space-y-4">
+        <div id="question-12" className="pb-7 border-b border-slate-100 space-y-4 transition-all">
           <label className="block text-[20px] font-bold text-[#0e1c2e]">
             Câu 12. Mức độ cấp thiết cần học đối với nhóm này <span className="text-rose-600">*</span>
           </label>

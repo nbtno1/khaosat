@@ -5,6 +5,7 @@ import { Part1Data } from "@/lib/validations/survey.schema";
 import { SurveyLinkMeta } from "@/hooks/useSurveyFormState";
 import { Select } from "@/components/common/Select";
 import { ArrowRight, AlertCircle, Lock } from "lucide-react";
+import { scrollToQuestion } from "@/lib/survey-scroll";
 
 interface StepGeneralInfoProps {
   part1: Partial<Part1Data>;
@@ -163,30 +164,37 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
   const validateAndProceed = () => {
     if (!part1.communeCode) {
       setErrorMsg("Vui lòng chọn Xã, phường, thị trấn nơi công tác.");
+      scrollToQuestion("question-1");
       return;
     }
     if (!part1.agencyCode) {
       setErrorMsg("Vui lòng chọn Cơ quan, đơn vị công tác.");
+      scrollToQuestion("question-2");
       return;
     }
     if (!part1.positionCode) {
       setErrorMsg("Vui lòng chọn Vị trí việc làm hiện tại.");
+      scrollToQuestion("question-3");
       return;
     }
     if (part1.positionCode.includes("KHAC") && !part1.positionOtherText?.trim()) {
       setErrorMsg("Vui lòng ghi rõ chức danh vị trí việc làm khác của đồng chí.");
+      scrollToQuestion("question-3-other");
       return;
     }
     if (!part1.capacities || part1.capacities.length === 0) {
       setErrorMsg("Vui lòng tích chọn ít nhất một tư cách làm việc.");
+      scrollToQuestion("question-4");
       return;
     }
     if (part1.capacities.includes("KHAC") && !part1.capacityOtherText?.trim()) {
       setErrorMsg("Vui lòng ghi rõ tư cách làm việc khác.");
+      scrollToQuestion("question-4-other");
       return;
     }
     if (!part1.experienceYears) {
       setErrorMsg("Vui lòng chọn số năm làm công việc tài chính, tài sản công.");
+      scrollToQuestion("question-5");
       return;
     }
 
@@ -206,7 +214,7 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
       )}
 
       {/* Câu 1: Địa bàn công tác */}
-      <section className="pb-7">
+      <section id="question-1" className="pb-7 transition-all">
         <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-4">
           Câu 1. Địa bàn công tác hiện tại <span className="text-rose-600">*</span>
         </h3>
@@ -245,48 +253,52 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
       </section>
 
       {/* Câu 2 & 3: Cơ quan và Vị trí việc làm */}
-      <section className="py-7">
+      <section className="py-7 transition-all">
         <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-4">
           Câu 2–3. Cơ quan và vị trí việc làm hiện tại <span className="text-rose-600">*</span>
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <Select
-            label="Câu 2. Cơ quan, đơn vị công tác"
-            required
-            sizeVariant="lg"
-            value={part1.agencyCode || ""}
-            onChange={handleAgencyChange}
-          >
-            <option value="">Chọn cơ quan, đơn vị...</option>
-            {AGENCIES.map((a) => (
-              <option key={a.code} value={a.code}>
-                {a.name}
-              </option>
-            ))}
-          </Select>
+          <div id="question-2">
+            <Select
+              label="Câu 2. Cơ quan, đơn vị công tác"
+              required
+              sizeVariant="lg"
+              value={part1.agencyCode || ""}
+              onChange={handleAgencyChange}
+            >
+              <option value="">Chọn cơ quan, đơn vị...</option>
+              {AGENCIES.map((a) => (
+                <option key={a.code} value={a.code}>
+                  {a.name}
+                </option>
+              ))}
+            </Select>
+          </div>
 
-          <Select
-            label="Câu 3. Vị trí việc làm hiện tại"
-            required
-            sizeVariant="lg"
-            disabled={!part1.agencyCode}
-            value={part1.positionCode || ""}
-            onChange={handlePositionChange}
-          >
-            <option value="">
-              {part1.agencyCode ? "Chọn vị trí việc làm..." : "Chọn cơ quan, đơn vị trước"}
-            </option>
-            {currentPositions.map((p) => (
-              <option key={p.code} value={p.code}>
-                {p.name}
+          <div id="question-3">
+            <Select
+              label="Câu 3. Vị trí việc làm hiện tại"
+              required
+              sizeVariant="lg"
+              disabled={!part1.agencyCode}
+              value={part1.positionCode || ""}
+              onChange={handlePositionChange}
+            >
+              <option value="">
+                {part1.agencyCode ? "Chọn vị trí việc làm..." : "Chọn cơ quan, đơn vị trước"}
               </option>
-            ))}
-          </Select>
+              {currentPositions.map((p) => (
+                <option key={p.code} value={p.code}>
+                  {p.name}
+                </option>
+              ))}
+            </Select>
+          </div>
         </div>
 
         {part1.positionCode?.includes("KHAC") && (
-          <div className="mt-4">
+          <div id="question-3-other" className="mt-4 transition-all">
             <label className="block text-[15.5px] font-semibold text-slate-700 mb-2">
               Ghi rõ chức danh vị trí khác <span className="text-rose-600">*</span>
             </label>
@@ -304,7 +316,7 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
       </section>
 
       {/* Câu 4: Tư cách làm việc */}
-      <section className="py-7">
+      <section id="question-4" className="py-7 transition-all">
         <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-1.5">
           Câu 4. Tư cách làm việc của đồng chí <span className="text-rose-600">*</span>
         </h3>
@@ -336,7 +348,7 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
         </div>
 
         {part1.capacities?.includes("KHAC") && (
-          <div className="mt-4">
+          <div id="question-4-other" className="mt-4 transition-all">
             <input
               type="text"
               value={part1.capacityOtherText || ""}
@@ -351,7 +363,7 @@ export const StepGeneralInfo: React.FC<StepGeneralInfoProps> = ({
       </section>
 
       {/* Câu 5: Số năm kinh nghiệm */}
-      <section className="py-7">
+      <section id="question-5" className="py-7 transition-all">
         <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-4">
           Câu 5. Số năm làm công việc quản lý tài chính, tài sản công <span className="text-rose-600">*</span>
         </h3>

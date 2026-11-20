@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { LearningFormat, Part4Data, Part1Data } from "@/lib/validations/survey.schema";
 import { SchemaConfigData } from "@/hooks/useSurveyFormState";
 import { ArrowLeft, Send, AlertCircle } from "lucide-react";
+import { scrollToQuestion } from "@/lib/survey-scroll";
 
 interface StepLearningPreferencesProps {
   part4: Partial<Part4Data>;
@@ -55,6 +56,7 @@ export const StepLearningPreferences: React.FC<StepLearningPreferencesProps> = (
   const handleConfirmSubmit = () => {
     if (selectedFormats.length === 0) {
       setErrorMsg("Vui lòng chọn ít nhất một hình thức học ở Câu 13.");
+      scrollToQuestion("question-13");
       return;
     }
     setErrorMsg(null);
@@ -71,7 +73,7 @@ export const StepLearningPreferences: React.FC<StepLearningPreferencesProps> = (
       )}
 
       {/* Câu 13: Hình thức học */}
-      <section className="pb-7">
+      <section id="question-13" className="pb-7 transition-all">
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-4">
           <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug">
             Câu 13. Hình thức bồi dưỡng phù hợp nhất (Chọn tối đa 2) <span className="text-rose-600">*</span>
@@ -111,7 +113,7 @@ export const StepLearningPreferences: React.FC<StepLearningPreferencesProps> = (
       </section>
 
       {/* Câu 14: Ý kiến khác */}
-      <section className="py-7">
+      <section id="question-14" className="py-7 transition-all">
         <h3 className="text-[20px] sm:text-[21px] font-bold text-[#0e1c2e] leading-snug mb-1.5">
           Câu 14. Ý kiến đề xuất khác (Không bắt buộc)
         </h3>

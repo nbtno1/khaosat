@@ -12,6 +12,7 @@ import {
   Send,
   Sparkles,
 } from "lucide-react";
+import { scrollToQuestion } from "@/lib/survey-scroll";
 
 interface StepWorkgroupsProps {
   workgroupStatuses: Record<string, WorkgroupStatus>;
@@ -85,9 +86,12 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
   const handleNext = () => {
     const unanswered = ALL_WORKGROUP_IDS.filter((id) => !workgroupStatuses[id]);
     if (unanswered.length > 0) {
+      const firstUnansweredId = unanswered[0];
+      const wgDef = sortedWorkgroups.find((w) => w.id === firstUnansweredId);
       setErrorMsg(
-        `Đồng chí còn ${unanswered.length} nhóm công việc chưa chọn trạng thái (Ví dụ: nhóm ${unanswered[0]}). Vui lòng xem xét đủ 16 nhóm.`
+        `Đồng chí còn ${unanswered.length} nhóm công việc chưa chọn trạng thái (Ví dụ: nhóm ${wgDef?.order || ""}. ${wgDef?.title || firstUnansweredId}). Vui lòng xem xét đủ 16 nhóm.`
       );
+      scrollToQuestion(`workgroup-${firstUnansweredId}`);
       return;
     }
 
@@ -127,6 +131,7 @@ export const StepWorkgroups: React.FC<StepWorkgroupsProps> = ({
           return (
             <div
               key={wg.id}
+              id={`workgroup-${wg.id}`}
               className={`space-y-3.5 transition-all ${
                 isSuggested
                   ? "bg-gradient-to-r from-[#f1f7fe] to-[#f9fbff] border border-[#c8dcf4] border-l-4 border-l-[#12457a] rounded-[12px] px-4 sm:px-5 py-4 shadow-[0_2px_10px_-4px_rgba(18,69,122,0.12)]"

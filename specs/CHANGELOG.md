@@ -4,6 +4,21 @@ Toàn bộ các thay đổi về đặc tả kỹ thuật, kiến trúc và mã 
 
 ---
 
+## [1.16.0] — 2026-11-20
+
+### Tính năng Tự động Cuộn (Auto-Scroll) & Làm nổi bật Câu hỏi Bắt buộc Chưa Điền
+- **Tiện ích Điều hướng Cuộn Thông minh (`src/lib/survey-scroll.ts`):**
+  - Xây dựng hàm `scrollToQuestion(elementId, options)` tính toán chính xác vị trí tương đối bên trong scroll container (`#survey-scroll-container`), cuộn mượt mà đưa câu hỏi còn thiếu vào tầm nhìn trung tâm.
+  - Tự động gắn class `.survey-required-highlight` kích hoạt hiệu ứng nhấp nháy viền đỏ dịu (Pulse Animation) trong 2.6s, sau đó tự dọn dẹp.
+  - Tự động focus vào điều khiển nhập liệu đầu tiên (select, input, textarea, button) để hỗ trợ thao tác bàn phím ngay lập tức.
+  - Hỗ trợ chuẩn truy cập giảm chuyển động `prefers-reduced-motion` (chuyển sang cuộn tức thì không gây chóng mặt).
+- **Áp dụng Trọn vẹn 4 Bước Khảo sát (`src/components/survey/**`):**
+  - **Bước 1 (Thông tin chung):** Tự động cuộn đến Câu 1 (Địa bàn xã), Câu 2 (Cơ quan), Câu 3 (Vị trí việc làm / vị trí khác), Câu 4 (Tư cách làm việc / tư cách khác), hoặc Câu 5 (Số năm kinh nghiệm) nếu bị bỏ sót.
+  - **Bước 2 (16 Nhóm công việc):** Tự động cuộn đến nhóm công việc chưa chọn trạng thái đầu tiên trong danh sách 16 nhóm (`#workgroup-[id]`).
+  - **Bước 3 (Đánh giá năng lực):** Tự động cuộn đến Câu 8 (Vai trò), Câu 9 (Mức tự đánh giá cho vai trò còn thiếu), Câu 10 (Khó khăn chính) hoặc Câu 12 (Mức độ cấp thiết cần học).
+  - **Bước 4 (Hình thức học & Nộp bài):** Tự động cuộn đến Câu 13 (Hình thức bồi dưỡng) khi nhấn "Nộp bài khảo sát" mà chưa chọn hình thức.
+- **Bộ Kiểm thử Đơn vị Mới (`tests/utils/survey-scroll.test.ts`):** 3/3 ca kiểm thử đạt 100% (An toàn trong SSR, cuộn chính xác trên client, tương thích prefers-reduced-motion). Script: `npm run test:scroll`.
+
 ## [1.15.0] — 2026-11-19 (`feat/ui-modernization-2026-11`)
 
 ### Nâng cấp Toàn diện Hệ thống Giao diện Công vụ Hiện đại (Đồng bộ 10 trang Admin, Đăng nhập & 4 bước Phiếu khảo sát)
